@@ -1,0 +1,6 @@
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\b\PMMX.Operaciones\bin\Debug\PMMX.Operaciones.dll.config
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\b\PMMX.Operaciones\bin\Debug\PMMX.Operaciones.dll
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\b\PMMX.Operaciones\bin\Debug\PMMX.Operaciones.pdb
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\i\PMMX.Operaciones\Debug\PMMX.Operaciones.csprojResolveAssemblyReference.cache
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\i\PMMX.Operaciones\Debug\PMMX.Operaciones.dll
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\i\PMMX.Operaciones\Debug\PMMX.Operaciones.pdb

@@ -1,0 +1,111 @@
+﻿@model IEnumerable<PMMX.Modelo.Entidades.Persona>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    @Styles.Render("~/Style/DataTables")
+
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Personas</h3>
+                <div class="box-tools">
+                    <a href="@Url.Action("Create", "Personas")" class="btn btn-primary btn-sm">
+                        <span class="fa fa-plus" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="box-body table-responsive">
+                <table class="table table-hover table-striped" id="example1">
+                    <thead>
+                        <tr style="width:100%" class="info">
+                            <th style="width:5%">
+                                @Html.DisplayNameFor(model => model.Id)
+                            </th>
+                            <th style="width:15%">
+                                Puesto
+                            </th>
+                            <th style="width:15%">
+                                @Html.DisplayNameFor(model => model.Nombre)
+                            </th>
+                            <th style="width:15%">
+                                @Html.DisplayNameFor(model => model.Apellido1)
+                            </th>
+                            <th style="width:15%">
+                                @Html.DisplayNameFor(model => model.Apellido2)
+                            </th>
+                            <th style="width:15%">
+                                @Html.DisplayNameFor(model => model.Activo)
+                            </th>
+                            <th style="width:10%"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr class=@(item.Activo ? "primary" : "approved")>
+                                <td>
+                                    @Html.ActionLink("" + item.Id, "Details", new { id = item.Id })
+
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Puesto.Nombre) 
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Apellido1)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Apellido2)
+                                </td>
+                                <td>
+                                    @Html.CheckBoxFor(modelItem => item.Activo)
+                                    @Html.LabelFor(modelItem => item.Activo)
+                                </td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+                                            <i class="fa fa-gear"></i>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
+                                            <li role="presentation">@Html.ActionLink("Editar", "Edit", new { id = item.Id })</li>
+                                            <li role="presentation">@Html.ActionLink("Detalles", "Details", new { id = item.Id })</li>
+                                            <li role="presentation" class="divider"></li>
+                                            <li role="presentation">@Html.ActionLink("Eliminar", "Delete", new { id = item.Id })</li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr style="width:100%" class="info"></tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/JS/DataTables")
+    <script>
+        $(function () {
+            $('#example1').DataTable();
+        });
+        $('#example1 input[type="checkbox"]').iCheck({
+            checkboxClass: 'icheckbox_flat-blue',
+            radioClass: 'iradio_flat-blue'
+        });
+    </script>
+}

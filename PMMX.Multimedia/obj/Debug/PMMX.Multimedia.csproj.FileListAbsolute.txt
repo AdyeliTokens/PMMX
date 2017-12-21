@@ -1,0 +1,14 @@
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Multimedia\bin\Debug\PMMX.Multimedia.dll.config
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Multimedia\bin\Debug\PMMX.Multimedia.dll
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Multimedia\bin\Debug\PMMX.Multimedia.pdb
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Multimedia\bin\Debug\PMMX.Modelo.dll
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Multimedia\bin\Debug\PMMX.Prueba.dll
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Multimedia\bin\Debug\EntityFramework.dll
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Multimedia\bin\Debug\PMMX.Modelo.pdb
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Multimedia\bin\Debug\PMMX.Modelo.dll.config
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Multimedia\bin\Debug\PMMX.Prueba.pdb
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Multimedia\bin\Debug\PMMX.Prueba.dll.config
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Multimedia\bin\Debug\EntityFramework.xml
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Multimedia\obj\Debug\PMMX.Multimedia.csprojResolveAssemblyReference.cache
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Multimedia\obj\Debug\PMMX.Multimedia.dll
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Multimedia\obj\Debug\PMMX.Multimedia.pdb

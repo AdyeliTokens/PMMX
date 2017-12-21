@@ -1,0 +1,9 @@
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\b\PMMX\bin\ApplicationInsights.config
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\b\PMMX\bin\Sitio.dll.config
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\b\PMMX\bin\Sitio.dll
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\b\PMMX\bin\Sitio.pdb
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\i\Sitio\Debug\Sitio.csprojResolveAssemblyReference.cache
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\i\Sitio\Debug\Sitio.Properties.Resources.resources
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\i\Sitio\Debug\Sitio.csproj.GenerateResource.Cache
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\i\Sitio\Debug\Sitio.dll
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\i\Sitio\Debug\Sitio.pdb

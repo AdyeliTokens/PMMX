@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4DED49B0-609A-4BE0-BC3D-DC0D16A0CA8A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PMMX.Modelo</RootNamespace>
+    <AssemblyName>PMMX.Modelo</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0-beta1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.10.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.10\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.10.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.Entity.6.9.10\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account\LoginModel.cs" />
+    <Compile Include="Entidades\Alias.cs" />
+    <Compile Include="Entidades\Asignacion.cs" />
+    <Compile Include="Entidades\AspNetRoles.cs" />
+    <Compile Include="Entidades\AspNetUser.cs" />
+    <Compile Include="Entidades\AspNetUserClaims.cs" />
+    <Compile Include="Entidades\Desperdicio.cs" />
+    <Compile Include="Entidades\Electricos.cs" />
+    <Compile Include="Entidades\Maquinaria\ObjetivoVQI.cs" />
+    <Compile Include="Entidades\Marca.cs" />
+    <Compile Include="Entidades\NoConformidad.cs" />
+    <Compile Include="Entidades\Area.cs" />
+    <Compile Include="Entidades\Competencia.cs" />
+    <Compile Include="Entidades\Defectos\ActividadEnDefecto.cs" />
+    <Compile Include="Entidades\Defectos\Comentario.cs" />
+    <Compile Include="Entidades\Defectos\Defecto.cs" />
+    <Compile Include="Entidades\Dia.cs" />
+    <Compile Include="Entidades\Dispositivo.cs" />
+    <Compile Include="Entidades\Entorno.cs" />
+    <Compile Include="Entidades\Categoria.cs" />
+    <Compile Include="Entidades\JustDoIts\Evento.cs" />
+    <Compile Include="Entidades\JustDoIts\JustDoIt.cs" />
+    <Compile Include="Entidades\Mantenimiento.cs" />
+    <Compile Include="Entidades\Pesador.cs" />
+    <Compile Include="Entidades\SubCategoria.cs" />
+    <Compile Include="Entidades\Foto.cs" />
+    <Compile Include="Entidades\GrupoPreguntas.cs" />
+    <Compile Include="Entidades\Indicador.cs" />
+    <Compile Include="Entidades\Maquinaria\BussinesUnit.cs" />
+    <Compile Include="Entidades\Maquinaria\Modulo.cs" />
+    <Compile Include="Entidades\Maquinaria\ModuloSeccion.cs" />
+    <Compile Include="Entidades\Maquinaria\Origen.cs" />
+    <Compile Include="Entidades\Maquinaria\WorkCenter.cs" />
+    <Compile Include="Entidades\Mecanicos.cs" />
+    <Compile Include="Entidades\Operadores.cs" />
+    <Compile Include="Entidades\OrigenRespuesta.cs" />
+    <Compile Include="Entidades\Notificacion.cs" />
+    <Compile Include="Entidades\Paros\ActividadEnParo.cs" />
+    <Compile Include="Entidades\Paros\Paro.cs" />
+    <Compile Include="Entidades\Paros\TiempoDeParo.cs" />
+    <Compile Include="Entidades\Persona.cs" />
+    <Compile Include="Entidades\Pregunta.cs" />
+    <Compile Include="Entidades\PreguntaTurno.cs" />
+    <Compile Include="Entidades\Puesto.cs" />
+    <Compile Include="Entidades\Remitentes.cs" />
+    <Compile Include="Entidades\RequisicionDeDescarga.cs" />
+    <Compile Include="Entidades\Respuesta.cs" />
+    <Compile Include="Entidades\Semana.cs" />
+    <Compile Include="Entidades\ShiftLeaders.cs" />
+    <Compile Include="Entidades\Turno.cs" />
+    <Compile Include="Entidades\User.cs" />
+    <Compile Include="Entidades\UsuariosPorPersona.cs" />
+    <Compile Include="Entidades\Video.cs" />
+    <Compile Include="Entidades\Warehouse\ActividadEnVentana.cs" />
+    <Compile Include="Entidades\Warehouse\BitacoraVentana.cs" />
+    <Compile Include="Entidades\Warehouse\Carrier.cs" />
+    <Compile Include="Entidades\Warehouse\Locacion.cs" />
+    <Compile Include="Entidades\Warehouse\Proveedores.cs" />
+    <Compile Include="Entidades\Warehouse\Recursos.cs" />
+    <Compile Include="Entidades\Warehouse\Ventana.cs" />
+    <Compile Include="Interfaces\IPMMXRepositorio.cs" />
+    <Compile Include="Interfaces\Seguridad\IDispositivoServicio.cs" />
+    <Compile Include="Interfaces\Seguridad\IUsuarioServicio.cs" />
+    <Compile Include="Map\ActividadEnVentanaMap.cs" />
+    <Compile Include="Map\AreaMap.cs" />
+    <Compile Include="Map\AsignacionMap.cs" />
+    <Compile Include="Map\BitacoraVentanaMap.cs" />
+    <Compile Include="Map\CarrierMap.cs" />
+    <Compile Include="Map\DesperdicioMap.cs" />
+    <Compile Include="Map\ElectricoMap.cs" />
+    <Compile Include="Map\LocacionMap.cs" />
+    <Compile Include="Map\MarcaMap.cs" />
+    <Compile Include="Map\NoConformidadMap.cs" />
+    <Compile Include="Map\CategoriaMap.cs" />
+    <Compile Include="Map\ComentarioMap.cs" />
+    <Compile Include="Map\EventoMap.cs" />
+    <Compile Include="Map\FotoMap.cs" />
+    <Compile Include="Map\IndicadoresMap.cs" />
+    <Compile Include="Map\JustDoItMap.cs" />
+    <Compile Include="Map\MantenimientoMap.cs" />
+    <Compile Include="Map\MecanicoMap.cs" />
+    <Compile Include="Map\ModuloSeccionMap.cs" />
+    <Compile Include="Map\ObjetivoVQIMap.cs" />
+    <Compile Include="Map\OperadoresMap.cs" />
+    <Compile Include="Map\ProveedoresMap.cs" />
+    <Compile Include="Map\RecursosMap.cs" />
+    <Compile Include="Map\RemitentesMap.cs" />
+    <Compile Include="Map\RequisicionDeDescargaMap.cs" />
+    <Compile Include="Map\ShiftLeaderMap.cs" />
+    <Compile Include="Map\SubCategoriaMap.cs" />
+    <Compile Include="Map\UsuariosPorPersonaMap.cs" />
+    <Compile Include="Map\VentanaMap.cs" />
+    <Compile Include="RespuestaGenerica\IRespuestaServicio.cs" />
+    <Compile Include="Map\ActividadEnDefectoMap.cs" />
+    <Compile Include="Map\ActividadEnParoMap.cs" />
+    <Compile Include="Map\AspNetUserMap.cs" />
+    <Compile Include="Map\BussinesUnitMap.cs" />
+    <Compile Include="Map\DefectoMap.cs" />
+    <Compile Include="Map\DispositivoMap.cs" />
+    <Compile Include="Map\EntornoMap.cs" />
+    <Compile Include="Map\GrupoPreguntasMap.cs" />
+    <Compile Include="Map\ModuloMap.cs" />
+    <Compile Include="Map\OrigenRespuestaMap.cs" />
+    <Compile Include="Map\OrigenMap.cs" />
+    <Compile Include="Map\ParoMap.cs" />
+    <Compile Include="Map\PersonaMap.cs" />
+    <Compile Include="Map\PreguntaMap.cs" />
+    <Compile Include="Map\PreguntaTurnoMap.cs" />
+    <Compile Include="Map\PuestoMap.cs" />
+    <Compile Include="Map\RespuestaMap.cs" />
+    <Compile Include="Map\TiempoDeParoMap.cs" />
+    <Compile Include="Map\UserMap.cs" />
+    <Compile Include="Map\WorkCenterMap.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RespuestaGenerica\RespuestaServicio.cs" />
+    <Compile Include="Servicios\IAccountServicio.cs" />
+    <Compile Include="Vistas\BussinesUnitView.cs" />
+    <Compile Include="Vistas\AreaView.cs" />
+    <Compile Include="Vistas\CategoriaView.cs" />
+    <Compile Include="Vistas\ClasificacionView.cs" />
+    <Compile Include="Vistas\ComentarioView.cs" />
+    <Compile Include="Vistas\DefectoView.cs" />
+    <Compile Include="Vistas\DispositivoView.cs" />
+    <Compile Include="Vistas\EntornoView.cs" />
+    <Compile Include="Vistas\EventoView.cs" />
+    <Compile Include="Vistas\FotoView.cs" />
+    <Compile Include="Vistas\GrupoPreguntasView.cs" />
+    <Compile Include="Vistas\IntervencionView.cs" />
+    <Compile Include="Vistas\JustDoItView.cs" />
+    <Compile Include="Vistas\LogServicioView.cs" />
+    <Compile Include="Vistas\MantenimientoView.cs" />
+    <Compile Include="Vistas\ModuloSeccionView.cs" />
+    <Compile Include="Vistas\ModuloView.cs" />
+    <Compile Include="Vistas\NoConformidadView.cs" />
+    <Compile Include="Vistas\OrigenRespuestaView.cs" />
+    <Compile Include="Vistas\OrigenView.cs" />
+    <Compile Include="Vistas\ParoView.cs" />
+    <Compile Include="Vistas\PersonaView.cs" />
+    <Compile Include="Vistas\PreguntaTurnoView.cs" />
+    <Compile Include="Vistas\PreguntaView.cs" />
+    <Compile Include="Vistas\PuestoView.cs" />
+    <Compile Include="Vistas\RemitentesView.cs" />
+    <Compile Include="Vistas\RespuestaView.cs" />
+    <Compile Include="Vistas\ShiftLeadersView.cs" />
+    <Compile Include="Vistas\SubClasificacionView.cs" />
+    <Compile Include="Vistas\TiempoDeParoView.cs" />
+    <Compile Include="Vistas\UserView.cs" />
+    <Compile Include="Vistas\VQIView.cs" />
+    <Compile Include="Vistas\WorkCenterView.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Entidades\Seguridad\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="serverpmi.tr3sco.net" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\MChan\\Documents\\Visual\ Studio\ 2017\\Projects\\Maya\\PMMX\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\MChan\\Documents\\Visual\ Studio\ 2017\\Projects\\Maya\\PMMX\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="Sitio.Models.ApplicationDbContext-Web.config Connection String" description="" value="Sitio.Models.ApplicationDbContext_ConnectionString" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\MChan\\Documents\\Visual\ Studio\ 2017\\Projects\\Maya\\PMMX\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='Sitio.Models.ApplicationDbContext']/@connectionString" />
+  </parameter>
+  <parameter name="MayaContext-Web.config Connection String" description="MayaContext Connection String used in web.config by the application to access the database." value="Data Source=169.48.177.21;Port=3306;Database=PMMX;Uid=PMMX;Pwd=AdministradorPMMX;Convert Zero Datetime=True; Allow Zero Datetime= True;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\MChan\\Documents\\Visual\ Studio\ 2017\\Projects\\Maya\\PMMX\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='MayaContext']/@connectionString" />
+  </parameter>
+</parameters>

@@ -1,0 +1,6 @@
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\b\PMMX.Modelo\bin\Debug\PMMX.Modelo.dll.config
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\b\PMMX.Modelo\bin\Debug\PMMX.Modelo.dll
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\b\PMMX.Modelo\bin\Debug\PMMX.Modelo.pdb
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\i\PMMX.Modelo\Debug\PMMX.Modelo.csprojResolveAssemblyReference.cache
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\i\PMMX.Modelo\Debug\PMMX.Modelo.dll
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\i\PMMX.Modelo\Debug\PMMX.Modelo.pdb

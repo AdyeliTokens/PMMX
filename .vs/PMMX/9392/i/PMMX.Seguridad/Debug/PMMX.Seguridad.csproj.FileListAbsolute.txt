@@ -1,0 +1,5 @@
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\b\PMMX.Seguridad\bin\Debug\PMMX.Seguridad.dll.config
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\b\PMMX.Seguridad\bin\Debug\PMMX.Seguridad.dll
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\b\PMMX.Seguridad\bin\Debug\PMMX.Seguridad.pdb
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\i\PMMX.Seguridad\Debug\PMMX.Seguridad.dll
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\i\PMMX.Seguridad\Debug\PMMX.Seguridad.pdb

@@ -1,0 +1,122 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutVideo.cshtml";
+    ViewBag.Title = "Chat";
+
+}
+
+<video id="video" controls style="background-color:black" autoplay ></video>
+    
+
+@section scripts {
+
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script>
+        $(function () {
+
+            var chat = $.connection.exempleHhub;
+
+            chat.client.getVideo = function () {
+                console.log("que pedo");
+                createPlayer();
+                $("#video").html('<source src="@Url.Action("StreamingVideo", "Home")" type="video/mp4"></source>');
+
+                //stop();
+
+                play();
+
+
+            };
+            chat.client.play = function () {
+                console.log("play");
+                play();
+            };
+
+            $.connection.hub.start().done(function () {
+                console.log("coneccion :D");
+            //    $('#sendvideo').click(function () {
+            //        chat.server.sendVideo('~/Home/StreamingVideo');
+
+            //    });
+            });
+        });
+
+        var _player = null;
+
+        function play() {
+            if (_player.paused) {
+                _player.play();
+            } else {
+                _player.pause();
+            }
+        }
+        function stop() {
+            _player.pause();
+            _player.currentTime = 0;
+
+        }
+        function restart() {
+            _player.currentTime = 0;
+        }
+        function skip(value) {
+            _player.currentTime += value;
+        }
+
+        function createPlayer() {
+            _player = document.getElementById('video');
+            _player.controls = true;
+            _player.style.background = 'black';
+            _player.load();
+
+            _player.addEventListener('loadeddata', function () {
+                console.log("Movie loaded.");
+            });
+            _player.addEventListener('loadedmetadata', function () {
+                console.log("Meta data loaded.");
+            });
+            _player.addEventListener('timeupdate', function () {
+                console.log("Current time: " + _player.currentTime);
+                //progress.updateProgress(_player.currentTime, _player.duration);
+            });
+            _player.addEventListener('play', function () {
+                console.log("Playback started.");
+            });
+            _player.addEventListener('pause', function () {
+                console.log("Playback paused.");
+            });
+            _player.addEventListener('ended', function () {
+                console.log("Playback finished.");
+                //init();
+            });
+
+        }
+        function resizePlayer() {
+            _player.width = $(window).width();
+            _player.height = $(window).height();
+        }
+        function changeSource() {
+            if (!_player) {
+                _player.poster = "https://www.theme-junkie.com/wp-content/uploads/video-background-wordpress-themes.png";
+                _player.src = "";
+                _player.load();
+            }
+        }
+
+        //$(document).ready(function () {
+        //    createPlayer();
+        //    resizePlayer();
+        //    console.log("cargado;D");
+        //});
+
+        window.onload = function () {
+            createPlayer();
+            resizePlayer();
+            //changeSource();
+            document.body.addEventListener('unload', onUnload);
+        };
+        window.onresize = function () {
+            resizePlayer();
+        };
+
+    </script>
+}

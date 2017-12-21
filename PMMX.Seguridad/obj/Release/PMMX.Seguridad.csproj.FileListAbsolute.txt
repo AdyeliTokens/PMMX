@@ -1,0 +1,16 @@
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Seguridad\bin\Release\PMMX.Seguridad.dll.config
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Seguridad\bin\Release\PMMX.Seguridad.dll
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Seguridad\bin\Release\PMMX.Seguridad.pdb
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Seguridad\bin\Release\EntityFramework.dll
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Seguridad\bin\Release\MySql.Data.dll
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Seguridad\bin\Release\MySql.Data.Entity.EF6.dll
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Seguridad\bin\Release\PMMX.Modelo.dll
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Seguridad\bin\Release\PMMX.Prueba.dll
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Seguridad\bin\Release\PMMX.Modelo.pdb
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Seguridad\bin\Release\PMMX.Modelo.dll.config
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Seguridad\bin\Release\PMMX.Prueba.pdb
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Seguridad\bin\Release\PMMX.Prueba.dll.config
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Seguridad\bin\Release\EntityFramework.xml
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Seguridad\obj\Release\PMMX.Seguridad.csprojResolveAssemblyReference.cache
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Seguridad\obj\Release\PMMX.Seguridad.dll
+C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.Seguridad\obj\Release\PMMX.Seguridad.pdb

@@ -1,0 +1,97 @@
+﻿@model PMMX.Modelo.Entidades.NoConformidad
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>NoConformidad</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Persona.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Persona.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Seccion.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Seccion.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WorkCenter.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WorkCenter.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Calificacion_Low)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Calificacion_Low)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Calificacion_High)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Calificacion_High)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Calificacion_VQI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Calificacion_VQI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Calificacion_CSVQI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Calificacion_CSVQI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
