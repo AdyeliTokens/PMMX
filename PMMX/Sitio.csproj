@@ -323,6 +323,7 @@
     <Compile Include="Areas\Operaciones\Controllers\WorkCentersController.cs" />
     <Compile Include="Areas\Operaciones\OperacionesAreaRegistration.cs" />
     <Compile Include="Areas\Seguridad\Controllers\DispositivosController.cs" />
+    <Compile Include="Areas\Seguridad\Controllers\ElectricosController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\EntornosController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\MecanicosController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\OperadoresController.cs" />
@@ -7913,6 +7914,11 @@
     <Content Include="Areas\Operaciones\Views\Electricos\Details.cshtml" />
     <Content Include="Areas\Operaciones\Views\Electricos\Edit.cshtml" />
     <Content Include="Areas\Operaciones\Views\Electricos\Index.cshtml" />
+    <Content Include="Areas\Seguridad\Views\Electricos\Create.cshtml" />
+    <Content Include="Areas\Seguridad\Views\Electricos\Delete.cshtml" />
+    <Content Include="Areas\Seguridad\Views\Electricos\Details.cshtml" />
+    <Content Include="Areas\Seguridad\Views\Electricos\Edit.cshtml" />
+    <Content Include="Areas\Seguridad\Views\Electricos\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
