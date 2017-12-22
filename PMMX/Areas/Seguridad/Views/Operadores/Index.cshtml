@@ -1,5 +1,4 @@
-﻿@*@model IEnumerable<PMMX.Modelo.Entidades.OperadoresPorWorkCenter>*@
-@model IEnumerable<PMMX.Modelo.Entidades.Operadores>
+﻿@model IEnumerable<PMMX.Modelo.Entidades.Operadores>
 
 @{
     ViewBag.Title = "Index";
@@ -46,7 +45,7 @@
                         {
                             <tr>
                                 <td>
-                                    <img src="~/img/user-default.png" class="img-circle img-responsive" style="width:30px;height:30px" />
+                                    <img src="@Url.Action("Usuario", "Fotos", new { idPersona = item.IdOperador, area = "" })" class="img-circle img-responsive" style="width:30px;height:30px" />
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Operador.Nombre) @Html.DisplayFor(modelItem => item.Operador.Apellido1) @Html.DisplayFor(modelItem => item.Operador.Apellido2)
