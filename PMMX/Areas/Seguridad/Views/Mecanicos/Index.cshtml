@@ -27,11 +27,15 @@
                     <thead>
                         <tr  class="info">
                             <th>
-                                @Html.DisplayNameFor(model => model.BusinessUnit.Nombre)
+                                
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Mecanico.Nombre)
                             </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.BusinessUnit.Nombre)
+                            </th>
+                            
                             <th>
                                 @Html.DisplayNameFor(model => model.Activo)
                             </th>
@@ -44,11 +48,15 @@
 
                             <tr class=@(item.Activo ? "success" : "danger")>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.BusinessUnit.Nombre)
+                                    <img src="@Url.Action("Usuario", "Fotos", new { idPersona = item.IdMecanico, area = "" })" class="img-circle img-responsive" style="width:30px;height:30px" />
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Mecanico.Nombre) @Html.DisplayFor(modelItem => item.Mecanico.Apellido1) @Html.DisplayFor(modelItem => item.Mecanico.Apellido2)
                                 </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BusinessUnit.Nombre)
+                                </td>
+                                
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Activo)
                                 </td>
@@ -72,11 +80,15 @@
                     <tfoot>
                         <tr class="info">
                             <th>
-                                @Html.DisplayNameFor(model => model.BusinessUnit.Nombre)
+
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Mecanico.Nombre)
                             </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.BusinessUnit.Nombre)
+                            </th>
+
                             <th>
                                 @Html.DisplayNameFor(model => model.Activo)
                             </th>
