@@ -1,5 +1,6 @@
 PMMX/bin/
 PMMX/obj/
+PMMX/packages/
 PMMX.Modelo/bin/
 PMMX.Modelo/obj/
 PMMX.Multimedia/bin/
@@ -20,3 +21,5 @@ SitioTests/bin/
 SitioTests/obj/
 SitioTests/SitioTests.csproj.user
 PMMX/Sitio.csproj.user
+PMMX/.vs/config/applicationhost.config
+PMMX/.vs/PMMX/v15/.suo
