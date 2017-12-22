@@ -41,7 +41,7 @@ namespace Sitio.Areas.Seguridad.Controllers
         public ActionResult Create()
         {
             ViewBag.IdCelula = new SelectList(db.BussinesUnits, "Id", "Nombre");
-            ViewBag.IdShiftLeader = new SelectList(db.Personas, "Id", "Nombre");
+            ViewBag.IdShiftLeader = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View();
         }
 
