@@ -144,10 +144,46 @@ namespace Sitio.Areas.Apis.Controllers
         }
         
         // GET: api/Evento/5
-        [ResponseType(typeof(Evento))]
+        [ResponseType(typeof(EventoView))]
         public IHttpActionResult GetEvento(int id)
         {
-            Evento evento = db.Evento.Find(id);
+            var evento = db.Evento.Where(e => (e.Id == id))
+                .Select(d => new EventoView
+                {
+                    Id = d.Id,
+                    IdOrigen = d.IdOrigen,
+                    IdResponsable = d.IdResponsable,
+                    IdCategoria = d.IdCategoria,
+                    Descripcion = d.Descripcion,
+                    FechaInicio = d.FechaInicio,
+                    FechaFin = d.FechaFin,
+                    Nota = d.Nota,
+                    Activo = d.Activo,
+                    Responsable = new PersonaView
+                    {
+                        Id = d.Responsable.Id,
+                        Apellido1 = d.Responsable.Apellido1,
+                        Apellido2 = d.Responsable.Apellido2,
+                        Nombre = d.Responsable.Nombre,
+
+                        Puesto = new PuestoView
+                        {
+                            Id = d.Responsable.Puesto.Id,
+                            Nombre = d.Responsable.Puesto.Nombre
+                        }
+                    },
+                    JustDoIt = d.JustDoIt.Select(j => new JustDoItView
+                    {
+                        Id = j.Id,
+                        IdEvento = j.IdEvento,
+                        IdOrigen = j.IdOrigen,
+                        Descripcion = j.Descripcion,
+                        IdReportador = j.IdReportador,
+                        IdResponsable = j.IdResponsable
+                    }).ToList()
+                })
+                .ToList();
+
             if (evento == null)
             {
                 return NotFound();
@@ -156,22 +192,7 @@ namespace Sitio.Areas.Apis.Controllers
             return Ok(evento);
         }
 
-        // GET: api/Evento/5
-        //[ResponseType(typeof(Evento))]
-        //public IHttpActionResult GetEventoByResponsable(int IdResponsable)
-        //{
-        //    var _evento = new db.
-
-        //    if (evento == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return Ok(evento);
-        //}
-
         // PUT: api/Evento/5
-
         [ResponseType(typeof(void))]
         public IHttpActionResult PutEvento(int id, Evento evento)
         {
