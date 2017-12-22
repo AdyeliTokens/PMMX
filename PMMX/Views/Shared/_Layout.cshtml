@@ -46,7 +46,7 @@
                                         @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Profile", @class = "btn btn-default btn-flat" })
                                     </div>
                                     <div class="pull-right">
-                                        @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm" }))
+                                        @using (Html.BeginForm("LogOff", "Account", new { area = "Seguridad" }, FormMethod.Post, new { id = "logoutForm" }))
                                         {
                                             @Html.AntiForgeryToken()
                                             <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-flat">Log off</a>
