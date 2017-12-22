@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMMX.Infraestructura", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMMX.Seguridad", "..\PMMX.Seguridad\PMMX.Seguridad.csproj", "{05723739-BD43-448B-A60E-188A23A82DF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMMX.Operaciones", "P..\MMX.Operaciones\PMMX.Operaciones.csproj", "{88799DD0-162B-4536-99BE-2EAB999F06CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMMX.Operaciones", "..\PMMX.Operaciones\PMMX.Operaciones.csproj", "{88799DD0-162B-4536-99BE-2EAB999F06CE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebPage", "WebPage", "{DBCBC589-6F2F-425F-AC0D-E8B6064C82E9}"
 EndProject
