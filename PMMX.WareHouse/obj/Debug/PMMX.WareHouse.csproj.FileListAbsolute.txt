@@ -1,5 +1,0 @@
-C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.WareHouse\bin\Debug\PMMX.WareHouse.dll
-C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.WareHouse\bin\Debug\PMMX.WareHouse.pdb
-C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.WareHouse\obj\Debug\PMMX.WareHouse.csprojResolveAssemblyReference.cache
-C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.WareHouse\obj\Debug\PMMX.WareHouse.dll
-C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\PMMX.WareHouse\obj\Debug\PMMX.WareHouse.pdb
