@@ -276,6 +276,7 @@
     <Compile Include="Areas\Operaciones\Controllers\DesperdiciosController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\ElectricosController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\EventoController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\HorariosController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\JustDoItController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\MantenimientoController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\MarcasController.cs" />
@@ -7919,7 +7920,13 @@
     <Content Include="Areas\Seguridad\Views\Electricos\Details.cshtml" />
     <Content Include="Areas\Seguridad\Views\Electricos\Edit.cshtml" />
     <Content Include="Areas\Seguridad\Views\Electricos\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Horarios\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Horarios\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Horarios\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Horarios\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Horarios\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

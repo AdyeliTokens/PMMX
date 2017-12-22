@@ -93,6 +93,7 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new DesperdicioMap());
             modelBuilder.Configurations.Add(new MarcaMap());
             modelBuilder.Configurations.Add(new ElectricosMap());
+            modelBuilder.Configurations.Add(new HorarioMap());
         }
 
         public DbSet<User> Users { get; set; }
@@ -144,6 +145,7 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<Desperdicio> Desperdicios { get; set; }
         public DbSet<Marca> Marcas { get; set; }
         public DbSet<Electricos> Electricos { get; set; }
+        public DbSet<Horario> Horarios { get; set; }
 
     }
 }

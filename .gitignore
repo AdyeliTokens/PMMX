@@ -24,3 +24,6 @@ PMMX/Sitio.csproj.user
 PMMX/.vs/config/applicationhost.config
 PMMX/.vs/PMMX/v15/.suo
 .vs/PMMX/v15/.suo
+*.cache
+*.cache
+*.cache
