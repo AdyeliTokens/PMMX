@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using PMMX.Modelo.Account;
 using Sitio.Models;
+using Sitio.Helpers;
 
 namespace Sitio.Areas.Seguridad.Controllers
 {
@@ -18,6 +19,7 @@ namespace Sitio.Areas.Seguridad.Controllers
 
         public AccountController()
         {
+
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -50,8 +52,7 @@ namespace Sitio.Areas.Seguridad.Controllers
             }
         }
 
-        //
-        // GET: /Account/Login
+        
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -59,8 +60,7 @@ namespace Sitio.Areas.Seguridad.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/Login
+        
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -70,9 +70,11 @@ namespace Sitio.Areas.Seguridad.Controllers
             {
                 return View(model);
             }
-            
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
+
+            AccountService servicio = new AccountService(UserManager, SignInManager);
+            var respuesta = await servicio.Login(model);
+
+            switch (respuesta.Respuesta)
             {
                 case SignInStatus.Success:
                     return RedirectToLocal(returnUrl);
@@ -147,11 +149,13 @@ namespace Sitio.Areas.Seguridad.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+
+                AccountService servicio = new AccountService(UserManager, SignInManager);
+                var respuesta = await servicio.Register(model);
+                if (respuesta.Respuesta.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    
+                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -159,17 +163,16 @@ namespace Sitio.Areas.Seguridad.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home", new { area = "" });
+                    return RedirectToAction("Index", "Usuarios", new { area = "Seguridad" });
                 }
-                AddErrors(result);
+                AddErrors(respuesta.Respuesta);
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
         }
 
-        //
-        // GET: /Account/ConfirmEmail
+        
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
@@ -181,8 +184,7 @@ namespace Sitio.Areas.Seguridad.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
-        //
-        // GET: /Account/ForgotPassword
+        
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
