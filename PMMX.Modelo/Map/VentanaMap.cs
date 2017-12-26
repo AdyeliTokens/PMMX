@@ -41,6 +41,7 @@ namespace PMMX.Modelo.Map
             #endregion
 
             #region HasRequired
+            this.HasRequired(c => c.Evento).WithMany(x => x.Ventanas);
             #endregion
         }
     }

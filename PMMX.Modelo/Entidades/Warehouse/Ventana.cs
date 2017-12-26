@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PMMX.Modelo.Entidades.Operaciones;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,5 +30,10 @@ namespace PMMX.Modelo.Entidades.Warehouse
         //
         public bool Activo { get; set; }
 
+        public Evento Evento { get; set; }
+        public Carrier Carrier { get; set; }
+        public Locacion Procedencia { get; set; }
+        public Locacion Destino { get; set; }
+        public Proveedores Proveedor { get; set; }
     }
 }
