@@ -53,8 +53,8 @@ namespace Sitio.Areas.Apis.Controllers
                             string folderName = @"c:\PMMX\Fotos\Defectos";
                             string pathString = Path.Combine(folderName, IdDefecto.ToString());
                             Directory.CreateDirectory(pathString);
-                            string fileName = System.IO.Path.GetRandomFileName();
-                            pathString = System.IO.Path.Combine(pathString, fileName);
+                            string fileName = Path.GetRandomFileName();
+                            pathString = Path.Combine(pathString, fileName);
                             if (!File.Exists(pathString + extension))
                             {
                                 postedFile.SaveAs(pathString + extension);

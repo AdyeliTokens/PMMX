@@ -237,6 +237,7 @@
     <Compile Include="Areas\Apis\Controllers\MantenimientoController.cs" />
     <Compile Include="Areas\Apis\Controllers\MecanicoController.cs" />
     <Compile Include="Areas\Apis\Controllers\MecanicoPorBusinessUnitsController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Multimedia\DefaultController.cs" />
     <Compile Include="Areas\Apis\Controllers\OperadoresPorWorkCentersController.cs" />
     <Compile Include="Areas\Apis\Controllers\ProveedoresController.cs" />
     <Compile Include="Areas\Apis\Controllers\RecursosController.cs" />
@@ -352,6 +353,7 @@
     <Compile Include="Controllers\MayaController.cs" />
     <Compile Include="Controllers\RequisicionDeDescargasController.cs" />
     <Compile Include="Controllers\ThumbnailController.cs" />
+    <Compile Include="Helpers\AccountService.cs" />
     <Compile Include="Hubs\ExempleHhub.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -8171,7 +8173,6 @@
     <Content Include="Areas\Seguridad\Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Fotos\Index.cshtml" />
     <Content Include="device-mockups\vendor\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="device-mockups\vendor\font-awesome\fonts\fontawesome-webfont.ttf" />
     <Content Include="device-mockups\vendor\font-awesome\fonts\fontawesome-webfont.woff" />
@@ -8267,7 +8268,8 @@
   <ItemGroup>
     <Folder Include="Areas\Warehouse\Models\" />
     <Folder Include="Areas\Warehouse\Views\Shared\" />
-    <Folder Include="Views\Thumbnail\" />
+    <Folder Include="Views\Account\" />
+    <Folder Include="Views\ApplicationOAuthProvider\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
