@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section Styles {
@@ -36,6 +37,16 @@
                         @Html.ValidationMessageFor(model => model.IdProveedor, "", new { @class = "text-danger" })
                     </div>
                 </div>
+
+                @*<div class="form-group">
+                    @Html.LabelFor(model => model.IdProveedor, "Supplier: ", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("IdProveedor", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.IdProveedor, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+
             </div>
             <div class="col-md-6">
                     <div class="form-group">
@@ -212,7 +223,7 @@
         $(function () {
             $('.select2').select2();
             $("#Activo").val(true);
-            $("#IdEvento").val(21);
+            $("#IdEvento").val(50);
             $('.collapse').collapse()
         });
     </script>
