@@ -23,6 +23,8 @@ namespace PMMX.Modelo.Map
             #endregion
 
             #region HasMany
+            this.HasMany(c => c.VentanasProcedencia).WithRequired(x => x.Procedencia).HasForeignKey(c => c.IdProcedencia);
+            this.HasMany(c => c.VentanasDestino).WithRequired(x => x.Destino).HasForeignKey(c => c.IdDestino);
             #endregion
 
             #region HasOptional

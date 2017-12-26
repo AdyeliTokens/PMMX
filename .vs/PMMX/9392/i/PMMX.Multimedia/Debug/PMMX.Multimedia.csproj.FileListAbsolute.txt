@@ -1,5 +1,0 @@
-C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\b\PMMX.Multimedia\bin\Debug\PMMX.Multimedia.dll.config
-C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\b\PMMX.Multimedia\bin\Debug\PMMX.Multimedia.dll
-C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\b\PMMX.Multimedia\bin\Debug\PMMX.Multimedia.pdb
-C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\i\PMMX.Multimedia\Debug\PMMX.Multimedia.dll
-C:\Users\MChan\Documents\Visual Studio 2017\Projects\Maya\.vs\PMMX\9392\i\PMMX.Multimedia\Debug\PMMX.Multimedia.pdb

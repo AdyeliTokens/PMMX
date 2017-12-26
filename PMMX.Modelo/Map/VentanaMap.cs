@@ -42,6 +42,7 @@ namespace PMMX.Modelo.Map
 
             #region HasRequired
             this.HasRequired(c => c.Evento).WithMany(x => x.Ventanas);
+            this.HasRequired(c => c.Carrier).WithMany(x => x.Ventanas);
             #endregion
         }
     }
