@@ -11,116 +11,116 @@ using PMMX.Modelo.Entidades;
 
 namespace Sitio.Areas.Seguridad.Controllers
 {
-    public class ShiftLeadersController : Controller
+    public class ElectricosController : Controller
     {
         private PMMXContext db = new PMMXContext();
 
-        // GET: Seguridad/ShiftLeaders
+        // GET: Seguridad/Electricos
         public ActionResult Index()
         {
-            var shiftLeaders = db.ShiftLeaders.Include(s => s.BussinesUnit).Include(s => s.ShiftLeader);
-            return View(shiftLeaders.ToList());
+            var electricos = db.Electricos.Include(e => e.BusinessUnit).Include(e => e.Electrico_Persona);
+            return View(electricos.ToList());
         }
 
-        // GET: Seguridad/ShiftLeaders/Details/5
+        // GET: Seguridad/Electricos/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ShiftLeaders shiftLeaders = db.ShiftLeaders.Find(id);
-            if (shiftLeaders == null)
+            Electricos electricos = db.Electricos.Find(id);
+            if (electricos == null)
             {
                 return HttpNotFound();
             }
-            return View(shiftLeaders);
+            return View(electricos);
         }
 
-        // GET: Seguridad/ShiftLeaders/Create
+        // GET: Seguridad/Electricos/Create
         public ActionResult Create()
         {
-            ViewBag.IdCelula = new SelectList(db.BussinesUnits, "Id", "Nombre");
-            ViewBag.IdShiftLeader = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
+            ViewBag.IdBusinessUnit = new SelectList(db.BussinesUnits, "Id", "Nombre");
+            ViewBag.IdElectrico = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View();
         }
 
-        // POST: Seguridad/ShiftLeaders/Create
+        // POST: Seguridad/Electricos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,IdShiftLeader,IdCelula,Activo")] ShiftLeaders shiftLeaders)
+        public ActionResult Create([Bind(Include = "Id,IdElectrico,IdBusinessUnit,Activo")] Electricos electricos)
         {
             if (ModelState.IsValid)
             {
-                db.ShiftLeaders.Add(shiftLeaders);
+                db.Electricos.Add(electricos);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdCelula = new SelectList(db.BussinesUnits, "Id", "Nombre", shiftLeaders.IdCelula);
-            ViewBag.IdShiftLeader = new SelectList(db.Personas, "Id", "Nombre", shiftLeaders.IdShiftLeader);
-            return View(shiftLeaders);
+            ViewBag.IdBusinessUnit = new SelectList(db.BussinesUnits, "Id", "Nombre", electricos.IdBusinessUnit);
+            ViewBag.IdElectrico = new SelectList(db.Personas, "Id", "Nombre", electricos.IdElectrico);
+            return View(electricos);
         }
 
-        // GET: Seguridad/ShiftLeaders/Edit/5
+        // GET: Seguridad/Electricos/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ShiftLeaders shiftLeaders = db.ShiftLeaders.Find(id);
-            if (shiftLeaders == null)
+            Electricos electricos = db.Electricos.Find(id);
+            if (electricos == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.IdCelula = new SelectList(db.BussinesUnits, "Id", "Nombre", shiftLeaders.IdCelula);
-            ViewBag.IdShiftLeader = new SelectList(db.Personas, "Id", "Nombre", shiftLeaders.IdShiftLeader);
-            return View(shiftLeaders);
+            ViewBag.IdBusinessUnit = new SelectList(db.BussinesUnits, "Id", "Nombre", electricos.IdBusinessUnit);
+            ViewBag.IdElectrico = new SelectList(db.Personas, "Id", "Nombre", electricos.IdElectrico);
+            return View(electricos);
         }
 
-        // POST: Seguridad/ShiftLeaders/Edit/5
+        // POST: Seguridad/Electricos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,IdShiftLeader,IdCelula,Activo")] ShiftLeaders shiftLeaders)
+        public ActionResult Edit([Bind(Include = "Id,IdElectrico,IdBusinessUnit,Activo")] Electricos electricos)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(shiftLeaders).State = EntityState.Modified;
+                db.Entry(electricos).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdCelula = new SelectList(db.BussinesUnits, "Id", "Nombre", shiftLeaders.IdCelula);
-            ViewBag.IdShiftLeader = new SelectList(db.Personas, "Id", "Nombre", shiftLeaders.IdShiftLeader);
-            return View(shiftLeaders);
+            ViewBag.IdBusinessUnit = new SelectList(db.BussinesUnits, "Id", "Nombre", electricos.IdBusinessUnit);
+            ViewBag.IdElectrico = new SelectList(db.Personas, "Id", "Nombre", electricos.IdElectrico);
+            return View(electricos);
         }
 
-        // GET: Seguridad/ShiftLeaders/Delete/5
+        // GET: Seguridad/Electricos/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ShiftLeaders shiftLeaders = db.ShiftLeaders.Find(id);
-            if (shiftLeaders == null)
+            Electricos electricos = db.Electricos.Find(id);
+            if (electricos == null)
             {
                 return HttpNotFound();
             }
-            return View(shiftLeaders);
+            return View(electricos);
         }
 
-        // POST: Seguridad/ShiftLeaders/Delete/5
+        // POST: Seguridad/Electricos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            ShiftLeaders shiftLeaders = db.ShiftLeaders.Find(id);
-            db.ShiftLeaders.Remove(shiftLeaders);
+            Electricos electricos = db.Electricos.Find(id);
+            db.Electricos.Remove(electricos);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

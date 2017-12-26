@@ -87,6 +87,7 @@
     <Compile Include="Entidades\AspNetUserClaims.cs" />
     <Compile Include="Entidades\Desperdicio.cs" />
     <Compile Include="Entidades\Electricos.cs" />
+    <Compile Include="Entidades\Horario.cs" />
     <Compile Include="Entidades\Maquinaria\ObjetivoVQI.cs" />
     <Compile Include="Entidades\Marca.cs" />
     <Compile Include="Entidades\NoConformidad.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="Map\CarrierMap.cs" />
     <Compile Include="Map\DesperdicioMap.cs" />
     <Compile Include="Map\ElectricoMap.cs" />
+    <Compile Include="Map\HorarioMap.cs" />
     <Compile Include="Map\LocacionMap.cs" />
     <Compile Include="Map\MarcaMap.cs" />
     <Compile Include="Map\NoConformidadMap.cs" />
