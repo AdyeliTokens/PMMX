@@ -24,6 +24,7 @@ namespace PMMX.Modelo.Map
             #endregion
 
             #region HasMany
+            this.HasMany(c => c.Ventanas).WithRequired(x => x.Proveedor).HasForeignKey(c => c.IdProveedor);
             #endregion
 
             #region HasOptional

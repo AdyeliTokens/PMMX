@@ -16,6 +16,7 @@ namespace PMMX.Modelo.Entidades.Warehouse
         #endregion
 
         #region Navegacion
+        public ICollection<Ventana> Ventanas { get; set; }
         #endregion
     }
 }
