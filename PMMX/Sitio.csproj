@@ -8261,6 +8261,7 @@
     <Content Include="Views\RequisicionDeDescargas\Edit.cshtml" />
     <Content Include="Views\RequisicionDeDescargas\Index.cshtml" />
     <Content Include="Views\AugmentedReality\SolicitudEnviada.cshtml" />
+    <Content Include="Views\Shared\_LayoutTable.cshtml" />
     <None Include="Views\Shared\_LayoutVideo.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />

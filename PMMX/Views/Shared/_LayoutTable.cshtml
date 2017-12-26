@@ -1,0 +1,43 @@
+﻿@model IEnumerable<PMMX.Modelo.Entidades.AspNetUser>
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    @Styles.Render("~/Style/DataTables")
+
+}
+
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Usuarios</h3>
+                <div class="box-tools">
+                    @RenderSection("bottons", required: false)
+                </div>
+            </div>
+            <div class="box-body table-responsive" id="div-table">
+                @RenderSection("table", required: true)
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/JS/DataTables")
+    <script>
+        $(function () {
+            $('#div-table table').DataTable();
+        });
+        $('#div-table table input[type="checkbox"]').iCheck({
+            checkboxClass: 'icheckbox_flat-blue',
+            radioClass: 'iradio_flat-blue'
+        });
+    </script>
+    @RenderSection("table-scripts", required: false)
+}
