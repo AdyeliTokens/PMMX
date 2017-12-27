@@ -18,7 +18,15 @@ namespace Sitio.Areas.Warehouse.Controllers
         // GET: Warehouse/Ventana
         public ActionResult Index()
         {
-            return View(db.Ventana.ToList());
+            var ventana = db.Ventana
+                .Include(e => e.Evento)
+                .Include(e => e.Proveedor)
+                .Include(e => e.Carrier)
+                .Include( e => e.Destino)
+                .Include(e => e.Procedencia)
+                .ToList();
+
+            return View(ventana);
         }
 
         // GET: Warehouse/Ventana/Details/5
@@ -52,8 +60,12 @@ namespace Sitio.Areas.Warehouse.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,PO,IdEvento,Recurso,Cantidad,IdCarrier,IdProcedencia,IdDestino,IdProveedor,NumeroEconomico,NumeroPlaca,TipoUnidad,Dimension,Temperatura,Conductor,MovilConductor,Activo")] Ventana ventana)
+        public ActionResult Create(Ventana ventana)
         {
+            ViewBag.IdProveedor = new SelectList(db.Proveedores.Select(x => new { Id = x.Id, NombreCorto = x.NombreCorto }).OrderBy(x => x.NombreCorto), "Id", "NombreCorto");
+            ViewBag.IdProcedencia = new SelectList(db.Locacion.Select(x => new { Id = x.Id, Nombre = (x.NombreCorto + " " + x.Nombre) }).OrderBy(x => x.Nombre), "Id", "Nombre");
+            ViewBag.IdDestino = new SelectList(db.Locacion.Select(x => new { Id = x.Id, Nombre = (x.NombreCorto + " " + x.Nombre) }).OrderBy(x => x.Nombre), "Id", "Nombre");
+            ViewBag.IdCarrier = new SelectList(db.Carrier.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
             if (ModelState.IsValid)
             {
                 db.Ventana.Add(ventana);
