@@ -69,7 +69,7 @@
       <Project>{4ded49b0-609a-4be0-bc3d-dc0d16a0ca8a}</Project>
       <Name>PMMX.Modelo</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\PMMX.Prueba\PMMX.Infraestructura.csproj">
+    <ProjectReference Include="..\..\PMMX.Infraestructura\PMMX.Infraestructura.csproj">
       <Project>{837934E3-EAC8-49B8-896C-A6CF1264210C}</Project>
       <Name>PMMX.Infraestructura</Name>
     </ProjectReference>
