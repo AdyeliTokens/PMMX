@@ -55,8 +55,8 @@
 
                             <tr class=@(item.Activo ? "success" : "danger")>
                                 <td>
-                                    @Html.ActionLink("" + item.Evento.FechaInicio, "Details", new { id = item.Id })
-                                    @*@Html.DisplayFor(modelItem => item.Evento.FechaInicio)*@
+                                    @*@Html.ActionLink("" + item.Evento.FechaInicio, "Details", new { id = item.Id })*@
+                                    @Html.DisplayFor(modelItem => item.Evento.FechaInicio)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Evento.Descripcion)
@@ -83,10 +83,11 @@
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
-                                            <li role="presentation">@Html.ActionLink("Editar", "Edit", new { id = item.Id })</li>
-                                            <li role="presentation">@Html.ActionLink("Detalles", "Details", new { id = item.Id })</li>
+                                            <li role="presentation"><button data-url="@Url.Action("Details","Ventana", new { id = item.Id })" class="btn-action" type="button" data-toggle="modal"> Detalles </button></li>
                                             <li role="presentation" class="divider"></li>
-                                            <li role="presentation">@Html.ActionLink("Eliminar", "Delete", new { id = item.Id })</li>
+                                            <li role="presentation"><button data-url="@Url.Action("Edit","Ventana", new { id = item.Id })" class="btn-action" type="button" data-toggle="modal"> Editar </button></li>
+                                            <li role="presentation" class="divider"></li>
+                                            <li role="presentation"><button  data-url="@Url.Action("Delete","Ventana", new { id = item.Id })" class="btn-action" type="button"  data-toggle="modal"> Eliminar </button></li>
                                         </ul>
                                     </div>
                                 </td>
@@ -125,12 +126,33 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="createAssetModal" tabindex="-1" role="dialog" aria-labelledby="CreateAssetModal" aria-hidden="true" data-backdrop="static">
+    <div id="createAssetContainer">
+    </div>
+</div>
+
 @section Scripts {
     @Scripts.Render("~/JS/DataTables")
     <script>
         $(function () {
             $('#example1').DataTable();
+
+
+            $(".btn-action").on("click", function ()
+            {
+                var url = $(this).data("url");
+
+                $.get(url, function (data) {
+                    $('#createAssetContainer').html(data);
+
+                    $('#createAssetModal').modal('show');
+                 });
+            });
+
         });
+
+
         $('#example1 input[type="checkbox"]').iCheck({
             checkboxClass: 'icheckbox_flat-blue',
             radioClass: 'iradio_flat-blue'
