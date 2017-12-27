@@ -151,7 +151,7 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<Desperdicio> Desperdicios { get; set; }
         public DbSet<Marca> Marcas { get; set; }
         public DbSet<Horario> Horarios { get; set; }
-
+        public DbSet<Indicador> Indicadores { get; set; }
         #endregion
 
         #region Seguridad
@@ -184,7 +184,6 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<PreguntaTurno> PreguntaTurno { get; set; }
         public DbSet<Remitentes> Remitentes { get; set; }
         public DbSet<Comentario> Comentarios { get; set; }
-        public DbSet<Indicador> Indicadores { get; set; }
         public DbSet<Categoria> Categoria { get; set; }
         public DbSet<SubCategoria> SubCategoria { get; set; }
         public DbSet<Evento> Evento { get; set; }
