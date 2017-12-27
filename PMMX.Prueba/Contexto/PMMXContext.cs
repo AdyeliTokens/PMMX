@@ -15,7 +15,7 @@ namespace PMMX.Infraestructura.Contexto
     /// Contexto principal de la aplicacion, Crea el modelo y el Map de las entidades de la aplicacion
     /// </summary>
     //[DbConfigurationType(typeof(MySql.Data.Entity.MySqlEFConfiguration))]
-    public class PMMXContext : DbContext 
+    public class PMMXContext : DbContext
     {
         /// <summary>
         /// Contructor del contexto PMMXContext tomando como base PMMXcontext de los settings
@@ -46,11 +46,14 @@ namespace PMMX.Infraestructura.Contexto
         {
             base.OnModelCreating(modelBuilder);
 
+            #region Multimedia
 
-            modelBuilder.Configurations.Add(new PersonaMap());
-            modelBuilder.Configurations.Add(new PuestoMap());
-            modelBuilder.Configurations.Add(new UserMap());
-            modelBuilder.Configurations.Add(new EntornoMap());
+            modelBuilder.Configurations.Add(new FotoMap());
+
+            #endregion
+
+            #region Operaciones
+
             modelBuilder.Configurations.Add(new WorkCenterMap());
             modelBuilder.Configurations.Add(new ModuloMap());
             modelBuilder.Configurations.Add(new ParoMap());
@@ -59,19 +62,48 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new ActividadEnDefectoMap());
             modelBuilder.Configurations.Add(new OrigenMap());
             modelBuilder.Configurations.Add(new BussinesUnitMap());
+            modelBuilder.Configurations.Add(new TiempoDeParoMap());
+            modelBuilder.Configurations.Add(new ObjetivoVQIMap());
+            modelBuilder.Configurations.Add(new DesperdicioMap());
+            modelBuilder.Configurations.Add(new MarcaMap());
+            modelBuilder.Configurations.Add(new ModuloSeccionMap());
+            modelBuilder.Configurations.Add(new NoConformidadMap());
+
+
+            #endregion
+
+            #region Seguridad
+
+            modelBuilder.Configurations.Add(new PersonaMap());
+            modelBuilder.Configurations.Add(new PuestoMap());
+            modelBuilder.Configurations.Add(new UserMap());
+            modelBuilder.Configurations.Add(new EntornoMap());
+            modelBuilder.Configurations.Add(new DispositivoMap());
+            modelBuilder.Configurations.Add(new AspNetUserMap());
+            modelBuilder.Configurations.Add(new ShiftLeaderMap());
+            modelBuilder.Configurations.Add(new PesadorMap());
+            modelBuilder.Configurations.Add(new ElectricosMap());
+            modelBuilder.Configurations.Add(new OperadoresMap());
+            modelBuilder.Configurations.Add(new HorarioMap());
+            modelBuilder.Configurations.Add(new MecanicoMap());
+
+            #endregion
+
+            #region WareHouse
+
+
+
+            #endregion
+
+
+
             modelBuilder.Configurations.Add(new PreguntaMap());
             modelBuilder.Configurations.Add(new RespuestaMap());
             modelBuilder.Configurations.Add(new GrupoPreguntasMap());
             modelBuilder.Configurations.Add(new OrigenRespuestaMap());
             modelBuilder.Configurations.Add(new PreguntaTurnoMap());
-            modelBuilder.Configurations.Add(new TiempoDeParoMap());
-            modelBuilder.Configurations.Add(new DispositivoMap());
-            modelBuilder.Configurations.Add(new FotoMap());
             modelBuilder.Configurations.Add(new RemitentesMap());
-            modelBuilder.Configurations.Add(new AspNetUserMap());
             modelBuilder.Configurations.Add(new ComentarioMap());
-            modelBuilder.Configurations.Add(new OperadoresMap());
-            modelBuilder.Configurations.Add(new MecanicoMap());
             modelBuilder.Configurations.Add(new IndicadoresMap());
             modelBuilder.Configurations.Add(new UsuariosPorPersonaMap());
             modelBuilder.Configurations.Add(new AreaMap());
@@ -81,9 +113,6 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new MantenimientoMap());
             modelBuilder.Configurations.Add(new JustDoItMap());
             modelBuilder.Configurations.Add(new RequisicionDeDescargaMap());
-            modelBuilder.Configurations.Add(new ModuloSeccionMap());
-            modelBuilder.Configurations.Add(new ShiftLeaderMap());
-            modelBuilder.Configurations.Add(new NoConformidadMap());
             modelBuilder.Configurations.Add(new ActividadEnVentanaMap());
             modelBuilder.Configurations.Add(new BitacoraVentanaMap());
             modelBuilder.Configurations.Add(new CarrierMap());
@@ -92,13 +121,24 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new RecursosMap());
             modelBuilder.Configurations.Add(new VentanaMap());
             modelBuilder.Configurations.Add(new AsignacionMap());
-            modelBuilder.Configurations.Add(new ObjetivoVQIMap());
-            modelBuilder.Configurations.Add(new DesperdicioMap());
-            modelBuilder.Configurations.Add(new MarcaMap());
-            modelBuilder.Configurations.Add(new ElectricosMap());
-            modelBuilder.Configurations.Add(new HorarioMap());
-            modelBuilder.Configurations.Add(new PesadorMap());
+            
+            
+            
+            
         }
+
+        #region Multimedia
+        #endregion
+
+        #region Operaciones
+        #endregion
+
+        #region Seguridad
+        #endregion
+
+        #region WareHouse
+        #endregion
+
 
         public DbSet<User> Users { get; set; }
         public DbSet<Persona> Personas { get; set; }
