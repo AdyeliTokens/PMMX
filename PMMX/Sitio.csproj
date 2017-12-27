@@ -339,6 +339,7 @@
     <Compile Include="Areas\Seguridad\Controllers\MecanicosController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\OperadoresController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\PersonasController.cs" />
+    <Compile Include="Areas\Seguridad\Controllers\PesadoresController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\PuestosController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\ShiftLeadersController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\UsersController.cs" />
@@ -7935,6 +7936,11 @@
     <Content Include="Areas\Operaciones\Views\Horarios\Details.cshtml" />
     <Content Include="Areas\Operaciones\Views\Horarios\Edit.cshtml" />
     <Content Include="Areas\Operaciones\Views\Horarios\Index.cshtml" />
+    <Content Include="Areas\Seguridad\Views\Pesadores\Create.cshtml" />
+    <Content Include="Areas\Seguridad\Views\Pesadores\Delete.cshtml" />
+    <Content Include="Areas\Seguridad\Views\Pesadores\Details.cshtml" />
+    <Content Include="Areas\Seguridad\Views\Pesadores\Edit.cshtml" />
+    <Content Include="Areas\Seguridad\Views\Pesadores\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
