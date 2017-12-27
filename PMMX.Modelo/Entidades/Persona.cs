@@ -62,6 +62,7 @@ namespace PMMX.Modelo.Entidades
         public ICollection<Desperdicio> DesperdicioReportado { get; set; }
         public ICollection<Asignacion> Asignaciones { get; set; }
         public ICollection<Alias> AliasDadosDeAlta { get; set; }
+        public ICollection<Pesador> Pesadores { get; set; }
 
 
         #endregion
