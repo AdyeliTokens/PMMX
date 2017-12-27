@@ -8286,8 +8286,6 @@
     <Folder Include="Areas\Apis\Views\BaseApi\" />
     <Folder Include="Areas\Warehouse\Models\" />
     <Folder Include="Areas\Warehouse\Views\Shared\" />
-    <Folder Include="Views\Account\" />
-    <Folder Include="Views\ApplicationOAuthProvider\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -8301,7 +8299,7 @@
       <Project>{4ded49b0-609a-4be0-bc3d-dc0d16a0ca8a}</Project>
       <Name>PMMX.Modelo</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PMMX.Operaciones\PMMX.Operaciones.csproj">
+    <ProjectReference Include="..\Operaciones\PMMX.Operaciones\PMMX.Operaciones.csproj">
       <Project>{88799DD0-162B-4536-99BE-2EAB999F06CE}</Project>
       <Name>PMMX.Operaciones</Name>
     </ProjectReference>
@@ -8309,7 +8307,7 @@
       <Project>{837934e3-eac8-49b8-896c-a6cf1264210c}</Project>
       <Name>PMMX.Infraestructura</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PMMX.Seguridad\PMMX.Seguridad.csproj">
+    <ProjectReference Include="..\Seguridad\PMMX.Seguridad\PMMX.Seguridad.csproj">
       <Project>{05723739-BD43-448B-A60E-188A23A82DF3}</Project>
       <Name>PMMX.Seguridad</Name>
     </ProjectReference>

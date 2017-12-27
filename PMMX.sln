@@ -3,13 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitio", "PMMX\Sitio.csproj", "{82FC7B78-5EF8-48C1-8327-9B59D8CFA5EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitio", "Sitio\PMMX.Sitio\Sitio.csproj", "{82FC7B78-5EF8-48C1-8327-9B59D8CFA5EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMMX.Infraestructura", "PMMX.Prueba\PMMX.Infraestructura.csproj", "{837934E3-EAC8-49B8-896C-A6CF1264210C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SitioTests", "Sitio\PMMX.SitioTests\SitioTests.csproj", "{9AB78A22-0803-4861-A1DE-C6C86D1EE320}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMMX.Seguridad", "PMMX.Seguridad\PMMX.Seguridad.csproj", "{05723739-BD43-448B-A60E-188A23A82DF3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMMX.Infraestructura", "PMMX.Infraestructura\PMMX.Infraestructura.csproj", "{837934E3-EAC8-49B8-896C-A6CF1264210C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMMX.Operaciones", "PMMX.Operaciones\PMMX.Operaciones.csproj", "{88799DD0-162B-4536-99BE-2EAB999F06CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMMX.Seguridad", "Seguridad\PMMX.Seguridad\PMMX.Seguridad.csproj", "{05723739-BD43-448B-A60E-188A23A82DF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMMX.SeguridadTests", "Seguridad\PMMX.SeguridadTests\PMMX.SeguridadTests.csproj", "{21F77279-8203-4B9A-9D40-A31CB0BC761C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMMX.Operaciones", "Operaciones\PMMX.Operaciones\PMMX.Operaciones.csproj", "{88799DD0-162B-4536-99BE-2EAB999F06CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMMX.OperacionesTests", "Operaciones\PMMX.OperacionesTests\PMMX.OperacionesTests.csproj", "{FD03E877-93FB-4481-AC85-81DB17C32237}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sitio", "Sitio", "{DBCBC589-6F2F-425F-AC0D-E8B6064C82E9}"
 EndProject
@@ -19,17 +25,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Operaciones", "Operaciones"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMMX.Modelo", "PMMX.Modelo\PMMX.Modelo.csproj", "{4DED49B0-609A-4BE0-BC3D-DC0D16A0CA8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMMX.OperacionesTests", "PMMX.OperacionesTests1\PMMX.OperacionesTests.csproj", "{FD03E877-93FB-4481-AC85-81DB17C32237}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMMX.SeguridadTests", "PMMX.SeguridadTests\PMMX.SeguridadTests.csproj", "{21F77279-8203-4B9A-9D40-A31CB0BC761C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SitioTests", "SitioTests\SitioTests.csproj", "{9AB78A22-0803-4861-A1DE-C6C86D1EE320}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMMX.Multimedia", "PMMX.Multimedia\PMMX.Multimedia.csproj", "{E6523638-C794-4570-BC8F-87309ECAAA3B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMMX.Multimedia", "Multimedia\PMMX.Multimedia\PMMX.Multimedia.csproj", "{E6523638-C794-4570-BC8F-87309ECAAA3B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Multimedia", "Multimedia", "{85D2B293-20E4-4136-924A-F775C6A2B47D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMMX.WareHouse", "PMMX.WareHouse\PMMX.WareHouse.csproj", "{B089CAD5-4515-475E-862E-F3A9641F66A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMMX.WareHouse", "WareHouse\PMMX.WareHouse\PMMX.WareHouse.csproj", "{B089CAD5-4515-475E-862E-F3A9641F66A4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WareHouse", "WareHouse", "{73517B94-DF65-4C80-80D0-0236B96D8693}"
 EndProject

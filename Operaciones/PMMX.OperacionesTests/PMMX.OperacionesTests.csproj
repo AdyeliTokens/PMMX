@@ -66,7 +66,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PMMX.Modelo\PMMX.Modelo.csproj">
+    <ProjectReference Include="..\..\PMMX.Modelo\PMMX.Modelo.csproj">
       <Project>{4DED49B0-609A-4BE0-BC3D-DC0D16A0CA8A}</Project>
       <Name>PMMX.Modelo</Name>
     </ProjectReference>
@@ -74,7 +74,7 @@
       <Project>{88799DD0-162B-4536-99BE-2EAB999F06CE}</Project>
       <Name>PMMX.Operaciones</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PMMX.Prueba\PMMX.Infraestructura.csproj">
+    <ProjectReference Include="..\..\PMMX.Prueba\PMMX.Infraestructura.csproj">
       <Project>{837934E3-EAC8-49B8-896C-A6CF1264210C}</Project>
       <Name>PMMX.Infraestructura</Name>
     </ProjectReference>
