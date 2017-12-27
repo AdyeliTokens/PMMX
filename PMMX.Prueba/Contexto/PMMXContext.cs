@@ -31,6 +31,10 @@ namespace PMMX.Infraestructura.Contexto
 
         }
 
+        /// <summary>
+        /// Contructor "Estatico" que retorna la entidad creada sin necesidad de intanciar previamente
+        /// </summary>
+        /// <returns></returns>
         public static PMMXContext Create()
         {
             return new PMMXContext();
@@ -94,6 +98,7 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new MarcaMap());
             modelBuilder.Configurations.Add(new ElectricosMap());
             modelBuilder.Configurations.Add(new HorarioMap());
+            modelBuilder.Configurations.Add(new PesadorMap());
         }
 
         public DbSet<User> Users { get; set; }
@@ -146,6 +151,7 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<Marca> Marcas { get; set; }
         public DbSet<Electricos> Electricos { get; set; }
         public DbSet<Horario> Horarios { get; set; }
+        public DbSet<Pesador> Pesadores { get; set; }
 
     }
 }
