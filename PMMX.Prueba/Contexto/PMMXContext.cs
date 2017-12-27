@@ -6,9 +6,7 @@ using PMMX.Modelo.Entidades.Paros;
 using System.Data.Entity;
 using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo;
-using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo.Entidades.Warehouse;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace PMMX.Infraestructura.Contexto
 {
@@ -24,8 +22,8 @@ namespace PMMX.Infraestructura.Contexto
         /// </summary>
         public PMMXContext() : base("name=PMMXContext")
         {
-            this.Configuration.LazyLoadingEnabled = false;
-            this.Configuration.ProxyCreationEnabled = false;
+            Configuration.LazyLoadingEnabled = false;
+            Configuration.ProxyCreationEnabled = false;
 
             Database.SetInitializer<PMMXContext>(new CreateDatabaseIfNotExists<PMMXContext>());
 
@@ -47,6 +45,7 @@ namespace PMMX.Infraestructura.Contexto
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
 
             modelBuilder.Configurations.Add(new PersonaMap());
             modelBuilder.Configurations.Add(new PuestoMap());
