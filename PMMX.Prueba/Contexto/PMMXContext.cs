@@ -128,22 +128,13 @@ namespace PMMX.Infraestructura.Contexto
         }
 
         #region Multimedia
+
+        public DbSet<Foto> Fotos { get; set; }
+
         #endregion
 
         #region Operaciones
-        #endregion
 
-        #region Seguridad
-        #endregion
-
-        #region WareHouse
-        #endregion
-
-
-        public DbSet<User> Users { get; set; }
-        public DbSet<Persona> Personas { get; set; }
-        public DbSet<Puesto> Puestos { get; set; }
-        public DbSet<Entorno> Entornos { get; set; }
         public DbSet<WorkCenter> WorkCenters { get; set; }
         public DbSet<Modulo> Modulos { get; set; }
         public DbSet<Paro> Paros { get; set; }
@@ -152,31 +143,54 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<ActividadEnDefecto> ActividadEnDefectos { get; set; }
         public DbSet<Origen> Origens { get; set; }
         public DbSet<BussinesUnit> BussinesUnits { get; set; }
+        public DbSet<Area> Area { get; set; }
+        public DbSet<NoConformidad> NoConformidades { get; set; }
+        public DbSet<TiempoDeParo> TiemposDeParo { get; set; }
+        public DbSet<ModuloSeccion> ModuloSeccion { get; set; }
+        public DbSet<ObjetivoVQI> ObjetivosVQI { get; set; }
+        public DbSet<Desperdicio> Desperdicios { get; set; }
+        public DbSet<Marca> Marcas { get; set; }
+        public DbSet<Horario> Horarios { get; set; }
+
+        #endregion
+
+        #region Seguridad
+
+        public DbSet<Dispositivo> Dispositivos { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Persona> Personas { get; set; }
+        public DbSet<Puesto> Puestos { get; set; }
+        public DbSet<Entorno> Entornos { get; set; }
+        public DbSet<AspNetUser> AspNetUser { get; set; }
+        public DbSet<Operadores> Operadores { get; set; }
+        public DbSet<Mecanicos> Mecanicos { get; set; }
+        public DbSet<UsuariosPorPersona> UsuariosPorPersonas { get; set; }
+        public DbSet<ShiftLeaders> ShiftLeaders { get; set; }
+        public DbSet<Electricos> Electricos { get; set; }
+        public DbSet<Pesador> Pesadores { get; set; }
+
+        #endregion
+
+        #region WareHouse
+        #endregion
+
+
+
+
         public DbSet<Pregunta> Preguntas { get; set; }
         public DbSet<Respuesta> Respuestas { get; set; }
         public DbSet<GrupoPreguntas> GrupoPreguntas { get; set; }
         public DbSet<OrigenRespuesta> OrigenRespuesta { get; set; }
         public DbSet<PreguntaTurno> PreguntaTurno { get; set; }
-        public DbSet<TiempoDeParo> TiemposDeParo { get; set; }
-        public DbSet<Foto> Fotos { get; set; }
-        public DbSet<Dispositivo> Dispositivos { get; set; }
         public DbSet<Remitentes> Remitentes { get; set; }
-        public DbSet<AspNetUser> AspNetUser { get; set; }
         public DbSet<Comentario> Comentarios { get; set; }
-        public DbSet<Operadores> Operadores { get; set; }
-        public DbSet<Mecanicos> Mecanicos { get; set; }
         public DbSet<Indicador> Indicadores { get; set; }
-        public DbSet<UsuariosPorPersona> UsuariosPorPersonas { get; set; }
-        public DbSet<Area> Area { get; set; }
         public DbSet<Categoria> Categoria { get; set; }
         public DbSet<SubCategoria> SubCategoria { get; set; }
         public DbSet<Evento> Evento { get; set; }
         public DbSet<Mantenimiento> Mantenimiento { get; set; }
         public DbSet<JustDoIt> JustDoIt { get; set; }
         public DbSet<RequisicionDeDescarga> RequisicionDeDescargas { get; set; }
-        public DbSet<ModuloSeccion> ModuloSeccion { get; set; }
-        public DbSet<ShiftLeaders> ShiftLeaders { get; set; }
-        public DbSet<NoConformidad> NoConformidades { get; set; }
         public DbSet<ActividadEnVentana> ActividadEnVentana { get; set; }
         public DbSet<BitacoraVentana> BitacoraVentana { get; set; }
         public DbSet<Carrier> Carrier { get; set; }
@@ -185,12 +199,7 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<Recursos> Recursos { get; set; }
         public DbSet<Ventana> Ventana { get; set; }
         public DbSet<Asignacion> Asignaciones { get; set; }
-        public DbSet<ObjetivoVQI> ObjetivosVQI { get; set; }
-        public DbSet<Desperdicio> Desperdicios { get; set; }
-        public DbSet<Marca> Marcas { get; set; }
-        public DbSet<Electricos> Electricos { get; set; }
-        public DbSet<Horario> Horarios { get; set; }
-        public DbSet<Pesador> Pesadores { get; set; }
+        
 
     }
 }
