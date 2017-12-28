@@ -83,11 +83,11 @@
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
-                                            <li role="presentation"><button data-url="@Url.Action("Details","Ventana", new { id = item.Id })" class="btn-action" type="button" data-toggle="modal"> Detalles </button></li>
+                                            <li role="presentation"><button data-url="@Url.Action("Details","Ventana", new { id = item.Id })" class="btn-action  btn btn-info" type="button" data-toggle="modal"> <i class="glyphicon glyphicon-barcode"></i>  Detalles </button></li>
                                             <li role="presentation" class="divider"></li>
-                                            <li role="presentation"><button data-url="@Url.Action("Edit","Ventana", new { id = item.Id })" class="btn-action" type="button" data-toggle="modal"> Editar </button></li>
+                                            <li role="presentation"><button data-url="@Url.Action("Edit","Ventana", new { id = item.Id })" class="btn-action btn btn-warning" type="button" data-toggle="modal"> <i class="glyphicon glyphicon-pencil"></i> Editar </button></li>
                                             <li role="presentation" class="divider"></li>
-                                            <li role="presentation"><button  data-url="@Url.Action("Delete","Ventana", new { id = item.Id })" class="btn-action" type="button"  data-toggle="modal"> Eliminar </button></li>
+                                            <li role="presentation"><button  data-url="@Url.Action("Delete","Ventana", new { id = item.Id })" class="btn-action btn btn-danger" type="button"  data-toggle="modal"><i class="glyphicon glyphicon-trash"></i> Eliminar </button></li>
                                         </ul>
                                     </div>
                                 </td>
@@ -126,9 +126,17 @@
     </div>
 </div>
 
-
+ <!-- Modal-->
 <div class="modal fade" id="createAssetModal" tabindex="-1" role="dialog" aria-labelledby="CreateAssetModal" aria-hidden="true" data-backdrop="static">
-    <div id="createAssetContainer">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header alert-info" >
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div id="createAssetContainer" class="modal-body">
+            </div>
+        </div>
     </div>
 </div>
 

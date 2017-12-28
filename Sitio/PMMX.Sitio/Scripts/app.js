@@ -39,3 +39,25 @@ app.use(express.static(__dirname + '/public'))
  	// print a message when the server starts listening 
    console.log("server starting on " + appEnv.url) 
  }) 
+
+//Class button action for open a modal CRUD operations 
+ $(".btn-action").on("click", function () {
+     var url = $(this).data("url");
+     var html = '';
+
+     $.get(url, function (data)
+     {
+         html += "<div class='modal fade' id='createAssetModal' tabindex='- 1' role='dialog' aria-labelledby='CreateAssetModal' aria-hidden='true' data-backdrop='static'>";
+         html += " <div class='modal-dialog' >"
+         html += "  <div class='modal-content'>"
+         html += "   <div class='modal-header alert-info'><button type='button' class='close' data-dismiss='modal'>&times;</button></div>"
+         html += "   <div id='createAssetContainer' class='modal-body'></div>"
+         html += "  </div>"
+         html += " </div>"
+         html += "</div>"
+
+         $('#divContainer').html(html);// Need to create a div with id like divContainer
+         $('#createAssetContainer').html(data);
+         $('#createAssetModal').modal('show');
+     });
+ });

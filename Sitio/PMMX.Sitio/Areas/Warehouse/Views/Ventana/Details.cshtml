@@ -2,146 +2,105 @@
 
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Detalle</h2>
 
 <div>
-    <h4>Ventana</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.PO)
-        </dt>
+    <div class="progress progress-xs progress-striped active">
+        <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.PO)
-        </dd>
+    <table class="table table-striped">
+        <tr>
+            <th style="width: 10px">#</th>
+            <th>Task</th>
+            <th>Value</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td><i class="fa fa-calendar"></i></td>
+            <td>PO</td>
+            <td>
+                @Html.DisplayFor(model => model.PO)
+            </td>
+        </tr>
+        <tr>
+            <td><i class="fa fa-calendar"></i></td>
+            <td>Evento</td>
+            <td>
+                @Html.DisplayFor(model => model.Evento.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Evento.FechaInicio)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Evento.FechaFin)
+            </td>
+        </tr>
+        <tr>
+            <td><i class="fa fa-calendar"></i></td>
+            <td>Material</td>
+            <td>
+                @Html.DisplayFor(model => model.Recurso)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Cantidad)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Carrier.NombreCorto)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Proveedor.Nombre)
+            </td>
+        </tr>
+        <tr>
+            <td><i class="fa fa-calendar"></i></td>
+            <td>Ubicacion</td>
+            <td>
+               Origen
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Procedencia.Nombre)
+            </td>
+            <td>
+                Destino
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Destino.Nombre)
+            </td>
+        </tr>
+       
+        <tr>
+            <td><i class="fa fa-calendar"></i></td>
+            <td>Transporte</td>
+            <td>
+                @Html.DisplayFor(model => model.NumeroEconomico)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.NumeroPlaca)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.TipoUnidad)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Dimension)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Temperatura)
+            </td>
+        </tr>
+        <tr>
+            <td><i class="fa fa-calendar"></i></td>
+            <td>Conductor</td>
+            <td>
+                @Html.DisplayFor(model => model.Conductor)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.MovilConductor)
+            </td>
+        </tr>
+        
+    </table>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IdEvento)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IdEvento)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Recurso)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Recurso)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Cantidad)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Cantidad)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IdCarrier)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IdCarrier)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IdProcedencia)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IdProcedencia)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IdDestino)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IdDestino)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IdProveedor)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IdProveedor)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NumeroEconomico)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NumeroEconomico)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NumeroPlaca)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NumeroPlaca)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TipoUnidad)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TipoUnidad)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Dimension)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Dimension)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Temperatura)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Temperatura)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Conductor)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Conductor)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MovilConductor)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MovilConductor)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Activo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Activo)
-        </dd>
-
-    </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
