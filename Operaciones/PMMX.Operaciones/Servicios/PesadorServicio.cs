@@ -31,7 +31,7 @@ namespace PMMX.Operaciones.Servicios
         {
             RespuestaServicio<List<WorkCenter>> respuesta = new RespuestaServicio<List<WorkCenter>>();
 
-            var workCenter = _context.Pesadores.SelectMany(p => p.Area.BussinessUnits.SelectMany(b => b.WorkCenters)).ToList();
+            var workCenter = _context.Pesadores.Where(p=> p.IdPesador == idPesador).SelectMany(p => p.Area.BussinessUnits.SelectMany(b => b.WorkCenters)).ToList();
             if (workCenter.Count <= 0)
             {
 
