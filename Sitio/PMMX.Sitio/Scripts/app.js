@@ -1,5 +1,4 @@
-﻿
-//Class button action for open a modal CRUD operations 
+
  $(".btn-action").on("click", function () {
      var url = $(this).data("url");
      var html = '';

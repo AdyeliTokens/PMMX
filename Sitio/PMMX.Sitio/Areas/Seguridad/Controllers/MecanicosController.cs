@@ -20,7 +20,12 @@ namespace Sitio.Areas.Seguridad.Controllers
         public ActionResult Index()
         {
             var mecanicos = db.Mecanicos.Include(m => m.BusinessUnit).Include(m => m.Mecanico);
-            return View(mecanicos.ToList());
+            if (Request.IsAjaxRequest())
+                return PartialView(mecanicos.ToList());
+            else
+                return View(mecanicos.ToList());
+            
+            
         }
 
         // GET: Seguridad/Mecanicos/Details/5
