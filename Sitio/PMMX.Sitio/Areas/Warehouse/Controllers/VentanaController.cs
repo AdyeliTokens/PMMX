@@ -83,7 +83,8 @@ namespace Sitio.Areas.Warehouse.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ventana ventana = db.Ventana.Find(id);
+           Ventana ventana = db.Ventana.Find(id);
+           
             if (ventana == null)
             {
                 return HttpNotFound();
@@ -96,7 +97,7 @@ namespace Sitio.Areas.Warehouse.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,PO,IdEvento,Recurso,Cantidad,IdCarrier,IdProcedencia,IdDestino,IdProveedor,NumeroEconomico,NumeroPlaca,TipoUnidad,Dimension,Temperatura,Conductor,MovilConductor,Activo")] Ventana ventana)
+        public ActionResult Edit(Ventana ventana)
         {
             if (ModelState.IsValid)
             {
