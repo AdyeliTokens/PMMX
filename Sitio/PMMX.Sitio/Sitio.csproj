@@ -248,6 +248,7 @@
     <Compile Include="Areas\Apis\Controllers\MecanicoPorBusinessUnitsController.cs" />
     <Compile Include="Areas\Apis\Controllers\Multimedia\DefaultController.cs" />
     <Compile Include="Areas\Apis\Controllers\OperadoresPorWorkCentersController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operarios\PesadoresController.cs" />
     <Compile Include="Areas\Apis\Controllers\ProveedoresController.cs" />
     <Compile Include="Areas\Apis\Controllers\RecursosController.cs" />
     <Compile Include="Areas\Apis\Controllers\RemitenteController.cs" />
@@ -7940,7 +7941,8 @@
     <Content Include="Areas\Seguridad\Views\Pesadores\Details.cshtml" />
     <Content Include="Areas\Seguridad\Views\Pesadores\Edit.cshtml" />
     <Content Include="Areas\Seguridad\Views\Pesadores\Index.cshtml" />
-    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\pmmxdev - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\pmmxqa - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

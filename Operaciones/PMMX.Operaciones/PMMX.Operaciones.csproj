@@ -59,6 +59,7 @@
     <Compile Include="Servicios\JustDoItServicio.cs" />
     <Compile Include="Servicios\MantenimientoServicio.cs" />
     <Compile Include="Servicios\ParoServicio.cs" />
+    <Compile Include="Servicios\PesadorServicio.cs" />
     <Compile Include="Servicios\WorkCenterServicio.cs" />
   </ItemGroup>
   <ItemGroup>
