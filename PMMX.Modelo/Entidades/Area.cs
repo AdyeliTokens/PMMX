@@ -23,6 +23,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public Persona Responsable { get; set; }
         public ICollection<BussinesUnit> BussinessUnits { get; set; }
         public ICollection<Indicador> Indicadores { get; set; }
+        public ICollection<Pesador> Pesadores { get; set; }
 
         #endregion
 

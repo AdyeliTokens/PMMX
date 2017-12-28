@@ -1,0 +1,560 @@
+﻿@using Microsoft.AspNet.Identity
+@using PMMX.Helpers
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>PMMX | Apps Operation</title>
+    @Styles.Render("~/Style/Bootstrap")
+    @Styles.Render("~/Style/Font-Awesome")
+    @Styles.Render("~/Style/AdminLTE")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("styles", required: false)
+</head>
+
+<body class="hold-transition skin-blue fixed sidebar-mini">
+    <div class="wrapper">
+        <header class="main-header">
+            <a href="~/" class="logo">
+                <span class="logo-mini"><b>PM</b></span>
+                <span class="logo-lg"><b>Philip Morris </b></span>
+            </a>
+            <nav class="navbar navbar-static-top">
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="@Url.Action("Usuario", "Fotos", new { idUser = User.Identity.GetUserId(), area = "" })" class="user-image" alt="User Image">
+                                <span class="hidden-xs">@User.Identity.GetUserName()</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="user-header">
+                                    <img src="@Url.Action("Usuario", "Fotos", new { idUser = User.Identity.GetUserId(), area = "" })" class="img-circle" alt="User Image">
+                                </li>
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Profile", @class = "btn btn-default btn-flat" })
+                                    </div>
+                                    <div class="pull-right">
+                                        @using (Html.BeginForm("LogOff", "Account", new { area = "Seguridad" }, FormMethod.Post, new { id = "logoutForm" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-flat">Log off</a>
+                                        }
+
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <aside class="main-sidebar" style="box-shadow: 4px 0px 20px #444;">
+            <section class="sidebar">
+                <br />
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="@Url.Action("Usuario", "Fotos", new { idUser = User.Identity.GetUserId(), area = "" })" class="img-circle" style="width:100%;height:100%" alt="User Image">
+
+                    </div>
+                    <div class="pull-left info">
+                        <p>@Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Profile" })</p>
+                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    </div>
+                </div>
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Buscar...">
+                        <span class="input-group-btn">
+                            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header">Menu</li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-address-book"></i>
+                            <span>Seguridad</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-circle-o"></i> Perfiles
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="fa fa-circle-o"></i> Mantenimiento
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li>
+                                            @Ajax.ActionLink("Prueba con el ajax", "Index", "Mecanicos", new { area = "Seguridad" }, new AjaxOptions
+                                       {
+                                           HttpMethod = "GET",
+                                           InsertionMode = InsertionMode.Replace,
+                                           //LoadingElementId = "divLoading",
+                                           OnSuccess="",
+                                           OnBegin= "divLoading",
+                                           UpdateTargetId = "row-content"
+                                       }) </li>
+                                            <li><a href ="~/Seguridad/Mecanicos" ><i class="fa fa-link"></i> <span>Mecanicos</span></a></li>
+                                            <li><a href = "~/Seguridad/Electricos" ><i class="fa fa-link"></i> <span>Electricos</span></a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="treeview">
+                                        <a href = "#" >
+                                            <i class="fa fa-circle-o"></i> Operarios
+                                             <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li><a href = "~/Seguridad/Operadores" ><i class="fa fa-link"></i> <span>Operadores</span></a></li>
+                                            <li><a href = "~/Seguridad/Pesadores" ><i class="fa fa-link"></i> <span>Reapers(Operador Delphi)</span></a></li>
+                                            <li><a href = "~/Seguridad/ShiftLeaders" ><i class="fa fa-link"></i> <span>ShiftLeaders</span></a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href = "~/Seguridad/LineLeaders" ><i class="fa fa-link"></i> <span>LineLeaders</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href = "#" >
+                                    <i class="fa fa-circle-o"></i> Usuarios / Personas
+                                     <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href = "~/Seguridad/Puestos" ><i class="fa fa-link"></i> <span>Puesto</span></a></li>
+                                    <li><a href = "~/Seguridad/Personas" ><i class="fa fa-link"></i> <span>Personas</span></a></li>
+                                    <li><a href = "~/Seguridad/Users" ><i class="fa fa-link"></i> <span>Users</span></a></li>
+                                    <li><a href = "~/Seguridad/Usuarios" ><i class="fa fa-link"></i> <span>AspNet Users</span></a></li>
+                                    <li><a href = "~/Seguridad/UsuariosPorPersonas" ><i class="fa fa-link"></i> <span>Usuarios Por Persona</span></a></li>
+                                </ul>
+                            </li>
+                            <li><a href = "~/Seguridad/Entornos" ><i class="fa fa-link"></i> <span>Entornos</span></a></li>
+                            <li><a href = "~/Seguridad/Dispositivos" ><i class="fa fa-link"></i> <span>Dispositivos</span></a></li>
+                        </ul>
+                    </li>
+
+                    <li class="treeview">
+                        <a href = "#" >
+                            <i class="fa fa-area-chart"></i>
+                            <span>Operaciones</span>
+                        </a>
+                        <ul class="treeview-menu">
+
+                            <li class="treeview">
+                                <a href = "#" >
+                                    <i class="fa fa-circle-o"></i> Indicadores
+                                     <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li class="treeview">
+                                        <a href = "#" >
+                                            <i class="fa fa-circle-o"></i> VQI
+                                             <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li><a href = "~/Operaciones/NoConformidades" ><i class="fa fa-link"></i> No Conformidades</a></li>
+                                            <li><a href = "~/Operaciones/ObjetivosVQI" ><i class="fa fa-link"></i> Objetivos</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="treeview">
+                                        <a href = "#" >
+                                            <i class="fa fa-circle-o"></i> CRR
+                                             <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li><a href = "~/Operaciones/Desperdicios" ><i class="fa fa-link"></i> Desperdicios</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="treeview">
+                                <a href = "#" >
+                                    <i class="fa fa-circle-o"></i> Maquinaria
+                                     <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href = "~/Operaciones/BussinesUnits" ><i class="fa fa-link"></i> <span>Business Units</span></a></li>
+                                    <li><a href = "~/Operaciones/Modulos" ><i class="fa fa-link"></i> <span>Modulos</span></a></li>
+                                    <li class="treeview">
+                                        <a href = "#" >
+                                            <i class="fa fa-circle-o"></i> Link-Up
+                                             <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li><a href = "~/Operaciones/WorkCenters" ><i class="fa fa-link"></i> <span>LUPS</span></a></li>
+                                            <li><a href = "~/Operaciones/Origenes" ><i class="fa fa-link"></i> <span>Origenes</span></a></li>
+                                            <li><a href = "~/Operaciones/ModulosSecciones" ><i class="fa fa-link"></i> <span>Secciones</span></a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="treeview">
+                                <a href = "#" >
+                                    <i class="fa fa-circle-o"></i> Mantenimiento
+                                     <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li class="treeview">
+                                        <a href = "#" >
+                                            <i class="fa fa-circle-o"></i> Fallas
+                                             <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li><a href = "~/Operaciones/Paros" ><i class="fa fa-link"></i> <span>Paros</span></a></li>
+                                            <li><a href = "~/Operaciones/ActividadEnParos" ><i class="fa fa-link"></i> <span>Actividades en Paros</span></a></li>
+
+                                        </ul>
+                                    </li>
+                                    <li class="treeview">
+                                        <a href = "#" >
+                                            <i class="fa fa-circle-o"></i> Defectos
+                                             <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li><a href = "~/Operaciones/Defectos" ><i class="fa fa-link"></i> <span>Defectos</span></a></li>
+                                            <li><a href = "~/Operaciones/ActividadEnDefectos" ><i class="fa fa-link"></i> <span>Actividad En Defectos</span></a></li>
+
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="treeview">
+                                <a href = "#" >
+                                    <i class="fa fa-calendar-check-o"></i>Just Do It
+                                     <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href = "~/Operaciones/Evento" ><i class="fa fa-link"></i> <span>Calendario</span></a></li>
+                                    <li><a href = "~/Operaciones/JustDoIt" ><i class="fa fa-link"></i> <span>Just Do It</span></a></li>
+                                </ul>
+                            </li>
+
+                            <li><a href = "~/Operaciones/Horarios" ><i class="fa fa-link"></i> <span>Horarios</span></a></li>
+                            <li><a href = "~/Operaciones/Marcas" ><i class="fa fa-link"></i> <span>Marcas</span></a></li>
+                            <li><a href = "~/Operaciones/Area" ><i class="fa fa-link"></i> <span>Area</span></a></li>
+
+
+                            <li><a href = "~/Operaciones/Calificaciones" ><i class="fa fa-link"></i> <span>Calificaciones</span></a></li>
+
+                            <li><a href = "~/Operaciones/Categoria" ><i class="fa fa-link"></i> <span>Categoria</span></a></li>
+                            <li><a href = "~/Operaciones/SubCategoria" ><i class="fa fa-link"></i> <span>SubCategoria</span></a></li>
+
+                            <li><a href = "~/Operaciones/Mantenimiento" ><i class="fa fa-link"></i> <span>Mantenimientos</span></a></li>
+
+                        </ul>
+                    </li>
+
+                    <li class="treeview">
+                        <a href = "#" >
+                            <i class="fa fa-files-o"></i>
+                            <span>Cuestionarios</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href = "~/Cuestionario/GrupoPreguntas" ><i class="fa fa-link"></i> <span>Grupo Preguntas</span></a></li>
+                            <li><a href = "~/Cuestionario/Preguntas" ><i class="fa fa-link"></i> <span>Preguntas</span></a></li>
+                            <li><a href = "~/Cuestionario/PreguntaTurno" ><i class="fa fa-link"></i> <span>Preguntas x Turno</span></a></li>
+                            <li><a href = "~/Cuestionario/Respuestas" ><i class="fa fa-link"></i> <span>Respuestas</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href = "#" >
+                            <i class="fa fa-files-o"></i>
+                            <span>Warehouse</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href = "~/Operaciones/Evento" ><i class="fa fa-link"></i> <span>Calendario</span></a></li>
+
+                            <li class="treeview">
+                                <a href = "#" >
+                                    <i class="fa fa-circle-o"></i> Ventanas
+                                     <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href = "~/Warehouse/Ventana" ><i class="fa fa-link"></i> <span>Ventanas</span></a></li>
+                                    <li><a href = "~/Warehouse/ActividadEnVentana" ><i class="fa fa-link"></i> <span>Actividad Ventana</span></a></li>
+                                    <li><a href = "~/Warehouse/BitacoraVentana" ><i class="fa fa-link"></i> <span>Bitacora Ventana</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href = "#" >
+                                    <i class="fa fa-circle-o"></i> Catalogos
+                                     <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href = "~/Warehouse/Carrier" ><i class="fa fa-link"></i> <span>Linea transportista</span></a></li>
+                                    <li><a href = "~/Warehouse/Proveedores" ><i class="fa fa-link"></i> <span>Proveedores</span></a></li>
+                                    <li><a href = "~/Warehouse/Recursos" ><i class="fa fa-link"></i> <span>Recursos</span></a></li>
+                                    <li><a href = "~/Warehouse/Locacion" ><i class="fa fa-link"></i> <span>Ubicaciones</span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="treeview">
+                        <a href = "#" >
+                            <i class="fa fa-files-o"></i>
+                            <span>Multimedia</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href = "~/Multimedia/Fotos" ><i class="fa fa-link"></i> <span>Fotos</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="header">Apps</li>
+                    <li><a href = "~/Maya" ><i class="fa fa-link"></i> <span>Maya</span></a></li>
+                    <li><a href = "~/AugmentedReality" ><i class="fa fa-link"></i> <span>Augmented Reality</span></a></li>
+                    <li class="header">Help</li>
+                    <li><a href = "~/Help" ><i class="fa fa-link"></i> <span>Apis</span></a></li>
+
+                </ul>
+            </section>
+        </aside>
+        <div class="content-wrapper">
+            <section class="content">
+                <div id="row-content" ></div>
+                
+                
+                @RenderBody()
+            </section >
+        </div>
+                                                    @*<footer class="main-footer">
+                                                            <div class="pull-right hidden-xs">
+                                                                <b>Version <small>0.4.0 (BETA) </small></b>
+                                                            </div>
+                                                            <strong>Copyright &copy; @DateTime.Now.Year </strong> Derechos reservados.
+                                                        </footer>*@
+                                                <aside class="control-sidebar control-sidebar-dark">
+                                                    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+                                                        <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+                                                        <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+                                                    </ul>
+                                                    <div class="tab-content">
+                                                        <div class="tab-pane" id="control-sidebar-home-tab">
+                                                            <h3 class="control-sidebar-heading">Recent Activity</h3>
+                                                            <ul class="control-sidebar-menu">
+                                                                <li>
+                                                                    <a href="javascript:void(0)">
+                                                                        <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+                                                                        <div class="menu-info">
+                                                                            <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+                                                                            <p>Will be 23 on April 24th</p>
+                                                                        </div>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:void(0)">
+                                                                        <i class="menu-icon fa fa-user bg-yellow"></i>
+                                                                        <div class="menu-info">
+                                                                            <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+                                                                            <p>New phone +1(800)555-1234</p>
+                                                                        </div>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:void(0)">
+                                                                        <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+                                                                        <div class="menu-info">
+                                                                            <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+                                                                            <p>nora@example.com</p>
+                                                                        </div>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:void(0)">
+                                                                        <i class="menu-icon fa fa-file-code-o bg-green"></i>
+                                                                        <div class="menu-info">
+                                                                            <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+                                                                            <p>Execution time 5 seconds</p>
+                                                                        </div>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                            <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                                                            <ul class="control-sidebar-menu">
+                                                                <li>
+                                                                    <a href="javascript:void(0)">
+                                                                        <h4 class="control-sidebar-subheading">
+                                                                            Custom Template Design
+                                                                            <span class="label label-danger pull-right">70%</span>
+                                                                        </h4>
+                                                                        <div class="progress progress-xxs">
+                                                                            <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                                                                        </div>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:void(0)">
+                                                                        <h4 class="control-sidebar-subheading">
+                                                                            Update Resume
+                                                                            <span class="label label-success pull-right">95%</span>
+                                                                        </h4>
+                                                                        <div class="progress progress-xxs">
+                                                                            <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                                                                        </div>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:void(0)">
+                                                                        <h4 class="control-sidebar-subheading">
+                                                                            Laravel Integration
+                                                                            <span class="label label-warning pull-right">50%</span>
+                                                                        </h4>
+                                                                        <div class="progress progress-xxs">
+                                                                            <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                                                                        </div>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:void(0)">
+                                                                        <h4 class="control-sidebar-subheading">
+                                                                            Back End Framework
+                                                                            <span class="label label-primary pull-right">68%</span>
+                                                                        </h4>
+                                                                        <div class="progress progress-xxs">
+                                                                            <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                                                                        </div>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+                                                        <div class="tab-pane" id="control-sidebar-settings-tab">
+                                                            <form method="post">
+                                                                <h3 class="control-sidebar-heading">General Settings</h3>
+                                                                <div class="form-group">
+                                                                    <label class="control-sidebar-subheading">
+                                                                        Report panel usage
+                                                                        <input type="checkbox" class="pull-right" checked>
+                                                                    </label>
+                                                                    <p>
+                                                                        Some information about this general settings option
+                                                                    </p>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-sidebar-subheading">
+                                                                        Allow mail redirect
+                                                                        <input type="checkbox" class="pull-right" checked>
+                                                                    </label>
+                                                                    <p>
+                                                                        Other sets of options are available
+                                                                    </p>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-sidebar-subheading">
+                                                                        Expose author name in posts
+                                                                        <input type="checkbox" class="pull-right" checked>
+                                                                    </label>
+                                                                    <p>
+                                                                        Allow the user to show his name in blog posts
+                                                                    </p>
+                                                                </div>
+                                                                <h3 class="control-sidebar-heading">Chat Settings</h3>
+                                                                <div class="form-group">
+                                                                    <label class="control-sidebar-subheading">
+                                                                        Show me as online
+                                                                        <input type="checkbox" class="pull-right" checked>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-sidebar-subheading">
+                                                                        Turn off notifications
+                                                                        <input type="checkbox" class="pull-right">
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-sidebar-subheading">
+                                                                        Delete chat history
+                                                                        <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
+                                                                    </label>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                <div class="control-sidebar-bg"></div>
+    </div>
+
+
+
+
+
+    @Scripts.Render("~/JS/jquery")
+    @Scripts.Render("~/JS/Bootstrap")
+    @Scripts.Render("~/JS/Complements")
+    @Scripts.Render("~/JS/AdminLTE")
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+    @Scripts.Render("~/JS/Demo")
+    <script src="~/Scripts/app.js"></script>
+    @RenderSection("scripts", required: false)
+    <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDUJMwUqbaoYb7XPVKKEgd27REuJ2DbWXk",
+            authDomain: "serverpmi.tr3sco.net",
+            databaseURL: "https://pmmx-a0173.firebaseio.com",
+            projectId: "pmmx-a0173",
+            messagingSenderId: "575772503257"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+
+
+
+</body>
+</html>

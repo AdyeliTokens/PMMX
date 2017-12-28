@@ -31,6 +31,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
             this.HasRequired(c => c.Categoria).WithMany(x => x.Eventos).HasForeignKey(c => c.IdCategoria);
 
             this.HasMany(c => c.JustDoIt).WithRequired(x => x.Evento).HasForeignKey(c => c.IdEvento);
+            this.HasMany(c => c.Ventanas).WithRequired(x => x.Evento).HasForeignKey(c => c.IdEvento);
         }
     }
 }

@@ -15,6 +15,11 @@ namespace PMMX.Modelo.Entidades.Warehouse
         public Boolean Activo { get; set; }
 
         #endregion
-        
+
+        #region Navegacion
+        public ICollection<Ventana> VentanasProcedencia { get; set; }
+        public ICollection<Ventana> VentanasDestino { get; set; }
+        #endregion
+
     }
 }

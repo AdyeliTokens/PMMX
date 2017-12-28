@@ -1,5 +1,6 @@
 ﻿using PMMX.Modelo.Entidades.Maquinaria;
 using PMMX.Modelo.Entidades.Operaciones;
+using PMMX.Modelo.Entidades.Warehouse;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -29,6 +30,8 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public Persona Responsable { get; set; }
         public Origen Origen { get; set; }
         public Categoria Categoria { get; set; }
+
         public ICollection<JustDoIt> JustDoIt { get; set; }
+        public ICollection<Ventana> Ventanas { get; set; }
     }
 }
