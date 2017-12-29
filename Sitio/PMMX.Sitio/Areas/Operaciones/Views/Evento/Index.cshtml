@@ -2,7 +2,8 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section Styles {
@@ -26,6 +27,7 @@
         @Scripts.Render("~/JS/Moment")
         @Scripts.Render("~/JS/jquery")
         @Scripts.Render("~/JS/FullCalendar")
+
         <script>
             $(document).ready(function ()
             {
