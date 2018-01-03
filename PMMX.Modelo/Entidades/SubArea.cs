@@ -8,7 +8,7 @@ using System.Web;
 
 namespace PMMX.Modelo.Entidades.Operaciones
 {
-    public class Area
+    public class SubArea
     {
         #region Propiedades
         public int Id { get; set; }
@@ -19,10 +19,8 @@ namespace PMMX.Modelo.Entidades.Operaciones
         #endregion
 
         #region Navegacion
+
         public Persona Responsable { get; set; }
-        public ICollection<BussinesUnit> BussinessUnits { get; set; }
-        public ICollection<Indicador> Indicadores { get; set; }
-        public ICollection<Pesador> Pesadores { get; set; }
         public ICollection<ListaDistribucion> ListaDistribucion { get; set; }
         #endregion
 

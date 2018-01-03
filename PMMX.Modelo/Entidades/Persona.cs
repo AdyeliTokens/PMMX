@@ -48,6 +48,7 @@ namespace PMMX.Modelo.Entidades
         public ICollection<OrigenRespuesta> Encuestado { get; set; }
         public ICollection<OrigenRespuesta> Supervisor { get; set; }
         public ICollection<Area> Areas { get; set; }
+        public ICollection<SubArea> SubAreas { get; set; }
         public ICollection<Categoria> Categorias { get; set; }
         public ICollection<SubCategoria> SubCategorias { get; set; }
         public ICollection<Evento> EventosAsignados { get; set; }
@@ -63,7 +64,7 @@ namespace PMMX.Modelo.Entidades
         public ICollection<Asignacion> Asignaciones { get; set; }
         public ICollection<Alias> AliasDadosDeAlta { get; set; }
         public ICollection<Pesador> Pesadores { get; set; }
-
+        public ICollection<ListaDistribucion> ListaDistribucion { get; set; }
 
         #endregion
 

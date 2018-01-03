@@ -55,7 +55,10 @@ namespace PMMX.Modelo.Map
                 cs.MapRightKey("IdFoto");
                 cs.ToTable("PersonasFotos");
             });
-            
+
+            HasMany(c => c.ListaDistribucion).WithRequired(x => x.Remitente).HasForeignKey(c => c.IdPersona);
+            HasMany(c => c.Areas).WithRequired(b => b.Responsable).HasForeignKey(c => c.IdResponsable);
+            HasMany(c => c.SubAreas).WithRequired(b => b.Responsable).HasForeignKey(c => c.IdResponsable);
             #endregion
 
             #region HasRequired
