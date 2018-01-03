@@ -18,23 +18,20 @@ namespace Sitio.Areas.Apis.Controllers.Operarios
     {
         private PMMXContext db = new PMMXContext();
 
-        // GET: api/Pesadores
         public IQueryable<Pesador> GetPesadores()
         {
 
             return db.Pesadores;
         }
 
-        // GET: api/Pesadores/5
         [ResponseType(typeof(Pesador))]
         public IHttpActionResult GetPesador(int id)
         {
             PesadorServicio servicio = new PesadorServicio();
             var workcenters = servicio.GetWorkCentersByPesador(id);
-            return Ok(workcenters);
+            return Ok(workcenters.Respuesta);
         }
 
-        // PUT: api/Pesadores/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutPesador(int id, Pesador pesador)
         {
@@ -69,7 +66,6 @@ namespace Sitio.Areas.Apis.Controllers.Operarios
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Pesadores
         [ResponseType(typeof(Pesador))]
         public IHttpActionResult PostPesador(Pesador pesador)
         {
@@ -84,7 +80,6 @@ namespace Sitio.Areas.Apis.Controllers.Operarios
             return CreatedAtRoute("DefaultApi", new { id = pesador.Id }, pesador);
         }
 
-        // DELETE: api/Pesadores/5
         [ResponseType(typeof(Pesador))]
         public IHttpActionResult DeletePesador(int id)
         {
