@@ -247,6 +247,7 @@
     <Compile Include="Areas\Apis\Controllers\MecanicoController.cs" />
     <Compile Include="Areas\Apis\Controllers\MecanicoPorBusinessUnitsController.cs" />
     <Compile Include="Areas\Apis\Controllers\Multimedia\DefaultController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operaciones\MarcasController.cs" />
     <Compile Include="Areas\Apis\Controllers\OperadoresPorWorkCentersController.cs" />
     <Compile Include="Areas\Apis\Controllers\Operarios\PesadoresController.cs" />
     <Compile Include="Areas\Apis\Controllers\ProveedoresController.cs" />
