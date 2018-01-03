@@ -12,6 +12,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
     {
         #region Propiedades
         public int Id { get; set; }
+        public int IdArea { get; set; }
         public string Nombre { get; set; }
         public string NombreCorto { get; set; }
         public int IdResponsable { get; set; }
@@ -19,7 +20,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         #endregion
 
         #region Navegacion
-
+        public Area Area { get; set; }
         public Persona Responsable { get; set; }
         public ICollection<ListaDistribucion> ListaDistribucion { get; set; }
         #endregion

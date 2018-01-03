@@ -19,7 +19,7 @@ namespace Sitio.Areas.Operaciones
         // GET: Operaciones/ListaDistribucion
         public ActionResult Index()
         {
-            var ListaDistribucion = db.ListaDistribucion.Include(l => l.Area).Include(l => l.Remitente).Include( l => l.SubArea);
+            var ListaDistribucion = db.ListaDistribucion.Include(l => l.Remitente).Include( l => l.SubArea);
             return View(ListaDistribucion.ToList());
         }
 
@@ -60,8 +60,7 @@ namespace Sitio.Areas.Operaciones
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.IdArea = new SelectList(db.Area, "Id", "Nombre", listaDistribucion.IdArea);
+            
             ViewBag.IdSubarea = new SelectList(db.SubArea, "Id", "Nombre", listaDistribucion.IdSubarea);
             ViewBag.IdPersona = new SelectList(db.Personas, "Id", "Nombre", listaDistribucion.IdPersona);
             return View(listaDistribucion);
@@ -79,7 +78,7 @@ namespace Sitio.Areas.Operaciones
             {
                 return HttpNotFound();
             }
-            ViewBag.IdArea = new SelectList(db.Area, "Id", "Nombre", listaDistribucion.IdArea);
+            
             ViewBag.IdSubarea = new SelectList(db.SubArea, "Id", "Nombre", listaDistribucion.IdSubarea);
             ViewBag.IdPersona = new SelectList(db.Personas, "Id", "Nombre", listaDistribucion.IdPersona);
             return View(listaDistribucion);
@@ -98,7 +97,6 @@ namespace Sitio.Areas.Operaciones
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdArea = new SelectList(db.Area, "Id", "Nombre", listaDistribucion.IdArea);
             ViewBag.IdSubarea = new SelectList(db.SubArea, "Id", "Nombre", listaDistribucion.IdSubarea);
             ViewBag.IdPersona = new SelectList(db.Personas, "Id", "Nombre", listaDistribucion.IdPersona);
             return View(listaDistribucion);

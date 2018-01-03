@@ -23,7 +23,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public ICollection<BussinesUnit> BussinessUnits { get; set; }
         public ICollection<Indicador> Indicadores { get; set; }
         public ICollection<Pesador> Pesadores { get; set; }
-        public ICollection<ListaDistribucion> ListaDistribucion { get; set; }
+        public ICollection<SubArea> SubAreas { get; set; }
         #endregion
 
     }

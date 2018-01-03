@@ -40,6 +40,7 @@ namespace Sitio.Areas.Operaciones
         // GET: Operaciones/SubArea/Create
         public ActionResult Create()
         {
+            ViewBag.IdArea = new SelectList(db.Area, "Id", "Nombre");
             ViewBag.IdResponsable = new SelectList(db.Personas, "Id", "Nombre");
             return View();
         }
@@ -49,7 +50,7 @@ namespace Sitio.Areas.Operaciones
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nombre,NombreCorto,IdResponsable,Activo")] SubArea subArea)
+        public ActionResult Create(SubArea subArea)
         {
             if (ModelState.IsValid)
             {
@@ -57,7 +58,7 @@ namespace Sitio.Areas.Operaciones
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            ViewBag.IdArea = new SelectList(db.Area, "Id", "Nombre", subArea.IdArea);
             ViewBag.IdResponsable = new SelectList(db.Personas, "Id", "Nombre", subArea.IdResponsable);
             return View(subArea);
         }
@@ -74,6 +75,7 @@ namespace Sitio.Areas.Operaciones
             {
                 return HttpNotFound();
             }
+            ViewBag.IdArea = new SelectList(db.Area, "Id", "Nombre", subArea.IdArea);
             ViewBag.IdResponsable = new SelectList(db.Personas, "Id", "Nombre", subArea.IdResponsable);
             return View(subArea);
         }
@@ -83,7 +85,7 @@ namespace Sitio.Areas.Operaciones
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nombre,NombreCorto,IdResponsable,Activo")] SubArea subArea)
+        public ActionResult Edit(SubArea subArea)
         {
             if (ModelState.IsValid)
             {
@@ -91,6 +93,7 @@ namespace Sitio.Areas.Operaciones
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.IdArea = new SelectList(db.Area, "Id", "Nombre", subArea.IdArea);
             ViewBag.IdResponsable = new SelectList(db.Personas, "Id", "Nombre", subArea.IdResponsable);
             return View(subArea);
         }

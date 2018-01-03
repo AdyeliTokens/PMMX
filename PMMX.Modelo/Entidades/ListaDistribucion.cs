@@ -12,7 +12,6 @@ namespace PMMX.Modelo.Entidades.Operaciones
     {
         #region Propiedades
         public int Id { get; set; }
-        public int IdArea { get; set; }
         public int IdSubarea { get; set; }
         public int IdPersona { get; set; }
         public bool Activo { get; set; }
@@ -20,7 +19,6 @@ namespace PMMX.Modelo.Entidades.Operaciones
 
         #region Navegacion
         public Persona Remitente { get; set; }
-        public Area Area { get; set; }
         public SubArea SubArea { get; set; }
         #endregion
 

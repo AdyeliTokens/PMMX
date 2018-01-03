@@ -30,7 +30,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
                 cs.ToTable("areasindicadores");
             });
 
-            HasMany(c => c.ListaDistribucion).WithRequired(x => x.Area).HasForeignKey( c => c.IdArea);
+            HasMany(c => c.SubAreas).WithRequired(x => x.Area).HasForeignKey(c => c.IdArea);
             #endregion
 
             #region HasOptional

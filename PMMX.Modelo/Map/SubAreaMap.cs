@@ -15,6 +15,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
             ToTable("SubArea");
             HasKey(c => c.Id);
             Property(c => c.Id).HasColumnName("Id");
+            Property(c => c.IdArea).HasColumnName("IdArea");
             Property(c => c.Nombre).HasColumnName("Nombre");
             Property(c => c.NombreCorto).HasColumnName("NombreCorto");
             Property(c => c.IdResponsable).HasColumnName("IdResponsable");
@@ -29,6 +30,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
             #endregion
 
             #region HasRequired
+            HasRequired(c => c.Area).WithMany(x => x.SubAreas).HasForeignKey(c => c.IdArea);
             HasRequired(c => c.Responsable).WithMany(x => x.SubArea).HasForeignKey(c => c.IdResponsable);
             #endregion
             

@@ -121,10 +121,12 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new RecursosMap());
             modelBuilder.Configurations.Add(new VentanaMap());
             modelBuilder.Configurations.Add(new AsignacionMap());
-            
-            
-            
-            
+            modelBuilder.Configurations.Add(new SubAreaMap());
+            modelBuilder.Configurations.Add(new ListaDistribucionMap());
+
+
+
+
         }
 
         #region Multimedia
@@ -198,7 +200,8 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<Recursos> Recursos { get; set; }
         public DbSet<Ventana> Ventana { get; set; }
         public DbSet<Asignacion> Asignaciones { get; set; }
-        
+        public DbSet<SubArea> SubArea { get; set; }
+        public DbSet<ListaDistribucion> ListaDistribucion { get; set; }
 
     }
 }
