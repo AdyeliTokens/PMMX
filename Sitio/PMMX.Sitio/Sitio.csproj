@@ -7751,7 +7751,6 @@
     <Content Include="img\maya\screen-3.png" />
     <Content Include="img\maya\screen-4.png" />
     <Content Include="img\user-default.png" />
-    <Content Include="js\index.js" />
     <Content Include="js\new-age.js" />
     <Content Include="js\new-age.min.js" />
     <Content Include="plugins\input-mask\phone-codes\phone-be.json" />
