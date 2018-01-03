@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using PMMX.Modelo.Entidades.JustDoIts;
 
 namespace PMMX.Modelo.Entidades
 {
@@ -65,7 +66,7 @@ namespace PMMX.Modelo.Entidades
         public ICollection<Alias> AliasDadosDeAlta { get; set; }
         public ICollection<Pesador> Pesadores { get; set; }
         public ICollection<ListaDistribucion> ListaDistribucion { get; set; }
-
+        public ICollection<EventoResponsable> EventoResponsable { get; set; }
         #endregion
 
     }

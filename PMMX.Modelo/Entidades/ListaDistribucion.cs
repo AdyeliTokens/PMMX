@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Web;
+using PMMX.Modelo.Entidades.JustDoIts;
 
 namespace PMMX.Modelo.Entidades.Operaciones
 {
@@ -20,6 +21,8 @@ namespace PMMX.Modelo.Entidades.Operaciones
         #region Navegacion
         public Persona Remitente { get; set; }
         public SubArea SubArea { get; set; }
+
+        public ICollection<EventoResponsable> EventoResponsable { get; set; }
         #endregion
 
     }

@@ -21,6 +21,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
             #endregion
 
             #region HasMany
+            this.HasMany(c => c.EventoResponsable).WithOptional(e => e.ListaDistribucion).HasForeignKey(e => e.IdListaDistribucion);
             #endregion
 
             #region HasOptional
