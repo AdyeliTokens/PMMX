@@ -22,19 +22,15 @@ namespace PMMX.Modelo.Entidades.Operaciones
             #endregion
 
             #region HasMany
-            //HasMany(c => c.Indicadores).WithMany(x => x.Areas).Map(cs =>
-            //{
-            //    cs.MapLeftKey("IdArea");
-            //    cs.MapRightKey("IdIndicador");
-            //    cs.ToTable("areasindicadores");
-            //});
             #endregion
 
             #region HasOptional
             #endregion
 
             #region HasRequired
-            HasRequired(c => c.Persona).WithMany(x => x.Areas).HasForeignKey(c => c.Persona);
+            this.HasRequired(c => c.Area).WithMany(x => x.ListaDistribucion);
+            this.HasRequired(c => c.SubArea).WithMany(x => x.ListaDistribucion);
+            this.HasRequired(c => c.Remitente).WithMany(x => x.ListaDistribucion);
             #endregion
 
 

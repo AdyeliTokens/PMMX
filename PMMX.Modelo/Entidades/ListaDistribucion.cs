@@ -12,8 +12,8 @@ namespace PMMX.Modelo.Entidades.Operaciones
     {
         #region Propiedades
         public int Id { get; set; }
-        public string IdArea { get; set; }
-        public string IdSubarea { get; set; }
+        public int IdArea { get; set; }
+        public int IdSubarea { get; set; }
         public int IdPersona { get; set; }
         public bool Activo { get; set; }
         #endregion
