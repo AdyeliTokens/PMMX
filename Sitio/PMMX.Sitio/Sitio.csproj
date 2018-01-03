@@ -241,6 +241,7 @@
     <Compile Include="Areas\Apis\Controllers\FotosController.cs" />
     <Compile Include="Areas\Apis\Controllers\IndicadoresController.cs" />
     <Compile Include="Areas\Apis\Controllers\JustDoItController.cs" />
+    <Compile Include="Areas\Apis\Controllers\ListaDistribucionController.cs" />
     <Compile Include="Areas\Apis\Controllers\LocacionController.cs" />
     <Compile Include="Areas\Apis\Controllers\LoginController.cs" />
     <Compile Include="Areas\Apis\Controllers\MantenimientoController.cs" />
@@ -252,6 +253,7 @@
     <Compile Include="Areas\Apis\Controllers\RecursosController.cs" />
     <Compile Include="Areas\Apis\Controllers\RemitenteController.cs" />
     <Compile Include="Areas\Apis\Controllers\ShiftLeadersController.cs" />
+    <Compile Include="Areas\Apis\Controllers\SubAreaController.cs" />
     <Compile Include="Areas\Apis\Controllers\SubCategoriaController.cs" />
     <Compile Include="Areas\Apis\Controllers\VentanaController.cs" />
     <Compile Include="Areas\Apis\Controllers\VQIController.cs" />
@@ -332,7 +334,9 @@
     <Compile Include="Areas\Operaciones\Controllers\OrigenesController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\ParosController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\WorkCentersController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\ListaDistribucionController.cs" />
     <Compile Include="Areas\Operaciones\OperacionesAreaRegistration.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\SubAreaController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\DispositivosController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\ElectricosController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\EntornosController.cs" />
@@ -7941,6 +7945,16 @@
     <Content Include="Areas\Seguridad\Views\Pesadores\Details.cshtml" />
     <Content Include="Areas\Seguridad\Views\Pesadores\Edit.cshtml" />
     <Content Include="Areas\Seguridad\Views\Pesadores\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\SubArea\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\SubArea\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\SubArea\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\SubArea\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\SubArea\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ListaDistribucion\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ListaDistribucion\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ListaDistribucion\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ListaDistribucion\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ListaDistribucion\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">

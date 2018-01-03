@@ -48,7 +48,7 @@ namespace PMMX.Modelo.Entidades
         public ICollection<OrigenRespuesta> Encuestado { get; set; }
         public ICollection<OrigenRespuesta> Supervisor { get; set; }
         public ICollection<Area> Areas { get; set; }
-        public ICollection<SubArea> SubAreas { get; set; }
+        public ICollection<SubArea> SubArea { get; set; }
         public ICollection<Categoria> Categorias { get; set; }
         public ICollection<SubCategoria> SubCategorias { get; set; }
         public ICollection<Evento> EventosAsignados { get; set; }

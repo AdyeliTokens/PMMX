@@ -58,7 +58,7 @@ namespace PMMX.Modelo.Map
 
             HasMany(c => c.ListaDistribucion).WithRequired(x => x.Remitente).HasForeignKey(c => c.IdPersona);
             HasMany(c => c.Areas).WithRequired(b => b.Responsable).HasForeignKey(c => c.IdResponsable);
-            HasMany(c => c.SubAreas).WithRequired(b => b.Responsable).HasForeignKey(c => c.IdResponsable);
+            HasMany(c => c.SubArea).WithRequired(b => b.Responsable).HasForeignKey(c => c.IdResponsable);
             #endregion
 
             #region HasRequired

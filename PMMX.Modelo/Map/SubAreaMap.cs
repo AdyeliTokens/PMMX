@@ -29,7 +29,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
             #endregion
 
             #region HasRequired
-            HasRequired(c => c.Responsable).WithMany(x => x.SubAreas).HasForeignKey(c => c.IdResponsable);
+            HasRequired(c => c.Responsable).WithMany(x => x.SubArea).HasForeignKey(c => c.IdResponsable);
             #endregion
             
         }

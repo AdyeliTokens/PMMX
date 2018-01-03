@@ -12,7 +12,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public ListaDistribucionMap()
         {
             #region Propiedades
-            ToTable("SubArea");
+            ToTable("ListaDistribucion");
             HasKey(c => c.Id);
             Property(c => c.Id).HasColumnName("Id");
             Property(c => c.IdArea).HasColumnName("IdArea");

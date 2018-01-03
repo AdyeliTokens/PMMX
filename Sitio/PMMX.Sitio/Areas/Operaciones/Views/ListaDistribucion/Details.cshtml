@@ -1,0 +1,50 @@
+﻿@model PMMX.Modelo.Entidades.Operaciones.ListaDistribucion
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ListaDistribucion</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Area.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Area.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Remitente.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Remitente.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdSubarea)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdSubarea)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Activo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Activo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
