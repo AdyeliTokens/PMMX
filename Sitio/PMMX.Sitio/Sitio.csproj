@@ -248,7 +248,6 @@
     <Compile Include="Areas\Apis\Controllers\MecanicoPorBusinessUnitsController.cs" />
     <Compile Include="Areas\Apis\Controllers\Multimedia\DefaultController.cs" />
     <Compile Include="Areas\Apis\Controllers\OperadoresPorWorkCentersController.cs" />
-    <Compile Include="Areas\Apis\Controllers\Operarios\PesadoresController.cs" />
     <Compile Include="Areas\Apis\Controllers\ProveedoresController.cs" />
     <Compile Include="Areas\Apis\Controllers\RecursosController.cs" />
     <Compile Include="Areas\Apis\Controllers\RemitenteController.cs" />
@@ -365,6 +364,7 @@
     <Compile Include="Controllers\RequisicionDeDescargasController.cs" />
     <Compile Include="Controllers\ThumbnailController.cs" />
     <Compile Include="Helpers\AccountService.cs" />
+    <Compile Include="Helpers\MenuLinkHelper.cs" />
     <Compile Include="Hubs\ExempleHhub.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -7750,6 +7750,7 @@
     <Content Include="img\maya\screen-3.png" />
     <Content Include="img\maya\screen-4.png" />
     <Content Include="img\user-default.png" />
+    <Content Include="js\index.js" />
     <Content Include="js\new-age.js" />
     <Content Include="js\new-age.min.js" />
     <Content Include="plugins\input-mask\phone-codes\phone-be.json" />
@@ -7941,8 +7942,7 @@
     <Content Include="Areas\Seguridad\Views\Pesadores\Details.cshtml" />
     <Content Include="Areas\Seguridad\Views\Pesadores\Edit.cshtml" />
     <Content Include="Areas\Seguridad\Views\Pesadores\Index.cshtml" />
-    <None Include="Properties\PublishProfiles\pmmxdev - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\pmmxqa - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
