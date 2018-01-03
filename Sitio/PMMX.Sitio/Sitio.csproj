@@ -248,6 +248,7 @@
     <Compile Include="Areas\Apis\Controllers\MecanicoPorBusinessUnitsController.cs" />
     <Compile Include="Areas\Apis\Controllers\Multimedia\DefaultController.cs" />
     <Compile Include="Areas\Apis\Controllers\OperadoresPorWorkCentersController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operarios\PesadoresController.cs" />
     <Compile Include="Areas\Apis\Controllers\ProveedoresController.cs" />
     <Compile Include="Areas\Apis\Controllers\RecursosController.cs" />
     <Compile Include="Areas\Apis\Controllers\RemitenteController.cs" />
@@ -8283,8 +8284,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Apis\Views\Accounts\" />
-    <Folder Include="Areas\Apis\Views\BaseApi\" />
     <Folder Include="Areas\Warehouse\Models\" />
     <Folder Include="Areas\Warehouse\Views\Shared\" />
   </ItemGroup>
