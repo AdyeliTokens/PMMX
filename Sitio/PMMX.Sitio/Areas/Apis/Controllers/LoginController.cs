@@ -13,8 +13,6 @@ namespace Sitio.Areas.Apis.Controllers
 {
     public class LoginController : ApiController
     {
-
-
         
         [HttpGet]
         [ResponseType(typeof(UserView))]
