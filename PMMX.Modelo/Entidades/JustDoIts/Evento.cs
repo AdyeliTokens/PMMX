@@ -1,4 +1,5 @@
-﻿using PMMX.Modelo.Entidades.Maquinaria;
+﻿using PMMX.Modelo.Entidades.JustDoIts;
+using PMMX.Modelo.Entidades.Maquinaria;
 using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo.Entidades.Warehouse;
 using System;
@@ -14,10 +15,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
     {
         public int Id { get; set; }
         public string Descripcion { get; set; }
-        public int IdOrigen { get; set; }
-        public int IdCategoria { get; set; }
         public int IdAsignador { get; set; }
-        public int IdResponsable { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]
         public DateTime FechaInicio { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]
@@ -27,11 +25,11 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public bool Activo { get; set; }
 
         public Persona Asignador { get; set; }
-        public Persona Responsable { get; set; }
-        public Origen Origen { get; set; }
-        public Categoria Categoria { get; set; }
 
         public ICollection<JustDoIt> JustDoIt { get; set; }
         public ICollection<Ventana> Ventanas { get; set; }
+        public ICollection<EventoOrigen> EventoOrigen { get; set; }
+        public ICollection<EventoResponsable> EventoResponsable { get; set; }
+
     }
 }

@@ -11,27 +11,28 @@ namespace PMMX.Modelo.Entidades.Operaciones
     {
         public EventoMap()
         {
+            #region Propiedades
             this.ToTable("Eventos");
             this.HasKey(c => c.Id);
             this.Property(c => c.Id).HasColumnName("Id");
             this.Property(c => c.Descripcion).HasColumnName("Descripcion");
-            this.Property(c => c.IdOrigen).HasColumnName("IdOrigen");
-            this.Property(c => c.IdCategoria).HasColumnName("IdCategoria");
             this.Property(c => c.IdAsignador).HasColumnName("IdAsignador");
-            this.Property(c => c.IdResponsable).HasColumnName("IdResponsable");
             this.Property(c => c.FechaInicio).HasColumnName("FechaInicio");
             this.Property(c => c.FechaFin).HasColumnName("FechaFin");
             this.Property(c => c.Nota).HasColumnName("Nota");
             this.Property(c => c.EsRecurrente).HasColumnName("EsRecurrente");
             this.Property(c => c.Activo).HasColumnName("Activo");
+            #endregion
 
-            this.HasRequired(c => c.Responsable).WithMany(x => x.EventosAsignados).HasForeignKey(c => c.IdResponsable);
+            #region HasRequired
             this.HasRequired(c => c.Asignador).WithMany(x => x.EventosReportados).HasForeignKey(c => c.IdAsignador);
-            this.HasRequired(c => c.Origen).WithMany(x => x.Eventos).HasForeignKey(c => c.IdOrigen);
-            this.HasRequired(c => c.Categoria).WithMany(x => x.Eventos).HasForeignKey(c => c.IdCategoria);
+            #endregion
 
+            #region HasMany
             this.HasMany(c => c.JustDoIt).WithRequired(x => x.Evento).HasForeignKey(c => c.IdEvento);
             this.HasMany(c => c.Ventanas).WithRequired(x => x.Evento).HasForeignKey(c => c.IdEvento);
+            this.HasMany(c => c.EventoOrigen).WithRequired(x => x.Evento).HasForeignKey(c => c.IdEvento);
+            #endregion
         }
     }
 }

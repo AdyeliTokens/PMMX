@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Web;
+using PMMX.Modelo.Entidades.JustDoIts;
 
 namespace PMMX.Modelo.Entidades.Operaciones
 {

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using PMMX.Modelo.Vistas;
+using PMMX.Modelo.Entidades.JustDoIts;
 
 namespace PMMX.Modelo.Entidades.Maquinaria
 {
@@ -33,13 +34,12 @@ namespace PMMX.Modelo.Entidades.Maquinaria
         //public ICollection<Pregunta> Preguntas { get; set; }
         public ICollection<OrigenRespuesta> OrigenRespuestas { get; set; }
         public ICollection<Remitentes> Remitentes { get; set; }
-        public ICollection<Evento> Eventos { get; set; }
         public ICollection<JustDoIt> JustDoIt { get; set; }
         public ICollection<Mantenimiento> Mantenimientos { get; set; }
         public ICollection<Foto> Fotos { get; set; }
-
+        public ICollection<EventoOrigen> EventoOrigen { get; set; }
         #endregion
-        
+
         public static implicit operator Origen(OrigenView v)
         {
             throw new NotImplementedException();

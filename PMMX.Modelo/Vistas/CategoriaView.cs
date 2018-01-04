@@ -16,6 +16,5 @@ namespace PMMX.Modelo.Vistas
         public bool Activo { get; set; }
 
         public PersonaView Responsable { get; set; }
-        public ICollection<EventoView> Eventos { get; set; }
     }
 }

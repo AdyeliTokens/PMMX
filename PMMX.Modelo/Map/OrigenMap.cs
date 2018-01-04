@@ -31,7 +31,7 @@ namespace PMMX.Modelo.Map
             HasMany(c => c.PreguntaTurno).WithRequired(x => x.Origen).HasForeignKey(c => c.IdOrigen);
             HasMany(c => c.OrigenRespuestas).WithRequired(x => x.Origen).HasForeignKey(c => c.IdOrigen);
             HasMany(c => c.Remitentes).WithRequired(p => p.Origen).HasForeignKey(c => c.IdOrigen);
-            HasMany(c => c.Eventos).WithRequired(x => x.Origen).HasForeignKey(c => c.IdOrigen);
+            HasMany(c => c.EventoOrigen).WithRequired(x => x.Origen).HasForeignKey(c => c.IdOrigen);
             HasMany(c => c.JustDoIt).WithRequired(x => x.Origen).HasForeignKey(c => c.IdOrigen);
             HasMany(c => c.Mantenimientos).WithRequired(x => x.Origen).HasForeignKey(c => c.IdOrigen);
             HasMany(c => c.Fotos).WithMany(x => x.Origenes).Map(cs =>

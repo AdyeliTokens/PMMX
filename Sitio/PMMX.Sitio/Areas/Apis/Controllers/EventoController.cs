@@ -28,24 +28,21 @@ namespace Sitio.Areas.Apis.Controllers
 
         // GET: api/JustDoIt/5
         [ResponseType(typeof(EventoView))]
-        
         public IHttpActionResult GetEventobyResponsableandFecha(int idResponsable, int dias, bool activo)
         {
             var today = DateTime.Now.Date;
             DateTime dateInit = today.AddDays(dias);
 
-            var evento = db.Evento
-               .Where(d => (d.IdResponsable == idResponsable) && (d.FechaInicio >= dateInit) && (d.Activo == activo))
+            var evento = db.EventoResponsable
+               .Where(d => (d.Evento.FechaInicio >= dateInit) && (d.Evento.Activo == activo) && (d.IdResponsable == idResponsable)  )
                .Select(d => new EventoView
                {
                    Id = d.Id,
-                   IdOrigen = d.IdOrigen,
-                   IdResponsable = d.IdResponsable,
-                   IdCategoria = d.IdCategoria,
-                   Descripcion = d.Descripcion,
-                   FechaInicio = d.FechaInicio,
-                   FechaFin = d.FechaFin,
-                   Activo = d.Activo,
+                   IdCategoria = d.Evento.IdCategoria,
+                   Descripcion = d.Evento.Descripcion,
+                   FechaInicio = d.Evento.FechaInicio,
+                   FechaFin = d.Evento.FechaFin,
+                   Activo = d.Evento.Activo,
                    Responsable = new PersonaView
                    {
                        Id = d.Responsable.Id,
@@ -58,27 +55,10 @@ namespace Sitio.Areas.Apis.Controllers
                            Id = d.Responsable.Puesto.Id,
                            Nombre = d.Responsable.Puesto.Nombre
                        }
-                   },
-                   Origen = new OrigenView
-                   {
-                       Id = d.Origen.Id,
-                       IdModulo = d.Origen.IdModulo,
-                       IdWorkCenter = d.Origen.IdWorkCenter,
-                       Modulo = new ModuloView
-                       {
-                           Id = d.Origen.Modulo.Id,
-                           Nombre = d.Origen.Modulo.Nombre,
-                           NombreCorto = d.Origen.Modulo.NombreCorto
-                       },
-                       WorkCenter = new WorkCenterView
-                       {
-                           Id = d.Origen.WorkCenter.Id,
-                           Nombre = d.Origen.WorkCenter.Nombre,
-                           NombreCorto = d.Origen.WorkCenter.NombreCorto,
-                           Activo = d.Origen.WorkCenter.Activo
-                       }
                    }
                }).ToList();
+
+
 
             if (evento == null)
             {
@@ -94,18 +74,17 @@ namespace Sitio.Areas.Apis.Controllers
             DateTime hoy = fecha.Date;
             DateTime mañana = hoy.AddDays(1);
 
-            var evento = db.Evento
-               .Where(d => (d.IdResponsable == idResponsable) && (d.FechaInicio >= hoy && d.FechaInicio <= mañana) && (d.Activo == activo))
+            var evento = db.EventoResponsable
+               .Where(d => (d.IdResponsable == idResponsable) && (d.Evento.FechaInicio >= hoy && d.Evento.FechaInicio <= mañana) && (d.Evento.Activo == activo))
                .Select(d => new EventoView
                {
                    Id = d.Id,
-                   IdOrigen = d.IdOrigen,
                    IdResponsable = d.IdResponsable,
-                   IdCategoria = d.IdCategoria,
-                   Descripcion = d.Descripcion,
-                   FechaInicio = d.FechaInicio,
-                   FechaFin = d.FechaFin,
-                   Activo = d.Activo,
+                   IdCategoria = d.Evento.IdCategoria,
+                   Descripcion = d.Evento.Descripcion,
+                   FechaInicio = d.Evento.FechaInicio,
+                   FechaFin = d.Evento.FechaFin,
+                   Activo = d.Evento.Activo,
                    Responsable = new PersonaView
                    {
                        Id = d.Responsable.Id,
@@ -118,31 +97,12 @@ namespace Sitio.Areas.Apis.Controllers
                            Id = d.Responsable.Puesto.Id,
                            Nombre = d.Responsable.Puesto.Nombre
                        }
-                   },
-                   Origen = new OrigenView
-                   {
-                       Id = d.Origen.Id,
-                       IdModulo = d.Origen.IdModulo,
-                       IdWorkCenter = d.Origen.IdWorkCenter,
-                       Modulo = new ModuloView
-                       {
-                           Id = d.Origen.Modulo.Id,
-                           Nombre = d.Origen.Modulo.Nombre,
-                           NombreCorto = d.Origen.Modulo.NombreCorto
-                       },
-                       WorkCenter = new WorkCenterView
-                       {
-                           Id = d.Origen.WorkCenter.Id,
-                           Nombre = d.Origen.WorkCenter.Nombre,
-                           NombreCorto = d.Origen.WorkCenter.NombreCorto,
-                           Activo = d.Origen.WorkCenter.Activo
-                       }
                    }
                }).ToList();
-            
+
             return Ok(evento);
         }
-        
+
         // GET: api/Evento/5
         [ResponseType(typeof(EventoView))]
         public IHttpActionResult GetEvento(int id)
@@ -151,27 +111,12 @@ namespace Sitio.Areas.Apis.Controllers
                 .Select(d => new EventoView
                 {
                     Id = d.Id,
-                    IdOrigen = d.IdOrigen,
-                    IdResponsable = d.IdResponsable,
                     IdCategoria = d.IdCategoria,
                     Descripcion = d.Descripcion,
                     FechaInicio = d.FechaInicio,
                     FechaFin = d.FechaFin,
                     Nota = d.Nota,
                     Activo = d.Activo,
-                    Responsable = new PersonaView
-                    {
-                        Id = d.Responsable.Id,
-                        Apellido1 = d.Responsable.Apellido1,
-                        Apellido2 = d.Responsable.Apellido2,
-                        Nombre = d.Responsable.Nombre,
-
-                        Puesto = new PuestoView
-                        {
-                            Id = d.Responsable.Puesto.Id,
-                            Nombre = d.Responsable.Puesto.Nombre
-                        }
-                    },
                     JustDoIt = d.JustDoIt.Select(j => new JustDoItView
                     {
                         Id = j.Id,
@@ -247,42 +192,23 @@ namespace Sitio.Areas.Apis.Controllers
 
             foreach (string notificacion in llaves)
             {
-                var _evento = db.Evento.Where(e => e.Id == evento.Id)
+                var _evento = db.EventoResponsable.Where(e => e.Id == evento.Id)
                     .Select(s => new EventoView
                     {
                         Id = s.Id,
-                        Descripcion = s.Descripcion,
+                        Descripcion = s.Evento.Descripcion,
                         Categoria = new CategoriaView
                         {
-                            Id = s.Categoria.Id,
-                            Nombre = s.Categoria.Nombre,
-                            NombreCorto = s.Categoria.NombreCorto
-                        },
-                        Origen = new OrigenView
-                        {
-                            Id = s.Origen.Id,
-                            WorkCenter = new WorkCenterView
-                            {
-                                Id = s.Origen.WorkCenter.Id,
-                                BussinesUnit = new BussinesUnitView
-                                {
-                                    Id = s.Origen.WorkCenter.BussinesUnit.Id,
-                                    Area = new AreaView
-                                    {
-                                        Id = s.Origen.WorkCenter.BussinesUnit.Area.Id,
-                                        Nombre = s.Origen.WorkCenter.BussinesUnit.Area.Nombre,
-                                        NombreCorto = s.Origen.WorkCenter.BussinesUnit.Area.NombreCorto
-                                    }
-                                }
-                            }
-                            
+                            Id = s.Evento.Categoria.Id,
+                            Nombre = s.Evento.Categoria.Nombre,
+                            NombreCorto = s.Evento.Categoria.NombreCorto
                         }
                     }).FirstOrDefault();
 
 
-                notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + _evento.Descripcion + ". ", _evento.Categoria.Nombre + " : originado en " + _evento.Origen.WorkCenter.BussinesUnit.Area.Nombre);
+                notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + _evento.Descripcion + ". ", _evento.Categoria.Nombre);// + " : originado en " + _evento.Origen.WorkCenter.BussinesUnit.Area.Nombre);
             }
-            
+
             return CreatedAtRoute("DefaultApi", new { id = evento.Id }, evento);
         }
 

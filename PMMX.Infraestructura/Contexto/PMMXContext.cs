@@ -7,6 +7,7 @@ using System.Data.Entity;
 using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo;
 using PMMX.Modelo.Entidades.Warehouse;
+using PMMX.Modelo.Entidades.JustDoIts;
 
 namespace PMMX.Infraestructura.Contexto
 {
@@ -123,10 +124,8 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new AsignacionMap());
             modelBuilder.Configurations.Add(new SubAreaMap());
             modelBuilder.Configurations.Add(new ListaDistribucionMap());
-
-
-
-
+            modelBuilder.Configurations.Add(new EventoOrigenMap());
+            modelBuilder.Configurations.Add(new EventoResponsableMap());
         }
 
         #region Multimedia
@@ -202,6 +201,8 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<Asignacion> Asignaciones { get; set; }
         public DbSet<SubArea> SubArea { get; set; }
         public DbSet<ListaDistribucion> ListaDistribucion { get; set; }
+        public DbSet<EventoOrigen> EventoOrigen { get; set; }
+        public DbSet<EventoResponsable> EventoResponsable { get; set; }
 
     }
 }

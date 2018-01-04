@@ -88,6 +88,8 @@
     <Compile Include="Entidades\Desperdicio.cs" />
     <Compile Include="Entidades\Electricos.cs" />
     <Compile Include="Entidades\Horario.cs" />
+    <Compile Include="Entidades\JustDoIts\EventoOrigen.cs" />
+    <Compile Include="Entidades\JustDoIts\EventoResponsable.cs" />
     <Compile Include="Entidades\ListaDistribucion.cs" />
     <Compile Include="Entidades\Maquinaria\ObjetivoVQI.cs" />
     <Compile Include="Entidades\Marca.cs" />
@@ -152,6 +154,8 @@
     <Compile Include="Map\CarrierMap.cs" />
     <Compile Include="Map\DesperdicioMap.cs" />
     <Compile Include="Map\ElectricoMap.cs" />
+    <Compile Include="Map\EventoOrigenMap.cs" />
+    <Compile Include="Map\EventoResponsableMap.cs" />
     <Compile Include="Map\HorarioMap.cs" />
     <Compile Include="Map\ListaDistribucionMap.cs" />
     <Compile Include="Map\LocacionMap.cs" />
