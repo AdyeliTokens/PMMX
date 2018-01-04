@@ -17,6 +17,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public bool Activo { get; set; }
 
         public Persona Responsable { get; set; }
+        public ICollection<SubCategoria> SubCategorias { get; set; }
         public ICollection<GrupoPreguntas> GrupoPreguntas { get; set; }
         public ICollection<JustDoIt> JustDoIt { get; set; }
     }

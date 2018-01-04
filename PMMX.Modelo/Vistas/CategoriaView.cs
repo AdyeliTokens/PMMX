@@ -16,5 +16,9 @@ namespace PMMX.Modelo.Vistas
         public bool Activo { get; set; }
 
         public PersonaView Responsable { get; set; }
+
+        public ICollection<SubCategoriaView> SubCategorias { get; set; }
+        public ICollection<GrupoPreguntasView> GrupoPreguntas { get; set; }
+        public ICollection<JustDoItView> JustDoIt { get; set; }
     }
 }

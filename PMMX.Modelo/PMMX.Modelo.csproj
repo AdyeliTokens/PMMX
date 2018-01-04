@@ -234,7 +234,7 @@
     <Compile Include="Vistas\RemitentesView.cs" />
     <Compile Include="Vistas\RespuestaView.cs" />
     <Compile Include="Vistas\ShiftLeadersView.cs" />
-    <Compile Include="Vistas\SubClasificacionView.cs" />
+    <Compile Include="Vistas\SubCategoriaView.cs" />
     <Compile Include="Vistas\TiempoDeParoView.cs" />
     <Compile Include="Vistas\UserView.cs" />
     <Compile Include="Vistas\VQIView.cs" />
