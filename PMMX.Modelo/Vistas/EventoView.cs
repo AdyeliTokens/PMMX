@@ -1,4 +1,6 @@
-﻿using PMMX.Modelo.Vistas;
+﻿using PMMX.Modelo.Entidades.JustDoIts;
+using PMMX.Modelo.Entidades.Warehouse;
+using PMMX.Modelo.Vistas;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,9 +13,7 @@ namespace PMMX.Modelo.Vistas
     {
         public int Id { get; set; }
         public string Descripcion { get; set; }
-        public int IdOrigen { get; set; }
         public int IdAsignador { get; set; }
-        public int IdResponsable { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]
         public DateTime FechaInicio { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]
@@ -23,9 +23,10 @@ namespace PMMX.Modelo.Vistas
         public bool Activo { get; set; }
 
         public PersonaView Asignador { get; set; }
-        public PersonaView Responsable { get; set; }
-        public OrigenView Origen { get; set; }
 
         public List<JustDoItView> JustDoIt { get; set; }
+        public List<Ventana> Ventanas { get; set; }
+        public List<EventoOrigen> EventoOrigen { get; set; }
+        public List<EventoResponsable> EventoResponsable { get; set; }
     }
 }

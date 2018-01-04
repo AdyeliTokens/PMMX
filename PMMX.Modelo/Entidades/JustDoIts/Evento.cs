@@ -26,10 +26,10 @@ namespace PMMX.Modelo.Entidades.Operaciones
 
         public Persona Asignador { get; set; }
 
-        public ICollection<JustDoIt> JustDoIt { get; set; }
-        public ICollection<Ventana> Ventanas { get; set; }
-        public ICollection<EventoOrigen> EventoOrigen { get; set; }
-        public ICollection<EventoResponsable> EventoResponsable { get; set; }
+        public List<JustDoIt> JustDoIt { get; set; }
+        public List<Ventana> Ventanas { get; set; }
+        public List<EventoOrigen> EventoOrigen { get; set; }
+        public List<EventoResponsable> EventoResponsable { get; set; }
 
     }
 }
