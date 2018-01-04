@@ -238,6 +238,8 @@
     <Compile Include="Areas\Apis\Controllers\CategoriaController.cs" />
     <Compile Include="Areas\Apis\Controllers\ComentariosController.cs" />
     <Compile Include="Areas\Apis\Controllers\EventoController.cs" />
+    <Compile Include="Areas\Apis\Controllers\EventoOrigenController.cs" />
+    <Compile Include="Areas\Apis\Controllers\EventoResponsableController.cs" />
     <Compile Include="Areas\Apis\Controllers\FotosController.cs" />
     <Compile Include="Areas\Apis\Controllers\IndicadoresController.cs" />
     <Compile Include="Areas\Apis\Controllers\JustDoItController.cs" />
@@ -292,6 +294,8 @@
     <Compile Include="Areas\Operaciones\Controllers\DesperdiciosController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\ElectricosController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\EventoController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\EventoOrigenController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\EventoResponsableController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\HorariosController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\JustDoItController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\MantenimientoController.cs" />
@@ -7959,6 +7963,16 @@
     <Content Include="Areas\Operaciones\Views\ListaDistribucion\Details.cshtml" />
     <Content Include="Areas\Operaciones\Views\ListaDistribucion\Edit.cshtml" />
     <Content Include="Areas\Operaciones\Views\ListaDistribucion\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\EventoResponsable\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\EventoResponsable\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\EventoResponsable\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\EventoResponsable\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\EventoResponsable\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\EventoOrigen\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\EventoOrigen\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\EventoOrigen\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\EventoOrigen\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\EventoOrigen\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
