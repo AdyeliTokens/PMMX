@@ -13,7 +13,6 @@ namespace PMMX.Modelo.Entidades
     {
         public int Id { get; set; }
         public int IdPersona { get; set; }
-        //public int IdEntorno { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
@@ -22,7 +21,6 @@ namespace PMMX.Modelo.Entidades
         public Boolean Activo { get; set; }
 
         public Persona Persona { get; set; }
-        
         public ICollection<Entorno> Entornos { get; set; }
     }
 }

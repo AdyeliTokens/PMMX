@@ -17,7 +17,6 @@ namespace PMMX.Modelo.Map
             HasKey(c => c.Id);
             Property(c => c.Id).HasColumnName("Id");
             Property(c => c.IdPersona).HasColumnName("IdPersona");
-            //Property(c => c.IdEntorno).HasColumnName("IdEntorno");
             Property(c => c.UserName).HasColumnName("UserName");
             Property(c => c.Email).HasColumnName("Email");
             Property(c => c.Password).HasColumnName("Password");
@@ -26,7 +25,6 @@ namespace PMMX.Modelo.Map
 
 
             HasRequired(c => c.Persona).WithMany(p => p.Usuarios).HasForeignKey(c => c.IdPersona);
-            //HasRequired(c => c.Entorno).WithMany(p => p.Usuarios).HasForeignKey(c => c.IdEntorno);
 
             HasMany(c => c.Entornos).WithMany(x => x.Usuarios).Map(cs =>
             {
