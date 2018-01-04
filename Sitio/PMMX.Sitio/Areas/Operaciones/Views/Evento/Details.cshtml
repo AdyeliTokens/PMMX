@@ -1,4 +1,4 @@
-﻿@model PMMX.Modelo.Entidades.Operaciones.Evento
+﻿@model PMMX.Modelo.Vistas.EventoView
 
 @{
     ViewBag.Title = "Details";
@@ -20,35 +20,11 @@
         </dd>
 
         <dt>
-            @Html.LabelFor(model => model.Responsable.Nombre, "Responsable: ")
-        </dt>
-
-        <dd>
-            @Html.Raw(@ViewBag.NombreResponsable)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Descripcion)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Descripcion)
-        </dd>
-
-        <dt>
-            @Html.LabelFor(model => model.IdOrigen, "Ubicacion: ")
-        </dt>
-
-        <dd>
-            @Html.Raw(@ViewBag.Ubicacion)
-        </dd>
-
-        <dt>
-            @Html.LabelFor(model => model.IdCategoria, "Categoria: ")
-        </dt>
-
-        <dd>
-            @Html.Raw(@ViewBag.NombreCategoria)
         </dd>
 
         <dt>

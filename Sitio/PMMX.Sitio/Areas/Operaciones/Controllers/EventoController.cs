@@ -51,11 +51,9 @@ namespace Sitio.Areas.Operaciones.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-
-
             var evento = db.Evento
-                .Where(e => e.Id == id).
-                Select(e => new Evento
+                .Where(e => e.Id == id)
+                .Select(e => new EventoView
                 {
                     Id = e.Id,
                     Descripcion = e.Descripcion,
@@ -65,22 +63,8 @@ namespace Sitio.Areas.Operaciones.Controllers
                     Nota = e.Nota,
                     EsRecurrente = e.EsRecurrente,
                     Activo = e.Activo,
-                    EventoOrigen = e.EventoOrigen.Where(o => o.IdEvento == e.Id)
-                    .Select(o => new EventoOrigen
-                    {
-                        Id = o.Id,
-                        IdEvento = o.IdEvento,
-                        IdOrigen = o.IdOrigen
-                    }).ToList(),
-                    EventoResponsable = e.EventoResponsable.Where(r => r.IdEvento == e.Id)
-                    .Select(r => new EventoResponsable
-                    {
-                        Id = r.Id,
-                        IdEvento = r.IdEvento,
-                        IdResponsable = r.IdResponsable
-                    }).ToList(),
                     JustDoIt = e.JustDoIt.Where(j => j.IdEvento == e.Id)
-                    .Select(j => new JustDoIt
+                    .Select(j => new JustDoItView
                     {
                         Id = j.Id,
                         IdCategoria = j.IdCategoria
@@ -93,10 +77,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
 
             ViewBag.NombreAsignador = db.Personas.Where(x => x.Id == evento.IdAsignador).Select(x =>  x.Nombre + " " + x.Apellido1 + " " + x.Apellido2).FirstOrDefault().ToString();
-            //ViewBag.NombreResponsable = db.Personas.Where(x => x.Id == evento.EventoResponsable.IdResponsable).Select(x => x.Nombre + " " + x.Apellido1 + " " + x.Apellido2).FirstOrDefault().ToString();
-            //ViewBag.NombreCategoria = db.Categoria.Where(x => x.Id == evento.JustDoIt.IdCategoria).Select(x => x.Nombre ).FirstOrDefault().ToString();
-            //ViewBag.Ubicacion = db.Origens.Where(x => x.Id == evento.IdOrigen).Select(x => x.WorkCenter.BussinesUnit.Area.Nombre + " " + x.WorkCenter.Nombre + " " + x.Modulo.Nombre).FirstOrDefault().ToString();
-
+            
             return View(evento);
         }
 
@@ -155,10 +136,8 @@ namespace Sitio.Areas.Operaciones.Controllers
         // GET: Eventos/Evento/Create
         public ActionResult Create()
         {
-             ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, NombreCorto = x.NombreCorto }).OrderBy(x => x.NombreCorto), "Id", "NombreCorto");
              ViewBag.IdAsignador = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
-             ViewBag.IdResponsable = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
-            
+             
             return View();
         }
 
@@ -168,7 +147,6 @@ namespace Sitio.Areas.Operaciones.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Evento evento)
-       // public ActionResult Create(Evento evento)
         {
             if (ModelState.IsValid)
             {
@@ -217,9 +195,6 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
 
             ViewBag.IdAsignador = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre", evento.IdAsignador);
-            //ViewBag.IdResponsable = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre", evento.IdResponsable);
-            //ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre}).OrderBy(x => x.Nombre), "Id", "Nombre", evento.IdCategoria);
-            //ViewBag.IdOrigen = new SelectList(db.Origens.Select(x => new { Id = x.Id, Nombre = x.WorkCenter.BussinesUnit.Area.Nombre + " " + x.WorkCenter.Nombre + " " + x.Modulo.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", evento.IdOrigen);
             return View(evento);
         }
 
@@ -228,7 +203,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Descripcion,IdOrigen,IdCategoria,IdAsignador,IdResponsable,FechaInicio,FechaFin,Nota,EsRecurrente,Activo")] Evento evento)
+        public ActionResult Edit(Evento evento)
         {
             if (ModelState.IsValid)
             {
@@ -238,7 +213,6 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
             
             ViewBag.IdAsignador = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
-            ViewBag.IdResponsable = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View(evento);
         }
 
@@ -256,10 +230,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
 
             ViewBag.NombreAsignador = db.Personas.Where(x => x.Id == evento.IdAsignador).Select(x => x.Nombre + " " + x.Apellido1 + " " + x.Apellido2).FirstOrDefault().ToString();
-            //ViewBag.NombreResponsable = db.Personas.Where(x => x.Id == evento.IdResponsable).Select(x => x.Nombre + " " + x.Apellido1 + " " + x.Apellido2).FirstOrDefault().ToString();
-            //ViewBag.NombreCategoria = db.Categoria.Where(x => x.Id == evento.IdCategoria).Select(x => x.Nombre).FirstOrDefault().ToString();
-            //ViewBag.Ubicacion = db.Origens.Where(x => x.Id == evento.IdOrigen).Select(x => x.WorkCenter.BussinesUnit.Area.Nombre + " " + x.WorkCenter.Nombre + " " + x.Modulo.Nombre).FirstOrDefault().ToString();
-
+            
             return View(evento);
         }
 
