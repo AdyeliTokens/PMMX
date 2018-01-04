@@ -1,24 +1,21 @@
-﻿using System;
+﻿using PMMX.Modelo.Vistas;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
 namespace PMMX.Modelo.Vistas
 {
-    public class CategoriaView
+    public class SubCategoriaView
     {
         public int Id { get; set; }
+        public int IdCategoria { get; set; }
         public string Nombre { get; set; }
         public string NombreCorto { get; set; }
         public int IdResponsable { get; set; }
-        public string Color { get; set; }
         public bool Activo { get; set; }
 
         public PersonaView Responsable { get; set; }
-
-        public ICollection<SubCategoriaView> SubCategorias { get; set; }
-        public ICollection<GrupoPreguntasView> GrupoPreguntas { get; set; }
-        public ICollection<JustDoItView> JustDoIt { get; set; }
+        public CategoriaView Categoria { get; set; }
     }
 }

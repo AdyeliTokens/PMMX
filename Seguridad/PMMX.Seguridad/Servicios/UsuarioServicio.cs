@@ -71,15 +71,15 @@ namespace PMMX.Seguridad.Servicios
         {
             List<DispositivoView> dispositivos = new List<DispositivoView>();
 
-            dispositivos = db.Evento
-                .Where(e => e.Id == idEvento)
-                .Select( e => e.Responsable.Dispositivos.Where( d => d.Activo == true).Select( v => new DispositivoView
+            dispositivos = db.EventoResponsable
+                .Where(e => e.IdEvento == idEvento)
+                .Select(e => e.Responsable.Dispositivos.Where(d => d.Activo == true).Select(v => new DispositivoView
                 {
                     Id = v.Id,
                     Llave = v.Llave
                 }).ToList()
                 ).FirstOrDefault();
-
+            
             return dispositivos;
         }
 

@@ -18,7 +18,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // GET: Eventos/SubCategoria
         public ActionResult Index()
         {
-            var subCategoria = db.SubCategoria.Include(s => s.Responsable);
+            var subCategoria = db.SubCategoria.Include(s => s.Responsable).Include(s => s.Categoria);
             return View(subCategoria.ToList());
         }
 
@@ -40,6 +40,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // GET: Eventos/SubCategoria/Create
         public ActionResult Create()
         {
+            ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
             ViewBag.IdResponsable = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View();
         }
@@ -49,7 +50,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nombre,NombreCorto,IdResponsable,Activo")] SubCategoria subCategoria)
+        public ActionResult Create(SubCategoria subCategoria)
         {
             if (ModelState.IsValid)
             {
@@ -58,6 +59,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
             ViewBag.IdResponsable = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View(subCategoria);
         }
@@ -74,6 +76,8 @@ namespace Sitio.Areas.Operaciones.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
             ViewBag.IdResponsable = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View(subCategoria);
         }
@@ -83,7 +87,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nombre,NombreCorto,IdResponsable,Activo")] SubCategoria subCategoria)
+        public ActionResult Edit(SubCategoria subCategoria)
         {
             if (ModelState.IsValid)
             {
@@ -91,6 +95,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
             ViewBag.IdResponsable = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View(subCategoria);
         }

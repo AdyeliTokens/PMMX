@@ -11,7 +11,7 @@ using System.Data.Entity;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Vistas;
 
-namespace Maya.Helpers
+namespace Sitio.Helpers
 {
     public class EmailService
     {
