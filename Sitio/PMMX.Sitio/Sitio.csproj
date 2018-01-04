@@ -250,6 +250,7 @@
     <Compile Include="Areas\Apis\Controllers\Multimedia\DefaultController.cs" />
     <Compile Include="Areas\Apis\Controllers\Operaciones\DesperdiciosController.cs" />
     <Compile Include="Areas\Apis\Controllers\Operaciones\MarcasController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operaciones\ModuloSeccionesController.cs" />
     <Compile Include="Areas\Apis\Controllers\OperadoresPorWorkCentersController.cs" />
     <Compile Include="Areas\Apis\Controllers\Operarios\PesadoresController.cs" />
     <Compile Include="Areas\Apis\Controllers\ProveedoresController.cs" />
