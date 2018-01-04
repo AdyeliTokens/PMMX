@@ -238,6 +238,8 @@
     <Compile Include="Areas\Apis\Controllers\CategoriaController.cs" />
     <Compile Include="Areas\Apis\Controllers\ComentariosController.cs" />
     <Compile Include="Areas\Apis\Controllers\EventoController.cs" />
+    <Compile Include="Areas\Apis\Controllers\EventoOrigenController.cs" />
+    <Compile Include="Areas\Apis\Controllers\EventoResponsableController.cs" />
     <Compile Include="Areas\Apis\Controllers\FotosController.cs" />
     <Compile Include="Areas\Apis\Controllers\IndicadoresController.cs" />
     <Compile Include="Areas\Apis\Controllers\JustDoItController.cs" />
