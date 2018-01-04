@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 
-namespace PMMX.Helpers
+namespace Sitio.Helpers
 {
     public class VideoResult : ActionResult
     {

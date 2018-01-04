@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Maya.Helpers
+namespace Sitio.Helpers
 {
     public class NotificationService
     {
