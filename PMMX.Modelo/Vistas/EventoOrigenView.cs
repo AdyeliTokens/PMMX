@@ -19,5 +19,6 @@ namespace PMMX.Modelo.Vistas
         #region Navegacion
         public EventoView Evento { get; set; }
         public OrigenView Origen { get; set; }
+        #endregion
     }
 }
