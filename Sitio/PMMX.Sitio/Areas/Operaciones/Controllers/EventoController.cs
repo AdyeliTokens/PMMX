@@ -25,7 +25,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // GET: Eventos/Evento
         public ActionResult Index()
         {
-            var evento = db.EventoResponsable.Include(e => e.Evento).Include(e => e.Evento.Asignador).Include(e => e.Responsable).ToList();
+            var evento = db.Evento.Include(e => e.Asignador);
             return View(evento);
         }
 

@@ -52,7 +52,6 @@ namespace PMMX.Modelo.Entidades
         public ICollection<SubArea> SubArea { get; set; }
         public ICollection<Categoria> Categorias { get; set; }
         public ICollection<SubCategoria> SubCategorias { get; set; }
-        public ICollection<Evento> EventosAsignados { get; set; }
         public ICollection<Evento> EventosReportados { get; set; }
         public ICollection<JustDoIt> JustDoItReportados { get; set; }
         public ICollection<JustDoIt> JustDoItAsignados { get; set; }
