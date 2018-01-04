@@ -14,13 +14,11 @@ namespace PMMX.Modelo.Entidades.JustDoIts
     {
         public int Id { get; set; }
         public int IdEvento { get; set; }
-        public int? IdResponsable { get; set; }
-        public int? IdListaDistribucion { get; set; }
+        public int IdResponsable { get; set; }
 
         #region Navegacion
         public Evento Evento { get; set; }
         public Persona Responsable { get; set; }
-        public ListaDistribucion ListaDistribucion { get; set; }
         #endregion
     }
 }

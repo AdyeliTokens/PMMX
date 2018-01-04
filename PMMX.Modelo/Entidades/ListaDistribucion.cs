@@ -21,8 +21,6 @@ namespace PMMX.Modelo.Entidades.Operaciones
         #region Navegacion
         public Persona Remitente { get; set; }
         public SubArea SubArea { get; set; }
-
-        public ICollection<EventoResponsable> EventoResponsable { get; set; }
         #endregion
 
     }
