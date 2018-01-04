@@ -60,7 +60,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,IdEvento,IdReportador,IdOrigen,Descripcion,Activo,FechaReporte,FechaEstimada")] JustDoIt JustDoIt)
+        public ActionResult Create(JustDoIt JustDoIt)
         {
             return View();
         }
@@ -132,10 +132,11 @@ namespace Sitio.Areas.Operaciones.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,IdEvento,IdReportador,IdOrigen,Descripcion,Activo,FechaReporte,FechaEstimada")] JustDoIt justDoIt)
+        public ActionResult Edit(JustDoIt justDoIt)
         {
             ViewBag.IdOrigen = new SelectList(db.Origens, "Id", "Id", justDoIt.IdOrigen);
             ViewBag.IdReportador = new SelectList(db.Personas, "Id", "Nombre", justDoIt.IdReportador);
+            ViewBag.IdCategoria = new SelectList(db.Categoria, "Id", "Id", justDoIt.IdCategoria);
             return View();
         }
 

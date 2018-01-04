@@ -21,8 +21,10 @@ namespace PMMX.Modelo.Entidades.Operaciones
             this.Property(c => c.Activo).HasColumnName("Activo");
 
             this.HasRequired(c => c.Responsable).WithMany(x => x.Categorias).HasForeignKey(c => c.IdResponsable);
+
             this.HasMany(c => c.Eventos).WithRequired(x => x.Categoria).HasForeignKey(c => c.IdCategoria);
             this.HasMany(c => c.GrupoPreguntas).WithRequired(x => x.Categoria).HasForeignKey(c => c.IdCategoria);
+            this.HasMany(c => c.JustDoIt).WithRequired(x => x.Categoria).HasForeignKey(c => c.IdCategoria);
         }
     }
 }

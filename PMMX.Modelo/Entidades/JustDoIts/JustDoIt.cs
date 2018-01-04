@@ -20,6 +20,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public DateTime FechaEstimada { get; set; }
         public int Prioridad { get; set; }
         public int IdResponsable { get; set; }
+        public int IdCategoria { get; set; }
         public Boolean Activo { get; set; }
 
 
@@ -27,6 +28,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public Persona Responsable { get; set; }
         public Origen Origen { get; set; }
         public Evento Evento { get; set; }
+        public Categoria Categoria { get; set; }
         public List<Foto> Fotos { get; set; }
     }
 }

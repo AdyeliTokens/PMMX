@@ -37,6 +37,7 @@ namespace PMMX.Operaciones.Servicios
                 FechaEstimada = d.FechaEstimada,
                 Descripcion = d.Descripcion,
                 IdResponsable = d.IdResponsable,
+                IdCategoria = d.IdCategoria,
                 Reportador = new PersonaView
                 {
                     Id = d.Reportador.Id,
@@ -76,9 +77,17 @@ namespace PMMX.Operaciones.Servicios
                             IdResponsable = d.Origen.WorkCenter.BussinesUnit.IdResponsable
                         }
                     }
+                },
+                Categoria = new CategoriaView
+                {
+                    Id = d.Categoria.Id,
+                    Nombre = d.Categoria.Nombre,
+                    NombreCorto = d.Categoria.NombreCorto,
+                    IdResponsable = d.Categoria.IdResponsable,
+                    Color = d.Categoria.Color,
+                    Activo = d.Categoria.Activo
                 }
-
-            });
+                });
             return respuesta;
         }
 
@@ -99,6 +108,7 @@ namespace PMMX.Operaciones.Servicios
                     Prioridad = d.Prioridad,
                     FechaReporte = d.FechaReporte,
                     FechaEstimada = d.FechaEstimada,
+                    IdCategoria = d.IdCategoria,
                     Reportador = new PersonaView
                     {
                         Id = d.Reportador.Id,
@@ -141,6 +151,15 @@ namespace PMMX.Operaciones.Servicios
 
                         }
 
+                    },
+                    Categoria = new CategoriaView
+                    {
+                        Id = d.Categoria.Id,
+                        Nombre = d.Categoria.Nombre,
+                        NombreCorto = d.Categoria.NombreCorto,
+                        IdResponsable = d.Categoria.IdResponsable,
+                        Color = d.Categoria.Color,
+                        Activo = d.Categoria.Activo
                     },
                     Fotos = d.Fotos.Select(f => new FotoView
                     {
