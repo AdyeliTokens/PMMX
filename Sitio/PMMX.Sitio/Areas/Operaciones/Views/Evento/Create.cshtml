@@ -29,41 +29,6 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IdOrigen, "Ubicacion: ", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <select id="Area" name="Area" , class = "form-control"></select>
-                <select id="WorkCenters" name="WorkCenters" , class = "form-control"></select>
-                <select id="Modulos" name="Modulos" , class = "form-control"></select>
-                @Html.Hidden("IdOrigen")
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdCategoria, "Categoria: ", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdCategoria", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IdCategoria, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.IdAsignador, "Autor: ", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdAsignador", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IdAsignador, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdResponsable, "Asignado a: ", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdResponsable", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IdResponsable, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.FechaInicio, "Fecha Inicio: ", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextBoxFor(model => model.FechaInicio, new { id = "FechaInicio", @class = "form-control" } )
