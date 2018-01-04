@@ -15,7 +15,6 @@ namespace PMMX.Modelo.Entidades.Operaciones
     {
         public int Id { get; set; }
         public string Descripcion { get; set; }
-        public int IdCategoria { get; set; }
         public int IdAsignador { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]
         public DateTime FechaInicio { get; set; }
@@ -26,7 +25,6 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public bool Activo { get; set; }
 
         public Persona Asignador { get; set; }
-        public Categoria Categoria { get; set; }
 
         public ICollection<JustDoIt> JustDoIt { get; set; }
         public ICollection<Ventana> Ventanas { get; set; }

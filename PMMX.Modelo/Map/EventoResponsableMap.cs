@@ -18,7 +18,6 @@ namespace PMMX.Modelo.Entidades.Operaciones
             Property(c => c.Id).HasColumnName("Id");
             Property(c => c.IdEvento).HasColumnName("IdEvento");
             Property(c => c.IdResponsable).HasColumnName("IdResponsable");
-            Property(c => c.IdListaDistribucion).HasColumnName("IdListaDistribucion");
             #endregion
 
             #region HasMany
@@ -30,7 +29,6 @@ namespace PMMX.Modelo.Entidades.Operaciones
             #region HasRequired
             this.HasRequired(er => er.Evento).WithMany(e => e.EventoResponsable);
             this.HasRequired(er => er.Responsable).WithMany(e => e.EventoResponsable);
-            this.HasRequired(er => er.ListaDistribucion).WithMany(e => e.EventoResponsable);
             #endregion
 
         }
