@@ -18,7 +18,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // GET: Operaciones/Desperdicios
         public ActionResult Index()
         {
-            var desperdicios = db.Desperdicios.Include(d => d.Seccion);
+            var desperdicios = db.Desperdicios.Include(d => d.MarcaDelCigarrillo).Include(d => d.Reportante).Include(d => d.Seccion).Include(d => d.WorkCenter);
             return View(desperdicios.ToList());
         }
 
@@ -40,7 +40,10 @@ namespace Sitio.Areas.Operaciones.Controllers
         // GET: Operaciones/Desperdicios/Create
         public ActionResult Create()
         {
+            ViewBag.IdMarca = new SelectList(db.Marcas, "Id", "Nombre");
+            ViewBag.IdPersona = new SelectList(db.Personas, "Id", "Nombre");
             ViewBag.IdSeccion = new SelectList(db.ModuloSeccion, "Id", "Nombre");
+            ViewBag.IdWorkCenter = new SelectList(db.WorkCenters, "Id", "Nombre");
             return View();
         }
 
@@ -58,7 +61,10 @@ namespace Sitio.Areas.Operaciones.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.IdMarca = new SelectList(db.Marcas, "Id", "Nombre", desperdicio.IdMarca);
+            ViewBag.IdPersona = new SelectList(db.Personas, "Id", "Nombre", desperdicio.IdPersona);
             ViewBag.IdSeccion = new SelectList(db.ModuloSeccion, "Id", "Nombre", desperdicio.IdSeccion);
+            ViewBag.IdWorkCenter = new SelectList(db.WorkCenters, "Id", "Nombre", desperdicio.IdWorkCenter);
             return View(desperdicio);
         }
 
@@ -74,7 +80,10 @@ namespace Sitio.Areas.Operaciones.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.IdMarca = new SelectList(db.Marcas, "Id", "Nombre", desperdicio.IdMarca);
+            ViewBag.IdPersona = new SelectList(db.Personas, "Id", "Nombre", desperdicio.IdPersona);
             ViewBag.IdSeccion = new SelectList(db.ModuloSeccion, "Id", "Nombre", desperdicio.IdSeccion);
+            ViewBag.IdWorkCenter = new SelectList(db.WorkCenters, "Id", "Nombre", desperdicio.IdWorkCenter);
             return View(desperdicio);
         }
 
@@ -91,7 +100,10 @@ namespace Sitio.Areas.Operaciones.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.IdMarca = new SelectList(db.Marcas, "Id", "Nombre", desperdicio.IdMarca);
+            ViewBag.IdPersona = new SelectList(db.Personas, "Id", "Nombre", desperdicio.IdPersona);
             ViewBag.IdSeccion = new SelectList(db.ModuloSeccion, "Id", "Nombre", desperdicio.IdSeccion);
+            ViewBag.IdWorkCenter = new SelectList(db.WorkCenters, "Id", "Nombre", desperdicio.IdWorkCenter);
             return View(desperdicio);
         }
 
