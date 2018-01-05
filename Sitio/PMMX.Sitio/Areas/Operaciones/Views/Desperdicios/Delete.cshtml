@@ -12,11 +12,35 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.MarcaDelCigarrillo.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MarcaDelCigarrillo.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Reportante.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Reportante.Nombre)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Seccion.Nombre)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Seccion.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WorkCenter.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WorkCenter.Nombre)
         </dd>
 
         <dt>
@@ -33,30 +57,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.Fecha)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IdPersona)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IdPersona)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IdWorkCenter)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IdWorkCenter)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IdMarca)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IdMarca)
         </dd>
 
     </dl>
