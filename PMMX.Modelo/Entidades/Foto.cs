@@ -1,6 +1,5 @@
 ﻿using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo.Entidades.Defectos;
-using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo.Entidades.Maquinaria;
 using System;
 using System.Collections.Generic;
