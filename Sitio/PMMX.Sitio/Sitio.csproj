@@ -7928,11 +7928,6 @@
     <Content Include="Areas\Operaciones\Views\Marcas\Details.cshtml" />
     <Content Include="Areas\Operaciones\Views\Marcas\Edit.cshtml" />
     <Content Include="Areas\Operaciones\Views\Marcas\Index.cshtml" />
-    <Content Include="Areas\Operaciones\Views\Desperdicios\Create.cshtml" />
-    <Content Include="Areas\Operaciones\Views\Desperdicios\Delete.cshtml" />
-    <Content Include="Areas\Operaciones\Views\Desperdicios\Details.cshtml" />
-    <Content Include="Areas\Operaciones\Views\Desperdicios\Edit.cshtml" />
-    <Content Include="Areas\Operaciones\Views\Desperdicios\Index.cshtml" />
     <Content Include="Areas\Operaciones\Views\Electricos\Create.cshtml" />
     <Content Include="Areas\Operaciones\Views\Electricos\Delete.cshtml" />
     <Content Include="Areas\Operaciones\Views\Electricos\Details.cshtml" />
@@ -7973,6 +7968,11 @@
     <Content Include="Areas\Operaciones\Views\EventoOrigen\Details.cshtml" />
     <Content Include="Areas\Operaciones\Views\EventoOrigen\Edit.cshtml" />
     <Content Include="Areas\Operaciones\Views\EventoOrigen\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Desperdicios\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Desperdicios\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Desperdicios\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Desperdicios\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Desperdicios\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
