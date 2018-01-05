@@ -1,7 +1,6 @@
 ﻿using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo.Entidades.Defectos;
 using PMMX.Modelo.Entidades.Paros;
-using PMMX.Modelo.Entidades.Operaciones;
 using System;
 using System.Collections.Generic;
 using System.Linq;
