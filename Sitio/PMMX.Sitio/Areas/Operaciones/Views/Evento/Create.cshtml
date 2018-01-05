@@ -76,7 +76,8 @@
         </div>
 
         <div class="form-group">
-            @Html.Hidden("IdOrigen")
+            @Html.Hidden("IdOrigen",0)
+            @Html.Hidden("IdResponsables",null)
             @Html.Hidden("Activo")            
         </div>
         
@@ -94,7 +95,7 @@
 </div>
 
 <!-- Modal-->
-<div class="modal fade" id="createAssetModal" tabindex="-1" role="dialog" aria-labelledby="CreateAssetModal" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="createAssetModal" role="dialog" aria-labelledby="CreateAssetModal" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
@@ -165,8 +166,8 @@
                 });
             });
 
-            $("#Ubicacion").click(function () {
-                var url = ("/Operaciones/Evento/Ubicaciones");
+            $("#Responsables").click(function () {
+                var url = ("/Operaciones/Evento/Responsables");
 
                 $.get(url, function (data) {
                     $('#createAssetContainer').html(data);

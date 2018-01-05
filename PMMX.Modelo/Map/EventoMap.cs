@@ -32,6 +32,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
             this.HasMany(c => c.JustDoIt).WithRequired(x => x.Evento).HasForeignKey(c => c.IdEvento);
             this.HasMany(c => c.Ventanas).WithRequired(x => x.Evento).HasForeignKey(c => c.IdEvento);
             this.HasMany(c => c.EventoOrigen).WithRequired(x => x.Evento).HasForeignKey(c => c.IdEvento);
+            this.HasMany(c => c.EventoResponsable).WithRequired(x => x.Evento).HasForeignKey(c => c.IdEvento);
             #endregion
         }
     }

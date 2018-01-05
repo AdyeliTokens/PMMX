@@ -132,11 +132,28 @@ namespace Sitio.Areas.Operaciones.Controllers
                 return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
             }
         }
-        
+        public ActionResult GetResponsables()
+        {
+            if (ModelState.IsValid)
+            {
+                var responsables = db.Personas.Select(w => new { Id = w.Id, Nombre = w.Nombre +" "+ w.Apellido1 +" "+ w.Apellido2 }).OrderBy(w => w.Id).ToList();
+                return Json(new { responsables }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public PartialViewResult Responsables()
+        {
+           return PartialView("_Responsables");
+        }
+
         public PartialViewResult Ubicaciones()
         {
             var areas = db.Area.Select(w => new { Id = w.Id, NombreCorto = w.NombreCorto }).OrderBy(w => w.Id).ToList();
-            return PartialView("_Origen", new { areas = areas }); //new ViewDataDictionary { {"origenes" , origenes } } );
+            return PartialView("_Origen", new { areas = areas }); 
         }
 
         // GET: Eventos/Evento/Create
@@ -152,7 +169,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Evento evento)
+        public ActionResult Create(Evento evento, int IdOrigen, string IdResponsables)
         {
             if (ModelState.IsValid)
             {
@@ -165,20 +182,42 @@ namespace Sitio.Areas.Operaciones.Controllers
                 if (persona.EjecucionCorrecta)
                 {
                    evento.IdAsignador = persona.Respuesta.Id;
+                    db.Evento.Add(evento);
+                    db.SaveChanges();
                 }
                 
-                db.Evento.Add(evento);
-                db.SaveChanges();
-
-                NotificationService notify = new NotificationService();
-                UsuarioServicio usuarioServicio = new UsuarioServicio();
-
-                List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(evento.Id);
-                List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
-
-                foreach (string notificacion in llaves)
+                if(IdOrigen > 0)
                 {
-                    notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + evento.Descripcion + ". ", "");
+                    EventoOrigen eOrigen = new EventoOrigen();
+                    eOrigen.IdEvento = evento.Id;
+                    eOrigen.IdOrigen = IdOrigen;
+                    db.EventoOrigen.Add(eOrigen);
+                    db.SaveChanges();
+                }
+                
+                if(IdResponsables != null && IdResponsables != "")
+                {
+                    Char delimiter = ',';
+                    String[] substrings = IdResponsables.Split(delimiter);
+                    foreach (var substring in substrings)
+                    {
+                        EventoResponsable eResponsable = new EventoResponsable();
+                        eResponsable.IdEvento = evento.Id;
+                        eResponsable.IdResponsable = int.Parse(substring);
+                        db.EventoResponsable.Add(eResponsable);
+                        db.SaveChanges();
+                    }
+
+                    NotificationService notify = new NotificationService();
+                    UsuarioServicio usuarioServicio = new UsuarioServicio();
+
+                    List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(evento.Id);
+                    List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
+
+                    foreach (string notificacion in llaves)
+                    {
+                        notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + evento.Descripcion + ". ", "");
+                    }
                 }
 
                 return RedirectToAction("Index");
