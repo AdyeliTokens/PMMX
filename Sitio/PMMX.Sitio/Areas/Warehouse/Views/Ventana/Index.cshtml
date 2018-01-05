@@ -5,10 +5,9 @@
     Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
-@section Styles {
+
     @Styles.Render("~/Style/DataTables")
 
-}
 <div class="row">
     <div class="col-md-12">
         <div class="box box-primary">
@@ -140,8 +139,8 @@
     </div>
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/JS/DataTables")
+
+@Scripts.Render("~/JS/DataTables")
     <script>
         $(function () {
             $('#example1').DataTable();
@@ -166,4 +165,4 @@
             radioClass: 'iradio_flat-blue'
         });
     </script>
-}
+
