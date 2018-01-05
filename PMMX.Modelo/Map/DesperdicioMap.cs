@@ -15,7 +15,7 @@ namespace PMMX.Modelo.Map
         {
             #region Propiedades
 
-            ToTable("Desperdicio");
+            ToTable("Desperdicios");
             HasKey(c => c.Id);
             Property(c => c.Id).HasColumnName("Id");
             Property(c => c.Cantidad).HasColumnName("Cantidad");
