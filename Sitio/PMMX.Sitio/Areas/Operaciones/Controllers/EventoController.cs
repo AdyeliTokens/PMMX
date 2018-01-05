@@ -132,6 +132,12 @@ namespace Sitio.Areas.Operaciones.Controllers
                 return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
             }
         }
+        
+        public PartialViewResult Ubicaciones()
+        {
+            var areas = db.Area.Select(w => new { Id = w.Id, NombreCorto = w.NombreCorto }).OrderBy(w => w.Id).ToList();
+            return PartialView("_Origen", new { areas = areas }); //new ViewDataDictionary { {"origenes" , origenes } } );
+        }
 
         // GET: Eventos/Evento/Create
         public ActionResult Create()

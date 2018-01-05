@@ -7973,6 +7973,7 @@
     <Content Include="Areas\Operaciones\Views\EventoOrigen\Details.cshtml" />
     <Content Include="Areas\Operaciones\Views\EventoOrigen\Edit.cshtml" />
     <Content Include="Areas\Operaciones\Views\EventoOrigen\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Evento\_Origen.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
