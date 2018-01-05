@@ -3,15 +3,13 @@
 @{
     ViewBag.Title = "Index";
     Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
-    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section Styles {
     @Styles.Render("~/Style/Bootstrap")
     @Styles.Render("~/Style/Font-Awesome")
     @Styles.Render("~/Style/FullCalendar")
     @Styles.Render("~/Style/AdminLTE")
-}
+
 <link rel="stylesheet" href="~/bower_components/fullcalendar/dist/fullcalendar.print.min.css" media="print">
 
 <h2>Index</h2>
@@ -23,7 +21,7 @@
 <div id='calendar' style="width: 70%; height: 70%; max-width: 900px; margin: 0 auto;"></div>
 
 
-@section Scripts {
+
         @Scripts.Render("~/JS/Moment")
         @Scripts.Render("~/JS/jquery")
         @Scripts.Render("~/JS/FullCalendar")
@@ -77,4 +75,4 @@
 
             });
         </script>
-    }
+    
