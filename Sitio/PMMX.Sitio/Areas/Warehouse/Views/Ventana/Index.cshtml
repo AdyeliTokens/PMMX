@@ -150,11 +150,11 @@
             $(".btn-action").on("click", function ()
             {
                 var url = $(this).data("url");
-
+                
                 $.get(url, function (data) {
                     $('#createAssetContainer').html(data);
-
                     $('#createAssetModal').modal('show');
+
                  });
             });
 

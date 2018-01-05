@@ -1,0 +1,109 @@
+﻿@Styles.Render("~/Style/Bootstrap")
+@Styles.Render("~/Style/Select2")
+
+
+<h2>Ubicacion</h2>
+
+<div class="form-group">
+    Area: <select id="Area" class="form-control select2"></select>
+</div>
+
+<div class="form-group">
+    WorkCenters: <select id="WorkCenters" class="form-control select2"></select>
+</div>
+
+<div class="form-group">
+    Modulos: <select id="Modulos" class="form-control select2"></select>
+</div>
+
+
+@Scripts.Render("~/JS/jquery")
+@Scripts.Render("~/JS/Select2")
+@Scripts.Render("~/JS/Bootstrap")
+@Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+
+<script>
+    $(document).ready(function ()
+    { 
+        $('.select2').select2();
+        getAreas();
+            
+        function getAreas() {
+            $.ajax({
+                dataType: "json",
+                contentType: "application/json",
+                url: "/Operaciones/Evento/GetArea",
+                success: function (data) {
+                    items = '<option>Select Area</option>';
+                    $.each(data.areas, function (i, k) {
+                        items += "<option value='" + k.Id + "'>" + k.NombreCorto + "</option>";
+                    });
+                    $('#Area').html(items);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('There was an error while fetching Work Centers!');
+                }
+            });
+        }
+
+
+        $('#Area').change(function ()
+        {
+            $.ajax({
+                dataType: "json",
+                contentType: "application/json",
+                url: "/Evento/GetWorkCenterbyArea?IdArea=" + $('#Area').val(),
+                success: function (data) {
+                    items = '<option>Select WorkCenter</option>';
+                    $.each(data.wlist, function (i, k) {
+                        items += "<option value='" + k.Id + "'>" + k.NombreCorto + "</option>";
+                    });
+                    $('#WorkCenters').html(items);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('There was an error while fetching Work Centers!');
+                }
+            });
+        });
+
+        $('#WorkCenters').change(function ()
+        {
+            $.ajax({
+                dataType: "json",
+                contentType: "application/json",
+                url: "/Evento/GetModulobyWorkCenter?IdWorkCenter=" + $('#WorkCenters').val(),
+                success: function (data)
+                {
+                    items = '<option>Select Modulo</option>';
+                    $.each(data.modulo, function (i, k) {
+                        items += "<option value='" + k.Id + "'>" + k.NombreCorto + "</option>";
+                    });
+                    $('#Modulos').html(items);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('There was an error while fetching Work Centers!');
+                }
+            });
+        });
+
+        $('#Modulos').change(function ()
+        {
+            $.ajax({
+                dataType: "json",
+                contentType: "application/json",
+                url: "/Evento/GetIdOrigen?IdWorkCenter=" + $('#WorkCenters').val() + "&IdModulo=" + $('#Modulos').val(),
+                success: function (data) {
+                    var nombre = $('#Area').find(":selected").text() + " " +$('#WorkCenters').find(":selected").text() + " " + $('#Modulos').find(":selected").text();
+
+                    $('#IdOrigen').val(data.origen.Id);
+                    $("#Ubicacion").val(nombre);
+                    $('#createAssetModal').modal('hide');
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('There was an error while fetching Work Centers!');
+                }
+            });
+        });
+    });
+</script>
+ 

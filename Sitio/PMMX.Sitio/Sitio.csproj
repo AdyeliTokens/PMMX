@@ -7968,6 +7968,8 @@
     <Content Include="Areas\Operaciones\Views\EventoOrigen\Details.cshtml" />
     <Content Include="Areas\Operaciones\Views\EventoOrigen\Edit.cshtml" />
     <Content Include="Areas\Operaciones\Views\EventoOrigen\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Evento\_Origen.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Evento\_Responsables.cshtml" />
     <Content Include="Areas\Operaciones\Views\Desperdicios\Create.cshtml" />
     <Content Include="Areas\Operaciones\Views\Desperdicios\Delete.cshtml" />
     <Content Include="Areas\Operaciones\Views\Desperdicios\Details.cshtml" />
