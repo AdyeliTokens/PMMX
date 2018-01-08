@@ -20,6 +20,19 @@
 
 <div id='calendar' style="width: 70%; height: 70%; max-width: 900px; margin: 0 auto;"></div>
 
+ <!-- Modal-->
+<div class="modal fade" id="createAssetModal" tabindex="-1" role="dialog" aria-labelledby="CreateAssetModal" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header alert-info">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div id="createAssetContainer" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
 
 
         @Scripts.Render("~/JS/Moment")
@@ -60,9 +73,19 @@
                                     event.title = item.Descripcion;
                                     event.brief = item.Nota;
                                     event.id = item.Id;
-                                    event.url = "/Operaciones/Evento/Details/" + item.Id;
+
                                     return event;
                                 }),
+                                eventClick: function (calEvent, jsEvent, view)
+                                {
+                                    var url = "/Operaciones/Evento/Details/" + calEvent.id;
+
+                                    $.get(url, function (data) {
+                                        $('#createAssetContainer').html(data);
+                                        $('#createAssetModal').modal('show');
+
+                                    });
+                                }
 
                             });
 
