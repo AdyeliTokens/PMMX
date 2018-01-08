@@ -373,6 +373,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\ManageController.cs" />
     <Compile Include="Controllers\MayaController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RequisicionDeDescargasController.cs" />
     <Compile Include="Controllers\ThumbnailController.cs" />
     <Compile Include="Helpers\AccountService.cs" />
@@ -8311,6 +8312,7 @@
     <Content Include="Views\RequisicionDeDescargas\Index.cshtml" />
     <Content Include="Views\AugmentedReality\SolicitudEnviada.cshtml" />
     <Content Include="Views\Shared\_LayoutTable.cshtml" />
+    <Content Include="Views\Profile\Details.cshtml" />
     <None Include="Views\Shared\_LayoutVideo.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
