@@ -21,9 +21,7 @@ namespace Sitio.Areas.Operaciones.Controllers
     [Authorize]
     public class DefectosController : Controller
     {
-
-
-        // GET: Maquinaria/Defectos
+    
         public ActionResult Index()
         {
 
@@ -37,7 +35,7 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         }
 
-        // GET: Maquinaria/Defectos/Details/5
+        
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -62,12 +60,10 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View();
         }
 
-        // POST: Maquinaria/Defectos/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,IdReportador,IdOrigen,Descripcion,Activo,FechaReporte,FechaEstimada")] Defecto defecto)
+        public ActionResult Create(Defecto defecto)
         {
             //if (ModelState.IsValid)
             //{
@@ -149,7 +145,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,IdReportador,IdOrigen,Descripcion,Activo,FechaReporte,FechaEstimada")] Defecto defecto)
+        public ActionResult Edit(Defecto defecto)
         {
             //if (ModelState.IsValid)
             //{
