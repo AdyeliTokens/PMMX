@@ -35,6 +35,7 @@ namespace PMMX.Modelo.Map
             #endregion
 
             #region HasMany
+            this.HasMany(c => c.StatusVentana).WithRequired(x => x.Ventana).HasForeignKey(x => x.IdVentana);
             #endregion
 
             #region HasOptional

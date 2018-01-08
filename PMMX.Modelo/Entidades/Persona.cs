@@ -65,6 +65,8 @@ namespace PMMX.Modelo.Entidades
         public ICollection<Pesador> Pesadores { get; set; }
         public ICollection<ListaDistribucion> ListaDistribucion { get; set; }
         public ICollection<EventoResponsable> EventoResponsable { get; set; }
+
+        public List<StatusVentana> StatusVentana { get; set; }
         #endregion
 
     }
