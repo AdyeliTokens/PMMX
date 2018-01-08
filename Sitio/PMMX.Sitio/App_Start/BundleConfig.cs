@@ -11,7 +11,7 @@ namespace Sitio
             bundles.Add(new StyleBundle("~/Style/Bootstrap").Include("~/bower_components/bootstrap/dist/css/bootstrap.min.css"));
             bundles.Add(new StyleBundle("~/Style/Font-Awesome").Include("~/bower_components/font-awesome/css/font-awesome.min.css", new CssRewriteUrlTransform()));
             bundles.Add(new StyleBundle("~/Style/AdminLTE").Include(
-                "~/dist/css/AdminLTE.min.css",
+                "~/dist/css/AdminLTE.css",
                 "~/dist/css/skins/_all-skins.css",
                 "~/plugins/iCheck/flat/blue.css"));
             bundles.Add(new StyleBundle("~/Style/FullCalendar").Include("~/bower_components/fullcalendar/dist/fullcalendar.min.css"));
