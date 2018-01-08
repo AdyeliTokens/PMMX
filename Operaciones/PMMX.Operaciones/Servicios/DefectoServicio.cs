@@ -4,11 +4,9 @@ using PMMX.Modelo.RespuestaGenerica;
 using PMMX.Modelo.Vistas;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PMMX.Infraestructura.Helpers;
+using System.Collections.Generic;
 
 namespace PMMX.Operaciones.Servicios
 {
@@ -22,9 +20,9 @@ namespace PMMX.Operaciones.Servicios
 
         #region Gets
 
-        public RespuestaServicio<IQueryable<DefectoView>> GetDefectos()
+        public RespuestaServicio<IList<DefectoView>> GetDefectos()
         {
-            RespuestaServicio<IQueryable<DefectoView>> respuesta = new RespuestaServicio<IQueryable<DefectoView>>();
+            RespuestaServicio<IList<DefectoView>> respuesta = new RespuestaServicio<IList<DefectoView>>();
             respuesta.Respuesta = db.Defectos.Select(d => new DefectoView
             {
                 Id = d.Id,
@@ -78,7 +76,24 @@ namespace PMMX.Operaciones.Servicios
                     }
                 }
 
-            });
+            }).ToList();
+            if (respuesta.EjecucionCorrecta == true)
+            {
+                foreach (DefectoView df in respuesta.Respuesta)
+                {
+                    if (df.IdResponsable > 0)
+                    {
+                        df.Responsable = db.Personas.Where(d => d.Id == df.IdResponsable).Select(d => new PersonaView
+                        {
+                            Id = d.Id,
+                            Nombre = d.Nombre,
+                            Apellido1 = d.Apellido1,
+                            Apellido2 = d.Apellido2
+
+                        }).FirstOrDefault();
+                    }
+                }
+            }
             return respuesta;
         }
 
@@ -173,7 +188,7 @@ namespace PMMX.Operaciones.Servicios
 
             if (defecto == null)
             {
-               return respuesta;
+                return respuesta;
             }
 
             defecto.NotificacionSAP = NotificacionSAP;
@@ -181,7 +196,7 @@ namespace PMMX.Operaciones.Servicios
 
             try
             {
-                
+
                 db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException ex)
