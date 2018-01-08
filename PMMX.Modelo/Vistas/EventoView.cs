@@ -14,6 +14,7 @@ namespace PMMX.Modelo.Vistas
         public int Id { get; set; }
         public string Descripcion { get; set; }
         public int IdAsignador { get; set; }
+        public int IdCategoria { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]
         public DateTime FechaInicio { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]
@@ -23,6 +24,7 @@ namespace PMMX.Modelo.Vistas
         public bool Activo { get; set; }
 
         public PersonaView Asignador { get; set; }
+        public CategoriaView Categoria { get; set; }
 
         public List<JustDoItView> JustDoIt { get; set; }
         public List<Ventana> Ventanas { get; set; }

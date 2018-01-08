@@ -19,6 +19,14 @@
         <dd>
             @Html.Raw(@ViewBag.NombreAsignador)
         </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.Asignador.Nombre, "Tipo de Evento: ")
+        </dt>
+
+        <dd>
+            @Html.Raw(@ViewBag.IdCategoria)
+        </dd>
         
         <dt>
             @Html.LabelFor(model => model.Descripcion)

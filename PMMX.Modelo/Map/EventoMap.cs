@@ -17,6 +17,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
             this.Property(c => c.Id).HasColumnName("Id");
             this.Property(c => c.Descripcion).HasColumnName("Descripcion");
             this.Property(c => c.IdAsignador).HasColumnName("IdAsignador");
+            this.Property(c => c.IdCategoria).HasColumnName("IdCategoria");
             this.Property(c => c.FechaInicio).HasColumnName("FechaInicio");
             this.Property(c => c.FechaFin).HasColumnName("FechaFin");
             this.Property(c => c.Nota).HasColumnName("Nota");
@@ -26,6 +27,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
 
             #region HasRequired
             this.HasRequired(c => c.Asignador).WithMany(x => x.EventosReportados).HasForeignKey(c => c.IdAsignador);
+            this.HasRequired(c => c.Categoria).WithMany(x => x.Eventos).HasForeignKey(c => c.IdCategoria);
             #endregion
 
             #region HasMany

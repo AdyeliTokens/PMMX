@@ -25,7 +25,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // GET: Eventos/Evento
         public ActionResult Index()
         {
-            var evento = db.Evento.Include(e => e.Asignador);
+            var evento = db.Evento.Include(e => e.Asignador).Include(e => e.Categoria);
             return View(evento);
         }
 
@@ -58,6 +58,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                     Id = e.Id,
                     Descripcion = e.Descripcion,
                     IdAsignador = e.IdAsignador,
+                    IdCategoria = e.IdCategoria,
                     FechaInicio = e.FechaInicio,
                     FechaFin = e.FechaFin,
                     Nota = e.Nota,
@@ -77,7 +78,8 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
 
             ViewBag.NombreAsignador = db.Personas.Where(x => x.Id == evento.IdAsignador).Select(x =>  x.Nombre + " " + x.Apellido1 + " " + x.Apellido2).FirstOrDefault().ToString();
-            
+            ViewBag.IdCategoria = db.Categoria.Where(x => x.Id == evento.IdCategoria).Select(x => x.Nombre ).FirstOrDefault().ToString();
+
             return View(evento);
         }
 
@@ -159,8 +161,8 @@ namespace Sitio.Areas.Operaciones.Controllers
         // GET: Eventos/Evento/Create
         public ActionResult Create()
         {
-             ViewBag.IdAsignador = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
-             
+            ViewBag.IdAsignador = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
+            ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre}).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View();
         }
 
@@ -220,7 +222,17 @@ namespace Sitio.Areas.Operaciones.Controllers
                     }
                 }
 
-                return RedirectToAction("Index");
+
+                switch(evento.IdCategoria)
+                {
+                    case 10:
+                        return RedirectToAction("Create", "Ventana", new {IdEvento = evento.Id, Area="Warehouse"});
+                        break;
+                    default:
+                        return RedirectToAction("Index");
+                        break;
+                }
+                
             }
             
             return View(evento);
@@ -240,6 +252,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
 
             ViewBag.IdAsignador = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre", evento.IdAsignador);
+            ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", evento.IdCategoria);
             return View(evento);
         }
 
@@ -258,6 +271,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
             
             ViewBag.IdAsignador = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
+            ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", evento.IdCategoria);
             return View(evento);
         }
 
@@ -275,7 +289,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
 
             ViewBag.NombreAsignador = db.Personas.Where(x => x.Id == evento.IdAsignador).Select(x => x.Nombre + " " + x.Apellido1 + " " + x.Apellido2).FirstOrDefault().ToString();
-            
+            ViewBag.IdCategoria = db.Categoria.Where(x => x.Id == evento.IdCategoria).Select(x => x.Nombre).FirstOrDefault().ToString();
             return View(evento);
         }
 
