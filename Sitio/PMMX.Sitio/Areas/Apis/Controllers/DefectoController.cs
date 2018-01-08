@@ -12,6 +12,7 @@ using PMMX.Modelo.Entidades.Defectos;
 using PMMX.Modelo.Vistas;
 using Sitio.Helpers;
 using PMMX.Seguridad.Servicios;
+using PMMX.Operaciones.Servicios;
 
 namespace Sitio.Areas.Apis.Controllers
 {
@@ -19,13 +20,11 @@ namespace Sitio.Areas.Apis.Controllers
     {
         private PMMXContext db = new PMMXContext();
 
-        // GET: api/Defectos
         public IQueryable<Defecto> GetDefecto()
         {
             return db.Defectos;
         }
 
-        // GET: api/Defectos/5
         [ResponseType(typeof(DefectoView))]
         public IHttpActionResult GetDefecto(int id)
         {
@@ -90,7 +89,6 @@ namespace Sitio.Areas.Apis.Controllers
             return Ok(defecto);
         }
 
-        // GET: api/Defectos/5
         [ResponseType(typeof(IList<DefectoView>))]
         public IHttpActionResult getDefectosByOrigen(int idOrigen, Boolean activo, int diasDesde, int diasHasta, int cantidad)
         {
@@ -153,7 +151,6 @@ namespace Sitio.Areas.Apis.Controllers
             return Ok(defectos);
         }
 
-        // GET: api/Defectos/5
         [ResponseType(typeof(IList<DefectoView>))]
         public IHttpActionResult getDefectosByBussinesUnit(int idBussinesUnit, Boolean activo, int diasDesde, int diasHasta, int cantidad)
         {
@@ -584,70 +581,37 @@ namespace Sitio.Areas.Apis.Controllers
             return Ok(defectoView);
         }
 
-        // POST: api/Defectos
         [ResponseType(typeof(DefectoView))]
         public IHttpActionResult PostDefecto(Defecto defecto)
         {
-
             defecto.Activo = true;
             defecto.FechaReporte = DateTime.Now;
-            defecto.Fotos = null;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            DefectoServicio servicio = new DefectoServicio(db);
+            var respuesta = servicio.PostDefecto(defecto);
+            if (respuesta.EjecucionCorrecta) {
+                NotificationService notify = new NotificationService();
+                UsuarioServicio usuarioServicio = new UsuarioServicio();
 
-            db.Defectos.Add(defecto);
-            db.SaveChanges();
+                List<DispositivoView> dispositivos = usuarioServicio.GetMecanicosPorOrigen(defecto.IdOrigen);
+                List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
 
-
-            var defectoView = db.Defectos
-                .Where(d => d.Id == defecto.Id)
-                .Select(d => new DefectoView
+                foreach (string notificacion in llaves)
                 {
-                    Id = d.Id,
-                    Origen = new OrigenView
-                    {
-                        Id = d.Origen.Id,
-                        IdModulo = d.Origen.IdModulo,
-                        IdWorkCenter = d.Origen.IdWorkCenter,
-                        Modulo = new ModuloView
-                        {
-                            Id = d.Origen.Modulo.Id,
-                            Nombre = d.Origen.Modulo.Nombre,
-                            NombreCorto = d.Origen.Modulo.NombreCorto,
-                            Activo = d.Origen.Modulo.Activo
-                        },
-                        WorkCenter = new WorkCenterView
-                        {
-                            Id = d.Origen.WorkCenter.Id,
-                            Nombre = d.Origen.WorkCenter.Nombre,
-                            NombreCorto = d.Origen.WorkCenter.NombreCorto,
-                            Activo = d.Origen.WorkCenter.Activo
-                        }
-
-                    }
-                }).FirstOrDefault();
-            
-
-            NotificationService notify = new NotificationService();
-            UsuarioServicio usuarioServicio = new UsuarioServicio();
-
-            List<DispositivoView> dispositivos = usuarioServicio.GetMecanicosPorOrigen(defecto.IdOrigen);
-            List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
-
-            foreach (string notificacion in llaves)
-            {
-                notify.SendPushNotification(notificacion, "El modulo " + defectoView.Origen.Modulo.NombreCorto + " no parece estar funcionando muy bien.", "Nuevo defecto reportado en " + defectoView.Origen.WorkCenter.NombreCorto + ".");
+                    notify.SendPushNotification(notificacion, "El modulo " + respuesta.Respuesta.Origen.Modulo.NombreCorto + " no parece estar funcionando muy bien.", "Nuevo defecto reportado en " + respuesta.Respuesta.Origen.WorkCenter.NombreCorto + ".");
+                }
             }
+            else {
 
-
-            return Ok(defectoView);
-
-
+            }
+            
+            return Ok(respuesta.Respuesta);
+            
         }
-
-        // DELETE: api/Defectos/5
+        
         [ResponseType(typeof(Defecto))]
         public IHttpActionResult DeleteDefecto(int id)
         {

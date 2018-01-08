@@ -7,23 +7,31 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using PMMX.Infraestructura.Helpers;
 using System.Collections.Generic;
+using PMMX.Modelo.Entidades;
+using PMMX.Modelo.Entidades.Maquinaria;
 
 namespace PMMX.Operaciones.Servicios
 {
     public class DefectoServicio
     {
-        #region Contexto
+        private PMMXContext _context;
 
-        private PMMXContext db = new PMMXContext();
+        public DefectoServicio(PMMXContext context)
+        {
+            _context = context;
+        }
 
-        #endregion
+        public DefectoServicio()
+        {
+            _context = new PMMXContext();
+        }
 
         #region Gets
 
         public RespuestaServicio<IList<DefectoView>> GetDefectos()
         {
             RespuestaServicio<IList<DefectoView>> respuesta = new RespuestaServicio<IList<DefectoView>>();
-            respuesta.Respuesta = db.Defectos.Select(d => new DefectoView
+            respuesta.Respuesta = _context.Defectos.Select(d => new DefectoView
             {
                 Id = d.Id,
                 IdOrigen = d.IdOrigen,
@@ -83,7 +91,7 @@ namespace PMMX.Operaciones.Servicios
                 {
                     if (df.IdResponsable > 0)
                     {
-                        df.Responsable = db.Personas.Where(d => d.Id == df.IdResponsable).Select(d => new PersonaView
+                        df.Responsable = _context.Personas.Where(d => d.Id == df.IdResponsable).Select(d => new PersonaView
                         {
                             Id = d.Id,
                             Nombre = d.Nombre,
@@ -97,13 +105,13 @@ namespace PMMX.Operaciones.Servicios
             return respuesta;
         }
 
-        public RespuestaServicio<DefectoView> GetDefecto(int id)
+        public RespuestaServicio<Defecto> GetDefecto(int id)
         {
-            RespuestaServicio<DefectoView> respuesta = new RespuestaServicio<DefectoView>();
+            RespuestaServicio<Defecto> respuesta = new RespuestaServicio<Defecto>();
 
-            DefectoView defecto = db.Defectos
+            Defecto defecto = _context.Defectos
                 .Where(d => (d.Id == id))
-                .Select(d => new DefectoView
+                .Select(d => new Defecto
                 {
                     Id = d.Id,
                     IdOrigen = d.IdOrigen,
@@ -114,56 +122,49 @@ namespace PMMX.Operaciones.Servicios
                     FechaReporte = d.FechaReporte,
                     FechaEstimada = d.FechaEstimada,
                     NotificacionSAP = d.NotificacionSAP,
-                    Reportador = new PersonaView
+                    Reportador = new Persona
                     {
                         Id = d.Reportador.Id,
                         Nombre = d.Reportador.Nombre,
                         Apellido1 = d.Reportador.Apellido1,
                         Apellido2 = d.Reportador.Apellido2,
-                        Puesto = new PuestoView
+                        Puesto = new Puesto
                         {
                             Id = d.Reportador.Puesto.Id,
                             Nombre = d.Reportador.Puesto.Nombre
                         }
                     },
-                    Origen = new OrigenView
+                    Origen = new Origen
                     {
                         Id = d.Origen.Id,
                         IdModulo = d.Origen.IdModulo,
                         IdWorkCenter = d.Origen.IdWorkCenter,
-                        Modulo = new ModuloView
+                        Modulo = new Modulo
                         {
                             Id = d.Origen.Modulo.Id,
                             Nombre = d.Origen.Modulo.Nombre,
                             NombreCorto = d.Origen.Modulo.NombreCorto,
                             Activo = d.Origen.Modulo.Activo
                         },
-                        WorkCenter = new WorkCenterView
+                        WorkCenter = new WorkCenter
                         {
                             Id = d.Origen.WorkCenter.Id,
                             Nombre = d.Origen.WorkCenter.Nombre,
                             NombreCorto = d.Origen.WorkCenter.NombreCorto,
                             Activo = d.Origen.WorkCenter.Activo,
                             IdBussinesUnit = d.Origen.WorkCenter.IdBussinesUnit,
-                            BussinesUnit = new BussinesUnitView
+                            BussinesUnit = new BussinesUnit
                             {
                                 Id = d.Origen.WorkCenter.BussinesUnit.Id,
                                 Nombre = d.Origen.WorkCenter.BussinesUnit.Nombre,
                                 NombreCorto = d.Origen.WorkCenter.BussinesUnit.NombreCorto,
                                 Activo = d.Origen.WorkCenter.BussinesUnit.Activo
-
                             }
                         }
                     },
-                    Comentarios = d.Comentarios.Select(f => new ComentarioView
-                    {
-                        Id = f.Id,
-                        Fecha = f.Fecha,
-                        IdComentador = f.IdComentador,
-                        Opinion = f.Opinion,
-                        IdDefecto = f.IdDefecto
-                    }).ToList()
+                    Comentarios = d.Comentarios
                 }).FirstOrDefault();
+
             if (defecto != null)
             {
                 respuesta.Respuesta = defecto;
@@ -180,11 +181,11 @@ namespace PMMX.Operaciones.Servicios
 
         #region Puts
 
-        public RespuestaServicio<DefectoView> PutDefecto(int id, string NotificacionSAP)
+        public RespuestaServicio<Defecto> PutDefecto(int id, string NotificacionSAP)
         {
-            RespuestaServicio<DefectoView> respuesta = new RespuestaServicio<DefectoView>();
+            RespuestaServicio<Defecto> respuesta = new RespuestaServicio<Defecto>();
 
-            Defecto defecto = db.Defectos.Find(id);
+            Defecto defecto = _context.Defectos.Find(id);
 
             if (defecto == null)
             {
@@ -192,12 +193,12 @@ namespace PMMX.Operaciones.Servicios
             }
 
             defecto.NotificacionSAP = NotificacionSAP;
-            db.Entry(defecto).State = EntityState.Modified;
+            _context.Entry(defecto).State = EntityState.Modified;
 
             try
             {
 
-                db.SaveChanges();
+                _context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException ex)
             {
@@ -214,6 +215,41 @@ namespace PMMX.Operaciones.Servicios
         #endregion
 
         #region Posts
+        public RespuestaServicio<Defecto> PostDefecto(Defecto defecto)
+        {
+            RespuestaServicio<Defecto> respuesta = new RespuestaServicio<Defecto>();
+            if (defecto == null)
+            {
+                respuesta.Mensaje = "El defecto no puede ser null al momento de guardar";
+                return respuesta;
+            }
+            try
+            {
+                _context.Defectos.Add(defecto);
+                _context.SaveChanges();
+
+                var respuesta_defecto = GetDefecto(defecto.Id);
+                if (respuesta_defecto.EjecucionCorrecta)
+                {
+                    respuesta.Respuesta = respuesta_defecto.Respuesta;
+                }
+                else {
+                    respuesta.Mensaje = respuesta_defecto.Mensaje;
+                    return respuesta;
+                }
+                
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                respuesta.Mensaje = ex.ToString();
+                return respuesta;
+
+            }
+            return respuesta;
+        }
+
+
+
         #endregion
 
         #region Deletes
@@ -243,12 +279,12 @@ namespace PMMX.Operaciones.Servicios
 
         public void Dispose()
         {
-            db.Dispose();
+            _context.Dispose();
         }
 
         private bool DefectoExists(int id)
         {
-            return db.Defectos.Count(e => e.Id == id) > 0;
+            return _context.Defectos.Count(e => e.Id == id) > 0;
         }
 
         #endregion
