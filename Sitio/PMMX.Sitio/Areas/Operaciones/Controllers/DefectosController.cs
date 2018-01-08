@@ -21,15 +21,20 @@ namespace Sitio.Areas.Operaciones.Controllers
     [Authorize]
     public class DefectosController : Controller
     {
-        
+
 
         // GET: Maquinaria/Defectos
         public ActionResult Index()
         {
+
             DefectoServicio servicio = new DefectoServicio();
             var defecto = servicio.GetDefectos();
 
-            return View(defecto.Respuesta.ToList());
+            if (Request.IsAjaxRequest())
+                return PartialView(defecto.Respuesta.ToList());
+            else
+                return View(defecto.Respuesta.ToList());
+
         }
 
         // GET: Maquinaria/Defectos/Details/5
@@ -39,7 +44,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            int idDefecto = (int) id;
+            int idDefecto = (int)id;
             DefectoServicio servicio = new DefectoServicio();
             RespuestaServicio<DefectoView> defecto = servicio.GetDefecto(idDefecto);
             if (defecto == null)
@@ -75,7 +80,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             //ViewBag.IdReportador = new SelectList(db.Personas, "Id", "Nombre", defecto.IdReportador);
             return View(/*defecto*/);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateComentario(Comentario comentario)
@@ -89,12 +94,13 @@ namespace Sitio.Areas.Operaciones.Controllers
                     comentario.IdComentador = persona.Respuesta.Id;
                     ComentarioServicio servicio = new ComentarioServicio();
                     RespuestaServicio<ComentarioView> respuesta = servicio.PostComentario(comentario);
-                    
-                }
-                else {
 
                 }
-                
+                else
+                {
+
+                }
+
             }
 
             return RedirectToAction("Details/", new RouteValueDictionary(new { controller = "Defectos", action = "Details", Id = comentario.IdDefecto }));
@@ -115,7 +121,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                     return HttpNotFound();
                 }
             }
-            
+
             return RedirectToAction("Details/", new RouteValueDictionary(new { controller = "Defectos", action = "Details", Id = id }));
         }
 
