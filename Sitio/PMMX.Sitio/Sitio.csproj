@@ -264,6 +264,8 @@
     <Compile Include="Areas\Apis\Controllers\VentanaController.cs" />
     <Compile Include="Areas\Apis\Controllers\VQIController.cs" />
     <Compile Include="Areas\Apis\Controllers\NoConformidadesController.cs" />
+    <Compile Include="Areas\Apis\StatusController.cs" />
+    <Compile Include="Areas\Apis\StatusVentanaController.cs" />
     <Compile Include="Areas\Cuestionario\Controllers\WebApiConfig.cs" />
     <Compile Include="Areas\Apis\Controllers\OrigenRespuestaController.cs" />
     <Compile Include="Areas\Apis\Controllers\PreguntaTurnoController.cs" />
@@ -301,6 +303,8 @@
     <Compile Include="Areas\Operaciones\Controllers\MantenimientoController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\MarcasController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\ObjetivosVQIController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\StatusController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\StatusVentanaController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\SubCategoriaController.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
@@ -7976,6 +7980,16 @@
     <Content Include="Areas\Operaciones\Views\Desperdicios\Details.cshtml" />
     <Content Include="Areas\Operaciones\Views\Desperdicios\Edit.cshtml" />
     <Content Include="Areas\Operaciones\Views\Desperdicios\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Status\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Status\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Status\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Status\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Status\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\StatusVentana\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\StatusVentana\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\StatusVentana\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\StatusVentana\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\StatusVentana\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
