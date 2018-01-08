@@ -56,8 +56,6 @@
             </div>
             <div class="form-group">
                 @Html.Hidden("IdEvento")
-            </div>
-            <div class="form-group">
                 @Html.Hidden("Activo")
             </div>
         </div>
@@ -211,10 +209,21 @@
     @Scripts.Render("~/JS/Select2")
     <script>
         $(function () {
+            var IdEvento = parseInt(getUrlVar("IdEvento"),10);
+
             $('.select2').select2();
             $("#Activo").val(true);
-            $("#IdEvento").val(50);
+            alert(IdEvento)
+            $("#IdEvento").val(IdEvento);
+
+            
             $('.collapse').collapse()
         });
+
+        function getUrlVar(key) {
+            var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search);
+            return result && unescape(result[1]) || "";
+        }
+        
     </script>
 }
