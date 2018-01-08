@@ -105,13 +105,13 @@ namespace PMMX.Operaciones.Servicios
             return respuesta;
         }
 
-        public RespuestaServicio<Defecto> GetDefecto(int id)
+        public RespuestaServicio<DefectoView> GetDefecto(int id)
         {
-            RespuestaServicio<Defecto> respuesta = new RespuestaServicio<Defecto>();
+            RespuestaServicio<DefectoView> respuesta = new RespuestaServicio<DefectoView>();
 
-            Defecto defecto = _context.Defectos
+            DefectoView defecto = _context.Defectos
                 .Where(d => (d.Id == id))
-                .Select(d => new Defecto
+                .Select(d => new DefectoView
                 {
                     Id = d.Id,
                     IdOrigen = d.IdOrigen,
@@ -122,38 +122,38 @@ namespace PMMX.Operaciones.Servicios
                     FechaReporte = d.FechaReporte,
                     FechaEstimada = d.FechaEstimada,
                     NotificacionSAP = d.NotificacionSAP,
-                    Reportador = new Persona
+                    Reportador = new PersonaView
                     {
                         Id = d.Reportador.Id,
                         Nombre = d.Reportador.Nombre,
                         Apellido1 = d.Reportador.Apellido1,
                         Apellido2 = d.Reportador.Apellido2,
-                        Puesto = new Puesto
+                        Puesto = new PuestoView
                         {
                             Id = d.Reportador.Puesto.Id,
                             Nombre = d.Reportador.Puesto.Nombre
                         }
                     },
-                    Origen = new Origen
+                    Origen = new OrigenView
                     {
                         Id = d.Origen.Id,
                         IdModulo = d.Origen.IdModulo,
                         IdWorkCenter = d.Origen.IdWorkCenter,
-                        Modulo = new Modulo
+                        Modulo = new ModuloView
                         {
                             Id = d.Origen.Modulo.Id,
                             Nombre = d.Origen.Modulo.Nombre,
                             NombreCorto = d.Origen.Modulo.NombreCorto,
                             Activo = d.Origen.Modulo.Activo
                         },
-                        WorkCenter = new WorkCenter
+                        WorkCenter = new WorkCenterView
                         {
                             Id = d.Origen.WorkCenter.Id,
                             Nombre = d.Origen.WorkCenter.Nombre,
                             NombreCorto = d.Origen.WorkCenter.NombreCorto,
                             Activo = d.Origen.WorkCenter.Activo,
                             IdBussinesUnit = d.Origen.WorkCenter.IdBussinesUnit,
-                            BussinesUnit = new BussinesUnit
+                            BussinesUnit = new BussinesUnitView
                             {
                                 Id = d.Origen.WorkCenter.BussinesUnit.Id,
                                 Nombre = d.Origen.WorkCenter.BussinesUnit.Nombre,
@@ -161,8 +161,7 @@ namespace PMMX.Operaciones.Servicios
                                 Activo = d.Origen.WorkCenter.BussinesUnit.Activo
                             }
                         }
-                    },
-                    Comentarios = d.Comentarios
+                    }
                 }).FirstOrDefault();
 
             if (defecto != null)
@@ -181,9 +180,9 @@ namespace PMMX.Operaciones.Servicios
 
         #region Puts
 
-        public RespuestaServicio<Defecto> PutDefecto(int id, string NotificacionSAP)
+        public RespuestaServicio<DefectoView> PutDefecto(int id, string NotificacionSAP)
         {
-            RespuestaServicio<Defecto> respuesta = new RespuestaServicio<Defecto>();
+            RespuestaServicio<DefectoView> respuesta = new RespuestaServicio<DefectoView>();
 
             Defecto defecto = _context.Defectos.Find(id);
 
@@ -215,9 +214,9 @@ namespace PMMX.Operaciones.Servicios
         #endregion
 
         #region Posts
-        public RespuestaServicio<Defecto> PostDefecto(Defecto defecto)
+        public RespuestaServicio<DefectoView> PostDefecto(Defecto defecto)
         {
-            RespuestaServicio<Defecto> respuesta = new RespuestaServicio<Defecto>();
+            RespuestaServicio<DefectoView> respuesta = new RespuestaServicio<DefectoView>();
             if (defecto == null)
             {
                 respuesta.Mensaje = "El defecto no puede ser null al momento de guardar";

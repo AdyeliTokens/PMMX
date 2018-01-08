@@ -44,7 +44,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
             int idDefecto = (int)id;
             DefectoServicio servicio = new DefectoServicio();
-            RespuestaServicio<Defecto> defecto = servicio.GetDefecto(idDefecto);
+            RespuestaServicio<DefectoView> defecto = servicio.GetDefecto(idDefecto);
             if (defecto == null)
             {
                 return HttpNotFound();
@@ -110,7 +110,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             if (ModelState.IsValid)
             {
                 DefectoServicio servicio = new DefectoServicio();
-                RespuestaServicio<Defecto> _defecto = servicio.PutDefecto(id, NotificacionSAP);
+                RespuestaServicio<DefectoView> _defecto = servicio.PutDefecto(id, NotificacionSAP);
 
                 if (_defecto == null)
                 {
@@ -130,7 +130,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
             int idDefecto = (int)id;
             DefectoServicio servicio = new DefectoServicio();
-            RespuestaServicio<Defecto> defecto = servicio.GetDefecto(idDefecto);
+            RespuestaServicio<DefectoView> defecto = servicio.GetDefecto(idDefecto);
             if (defecto == null)
             {
                 return HttpNotFound();

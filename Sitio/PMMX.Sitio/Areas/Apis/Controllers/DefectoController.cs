@@ -13,6 +13,7 @@ using PMMX.Modelo.Vistas;
 using Sitio.Helpers;
 using PMMX.Seguridad.Servicios;
 using PMMX.Operaciones.Servicios;
+using PMMX.Modelo.RespuestaGenerica;
 
 namespace Sitio.Areas.Apis.Controllers
 {
@@ -202,7 +203,7 @@ namespace Sitio.Areas.Apis.Controllers
 
                     }
                 }).Take(cantidad).ToList();
-            
+
             return Ok(defectos);
         }
 
@@ -257,10 +258,10 @@ namespace Sitio.Areas.Apis.Controllers
 
                     }
                 }).Take(cantidad).ToList();
-            
+
             return Ok(defectos);
         }
-        
+
         [ResponseType(typeof(void))]
         public IHttpActionResult PutDefecto(int id, Defecto defecto)
         {
@@ -294,7 +295,7 @@ namespace Sitio.Areas.Apis.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
-        
+
         [HttpPut]
         [ResponseType(typeof(DefectoView))]
         public IHttpActionResult PutDefectoByActivo(int id, Boolean activo)
@@ -455,7 +456,7 @@ namespace Sitio.Areas.Apis.Controllers
             {
                 return NotFound();
             }
-            
+
             defecto.IdResponsable = idResponsable;
             db.SaveChanges();
 
@@ -508,7 +509,7 @@ namespace Sitio.Areas.Apis.Controllers
                     }
                 }).FirstOrDefault();
 
-            
+
 
             return Ok(defectoView);
         }
@@ -584,34 +585,41 @@ namespace Sitio.Areas.Apis.Controllers
         [ResponseType(typeof(DefectoView))]
         public IHttpActionResult PostDefecto(Defecto defecto)
         {
-            defecto.Activo = true;
-            defecto.FechaReporte = DateTime.Now;
-            if (!ModelState.IsValid)
+            RespuestaServicio<DefectoView> respuesta = new RespuestaServicio<DefectoView>();
+            if (defecto != null)
             {
-                return BadRequest(ModelState);
-            }
-            DefectoServicio servicio = new DefectoServicio(db);
-            var respuesta = servicio.PostDefecto(defecto);
-            if (respuesta.EjecucionCorrecta) {
-                NotificationService notify = new NotificationService();
-                UsuarioServicio usuarioServicio = new UsuarioServicio();
+                defecto.Activo = true;
+                defecto.FechaReporte = DateTime.Now;
 
-                List<DispositivoView> dispositivos = usuarioServicio.GetMecanicosPorOrigen(defecto.IdOrigen);
-                List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
-
-                foreach (string notificacion in llaves)
+                DefectoServicio servicio = new DefectoServicio(db);
+                respuesta = servicio.PostDefecto(defecto);
+                if (respuesta.EjecucionCorrecta)
                 {
-                    notify.SendPushNotification(notificacion, "El modulo " + respuesta.Respuesta.Origen.Modulo.NombreCorto + " no parece estar funcionando muy bien.", "Nuevo defecto reportado en " + respuesta.Respuesta.Origen.WorkCenter.NombreCorto + ".");
+                    NotificationService notify = new NotificationService();
+                    UsuarioServicio usuarioServicio = new UsuarioServicio();
+
+                    List<DispositivoView> dispositivos = usuarioServicio.GetMecanicosPorOrigen(defecto.IdOrigen);
+                    List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
+
+                    foreach (string notificacion in llaves)
+                    {
+                        notify.SendPushNotification(notificacion, "El modulo " + respuesta.Respuesta.Origen.Modulo.NombreCorto + " no parece estar funcionando muy bien.", "Nuevo defecto reportado en " + respuesta.Respuesta.Origen.WorkCenter.NombreCorto + ".");
+                    }
+                }
+                else
+                {
+
                 }
             }
-            else {
-
+            else
+            {
+                respuesta.Mensaje = "El defecto no se puede agregar porque llego nulo :(";
             }
             
-            return Ok(respuesta.Respuesta);
-            
+            return Ok(respuesta);
+
         }
-        
+
         [ResponseType(typeof(Defecto))]
         public IHttpActionResult DeleteDefecto(int id)
         {
