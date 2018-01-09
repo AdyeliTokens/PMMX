@@ -17,6 +17,6 @@ namespace PMMX.Modelo.Vistas
         public int Activo { get; set; }
 
 
-        public List<StatusVentanaView> StatusVentana { get; set; }
+        public ICollection<StatusVentanaView> StatusVentana { get; set; }
     }
 }

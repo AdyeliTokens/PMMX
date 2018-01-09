@@ -12,6 +12,7 @@ using PMMX.Seguridad.Servicios;
 using PMMX.Modelo.RespuestaGenerica;
 using PMMX.Modelo.Entidades;
 using Microsoft.AspNet.Identity;
+using PMMX.Modelo.Vistas;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -22,7 +23,35 @@ namespace Sitio.Areas.Operaciones.Controllers
         // GET: Operaciones/StatusVentana
         public ActionResult Index()
         {
-            var statusVentana = db.StatusVentana.Include(s => s.Responsable).Include(s => s.Status).Include(s => s.Ventana);
+            //var statusVentana = db.StatusVentana.ToList();
+            var statusVentana = db.StatusVentana
+            .Select(s => new StatusVentanaView
+            {
+                Id = s.Id,
+                IdVentana = s.IdVentana,
+                IdStatus = s.IdStatus,
+                IdResponsable = s.IdResponsable,
+                Ventana = new VentanaView
+                {
+                    IdEvento = s.Ventana.IdEvento,
+                    PO = s.Ventana.PO,
+                },
+                //Status = new StatusView
+                //{
+                //    Id = s.Status.Id,
+                //    Nombre = s.Status.Nombre,
+                //    NombreCorto = s.Status.NombreCorto,
+                //    Activo = s.Status.Activo
+                //},
+                Responsable = new PersonaView
+                {
+                    Id = s.Responsable.Id,
+                    Nombre = s.Responsable.Nombre,
+                    Apellido1 = s.Responsable.Apellido1,
+                    Apellido2 = s.Responsable.Apellido2
+                }
+            }).ToList();
+
             return View(statusVentana);
         }
 
