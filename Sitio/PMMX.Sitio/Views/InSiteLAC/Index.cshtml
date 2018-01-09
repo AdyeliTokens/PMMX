@@ -1,0 +1,59 @@
+﻿@model IEnumerable<PMMX.Modelo.Entidades.InsiteLAC.KPI>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YTD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mes_Efectivo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Anio_Efectivo)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.YTD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mes_Efectivo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Anio_Efectivo)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

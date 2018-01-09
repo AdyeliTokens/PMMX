@@ -374,6 +374,7 @@
     <Compile Include="Controllers\AugmentedRealityController.cs" />
     <Compile Include="Controllers\FotosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InSiteLACController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\ManageController.cs" />
     <Compile Include="Controllers\MayaController.cs" />
@@ -8327,6 +8328,11 @@
     <Content Include="Views\AugmentedReality\SolicitudEnviada.cshtml" />
     <Content Include="Views\Shared\_LayoutTable.cshtml" />
     <Content Include="Views\Profile\Details.cshtml" />
+    <Content Include="Views\InSiteLAC\Create.cshtml" />
+    <Content Include="Views\InSiteLAC\Delete.cshtml" />
+    <Content Include="Views\InSiteLAC\Details.cshtml" />
+    <Content Include="Views\InSiteLAC\Edit.cshtml" />
+    <Content Include="Views\InSiteLAC\Index.cshtml" />
     <None Include="Views\Shared\_LayoutVideo.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
