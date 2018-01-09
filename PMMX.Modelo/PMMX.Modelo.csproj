@@ -187,7 +187,7 @@
     <Compile Include="Map\SubCategoriaMap.cs" />
     <Compile Include="Map\UsuariosPorPersonaMap.cs" />
     <Compile Include="Map\VentanaMap.cs" />
-    <Compile Include="PesadorMap.cs" />
+    <Compile Include="Entidades\PesadorMap.cs" />
     <Compile Include="RespuestaGenerica\IRespuestaServicio.cs" />
     <Compile Include="Map\ActividadEnDefectoMap.cs" />
     <Compile Include="Map\ActividadEnParoMap.cs" />
