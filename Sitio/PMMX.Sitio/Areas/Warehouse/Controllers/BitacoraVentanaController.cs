@@ -8,6 +8,10 @@ using System.Web;
 using System.Web.Mvc;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.Warehouse;
+using PMMX.Seguridad.Servicios;
+using PMMX.Modelo.RespuestaGenerica;
+using PMMX.Modelo.Entidades;
+using Microsoft.AspNet.Identity;
 
 namespace Sitio.Areas.Warehouse.Controllers
 {
@@ -39,6 +43,7 @@ namespace Sitio.Areas.Warehouse.Controllers
         // GET: Warehouse/BitacoraVentana/Create
         public ActionResult Create()
         {
+            ViewBag.IdActividadVentana = new SelectList(db.ActividadEnVentana.Select(x => new { Id = x.Id, Nombre = x.Nombre}).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View();
         }
 
@@ -47,16 +52,23 @@ namespace Sitio.Areas.Warehouse.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id, IdVentana, IdActividadVentana, FechaInicio, FechaFin, IdResponsable, Comentarios, Activo")] BitacoraVentana bitacoraVentana)
+        public ActionResult Create(BitacoraVentana bitacoraVentana)
         {
-            if (ModelState.IsValid)
-            {
-                db.BitacoraVentana.Add(bitacoraVentana);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            ViewBag.IdActividadVentana = new SelectList(db.ActividadEnVentana.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", bitacoraVentana.IdActividadVentana);
+            
+            PersonaServicio personaServicio = new PersonaServicio();
+            IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
 
-            return View(bitacoraVentana);
+            if (persona.EjecucionCorrecta)
+            {
+                bitacoraVentana.IdResponsable = persona.Respuesta.Id;                    
+            }
+                
+            bitacoraVentana.Fecha = DateTime.Now;
+               
+            db.BitacoraVentana.Add(bitacoraVentana);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: Warehouse/BitacoraVentana/Edit/5
@@ -79,7 +91,7 @@ namespace Sitio.Areas.Warehouse.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id, IdVentana, IdActividadVentana, FechaInicio, FechaFin, IdResponsable, Comentarios, Activo")] BitacoraVentana bitacoraVentana)
+        public ActionResult Edit(BitacoraVentana bitacoraVentana)
         {
             if (ModelState.IsValid)
             {

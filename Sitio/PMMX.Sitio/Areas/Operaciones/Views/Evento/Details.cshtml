@@ -120,6 +120,27 @@
                 });
             });
 
+            $("#btn-Continuar").on("click", function () {
+                var url = ("/Operaciones/StatusVentana/Create?IdVentana=" + id);
+
+                $.get(url, function (data) {
+                    $('#createAssetContainer').html(data);
+
+                    $('#createAssetModal').modal('show');
+                });
+            });
+
+            $("#btn-Rechazo").on("click", function () {
+                var url = ("/Warehouse/BitacoraVentana/Create?IdVentana=" + id);
+                alert(url)
+
+                $.get(url, function (data) {
+                    $('#createAssetContainer').html(data);
+
+                    $('#createAssetModal').modal('show');
+                });
+            });
+
         });
     </script>
 
