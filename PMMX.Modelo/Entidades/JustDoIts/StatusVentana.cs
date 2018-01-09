@@ -17,7 +17,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public int IdVentana { get; set; }
         public int IdStatus { get; set; }
         public int IdResponsable { get; set; }
-        public int Fecha { get; set; }
+        public DateTime Fecha { get; set; }
 
 
         public Ventana Ventana { get; set; }

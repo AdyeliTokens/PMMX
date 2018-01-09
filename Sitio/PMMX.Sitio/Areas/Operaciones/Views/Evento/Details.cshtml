@@ -130,13 +130,11 @@
                 });
             });
 
-            $("#btn-Rechazo").on("click", function () {
+            $("#btn-Rechazo").on("click", function (e) {
                 var url = ("/Warehouse/BitacoraVentana/Create?IdVentana=" + id);
-                alert(url)
-
+                
                 $.get(url, function (data) {
                     $('#createAssetContainer').html(data);
-
                     $('#createAssetModal').modal('show');
                 });
             });
