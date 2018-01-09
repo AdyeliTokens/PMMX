@@ -32,7 +32,7 @@ namespace Sitio.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public PartialViewResult Create([Bind(Include = "Id,Nombre,Comentario,Email")] RequisicionDeDescarga requisicionDeDescarga)
+        public PartialViewResult Create(RequisicionDeDescarga requisicionDeDescarga)
         {
             
             if (ModelState.IsValid)

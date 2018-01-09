@@ -1,13 +1,16 @@
-﻿using PMMX.Modelo.Map;
+﻿using PMMX.Modelo;
 using PMMX.Modelo.Entidades;
 using PMMX.Modelo.Entidades.Defectos;
 using PMMX.Modelo.Entidades.Maquinaria;
 using PMMX.Modelo.Entidades.Paros;
-using System.Data.Entity;
 using PMMX.Modelo.Entidades.Operaciones;
-using PMMX.Modelo;
 using PMMX.Modelo.Entidades.Warehouse;
 using PMMX.Modelo.Entidades.JustDoIts;
+using PMMX.Modelo.Entidades.InsiteLAC;
+using PMMX.Modelo.Map;
+using PMMX.Modelo.Map.InsiteLAC;
+
+using System.Data.Entity;
 
 namespace PMMX.Infraestructura.Contexto
 {
@@ -47,6 +50,12 @@ namespace PMMX.Infraestructura.Contexto
         {
             base.OnModelCreating(modelBuilder);
 
+            #region InSiteLAC
+
+            modelBuilder.Configurations.Add(new KPIMap());
+
+            #endregion
+            
             #region Multimedia
 
             modelBuilder.Configurations.Add(new FotoMap());
@@ -128,8 +137,15 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new EventoResponsableMap());
             modelBuilder.Configurations.Add(new StatusMap());
             modelBuilder.Configurations.Add(new StatusVentanaMap());
+
         }
 
+        #region InSiteLAC
+
+        public DbSet<KPI> KPIs { get; set; }
+
+        #endregion
+        
         #region Multimedia
 
         public DbSet<Foto> Fotos { get; set; }

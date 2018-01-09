@@ -25,6 +25,9 @@ Seguridad/PMMX.SeguridadTests/PMMX.SeguridadTests.csproj.user
 WareHouse/PMMX.WareHouse/bin/
 WareHouse/PMMX.WareHouse/obj/
 WareHouse/PMMX.WareHouse/PMMX.WareHouse.csproj.user
+WareHouse/PMMX.WareHouseTests/bin/
+WareHouse/PMMX.WareHouseTests/obj/
+WareHouse/PMMX.WareHouseTests/PMMX.WareHouse.csproj.user
 
 
 PMMX.Modelo/bin/

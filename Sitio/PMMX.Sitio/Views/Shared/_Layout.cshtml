@@ -442,9 +442,13 @@
                     <li>
                         @Ajax.MenuLink("Augmented Reality", string.Format("{0:c}", "fa fa-link"), "Index", "AugmentedReality", null, null, null)
                     </li>
+                    <li>
+                        
+                        @Html.ActionLink("InSiteLAC", "Index", "InSiteLAC", new { area = "" }, null)
+                    </li>
                     <li class="header">Help</li>
                     <li>
-                        @Ajax.MenuLink("Apis", string.Format("{0:c}", "fa fa-link"), "Index", "Help", null, null, null)
+                        @Html.ActionLink("Apis", "Index", "Help", new { area = "" }, null)
                     </li>
                 </ul>
             </section>
