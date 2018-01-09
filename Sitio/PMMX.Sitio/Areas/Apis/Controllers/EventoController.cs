@@ -43,6 +43,7 @@ namespace Sitio.Areas.Apis.Controllers
                      FechaInicio = s.Evento.FechaInicio,
                      FechaFin = s.Evento.FechaFin,
                      Nota = s.Evento.Nota,
+                     IdCategoria = s.Evento.IdCategoria,
                      Activo = s.Evento.Activo
                  }).ToList();
             
@@ -70,6 +71,7 @@ namespace Sitio.Areas.Apis.Controllers
                      FechaInicio = s.Evento.FechaInicio,
                      FechaFin = s.Evento.FechaFin,
                      Nota = s.Evento.Nota,
+                     IdCategoria = s.Evento.IdCategoria,
                      Activo = s.Evento.Activo
                  }).ToList();
 
@@ -88,6 +90,7 @@ namespace Sitio.Areas.Apis.Controllers
                     FechaInicio = d.FechaInicio,
                     FechaFin = d.FechaFin,
                     Nota = d.Nota,
+                    IdCategoria = d.IdCategoria,
                     Activo = d.Activo,
                     JustDoIt = d.JustDoIt.Select(j => new JustDoItView
                     {
