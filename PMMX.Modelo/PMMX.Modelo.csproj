@@ -146,6 +146,7 @@
     <Compile Include="Entidades\Warehouse\Proveedores.cs" />
     <Compile Include="Entidades\Warehouse\Recursos.cs" />
     <Compile Include="Entidades\Warehouse\Ventana.cs" />
+    <Compile Include="Entidades\InsiteLAC\KPI.cs" />
     <Compile Include="Interfaces\IPMMXRepositorio.cs" />
     <Compile Include="Interfaces\Seguridad\IDispositivoServicio.cs" />
     <Compile Include="Interfaces\Seguridad\IUsuarioServicio.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Map\EventoOrigenMap.cs" />
     <Compile Include="Map\EventoResponsableMap.cs" />
     <Compile Include="Map\HorarioMap.cs" />
+    <Compile Include="Map\InsiteLAC\KPIMap.cs" />
     <Compile Include="Map\ListaDistribucionMap.cs" />
     <Compile Include="Map\LocacionMap.cs" />
     <Compile Include="Map\MarcaMap.cs" />
