@@ -36,6 +36,6 @@ namespace PMMX.Modelo.Entidades.Warehouse
         public Locacion Destino { get; set; }
         public Proveedores Proveedor { get; set; }
 
-        public List<StatusVentana> StatusVentana { get; set; }
+        public ICollection<StatusVentana> StatusVentana { get; set; }
     }
 }

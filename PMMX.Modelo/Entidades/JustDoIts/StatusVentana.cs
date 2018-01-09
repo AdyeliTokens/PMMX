@@ -17,9 +17,9 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public int IdVentana { get; set; }
         public int IdStatus { get; set; }
         public int IdResponsable { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]
         public DateTime Fecha { get; set; }
-
-
+        
         public Ventana Ventana { get; set; }
         public Status Status { get; set; }
         public Persona Responsable { get; set; }

@@ -264,8 +264,8 @@
     <Compile Include="Areas\Apis\Controllers\VentanaController.cs" />
     <Compile Include="Areas\Apis\Controllers\VQIController.cs" />
     <Compile Include="Areas\Apis\Controllers\NoConformidadesController.cs" />
-    <Compile Include="Areas\Apis\StatusController.cs" />
-    <Compile Include="Areas\Apis\StatusVentanaController.cs" />
+    <Compile Include="Areas\Apis\Controllers\StatusController.cs" />
+    <Compile Include="Areas\Apis\Controllers\StatusVentanaController.cs" />
     <Compile Include="Areas\Cuestionario\Controllers\WebApiConfig.cs" />
     <Compile Include="Areas\Apis\Controllers\OrigenRespuestaController.cs" />
     <Compile Include="Areas\Apis\Controllers\PreguntaTurnoController.cs" />

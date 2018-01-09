@@ -34,5 +34,7 @@ namespace PMMX.Modelo.Vistas
         public LocacionView Procedencia { get; set; }
         public LocacionView Destino { get; set; }
         public ProveedoresView Proveedor { get; set; }
+
+        public ICollection<StatusVentanaView> StatusVentana { get; set; }
     }
 }

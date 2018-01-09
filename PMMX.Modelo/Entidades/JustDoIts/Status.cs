@@ -19,6 +19,6 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public int Activo { get; set; }
 
 
-        public List<StatusVentana> StatusVentana { get; set; }
+        public ICollection<StatusVentana> StatusVentana { get; set; }
     }
 }
