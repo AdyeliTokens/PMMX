@@ -1,59 +1,207 @@
-﻿@model IEnumerable<PMMX.Modelo.Entidades.InsiteLAC.KPI>
+﻿@model Sitio.Models.RequisicionDeDescarga
 
 @{
     Layout = null;
 }
 
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>PMMX - Aplicaciones</title>
+
+    <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" />
+    <link href="~/device-mockups/device-mockups.min.css" rel="stylesheet" />
+    <link href="~/css/new-age.css" rel="stylesheet" />
+
+
 </head>
-<body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.YTD)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Mes_Efectivo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Anio_Efectivo)
-            </th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.YTD)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Mes_Efectivo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Anio_Efectivo)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-            </td>
-        </tr>
-    }
-    
-    </table>
+<body id="page-top">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">Augmented Reality</a>
+
+        </div>
+    </nav>
+    <header class="masthead">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-lg-7 my-auto">
+                    <div class="header-content mx-auto">
+                        <h1 class="mb-5">Aplicación pensada para dar a conocer a todos los empleados de PMI LA&C los resultados de nuestros indicadores más relevantes en operaciones.</h1>
+                        <a href="@Url.Action("Download", "InSiteLAC", new { area = "" })" class="btn btn-outline btn-xl js-scroll-trigger">DESCARGA PARA ANDROID</a>
+                        <br />
+                        <br />
+                        <a href="#" class="btn btn-outline btn-xl js-scroll-trigger" data-toggle="modal" data-target="#myModal">SOLICITUD PARA IOS</a>
+                        <div id="myModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content" id="myModalContent">
+                                    <div id="respuesta"></div>
+                                    @using (Ajax.BeginForm("Create", "InSiteLAC", new AjaxOptions
+                                    {
+                                        HttpMethod = "POST",
+                                        InsertionMode = InsertionMode.Replace,
+                                        UpdateTargetId = "respuesta"
+                                    }))
+
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                        <div class="modal-body">
+                                            <div class="form-horizontal">
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2 text-dark" })
+                                                    <div class="col-md-10">
+                                                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2 text-dark" })
+                                                    <div class="col-md-10">
+                                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Comentario, htmlAttributes: new { @class = "control-label col-md-2 text-dark" })
+                                                    <div class="col-md-10">
+                                                        @Html.EditorFor(model => model.Comentario, new { htmlAttributes = new { @class = "form-control ", rows = "3" } })
+                                                        @Html.ValidationMessageFor(model => model.Comentario, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                            <input type="submit" value="Solicitar" class="btn btn-default" />
+                                        </div>
+                                    }
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 my-auto">
+                    <div class="device-container">
+                        <div class="device-mockup iphone6_plus portrait white">
+                            <div class="device">
+                                <div class="screen">
+                                    <img src="~/img/augmented-reality/screen-1.png" class="img-fluid" alt="">
+                                </div>
+                                <div class="button">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-heading text-center">
+                <h2></h2>
+                <p class="text-muted"></p>
+                <hr>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 my-auto">
+                    <div class="device-container">
+                        <div class="device-mockup iphone6_plus portrait white">
+                            <div class="device">
+                                <div class="screen">
+                                    <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
+                                    <img src="~/img/augmented-reality/screen-1.png" class="img-fluid" alt="">
+                                </div>
+                                <div class="button">
+                                    <!-- You can hook the "home button" to some JavaScript events or just remove it -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 my-auto">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="feature-item">
+                                    <i class="icon-screen-smartphone text-primary"></i>
+                                    <h3>Movilidad</h3>
+                                    <p class="text-muted">Tu celular una extensión de ti!</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="feature-item">
+                                    <i class="icon-camera text-primary"></i>
+                                    <h3>Cámara</h3>
+                                    <p class="text-muted">Deja que tu cámara vea lo que tu no ves!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="feature-item">
+                                    <i class="icon-chart text-primary"></i>
+                                    <h3>Indicadores</h3>
+                                    <p class="text-muted">Cómo vamos, a dónde vamos!</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="feature-item">
+                                    <i class="icon-globe text-primary"></i>
+                                    <h3>LA&C </h3>
+                                    <p class="text-muted">Información que necesitas!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="cta">
+        <div class="cta-content">
+            <div class="container">
+                <h2>Stop waiting.<br>Start building.</h2>
+            </div>
+        </div>
+        <div class="overlay"></div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2018 PMMX.</p>
+
+        </div>
+    </footer>
+
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/popper/popper.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/js/new-age.min.js"></script>
+
 </body>
 </html>
+
+

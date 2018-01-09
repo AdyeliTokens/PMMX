@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.InsiteLAC;
+using OfficeOpenXml;
+using Sitio.Models;
 
 namespace Sitio.Controllers
 {
@@ -15,13 +17,75 @@ namespace Sitio.Controllers
     {
         private PMMXContext db = new PMMXContext();
 
-        // GET: InSiteLAC
+
         public ActionResult Index()
         {
-            return View(db.KPIs.ToList());
+            return View();
         }
 
-        // GET: InSiteLAC/Details/5
+        public ActionResult Listado()
+        {
+
+            if (Request.IsAjaxRequest())
+                return PartialView(db.KPIs.ToList());
+            else
+                return View(db.KPIs.ToList());
+
+
+        }
+
+        public ActionResult UploadFile()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult UploadFile(FechaModel model ,HttpPostedFileBase file)
+        {
+            if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+            {
+                string fileName = file.FileName;
+                string fileContentType = file.ContentType;
+                byte[] fileBytes = new byte[file.ContentLength];
+                var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+                var kpis = new List<KPI>();
+                using (var package = new ExcelPackage(file.InputStream))
+                {
+
+
+                    var currentSheet = package.Workbook.Worksheets;
+                    foreach (var workSheet in currentSheet)
+                    {
+                        var noOfCol = workSheet.Dimension.End.Column;
+                        var noOfRow = workSheet.Dimension.End.Row;
+
+                        for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
+                        {
+
+
+                            var kpi = new KPI();
+
+                            kpi.Description = workSheet.Cells[rowIterator, 1].Value.ToString().Trim();
+                            kpi.YTD = Convert.ToDouble(workSheet.Cells[rowIterator, 2].Value.ToString().Trim());
+                            kpi.Mes_Efectivo = model.Mes;
+                            kpi.Anio_Efectivo = model.Anio;
+
+                            kpis.Add(kpi);
+                            
+                        }
+                    }
+                    
+                    db.KPIs.AddRange(kpis);
+                    db.SaveChanges();
+                    return RedirectToAction("Listado");
+                }
+            }
+
+            return View("Listado");
+        }
+
+
+
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,15 +100,13 @@ namespace Sitio.Controllers
             return View(kPI);
         }
 
-        // GET: InSiteLAC/Create
+
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: InSiteLAC/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Description,YTD,Mes_Efectivo,Anio_Efectivo")] KPI kPI)
@@ -59,7 +121,7 @@ namespace Sitio.Controllers
             return View(kPI);
         }
 
-        // GET: InSiteLAC/Edit/5
+
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -74,9 +136,7 @@ namespace Sitio.Controllers
             return View(kPI);
         }
 
-        // POST: InSiteLAC/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Description,YTD,Mes_Efectivo,Anio_Efectivo")] KPI kPI)
@@ -90,7 +150,7 @@ namespace Sitio.Controllers
             return View(kPI);
         }
 
-        // GET: InSiteLAC/Delete/5
+
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -105,7 +165,7 @@ namespace Sitio.Controllers
             return View(kPI);
         }
 
-        // POST: InSiteLAC/Delete/5
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -116,6 +176,7 @@ namespace Sitio.Controllers
             return RedirectToAction("Index");
         }
 
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -123,6 +184,19 @@ namespace Sitio.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public PartialViewResult SolicitudEnviada()
+        {
+            return PartialView();
+        }
+
+        public FileResult Download()
+        {
+            byte[] fileBytes = System.IO.File.ReadAllBytes(@"c:\PMMX\Aplicaciones\AugmentedReality\AR.apk");
+            string fileName = "AR.apk";
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+
         }
     }
 }
