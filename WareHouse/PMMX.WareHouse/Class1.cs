@@ -8,5 +8,8 @@ namespace PMMX.WareHouse
 {
     public class Class1
     {
+        public void Name() {
+
+        }
     }
 }
