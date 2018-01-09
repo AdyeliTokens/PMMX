@@ -2,14 +2,20 @@
 
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
+@Styles.Render("~/Style/Bootstrap")
 
-<h2>Details</h2>
+<h2>@Html.DisplayFor(model => model.Descripcion)</h2>
 
 <div>
-    <h4>Evento</h4>
+    <p align="right">
+        <button id="btn-Editar" class="btn btn-default"><i class="fa fa-pencil text-info"></i></button>
+        <button id="btn-Delete" class="btn btn-default"><i class="fa fa-trash text-danger"></i></button>
+    </p>
     <hr />
+    @Html.Hidden("Id", Model.Id)
+    @Html.Hidden("IdCategoria", Model.IdCategoria)
     <dl class="dl-horizontal">
         <dt>
             @Html.LabelFor(model => model.Asignador.Nombre, "Autor: ")
@@ -24,14 +30,6 @@
 
         <dd>
             @Html.Raw(@ViewBag.IdCategoria)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Descripcion)
         </dd>
 
         <dt>
@@ -76,8 +74,71 @@
 
     </dl>
 </div>
-<p>
-    <i class="fa fa-pencil text-green"></i> @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    <i class="fa fa-trash text-red"></i> @Html.ActionLink("Delete", "Delete", new { id = Model.Id }) |
-    <i class="fa fa-backward text-blue"></i> @Html.ActionLink("Back to List", "Index")
-</p>
+
+    <div id="opciones-ventana" class="form-group" align="center">
+         <button id="btn-Continuar" class="btn btn-success" >Continuar</button>
+         <button id="btn-Rechazo" class="btn btn-danger">Rechazar</button>
+    </div>
+
+    @Scripts.Render("~/JS/jquery")
+    @Scripts.Render("~/JS/Bootstrap")
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+
+    <script>
+        $(document).ready(function ()
+        {
+            var id = $("#Id").val();
+            start();
+
+            function start()
+            {
+                var idCategoria = $("#IdCategoria").val();
+                $("#opciones-ventana").hide();
+
+                if (idCategoria == 10)
+                    $("#opciones-ventana").show();
+            }
+
+            $("#btn-Editar").on("click", function ()
+            {
+                var url = ("/Operaciones/Evento/Edit/"+id);
+
+                $.get(url, function (data) {
+                    $('#createAssetContainer').html(data);
+
+                    $('#createAssetModal').modal('show');
+                });
+            });
+
+            $("#btn-Delete").on("click", function () {
+                var url = ("/Operaciones/Evento/Delete/" + id);
+
+                $.get(url, function (data) {
+                    $('#createAssetContainer').html(data);
+
+                    $('#createAssetModal').modal('show');
+                });
+            });
+
+            $("#btn-Continuar").on("click", function () {
+                var url = ("/Operaciones/StatusVentana/Create?IdVentana=" + id);
+
+                $.get(url, function (data) {
+                    $('#createAssetContainer').html(data);
+
+                    $('#createAssetModal').modal('show');
+                });
+            });
+
+            $("#btn-Rechazo").on("click", function (e) {
+                var url = ("/Warehouse/BitacoraVentana/Create?IdVentana=" + id);
+                
+                $.get(url, function (data) {
+                    $('#createAssetContainer').html(data);
+                    $('#createAssetModal').modal('show');
+                });
+            });
+
+        });
+    </script>
+

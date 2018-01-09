@@ -18,8 +18,7 @@ namespace PMMX.Modelo.Map
             Property(c => c.Id).HasColumnName("Id");
             Property(c => c.IdActividadVentana).HasColumnName("IdActividadVentana");
             Property(c => c.IdResponsable).HasColumnName("IdResponsable");
-            Property(c => c.FechaInicio).HasColumnName("FechaInicio");
-            Property(c => c.FechaFin).HasColumnName("FechaFin");
+            Property(c => c.Fecha).HasColumnName("Fecha");
             Property(c => c.Comentarios).HasColumnName("Comentarios");
             Property(c => c.Activo).HasColumnName("Activo");
             #endregion

@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<PMMX.Modelo.Entidades.Operaciones.StatusVentana>
 
 @{
-    Layout = null;
+    ViewBag.Title = "Index";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
-
 <!DOCTYPE html>
 
 <html>
@@ -20,15 +20,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Responsable.Nombre)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ventana.PO)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
+           
             <th></th>
         </tr>
     
@@ -37,15 +29,8 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Responsable.Nombre)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ventana.PO)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
+           
+            
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
                 @Html.ActionLink("Details", "Details", new { id=item.Id }) |

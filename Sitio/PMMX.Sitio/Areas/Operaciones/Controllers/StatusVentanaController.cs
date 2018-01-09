@@ -8,6 +8,10 @@ using System.Web;
 using System.Web.Mvc;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.Operaciones;
+using PMMX.Seguridad.Servicios;
+using PMMX.Modelo.RespuestaGenerica;
+using PMMX.Modelo.Entidades;
+using Microsoft.AspNet.Identity;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -19,7 +23,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         public ActionResult Index()
         {
             var statusVentana = db.StatusVentana.Include(s => s.Responsable).Include(s => s.Status).Include(s => s.Ventana);
-            return View(statusVentana.ToList());
+            return View(statusVentana);
         }
 
         // GET: Operaciones/StatusVentana/Details/5
@@ -40,9 +44,8 @@ namespace Sitio.Areas.Operaciones.Controllers
         // GET: Operaciones/StatusVentana/Create
         public ActionResult Create()
         {
-            ViewBag.IdResponsable = new SelectList(db.Personas, "Id", "Nombre");
-            ViewBag.IdStatus = new SelectList(db.Status, "Id", "Nombre");
-            ViewBag.IdVentana = new SelectList(db.Ventana, "Id", "PO");
+            ViewBag.IdStatus = new SelectList(db.Status.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
+            ViewBag.IdVentana = new SelectList(db.Ventana.Select(x => new { Id = x.Id, PO = x.PO }).OrderBy(x => x.PO), "Id", "PO");
             return View();
         }
 
@@ -51,18 +54,28 @@ namespace Sitio.Areas.Operaciones.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,IdVentana,IdStatus,IdResponsable,Fecha")] StatusVentana statusVentana)
+        public ActionResult Create(StatusVentana statusVentana)
         {
             if (ModelState.IsValid)
             {
+                PersonaServicio personaServicio = new PersonaServicio();
+                IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
+
+                if (persona.EjecucionCorrecta)
+                {
+                    statusVentana.IdResponsable = persona.Respuesta.Id;
+                }
+
+                statusVentana.Fecha = DateTime.Now;
+
                 db.StatusVentana.Add(statusVentana);
                 db.SaveChanges();
+                //return View(statusVentana);
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdResponsable = new SelectList(db.Personas, "Id", "Nombre", statusVentana.IdResponsable);
-            ViewBag.IdStatus = new SelectList(db.Status, "Id", "Nombre", statusVentana.IdStatus);
-            ViewBag.IdVentana = new SelectList(db.Ventana, "Id", "PO", statusVentana.IdVentana);
+            ViewBag.IdStatus = new SelectList(db.Status.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", statusVentana.IdStatus);
+            ViewBag.IdVentana = new SelectList(db.Ventana.Select(x => new { Id = x.Id, PO = x.PO }).OrderBy(x => x.PO), "Id", "PO", statusVentana.IdVentana);
             return View(statusVentana);
         }
 
@@ -78,7 +91,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IdResponsable = new SelectList(db.Personas, "Id", "Nombre", statusVentana.IdResponsable);
+
             ViewBag.IdStatus = new SelectList(db.Status, "Id", "Nombre", statusVentana.IdStatus);
             ViewBag.IdVentana = new SelectList(db.Ventana, "Id", "PO", statusVentana.IdVentana);
             return View(statusVentana);
@@ -89,15 +102,16 @@ namespace Sitio.Areas.Operaciones.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,IdVentana,IdStatus,IdResponsable,Fecha")] StatusVentana statusVentana)
+        public ActionResult Edit(StatusVentana statusVentana)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(statusVentana).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                return RedirectToAction("Index", "Evento", new { Area = "Operaciones" });
             }
-            ViewBag.IdResponsable = new SelectList(db.Personas, "Id", "Nombre", statusVentana.IdResponsable);
+
             ViewBag.IdStatus = new SelectList(db.Status, "Id", "Nombre", statusVentana.IdStatus);
             ViewBag.IdVentana = new SelectList(db.Ventana, "Id", "PO", statusVentana.IdVentana);
             return View(statusVentana);

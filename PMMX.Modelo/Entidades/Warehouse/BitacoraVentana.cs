@@ -11,8 +11,7 @@ namespace PMMX.Modelo.Entidades.Warehouse
         #region Propiedades
         public int Id { get; set; }
         public int IdVentana { get; set; }
-        public DateTime FechaInicio { get; set; }
-        public DateTime FechaFin { get; set; }
+        public DateTime Fecha { get; set; }
         public int IdResponsable { get; set; }
         public string Comentarios { get; set; }
         public int IdActividadVentana { get; set; }

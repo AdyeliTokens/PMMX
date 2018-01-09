@@ -1,60 +1,37 @@
 ﻿@model PMMX.Modelo.Entidades.Warehouse.BitacoraVentana
 
 @{
-    ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+@Styles.Render("~/Style/Select2")
+
+<h2>Bitacora En Ventana</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>BitacoraVentana</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
         <div class="form-group">
-            @Html.LabelFor(model => model.IdVentana, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IdVentana, "PO: ", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.IdVentana, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownList("IdVentana", null, htmlAttributes: new { @class = "form-control select2", @style = "width: 100%;" })
                 @Html.ValidationMessageFor(model => model.IdVentana, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IdActividadVentana, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IdActividadVentana,"Actividad en Ventana: ", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.IdActividadVentana, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownList("IdActividadVentana", null, htmlAttributes: new { @class = "form-control select2", @style = "width: 100%;" })
                 @Html.ValidationMessageFor(model => model.IdActividadVentana, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FechaInicio, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FechaInicio, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FechaInicio, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FechaFin, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FechaFin, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FechaFin, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdResponsable, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IdResponsable, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IdResponsable, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
+        
         <div class="form-group">
             @Html.LabelFor(model => model.Comentarios, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -64,13 +41,8 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Activo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Activo)
-                    @Html.ValidationMessageFor(model => model.Activo, "", new { @class = "text-danger" })
-                </div>
-            </div>
+            @Html.Hidden("IdVentana")
+            @Html.Hidden("Activo")
         </div>
 
         <div class="form-group">
@@ -81,6 +53,21 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@Scripts.Render("~/JS/jquery")
+@Scripts.Render("~/JS/Bootstrap")
+@Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+@Scripts.Render("~/JS/Select2")
+
+<script>
+        $(document).ready(function ()
+        {
+            $('.select2').select2();
+           start();
+
+            function start()
+            {   
+                $("#Activo").val(true);     
+           }
+        });
+</script>
+
