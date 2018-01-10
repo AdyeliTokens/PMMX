@@ -220,9 +220,11 @@ namespace Sitio.Areas.Operaciones.Controllers
                     {
                         notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + evento.Descripcion + ". ", "");
                     }
+
+                    EmailService email = new EmailService();
+                    email.SendMail("adriana.flores@contracted.pmi.com");
                 }
-
-
+                
                 switch(evento.IdCategoria)
                 {
                     case 10:

@@ -10,6 +10,7 @@ using System.Web;
 using System.Data.Entity;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Vistas;
+using System.Configuration;
 
 namespace Sitio.Helpers
 {
@@ -157,5 +158,33 @@ namespace Sitio.Helpers
             }
         }
 
+        public bool SendMail(string To_Mail)
+        {
+            try
+            {
+                MailMessage smail = new MailMessage();
+                smail.IsBodyHtml = true;
+                smail.BodyEncoding = System.Text.Encoding.GetEncoding("iso-8859-1");
+                smail.From = new MailAddress("pmm.isoperation@gmail.com", "Philip Morris");
+                smail.To.Add(new MailAddress(To_Mail));
+                smail.Subject = "Test PMMX";
+
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+                smtp.EnableSsl = true;
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new System.Net.NetworkCredential("pmm.isoperation@gmail.com", "82000100");
+                smtp.Send(smail);
+            }
+            catch (SmtpException ex)
+            {
+                Console.WriteLine(ex.StatusCode);
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+            return true;
+        }
+        
     }
 }

@@ -11,6 +11,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Sitio.Models;
+using System.Net.Mail;
+using System.Configuration;
 
 namespace Sitio
     {
@@ -26,7 +28,35 @@ namespace Sitio
             {
                 throw new NotImplementedException();
             }
-        }
+
+            public bool SendMail(string To_Mail)
+            {
+                try
+                {
+                    MailMessage smail = new MailMessage();
+                    smail.IsBodyHtml = true;
+                    smail.BodyEncoding = System.Text.Encoding.GetEncoding("iso-8859-1");
+                    smail.From = new MailAddress("pmmx.applications@pmi.com", "Philip Morris");
+                    smail.To.Add(new MailAddress(To_Mail));
+                    smail.Subject= "Test PMMX";   
+
+                    SmtpClient smtp = new SmtpClient();
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.Port = 587;
+                    smtp.EnableSsl = true;
+                    smtp.UseDefaultCredentials = false;
+                    smtp.Credentials = new System.Net.NetworkCredential("pmm.isoperation@gmail.com", "82000100");
+                    smtp.Send(smail);
+                }
+                catch(SmtpException ex)
+                {
+                    Console.WriteLine(ex.StatusCode);
+                    Console.WriteLine(ex.Message);
+                    return false;
+                }
+                return true;
+            }
+    }
 
         public class SmsService : IIdentityMessageService
         {
