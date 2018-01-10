@@ -1,7 +1,7 @@
 ﻿@model PMMX.Modelo.Entidades.Operaciones.StatusVentana
 
 @{
-    Layout = null;
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
