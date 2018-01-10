@@ -15,8 +15,8 @@ namespace PMMX.Modelo.Entidades.Operaciones
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
-        public int NombreCorto { get; set; }
-        public int Activo { get; set; }
+        public string NombreCorto { get; set; }
+        public bool Activo { get; set; }
 
 
         public ICollection<StatusVentana> StatusVentana { get; set; }
