@@ -23,35 +23,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // GET: Operaciones/StatusVentana
         public ActionResult Index()
         {
-            //var statusVentana = db.StatusVentana.ToList();
-            var statusVentana = db.StatusVentana
-            .Select(s => new StatusVentanaView
-            {
-                Id = s.Id,
-                IdVentana = s.IdVentana,
-                IdStatus = s.IdStatus,
-                IdResponsable = s.IdResponsable,
-                Ventana = new VentanaView
-                {
-                    IdEvento = s.Ventana.IdEvento,
-                    PO = s.Ventana.PO,
-                },
-                //Status = new StatusView
-                //{
-                //    Id = s.Status.Id,
-                //    Nombre = s.Status.Nombre,
-                //    NombreCorto = s.Status.NombreCorto,
-                //    Activo = s.Status.Activo
-                //},
-                Responsable = new PersonaView
-                {
-                    Id = s.Responsable.Id,
-                    Nombre = s.Responsable.Nombre,
-                    Apellido1 = s.Responsable.Apellido1,
-                    Apellido2 = s.Responsable.Apellido2
-                }
-            }).ToList();
-
+            var statusVentana = db.StatusVentana.Include(s => s.Responsable).Include(s => s.Ventana).Include(s => s.Status).ToList();
             return View(statusVentana);
         }
 
@@ -62,11 +34,38 @@ namespace Sitio.Areas.Operaciones.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            StatusVentana statusVentana = db.StatusVentana.Find(id);
+
+            var statusVentana = db.StatusVentana.Where(s => (s.Id == id)).
+                Select(s => new StatusVentanaView
+                {
+                    Id = s.Id,
+                    IdVentana = s.IdVentana,
+                    IdStatus = s.IdStatus,
+                    IdResponsable = s.IdResponsable,
+                    Ventana = new VentanaView
+                    {
+                        Id = s.Ventana.Id,
+                        PO = s.Ventana.PO
+                    },
+                    Status = new StatusView
+                    {
+                        Id = s.Status.Id,
+                        Nombre = s.Status.Nombre
+                    },
+                    Responsable = new PersonaView
+                    {
+                        Id = s.Responsable.Id,
+                        Nombre = s.Responsable.Nombre,
+                        Apellido1 = s.Responsable.Apellido1,
+                        Apellido2 = s.Responsable.Apellido2
+                    }
+                }).FirstOrDefault();
+            
             if (statusVentana == null)
             {
                 return HttpNotFound();
             }
+
             return View(statusVentana);
         }
 
@@ -99,7 +98,6 @@ namespace Sitio.Areas.Operaciones.Controllers
 
                 db.StatusVentana.Add(statusVentana);
                 db.SaveChanges();
-                //return View(statusVentana);
                 return RedirectToAction("Index");
             }
 
@@ -116,13 +114,16 @@ namespace Sitio.Areas.Operaciones.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             StatusVentana statusVentana = db.StatusVentana.Find(id);
+            
             if (statusVentana == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.IdStatus = new SelectList(db.Status, "Id", "Nombre", statusVentana.IdStatus);
-            ViewBag.IdVentana = new SelectList(db.Ventana, "Id", "PO", statusVentana.IdVentana);
+            ViewBag.IdStatus = new SelectList(db.Status.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
+            ViewBag.IdVentana = new SelectList(db.Ventana.Select(x => new { Id = x.Id, PO = x.PO }).OrderBy(x => x.PO), "Id", "PO");
+            ViewBag.IdResponsable = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido1 }).OrderBy(x => x.Nombre), "Id", "Nombre");
+
             return View(statusVentana);
         }
 
@@ -137,12 +138,12 @@ namespace Sitio.Areas.Operaciones.Controllers
             {
                 db.Entry(statusVentana).State = EntityState.Modified;
                 db.SaveChanges();
-                //return RedirectToAction("Index");
-                return RedirectToAction("Index", "Evento", new { Area = "Operaciones" });
+                return RedirectToAction("Index");
             }
 
-            ViewBag.IdStatus = new SelectList(db.Status, "Id", "Nombre", statusVentana.IdStatus);
-            ViewBag.IdVentana = new SelectList(db.Ventana, "Id", "PO", statusVentana.IdVentana);
+            ViewBag.IdStatus = new SelectList(db.Status.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", statusVentana.IdStatus);
+            ViewBag.IdVentana = new SelectList(db.Ventana.Select(x => new { Id = x.Id, PO = x.PO }).OrderBy(x => x.PO), "Id", "PO", statusVentana.IdVentana);
+            ViewBag.IdResponsable = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre +" "+ x.Apellido1 +" "+ x.Apellido1 }).OrderBy(x => x.Nombre), "Id", "Nombre", statusVentana.IdResponsable);
             return View(statusVentana);
         }
 
@@ -153,7 +154,33 @@ namespace Sitio.Areas.Operaciones.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            StatusVentana statusVentana = db.StatusVentana.Find(id);
+            
+            var statusVentana = db.StatusVentana.Where(s => (s.Id == id)).
+                Select(s => new StatusVentanaView
+                {
+                    Id = s.Id,
+                    IdVentana = s.IdVentana,
+                    IdStatus = s.IdStatus,
+                    IdResponsable = s.IdResponsable,
+                    Ventana = new VentanaView
+                    {
+                        Id = s.Ventana.Id,
+                        PO = s.Ventana.PO
+                    },
+                    Status = new StatusView
+                    {
+                        Id = s.Status.Id,
+                        Nombre = s.Status.Nombre
+                    },
+                    Responsable = new PersonaView
+                    {
+                        Id = s.Responsable.Id,
+                        Nombre = s.Responsable.Nombre,
+                        Apellido1 = s.Responsable.Apellido1,
+                        Apellido2 = s.Responsable.Apellido2
+                    }
+                }).FirstOrDefault();
+
             if (statusVentana == null)
             {
                 return HttpNotFound();
