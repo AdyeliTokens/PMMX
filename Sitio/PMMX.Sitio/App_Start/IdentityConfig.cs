@@ -29,7 +29,7 @@ namespace Sitio
                 throw new NotImplementedException();
             }
 
-            public bool SendMail(string To_Mail)
+            public bool SendMail(List<string> To_Mail)
             {
                 try
                 {
@@ -37,7 +37,12 @@ namespace Sitio
                     smail.IsBodyHtml = true;
                     smail.BodyEncoding = System.Text.Encoding.GetEncoding("iso-8859-1");
                     smail.From = new MailAddress("pmmx.applications@pmi.com", "Philip Morris");
-                    smail.To.Add(new MailAddress(To_Mail));
+
+                    foreach (string email in To_Mail)
+                    {
+                        smail.To.Add(new MailAddress(email));
+                    }
+                
                     smail.Subject= "Test PMMX";   
 
                     SmtpClient smtp = new SmtpClient();

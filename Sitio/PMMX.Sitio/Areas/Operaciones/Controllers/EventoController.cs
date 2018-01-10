@@ -221,8 +221,11 @@ namespace Sitio.Areas.Operaciones.Controllers
                         notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + evento.Descripcion + ". ", "");
                     }
 
-                    EmailService email = new EmailService();
-                    email.SendMail("adriana.flores@contracted.pmi.com");
+                    List<UserView> users = usuarioServicio.GetEmailByEvento(evento.Id);
+                    List<string> emails = users.Select(x => x.Email).ToList();
+                    
+                    EmailService emailService = new EmailService();
+                    emailService.SendMail(emails);
                 }
                 
                 switch(evento.IdCategoria)
