@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.Operaciones;
+using PMMX.Modelo.Vistas;
 
 namespace Sitio.Areas.Apis.Controllers
 {
@@ -28,6 +29,26 @@ namespace Sitio.Areas.Apis.Controllers
         public IHttpActionResult GetSubArea(int id)
         {
             SubArea subArea = db.SubArea.Find(id);
+            if (subArea == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(subArea);
+        }
+
+        [ResponseType(typeof(SubAreaView))]
+        public IHttpActionResult GetSubAreaByArea(int idArea)
+        {
+            var subArea = db.SubArea.Where(s => (s.IdArea == idArea))
+            .Select(s=> new SubAreaView
+            {
+                Id = s.Id,
+                Nombre = s.Nombre,
+                NombreCorto = s.NombreCorto,
+                Activo = s.Activo
+            }).ToList();
+
             if (subArea == null)
             {
                 return NotFound();
