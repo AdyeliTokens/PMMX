@@ -228,6 +228,7 @@
     <Compile Include="Vistas\GrupoPreguntasView.cs" />
     <Compile Include="Vistas\IntervencionView.cs" />
     <Compile Include="Vistas\JustDoItView.cs" />
+    <Compile Include="Vistas\ListaDistribucionView.cs" />
     <Compile Include="Vistas\LocacionView.cs" />
     <Compile Include="Vistas\LogServicioView.cs" />
     <Compile Include="Vistas\MantenimientoView.cs" />
@@ -247,6 +248,7 @@
     <Compile Include="Vistas\ShiftLeadersView.cs" />
     <Compile Include="Vistas\StatusVentanaView.cs" />
     <Compile Include="Vistas\StatusView.cs" />
+    <Compile Include="Vistas\SubAreaView.cs" />
     <Compile Include="Vistas\SubCategoriaView.cs" />
     <Compile Include="Vistas\TiempoDeParoView.cs" />
     <Compile Include="Vistas\UserView.cs" />
