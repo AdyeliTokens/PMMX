@@ -72,16 +72,24 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div id="div-ubicacion" class="form-group">
             @Html.Label("Agregar ubicacion: ", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextBox("Ubicacion", "")
             </div>
         </div>
-        <div class="form-group">
+
+        <div id="div-personas" class="form-group">
             @Html.Label("Invitar a más personas: ", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextBox("Responsables","")
+            </div>
+        </div>
+
+        <div id="div-lista" class="form-group">
+            @Html.Label("Notificar a: ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("Distribucion", "")
             </div>
         </div>
 
@@ -129,7 +137,9 @@
         $(document).ready(function ()
         {
             var today = new Date();
-           
+            $("#div-personas").hide();
+            $("#div-ubicacion").hide();
+            $("#div-lista").hide();
             $("#Activo").val(true);
 
             $('#FechaInicio').daterangepicker({
@@ -165,6 +175,25 @@
                 "minDate": "YYYY-MM-DD  h:mm A",
                 "maxDate": "YYYY-MM-DD  h:mm A"
             });
+
+            $("#IdCategoria").on("change", function () {
+                var idCategoria = $('#IdCategoria').val();
+                
+               switch (idCategoria)
+               {
+                   case "10": // ventana
+                       $("#div-personas").hide();
+                       $("#div-ubicacion").hide();
+                       $("#div-lista").show();
+                   break;
+                   default:
+                       $("#div-personas").show();
+                       $("#div-ubicacion").show();
+                       $("#div-lista").hide();
+                   break;
+               }
+
+            });
             
             $("#Ubicacion").click(function () {
                 var url = ("/Operaciones/Evento/Ubicaciones");
@@ -186,6 +215,15 @@
                 });
             });
 
+            $("#Distribucion").click(function () {
+                var url = ("/Operaciones/Evento/ListaDistribucion");
+
+                $.get(url, function (data) {
+                    $('#createAssetContainer').html(data);
+
+                    $('#createAssetModal').modal('show');
+                });
+            });
         });
     </script>
 }

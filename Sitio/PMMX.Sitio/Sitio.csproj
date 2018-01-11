@@ -7993,6 +7993,7 @@
     <Content Include="Areas\Operaciones\Views\StatusVentana\Details.cshtml" />
     <Content Include="Areas\Operaciones\Views\StatusVentana\Edit.cshtml" />
     <Content Include="Areas\Operaciones\Views\StatusVentana\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Evento\_ListaDistribucion.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">

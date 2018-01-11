@@ -147,6 +147,19 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
         }
 
+        public ActionResult GetListaDistribucion()
+        {
+            if (ModelState.IsValid)
+            {
+                var lista = db.SubArea.Select(w => new { Id = w.Id, Nombre = w.Nombre }).OrderBy(w => w.Id).ToList();
+                return Json(new { lista }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        
         public PartialViewResult Responsables()
         {
            return PartialView("_Responsables");
@@ -156,6 +169,11 @@ namespace Sitio.Areas.Operaciones.Controllers
         {
             var areas = db.Area.Select(w => new { Id = w.Id, NombreCorto = w.NombreCorto }).OrderBy(w => w.Id).ToList();
             return PartialView("_Origen", new { areas = areas }); 
+        }
+
+        public PartialViewResult ListaDistribucion()
+        {
+            return PartialView("_ListaDistribucion");
         }
 
         // GET: Eventos/Evento/Create

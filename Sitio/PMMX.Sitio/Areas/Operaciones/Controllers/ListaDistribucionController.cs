@@ -37,6 +37,19 @@ namespace Sitio.Areas.Operaciones
             }
             return View(listaDistribucion);
         }
+        // GET: Operaciones/ListaDistribucion
+        public ActionResult GetListaDistribucionbySubArea(int? idSubArea)
+        {
+            if (ModelState.IsValid)
+            {
+                var lista = db.ListaDistribucion.Where(w => (w.IdSubarea == idSubArea)).Select(w => new { IdPersona = w.IdPersona }).ToList();
+                return Json(new { lista }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
         // GET: Operaciones/ListaDistribucion/Create
         public ActionResult Create()
