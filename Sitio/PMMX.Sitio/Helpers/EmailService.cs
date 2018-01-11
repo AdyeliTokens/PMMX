@@ -165,9 +165,16 @@ namespace Sitio.Helpers
                 MailMessage smail = new MailMessage();
                 smail.IsBodyHtml = true;
                 smail.BodyEncoding = System.Text.Encoding.GetEncoding("iso-8859-1");
-                smail.From = new MailAddress("pmm.isoperation@gmail.com", "Philip Morris");
-                smail.To.Add(new MailAddress(To_Mail));
+                smail.From = new MailAddress("pmmx.applications@pmi.com", "Philip Morris");
+
+                string[] emails = To_Mail.Split(',');
+                foreach (string email in emails)
+                {
+                    if (email != "") smail.To.Add(email);
+                }
+
                 smail.Subject = "Test PMMX";
+                smail.Body = "";
 
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = "smtp.gmail.com";
@@ -185,6 +192,5 @@ namespace Sitio.Helpers
             }
             return true;
         }
-        
     }
 }

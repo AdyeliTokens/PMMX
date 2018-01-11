@@ -239,11 +239,9 @@ namespace Sitio.Areas.Operaciones.Controllers
                         notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + evento.Descripcion + ". ", "");
                     }
 
-                    List<UserView> users = usuarioServicio.GetEmailByEvento(evento.Id);
-                    List<string> emails = users.Select(x => x.Email).ToList();
-                    
+                    string senders = usuarioServicio.GetEmailByEvento(evento.Id);
                     EmailService emailService = new EmailService();
-                    emailService.SendMail(emails);
+                    emailService.SendMail(senders, evento);
                 }
                 
                 switch(evento.IdCategoria)

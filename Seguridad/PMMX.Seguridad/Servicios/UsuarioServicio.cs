@@ -116,20 +116,26 @@ namespace PMMX.Seguridad.Servicios
         }
 
 
-        public List<UserView> GetEmailByEvento(int idEvento)
+        public string GetEmailByEvento(int idEvento)
         {
-            var email = db.EventoResponsable.Where(e => e.IdEvento == idEvento)
-                .Select(e => e.Responsable.Usuarios.Where(d => (d.IdPersona == e.IdResponsable) && (d.Activo == true))
-                .Select(u => new UserView
+            var emailList = db.EventoResponsable
+                .Where(e => e.IdEvento == idEvento)
+                .Select(e => e.Responsable.Usuarios.Where(d => d.Activo == true).Select(v => new UserView
                 {
-                    Id = u.Id,
-                    Email = u.Email
+                    Id = v.Id,
+                    Email = v.Email
                 }).ToList()
-                );
+                ).FirstOrDefault();
 
-            List<UserView> emails = email.FirstOrDefault();
-
-            return emails;
+            List<string> emails = emailList.Select(x => x.Email).ToList();
+            string stringEmails = "";
+             
+            foreach (string email in emails)
+            {
+                stringEmails += (email + ",");
+            }
+            
+            return stringEmails;
         }
     }
 }

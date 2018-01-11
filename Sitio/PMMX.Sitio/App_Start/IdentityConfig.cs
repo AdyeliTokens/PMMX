@@ -13,6 +13,7 @@ using Microsoft.Owin.Security;
 using Sitio.Models;
 using System.Net.Mail;
 using System.Configuration;
+using PMMX.Modelo.Entidades.Operaciones;
 
 namespace Sitio
     {
@@ -29,21 +30,32 @@ namespace Sitio
                 throw new NotImplementedException();
             }
 
-            public bool SendMail(List<string> To_Mail)
+            public bool SendMail(string To_Mail,Evento evento)
             {
                 try
                 {
                     MailMessage smail = new MailMessage();
                     smail.IsBodyHtml = true;
                     smail.BodyEncoding = System.Text.Encoding.GetEncoding("iso-8859-1");
-                    smail.From = new MailAddress("pmmx.applications@pmi.com", "Philip Morris");
-
-                    foreach (string email in To_Mail)
-                    {
-                        smail.To.Add(new MailAddress(email));
-                    }
+                    smail.From = new MailAddress("pmm.isoperation@gmail.com", "maya@pmi.com");
                 
-                    smail.Subject= "Test PMMX";   
+                    string[] emails = To_Mail.Split(',');
+                    foreach (string email in emails)
+                    {
+                        if (email != "") smail.To.Add(email);
+                    }
+                    
+                    smail.Subject = "[PMMX Notification] Info: " + evento.Descripcion;
+                    smail.Body = string.Format("<html><head><meta charset='UTF-8'></head><body>  ");
+                    smail.Body = smail.Body + string.Format("  <img src = '~/img/maya/logo.jpg' /><br /><br /> ");
+                    smail.Body = smail.Body + string.Format("  <div style = 'border - top:3px solid #22BCE5'>&nbsp;</div> ");
+                    smail.Body = smail.Body + string.Format("  <span style = 'font - family:Arial; font - size:10pt'> ");
+                    smail.Body = smail.Body + string.Format(" Hello <b></b>,<br /><br /> ");
+                    smail.Body = smail.Body + string.Format("  A new event has been asigned to you.<br /><br /> ");
+                    smail.Body = smail.Body + string.Format("  <h3> Se le ha asignado un nuevo evento " + evento.Descripcion + " con fecha " + evento.FechaInicio + "</h3>");
+                    smail.Body = smail.Body + string.Format(" <br /><br /> ");
+                    smail.Body = smail.Body + string.Format("  Thanks<br /> ");
+                    smail.Body = smail.Body + string.Format(" </span></body></html> ");
 
                     SmtpClient smtp = new SmtpClient();
                     smtp.Host = "smtp.gmail.com";
@@ -53,7 +65,7 @@ namespace Sitio
                     smtp.Credentials = new System.Net.NetworkCredential("pmm.isoperation@gmail.com", "82000100");
                     smtp.Send(smail);
                 }
-                catch(SmtpException ex)
+                catch (SmtpException ex)
                 {
                     Console.WriteLine(ex.StatusCode);
                     Console.WriteLine(ex.Message);

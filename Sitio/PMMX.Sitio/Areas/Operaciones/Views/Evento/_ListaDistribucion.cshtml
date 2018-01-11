@@ -5,7 +5,7 @@
 <h2>Invitar mas Personas</h2>
 <div id="personas">
     <div class="form-group">
-        <select id="slt-listadistribucion" class="form-control select2"></select>
+        <select id="slt-listadistribucion" class="form-control select2" multiple="multiple"></select>
     </div>
     <div class="form-group">
         <button id="btn-finish">Listo</button>
@@ -42,32 +42,45 @@
         }
 
         $("#btn-finish").on("click", function () 
-        {            
+        {      
+            var flag = false
             var subarea = $('#slt-listadistribucion').find(":selected").text();
             var id = $('#slt-listadistribucion').val();
             var url = "/Operaciones/ListaDistribucion/GetListaDistribucionbySubArea?idSubArea=" + id;
-            
-            $.ajax({
-                dataType: "json",
-                contentType: "application/json",
-                url: url,
-                success: function (data) {
-                    items = ""
-                    $.each(data.lista, function (i, k) {
-                        items += k.IdPersona+",";
-                    });
-                    items += 2;
-                    
-                    $("#IdResponsables").val(items);
-                    $("#Distribucion").val(subarea);
-                    $('#createAssetModal').modal('hide');
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    $('#createAssetModal').modal('hide');
-                    alert('There was an error while fetching data!');
-                }
-            });
-            
+            items = ""
+
+            alert(id)
+            var ids = id[0].split(',').map(x => { return parseInt(x) });
+
+            alert(ids)
+            for (var j = 0; j < ids.size; j++)
+            {
+                $.ajax({
+                    dataType: "json",
+                    contentType: "application/json",
+                    url: url,
+                    success: function (data) {
+                        $.each(data.lista, function (i, k) {
+                            items += k.IdPersona + ",";
+                        });
+                        flag = true
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        $('#createAssetModal').modal('hide');
+                        alert('There was an error while fetching data!');
+                        flag = false
+
+                    }
+                });
+            }
+            alert(flag)
+            if (flag == true)
+            {
+                items += 2;
+                $("#IdResponsables").val(items);
+                $("#Distribucion").val(subarea);
+                $('#createAssetModal').modal('hide');
+            }
             
         });
 
