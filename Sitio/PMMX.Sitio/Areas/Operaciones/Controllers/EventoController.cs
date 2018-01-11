@@ -147,6 +147,19 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
         }
 
+        public ActionResult GetListaDistribucion()
+        {
+            if (ModelState.IsValid)
+            {
+                var lista = db.SubArea.Select(w => new { Id = w.Id, Nombre = w.Nombre }).OrderBy(w => w.Id).ToList();
+                return Json(new { lista }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        
         public PartialViewResult Responsables()
         {
            return PartialView("_Responsables");
@@ -156,6 +169,11 @@ namespace Sitio.Areas.Operaciones.Controllers
         {
             var areas = db.Area.Select(w => new { Id = w.Id, NombreCorto = w.NombreCorto }).OrderBy(w => w.Id).ToList();
             return PartialView("_Origen", new { areas = areas }); 
+        }
+
+        public PartialViewResult ListaDistribucion()
+        {
+            return PartialView("_ListaDistribucion");
         }
 
         // GET: Eventos/Evento/Create
@@ -203,11 +221,14 @@ namespace Sitio.Areas.Operaciones.Controllers
                     String[] substrings = IdResponsables.Split(delimiter);
                     foreach (var substring in substrings)
                     {
-                        EventoResponsable eResponsable = new EventoResponsable();
-                        eResponsable.IdEvento = evento.Id;
-                        eResponsable.IdResponsable = int.Parse(substring);
-                        db.EventoResponsable.Add(eResponsable);
-                        db.SaveChanges();
+                        if (substring != "")
+                        {
+                            EventoResponsable eResponsable = new EventoResponsable();
+                            eResponsable.IdEvento = evento.Id;
+                            eResponsable.IdResponsable = int.Parse(substring);
+                            db.EventoResponsable.Add(eResponsable);
+                            db.SaveChanges();
+                        }
                     }
 
                     NotificationService notify = new NotificationService();
@@ -221,8 +242,9 @@ namespace Sitio.Areas.Operaciones.Controllers
                         notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + evento.Descripcion + ". ", "");
                     }
 
-                    EmailService email = new EmailService();
-                    email.SendMail("adriana.flores@contracted.pmi.com");
+                    string senders = usuarioServicio.GetEmailByEvento(evento.Id);
+                    EmailService emailService = new EmailService();
+                    emailService.SendMail(senders, evento);
                 }
                 
                 switch(evento.IdCategoria)
