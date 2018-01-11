@@ -36,52 +36,43 @@
                     $('#slt-listadistribucion').html(items);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert('There was an error while fetching Work Centers!');
+                    alert('There was an error while fetching data!');
                 }
             });
         }
 
         $("#btn-finish").on("click", function () 
         {      
-            var flag = false
             var subarea = $('#slt-listadistribucion').find(":selected").text();
-            var id = $('#slt-listadistribucion').val();
-            var url = "/Operaciones/ListaDistribucion/GetListaDistribucionbySubArea?idSubArea=" + id;
-            items = ""
-
-            alert(id)
-            var ids = id[0].split(',').map(x => { return parseInt(x) });
-
-            alert(ids)
-            for (var j = 0; j < ids.size; j++)
-            {
+            var id = $('#slt-listadistribucion').val() + '';
+            items = "";
+            var numbersArray = id.split(',').map(x => { return parseInt(x) });
+            
+            $.each(numbersArray, function (index, value) {
                 $.ajax({
                     dataType: "json",
                     contentType: "application/json",
-                    url: url,
+                    url: "/Operaciones/ListaDistribucion/GetListaDistribucionbySubArea?idSubArea=" + value,
                     success: function (data) {
                         $.each(data.lista, function (i, k) {
                             items += k.IdPersona + ",";
                         });
-                        flag = true
+                        
+                        $("#IdResponsables").val(items);
+                        $("#Distribucion").val(subarea);
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         $('#createAssetModal').modal('hide');
                         alert('There was an error while fetching data!');
-                        flag = false
-
                     }
                 });
-            }
-            alert(flag)
-            if (flag == true)
-            {
-                items += 2;
-                $("#IdResponsables").val(items);
-                $("#Distribucion").val(subarea);
-                $('#createAssetModal').modal('hide');
-            }
-            
+                
+                if (index == (numbersArray.length -1))
+                {
+                    $('#createAssetModal').modal('hide');
+                    
+                }
+            });
         });
 
     });

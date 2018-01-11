@@ -221,11 +221,14 @@ namespace Sitio.Areas.Operaciones.Controllers
                     String[] substrings = IdResponsables.Split(delimiter);
                     foreach (var substring in substrings)
                     {
-                        EventoResponsable eResponsable = new EventoResponsable();
-                        eResponsable.IdEvento = evento.Id;
-                        eResponsable.IdResponsable = int.Parse(substring);
-                        db.EventoResponsable.Add(eResponsable);
-                        db.SaveChanges();
+                        if (substring != "")
+                        {
+                            EventoResponsable eResponsable = new EventoResponsable();
+                            eResponsable.IdEvento = evento.Id;
+                            eResponsable.IdResponsable = int.Parse(substring);
+                            db.EventoResponsable.Add(eResponsable);
+                            db.SaveChanges();
+                        }
                     }
 
                     NotificationService notify = new NotificationService();

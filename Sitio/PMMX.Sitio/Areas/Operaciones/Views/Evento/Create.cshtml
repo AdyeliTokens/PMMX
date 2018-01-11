@@ -219,6 +219,7 @@
                 var url = ("/Operaciones/Evento/ListaDistribucion");
 
                 $.get(url, function (data) {
+                    
                     $('#createAssetContainer').html(data);
 
                     $('#createAssetModal').modal('show');
