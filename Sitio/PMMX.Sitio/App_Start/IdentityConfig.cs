@@ -48,11 +48,10 @@ namespace Sitio
                     smail.Subject = "[PMMX Notification] Info: " + evento.Descripcion;
                     smail.Body = string.Format("<html><head><meta charset='UTF-8'></head><body>  ");
                     smail.Body = smail.Body + string.Format("  <img src = '~/img/maya/logo.jpg' /><br /><br /> ");
-                    smail.Body = smail.Body + string.Format("  <div style = 'border - top:3px solid #22BCE5'>&nbsp;</div> ");
-                    smail.Body = smail.Body + string.Format("  <span style = 'font - family:Arial; font - size:10pt'> ");
+                    smail.Body = smail.Body + string.Format("<div style = 'border - top:3px solid #22BCE5'>&nbsp;</div> ");
+                    smail.Body = smail.Body + string.Format("<span style = 'font - family:Arial; font - size:10pt'> ");
                     smail.Body = smail.Body + string.Format(" Hello <b></b>,<br /><br /> ");
-                    smail.Body = smail.Body + string.Format("  A new event has been asigned to you.<br /><br /> ");
-                    smail.Body = smail.Body + string.Format("  <h3> Se le ha asignado un nuevo evento " + evento.Descripcion + " con fecha " + evento.FechaInicio + "</h3>");
+                    smail.Body = smail.Body + string.Format("   A new event has been asigned to you <h3>" + evento.Descripcion + "</h3> to " + evento.FechaInicio);
                     smail.Body = smail.Body + string.Format(" <br /><br /> ");
                     smail.Body = smail.Body + string.Format("  Thanks<br /> ");
                     smail.Body = smail.Body + string.Format(" </span></body></html> ");
