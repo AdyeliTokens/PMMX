@@ -69,7 +69,7 @@ namespace Sitio.Areas.Apis.Controllers
                             Foto foto = new Foto();
                             foto.Fecha = DateTime.Now;
                             foto.Path = pathString + extension;
-                            foto.IdJustDoIt = 0;
+                            //foto.IdJustDoIt = 0;
                             foto.IdMantenimiento = 0;
                             foto.Defectos = new List<Defecto>
                             {
@@ -153,7 +153,7 @@ namespace Sitio.Areas.Apis.Controllers
                             Foto foto = new Foto();
                             foto.Fecha = DateTime.Now;
                             foto.Path = pathString + extension;
-                            foto.IdJustDoIt = 0;
+                            //foto.IdJustDoIt = 0;
                             foto.IdMantenimiento = 0;
                             foto.Origenes = new List<Origen>
                             {
@@ -237,7 +237,7 @@ namespace Sitio.Areas.Apis.Controllers
                             Foto foto = new Foto();
                             foto.Fecha = DateTime.Now;
                             foto.Path = pathString + extension;
-                            foto.IdJustDoIt = 0;
+                            //foto.IdJustDoIt = 0;
                             foto.IdMantenimiento = 0;
                             foto.Personas = new List<Persona>
                             {
@@ -269,7 +269,7 @@ namespace Sitio.Areas.Apis.Controllers
 
 
         }
-
+        /*
         [ResponseType(typeof(Foto))]
         public async Task<HttpResponseMessage> PostJustDoIt(int IdJustDoIt)
         {
@@ -341,7 +341,90 @@ namespace Sitio.Areas.Apis.Controllers
                 dict.Add("error", ex.ToString());
                 return Request.CreateResponse(HttpStatusCode.NotFound, dict);
             }
+        }*/
+
+        public async Task<HttpResponseMessage> PostFotoJustDoIt(int IdJustDoIt)
+        {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            try
+            {
+                var httpRequest = HttpContext.Current.Request;
+
+                foreach (string file in httpRequest.Files)
+                {
+                    HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
+
+                    var postedFile = httpRequest.Files[file];
+                    if (postedFile != null && postedFile.ContentLength > 0)
+                    {
+
+                        int MaxContentLength = 1024 * 1024 * 1; //Size = 1 MB  
+
+                        IList<string> AllowedFileExtensions = new List<string> { ".jpg", ".gif", ".png" };
+                        var ext = postedFile.FileName.Substring(postedFile.FileName.LastIndexOf('.'));
+                        var extension = ext.ToLower();
+                        if (!AllowedFileExtensions.Contains(extension))
+                        {
+
+                            var message = string.Format("Please Upload image of type .jpg,.gif,.png.");
+
+                            dict.Add("error", message);
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, dict);
+                        }
+                        else
+                        {
+                            string folderName = @"c:\PMMX\Fotos\JustDoIt";
+                            string pathString = Path.Combine(folderName, IdJustDoIt.ToString());
+                            Directory.CreateDirectory(pathString);
+                            string fileName = Path.GetRandomFileName();
+                            pathString = Path.Combine(pathString, fileName);
+                            if (!File.Exists(pathString + extension))
+                            {
+                                postedFile.SaveAs(pathString + extension);
+                            }
+                            else
+                            {
+
+                                File.Delete(pathString + extension);
+                                postedFile.SaveAs(pathString + extension);
+                            }
+
+                            Foto foto = new Foto();
+                            foto.Fecha = DateTime.Now;
+                            foto.Path = pathString + extension;
+                            //foto.IdJustDoIt = 0;
+                            foto.IdMantenimiento = 0;
+                            foto.Defectos = new List<Defecto>
+                            {
+                                db.Defectos.Find(IdJustDoIt)
+                            };
+                            foto.Nombre = fileName + extension;
+                            
+                            db.Fotos.Add(foto);
+                            db.SaveChanges();
+
+                        }
+                    }
+
+                    var message1 = string.Format("Image Updated Successfully.");
+                    return Request.CreateErrorResponse(HttpStatusCode.Created, message1); ;
+                }
+                var res = string.Format("Please Upload a image.");
+                dict.Add("error", res);
+                return Request.CreateResponse(HttpStatusCode.NotFound, dict);
+            }
+            catch (Exception ex)
+            {
+                var res = string.Format("some Message");
+                dict.Add("error", ex.ToString());
+                return Request.CreateResponse(HttpStatusCode.NotFound, dict);
+            }
+
+
+            //return CreatedAtRoute("DefaultApi", new { id = foto.Id }, foto);
         }
+
+
 
         [ResponseType(typeof(Foto))]
         public async Task<HttpResponseMessage> PostMantenimiento(int IdMantenimiento)
@@ -392,7 +475,7 @@ namespace Sitio.Areas.Apis.Controllers
                             Foto foto = new Foto();
                             foto.Path = pathString + extension;
                             foto.IdMantenimiento = IdMantenimiento;
-                            foto.IdJustDoIt = 0;
+                            //foto.IdJustDoIt = 0;
                             foto.Nombre = IdMantenimiento.ToString() + extension;
 
                             db.Fotos.Add(foto);

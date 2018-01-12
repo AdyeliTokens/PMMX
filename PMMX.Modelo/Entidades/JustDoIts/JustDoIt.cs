@@ -22,8 +22,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public int IdResponsable { get; set; }
         public int IdCategoria { get; set; }
         public Boolean Activo { get; set; }
-
-
+        
         public Persona Reportador { get; set; }
         public Persona Responsable { get; set; }
         public Origen Origen { get; set; }

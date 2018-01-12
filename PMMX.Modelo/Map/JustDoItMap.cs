@@ -32,7 +32,15 @@ namespace PMMX.Modelo.Map
             this.HasRequired(c => c.Evento).WithMany(p => p.JustDoIt);
             this.HasRequired(c => c.Categoria).WithMany(p => p.JustDoIt);
 
-            this.HasMany(c => c.Fotos).WithOptional(f => f.JustDoIt).HasForeignKey(c => c.IdJustDoIt);
+            //this.HasMany(c => c.Fotos).WithOptional(f => f.JustDoIt).HasForeignKey(c => c.IdJustDoIt);
+
+            this.HasMany(c => c.Fotos).WithMany(x => x.JustDoIts).Map(cs =>
+            {
+                cs.MapLeftKey("IdFoto");
+                cs.MapRightKey("IdJustDoIt");
+                cs.ToTable("JustDoItFotos");
+            });
+
         }
     }
 }

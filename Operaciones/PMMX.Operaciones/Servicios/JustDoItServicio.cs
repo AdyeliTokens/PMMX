@@ -173,14 +173,14 @@ namespace PMMX.Operaciones.Servicios
                         IdResponsable = d.Categoria.IdResponsable,
                         Color = d.Categoria.Color,
                         Activo = d.Categoria.Activo
-                    },
-                    Fotos = d.Fotos.Select(f => new FotoView
+                    }
+                    /*Fotos = d.Fotos.Select(f => new FotoView
                     {
                         Id = f.Id,
                         Nombre = f.Nombre,
                         Path = f.Path,
                         IdJustDoIt = f.IdJustDoIt
-                    }).ToList()
+                    }).ToList()*/
                 }).FirstOrDefault();
             if (JustDoIt != null)
             {
