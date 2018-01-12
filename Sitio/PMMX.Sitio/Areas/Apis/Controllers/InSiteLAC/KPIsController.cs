@@ -18,9 +18,10 @@ namespace Sitio.Areas.Apis.Controllers.InSiteLAC
         private PMMXContext db = new PMMXContext();
 
         // GET: api/KPIs
-        public IQueryable<KPI> GetKPIs()
+        public IQueryable<String> GetKPIs()
         {
-            return db.KPIs;
+            var list = db.KPIs.Select(x => x.Description);
+            return list.Distinct();
         }
 
         // GET: api/KPIs/5
