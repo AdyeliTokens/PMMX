@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.InsiteLAC;
+using PMMX.Modelo.Vistas;
 
 namespace Sitio.Areas.Apis.Controllers.InSiteLAC
 {
@@ -18,9 +19,9 @@ namespace Sitio.Areas.Apis.Controllers.InSiteLAC
         private PMMXContext db = new PMMXContext();
 
         // GET: api/KPIs
-        public IQueryable<String> GetKPIs()
+        public IQueryable<KPIView> GetKPIs()
         {
-            var list = db.KPIs.Select(x => x.Description);
+            var list = db.KPIs.Select(x => new KPIView { Description=  x.Description });
             return list.Distinct();
         }
 
