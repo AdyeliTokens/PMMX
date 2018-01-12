@@ -228,6 +228,7 @@
     <Compile Include="Vistas\GrupoPreguntasView.cs" />
     <Compile Include="Vistas\IntervencionView.cs" />
     <Compile Include="Vistas\JustDoItView.cs" />
+    <Compile Include="Vistas\KPIView.cs" />
     <Compile Include="Vistas\ListaDistribucionView.cs" />
     <Compile Include="Vistas\LocacionView.cs" />
     <Compile Include="Vistas\LogServicioView.cs" />
