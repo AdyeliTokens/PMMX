@@ -25,6 +25,12 @@ namespace Sitio.Areas.Apis.Controllers.InSiteLAC
             return list.Distinct();
         }
 
+        public IQueryable<KPI> GetKPIs(string Description)
+        {
+            var list = db.KPIs.Where(x=> x.Description == Description);
+            return list;
+        }
+
         // GET: api/KPIs/5
         [ResponseType(typeof(KPI))]
         public IHttpActionResult GetKPI(int id)
