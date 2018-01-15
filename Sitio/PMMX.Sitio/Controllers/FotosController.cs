@@ -45,22 +45,29 @@ namespace Sitio.Controllers
             return base.File(folderName, "image/png");
         }
 
-        // GET: FotosPersonales
+        // GET: FotosJustDoIt
         public ActionResult JustDoIt(string idJustDoIt)
         {
-            string folderName = @"c:\Fotos\JustDoIt";
-            folderName = System.IO.Path.Combine(folderName, idJustDoIt);
+            int Id = Convert.ToInt32(idJustDoIt);
+            PMMXContext db = new PMMXContext();
 
-            string pngName = System.IO.Path.Combine(folderName, idJustDoIt + ".png");
-            string jpgName = System.IO.Path.Combine(folderName, idJustDoIt + ".jpg");
-            folderName = System.IO.File.Exists(pngName) ? pngName : jpgName;
+            var fotos = db.JustDoIt.Where(p => p.Id == Id).Select(p => p.Fotos.Where(f => f.Fecha != null)).FirstOrDefault();
+            
+            string folderName;
+            if (fotos.Count() > 0)
+            {
+                folderName = fotos.OrderByDescending(w => w.Fecha).FirstOrDefault().Path;
 
-            if (!System.IO.File.Exists(folderName))
+                if (!System.IO.File.Exists(folderName))
+                {
+                    folderName = Server.MapPath("~/img/default.png");
+                }
+            }
+            else
             {
                 folderName = Server.MapPath("~/img/default.png");
             }
-
-
+            
             WebClient client = new WebClient();
             Stream stream = client.OpenRead(folderName);
             Bitmap bitmap; bitmap = new Bitmap(stream);

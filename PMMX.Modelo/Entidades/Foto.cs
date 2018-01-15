@@ -26,8 +26,6 @@ namespace PMMX.Modelo.Entidades
         #endregion
 
         #region Navegacion
-
-        //public JustDoIt JustDoIt { get; set; }
         public Mantenimiento Mantenimiento { get; set; }
         public ICollection<Origen> Origenes { get; set; }
         public ICollection<Defecto> Defectos { get; set; }
