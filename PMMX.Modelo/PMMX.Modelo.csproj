@@ -218,6 +218,7 @@
     <Compile Include="Vistas\CategoriaView.cs" />
     <Compile Include="Vistas\ClasificacionView.cs" />
     <Compile Include="Vistas\ComentarioView.cs" />
+    <Compile Include="Vistas\CRRView.cs" />
     <Compile Include="Vistas\DefectoView.cs" />
     <Compile Include="Vistas\DispositivoView.cs" />
     <Compile Include="Vistas\EntornoView.cs" />
