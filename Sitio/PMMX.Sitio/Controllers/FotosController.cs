@@ -52,8 +52,7 @@ namespace Sitio.Controllers
             PMMXContext db = new PMMXContext();
 
             var fotos = db.JustDoIt.Where(p => p.Id == Id).Select(p => p.Fotos.Where(f => f.Fecha != null)).FirstOrDefault();
-            //var fotos = qrfotos.FirstOrDefault();
-
+            
             string folderName;
             if (fotos.Count() > 0)
             {
@@ -68,8 +67,7 @@ namespace Sitio.Controllers
             {
                 folderName = Server.MapPath("~/img/default.png");
             }
-
-
+            
             WebClient client = new WebClient();
             Stream stream = client.OpenRead(folderName);
             Bitmap bitmap; bitmap = new Bitmap(stream);

@@ -2,6 +2,7 @@
 using PMMX.Modelo.Entidades;
 using PMMX.Modelo.Entidades.Defectos;
 using PMMX.Modelo.Entidades.Maquinaria;
+using PMMX.Modelo.Entidades.Operaciones;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -319,15 +320,14 @@ namespace Sitio.Areas.Apis.Controllers
                             foto.Path = pathString + extension;
                             
                             foto.IdMantenimiento = 0;
-                            foto.Defectos = new List<Defecto>
+                            foto.JustDoIts = new List<JustDoIt>
                             {
-                                db.Defectos.Find(IdJustDoIt)
+                                db.JustDoIt.Find(IdJustDoIt)
                             };
                             foto.Nombre = fileName + extension;
                             
                             db.Fotos.Add(foto);
                             db.SaveChanges();
-
                         }
                     }
 
