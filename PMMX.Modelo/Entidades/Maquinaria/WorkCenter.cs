@@ -28,6 +28,7 @@ namespace PMMX.Modelo.Entidades.Maquinaria
         public ICollection<NoConformidad> NoConformidades { get; set; }
         public ICollection<Desperdicio> Desperdicios { get; set; }
         public ICollection<ObjetivoVQI> ObjetivosVQI { get; set; }
+        public ICollection<VolumenDeProduccion> VolumenesDeProduccion { get; set; }
 
         #endregion
 

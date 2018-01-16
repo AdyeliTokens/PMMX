@@ -78,7 +78,7 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new MarcaMap());
             modelBuilder.Configurations.Add(new ModuloSeccionMap());
             modelBuilder.Configurations.Add(new NoConformidadMap());
-
+            modelBuilder.Configurations.Add(new VolumenDeProduccionMap());
 
             #endregion
 
@@ -171,6 +171,7 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<Marca> Marcas { get; set; }
         public DbSet<Horario> Horarios { get; set; }
         public DbSet<Indicador> Indicadores { get; set; }
+        public DbSet<VolumenDeProduccion> VolumenesDeProduccion { get; set; }
         #endregion
 
         #region Seguridad

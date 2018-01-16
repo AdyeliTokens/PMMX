@@ -31,7 +31,7 @@ namespace Sitio.Areas.Apis.Controllers
             IList<CRRView> crr = new List<CRRView>();
             for (int i = delta; i <= (6 + delta); i++)
             {
-                int crrTotal = desperdicios.Where(x => x.Fecha.Date == diaSeleccionado.AddDays(i).Date).Sum(o => o.Cantidad);
+                Double crrTotal = desperdicios.Where(x => x.Fecha.Date == diaSeleccionado.AddDays(i).Date).Sum(o => o.Cantidad);
                 //int objetivo = objetivos.Where(x => x.FechaInicial <= diaSeleccionado.AddDays(i).Date).OrderByDescending(x => x.FechaInicial).Select(x => x.Objetivo).FirstOrDefault();
 
                 crr.Add(new CRRView { Fecha = diaSeleccionado.AddDays(i), CRR_Total = crrTotal, Objetivo = 0 });
