@@ -10,8 +10,9 @@
 
 <div>
     <p align="right">
-        <button id="btn-Editar" class="btn btn-default"><i class="fa fa-pencil text-info"></i></button>
-        <button id="btn-Delete" class="btn btn-default"><i class="fa fa-trash text-danger"></i></button>
+        <button id="btn-Editar" class="btn btn-default" alt="Editar"><i class="fa fa-pencil text-info"></i></button>
+        <button id="btn-Info" class="btn btn-default" alt="Mas Informacion"><i class="fa fa-info-circle text-info"></i></button>
+        <button id="btn-Delete" class="btn btn-default" alt="Eliminar"><i class="fa fa-trash text-danger"></i></button>
     </p>
     <hr />
     @Html.Hidden("Id", Model.Id)
@@ -109,6 +110,27 @@
                     $('#createAssetModal').modal('show');
                 });
             });
+
+            $("#btn-Info").on("click", function () {
+                $.ajax({
+                    dataType: "json",
+                    contentType: "application/json",
+                    url: "/Warehouse/Ventana/GetVentanabyEvento?idEvento=" + id,
+                    success: function (data) {
+                        $.each(data, function (i, k) {
+                            var url = ("/Warehouse/Ventana/Details/" + k.Id);
+
+                            $.get(url, function (data) {
+                                $('#subVista').html(data);
+                            });
+                        });
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert('There was an error while fetching data!');
+                    }
+                });
+            });
+
 
             $("#btn-Delete").on("click", function () {
                 var url = ("/Operaciones/Evento/Delete/" + id);

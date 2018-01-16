@@ -20,7 +20,17 @@
         <hr />
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Tipo de Ventana: ", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <select id="slt-Subcategoria" class="form-control select2"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -214,7 +224,7 @@
             $('.select2').select2();
             $("#Activo").val(true);
             $("#IdEvento").val(IdEvento);
-
+            getSubCategorias();
             
             $('.collapse').collapse()
         });
@@ -222,6 +232,24 @@
         function getUrlVar(key) {
             var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search);
             return result && unescape(result[1]) || "";
+        }
+
+        function getSubCategorias() {
+            $.ajax({
+                dataType: "json",
+                contentType: "application/json",
+                url: "/Warehouse/Ventana/GetSubCategorias?idCategoria=10",
+                success: function (data) {
+                    items = '<option></option>';
+                    $.each(data.subcategorias, function (i, k) {
+                        items += "<option value='" + k.Id + "'>" + k.NombreCorto + "</option>";
+                    });
+                    $('#slt-Subcategoria').html(items);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('There was an error while fetching Work Centers!');
+                }
+            });
         }
         
     </script>

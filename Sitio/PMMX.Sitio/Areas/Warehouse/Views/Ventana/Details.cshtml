@@ -11,88 +11,60 @@
         <div class="progress-bar progress-bar-success" style="width: 100%"></div>
     </div>
 
-    <table class="table table-striped">
-        <tr>
-            <th style="width: 10px">#</th>
-            <th>Task</th>
-            <th>Value</th>
-            <th>Value</th>
-        </tr>
-        <tr>
-            <td><i class="fa fa-calendar"></i></td>
-            <td>PO</td>
+    <table class="table">
+        <tr class="bg-info">
+            <td class="bg-primary"><i class="fa fa-calendar"></i></td>
+            <td class="bg-primary"><b>PO</b></td>
             <td>
                 @Html.DisplayFor(model => model.PO)
             </td>
+            <td></td>
         </tr>
-        <tr>
-            <td><i class="fa fa-calendar"></i></td>
-            <td>Evento</td>
+        <tr class="bg-success">
+            <td class="bg-primary"><i class="fa fa-dropbox"></i></td>
+            <td class="bg-primary"><b>Material</b></td>
             <td>
-                @Html.DisplayFor(model => model.Evento.Descripcion)
+                @Html.DisplayFor(model => model.Recurso) @Html.DisplayFor(model => model.Cantidad) pallets
             </td>
             <td>
-                @Html.DisplayFor(model => model.Evento.FechaInicio)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Evento.FechaFin)
+                Proveedor: @Html.DisplayFor(model => model.Proveedor.Nombre)
             </td>
         </tr>
-        <tr>
-            <td><i class="fa fa-calendar"></i></td>
-            <td>Material</td>
+        <tr class="bg-info">
+            <td class="bg-primary"><i class="fa fa-globe"></i></td>
+            <td class="bg-primary"><b>Ubicacion</b></td>
             <td>
-                @Html.DisplayFor(model => model.Recurso)
+               Origen : @Html.DisplayFor(model => model.Procedencia.Nombre)
             </td>
             <td>
-                @Html.DisplayFor(model => model.Cantidad)
+                Destino : @Html.DisplayFor(model => model.Destino.Nombre)
+            </td>            
+        </tr>
+        <tr class="bg-success">
+            <td class="bg-primary"><i class="fa fa-truck"></i></td>
+            <td class="bg-primary"><b>Transporte</b></td>
+            <td>
+                Linea transportista: @Html.DisplayFor(model => model.Carrier.NombreCorto)
             </td>
             <td>
-                @Html.DisplayFor(model => model.Carrier.NombreCorto)
+                #Economico: @Html.DisplayFor(model => model.NumeroEconomico) </br>
+                #Placa: @Html.DisplayFor(model => model.NumeroPlaca)
+            </td>
+         </tr>
+        <tr class="bg-success">
+            <td class="bg-primary"></td>
+            <td class="bg-primary"></td>
+            <td>
+                Tipo Unidad: @Html.DisplayFor(model => model.TipoUnidad)
             </td>
             <td>
-                @Html.DisplayFor(model => model.Proveedor.Nombre)
+                Dimension: @Html.DisplayFor(model => model.Dimension) </br>
+                Temperatura:@Html.DisplayFor(model => model.Temperatura)
             </td>
         </tr>
-        <tr>
-            <td><i class="fa fa-calendar"></i></td>
-            <td>Ubicacion</td>
-            <td>
-               Origen
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Procedencia.Nombre)
-            </td>
-            <td>
-                Destino
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Destino.Nombre)
-            </td>
-        </tr>
-       
-        <tr>
-            <td><i class="fa fa-calendar"></i></td>
-            <td>Transporte</td>
-            <td>
-                @Html.DisplayFor(model => model.NumeroEconomico)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.NumeroPlaca)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.TipoUnidad)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Dimension)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Temperatura)
-            </td>
-        </tr>
-        <tr>
-            <td><i class="fa fa-calendar"></i></td>
-            <td>Conductor</td>
+        <tr class="bg-info">
+            <td class="bg-primary"><i class="fa fa-user"></i></td>
+            <td class="bg-primary"><b>Conductor</b></td>
             <td>
                 @Html.DisplayFor(model => model.Conductor)
             </td>

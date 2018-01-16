@@ -159,7 +159,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
             }
         }
-        
+
         public PartialViewResult Responsables()
         {
            return PartialView("_Responsables");

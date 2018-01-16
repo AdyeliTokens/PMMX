@@ -36,12 +36,45 @@ namespace Sitio.Areas.Warehouse.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ventana ventana = db.Ventana.Find(id);
+            //Ventana ventana = db.Ventana.Find(id);
+            var ventana = db.Ventana.Where(v=> (v.Id == id))
+                 .Include(e => e.Evento)
+                 .Include(e => e.Proveedor)
+                 .Include(e => e.Carrier)
+                 .Include(e => e.Destino)
+                 .Include(e => e.Procedencia)
+                 .FirstOrDefault();
             if (ventana == null)
             {
                 return HttpNotFound();
             }
             return View(ventana);
+        }
+        
+        public ActionResult GetSubCategorias(int idCategoria)
+        {
+            if (ModelState.IsValid)
+            {
+                var subcategorias = db.SubCategoria.Where(o => (o.IdCategoria == idCategoria)).Select(o => new { Id = o.Id, NombreCorto = o.NombreCorto }).ToList();
+                return Json(new { subcategorias }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult GetVentanabyEvento(int idEvento)
+        {
+            if (ModelState.IsValid)
+            {
+                var ventana = db.Ventana.Where(o => (o.IdEvento == idEvento)).Select(o => new { Id = o.Id, PO = o.PO }).FirstOrDefault();
+                return Json(new { ventana }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         // GET: Warehouse/Ventana/Create
@@ -66,6 +99,7 @@ namespace Sitio.Areas.Warehouse.Controllers
             ViewBag.IdProcedencia = new SelectList(db.Locacion.Select(x => new { Id = x.Id, Nombre = (x.NombreCorto + " " + x.Nombre) }).OrderBy(x => x.Nombre), "Id", "Nombre");
             ViewBag.IdDestino = new SelectList(db.Locacion.Select(x => new { Id = x.Id, Nombre = (x.NombreCorto + " " + x.Nombre) }).OrderBy(x => x.Nombre), "Id", "Nombre");
             ViewBag.IdCarrier = new SelectList(db.Carrier.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
+
             if (ModelState.IsValid)
             {
                 db.Ventana.Add(ventana);
