@@ -351,6 +351,7 @@
     <Compile Include="Areas\Operaciones\Controllers\VolumenesDeProduccionController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\WorkCentersController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\ListaDistribucionController.cs" />
+    <Compile Include="Areas\Operaciones\LineLeadersController.cs" />
     <Compile Include="Areas\Operaciones\OperacionesAreaRegistration.cs" />
     <Compile Include="Areas\Operaciones\Controllers\SubAreaController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\DispositivosController.cs" />

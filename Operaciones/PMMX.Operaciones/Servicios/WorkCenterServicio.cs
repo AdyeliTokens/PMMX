@@ -34,7 +34,7 @@ namespace PMMX.Operaciones.Servicios
             respuesta.Respuesta = _context.WorkCenters;
             return respuesta;
         }
-        
+
         public RespuestaServicio<WorkCenterView> GetWorkCenter(int id)
         {
             RespuestaServicio<WorkCenterView> respuesta = new RespuestaServicio<WorkCenterView>();
@@ -199,13 +199,13 @@ namespace PMMX.Operaciones.Servicios
 
                         }
                     }).ToList()
-                
+
 
                 })).ToList();
 
 
 
-                
+
 
             if (workCenter != null)
             {
@@ -214,6 +214,23 @@ namespace PMMX.Operaciones.Servicios
             else
             {
                 respuesta.Mensaje = "LU inexistentes";
+            }
+
+            return respuesta;
+        }
+
+        public RespuestaServicio<List<WorkCenter>> GetWorkCentersByLineLeader(int idLineLeader)
+        {
+            RespuestaServicio<List<WorkCenter>> respuesta = new RespuestaServicio<List<WorkCenter>>();
+            List<WorkCenter> workCenter = _context.WorkCenters.Where(y => y.IdResponsable == idLineLeader).ToList();
+
+            if (workCenter != null && workCenter.Count() > 0)
+            {
+                respuesta.Respuesta = workCenter;
+            }
+            else
+            {
+                respuesta.Mensaje = "WorkCenters inexistentes";
             }
 
             return respuesta;
@@ -274,7 +291,7 @@ namespace PMMX.Operaciones.Servicios
 
             return respuesta;
         }
-        
+
         public RespuestaServicio<List<WorkCenterView>> GetWorkCentersByBussinesUnit(int idBussinesUnit)
         {
             RespuestaServicio<List<WorkCenterView>> respuesta = new RespuestaServicio<List<WorkCenterView>>();
