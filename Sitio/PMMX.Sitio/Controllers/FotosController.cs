@@ -52,7 +52,7 @@ namespace Sitio.Controllers
             PMMXContext db = new PMMXContext();
 
             var fotos = db.JustDoIt.Where(p => p.Id == Id).Select(p => p.Fotos.Where(f => f.Fecha != null)).FirstOrDefault();
-            
+
             string folderName;
             if (fotos.Count() > 0)
             {
@@ -67,7 +67,7 @@ namespace Sitio.Controllers
             {
                 folderName = Server.MapPath("~/img/default.png");
             }
-            
+
             WebClient client = new WebClient();
             Stream stream = client.OpenRead(folderName);
             Bitmap bitmap; bitmap = new Bitmap(stream);
@@ -163,7 +163,7 @@ namespace Sitio.Controllers
             if (persona.EjecucionCorrecta)
             {
                 var fotos = db.Personas.Where(p => p.Id == persona.Respuesta.Id).Select(p => p.FotosPersonales.Where(f => f.Fecha != null)).FirstOrDefault();
-                
+
                 if (fotos.Count() > 0)
                 {
                     folderName = fotos.OrderByDescending(w => w.Fecha).FirstOrDefault().Path;
@@ -189,5 +189,17 @@ namespace Sitio.Controllers
             Bitmap bitmap; bitmap = new Bitmap(stream);
             return base.File(folderName, "image/png");
         }
+
+        public ActionResult Marcas(string idMarca)
+        {
+
+            string folderName = Server.MapPath("~/img/default.png");
+            
+            WebClient client = new WebClient();
+            Stream stream = client.OpenRead(folderName);
+            Bitmap bitmap; bitmap = new Bitmap(stream);
+            return base.File(folderName, "image/png");
+        }
+
     }
 }
