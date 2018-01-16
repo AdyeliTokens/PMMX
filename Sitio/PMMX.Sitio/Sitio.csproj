@@ -237,6 +237,7 @@
     <Compile Include="Areas\Apis\Controllers\CarrierController.cs" />
     <Compile Include="Areas\Apis\Controllers\CategoriaController.cs" />
     <Compile Include="Areas\Apis\Controllers\ComentariosController.cs" />
+    <Compile Include="Areas\Apis\Controllers\CRRController.cs" />
     <Compile Include="Areas\Apis\Controllers\EventoController.cs" />
     <Compile Include="Areas\Apis\Controllers\EventoOrigenController.cs" />
     <Compile Include="Areas\Apis\Controllers\EventoResponsableController.cs" />
@@ -254,6 +255,7 @@
     <Compile Include="Areas\Apis\Controllers\Operaciones\DesperdiciosController.cs" />
     <Compile Include="Areas\Apis\Controllers\Operaciones\MarcasController.cs" />
     <Compile Include="Areas\Apis\Controllers\Operaciones\ModuloSeccionesController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operaciones\VolumenesDeProduccionController.cs" />
     <Compile Include="Areas\Apis\Controllers\OperadoresPorWorkCentersController.cs" />
     <Compile Include="Areas\Apis\Controllers\Operarios\PesadoresController.cs" />
     <Compile Include="Areas\Apis\Controllers\ProveedoresController.cs" />
@@ -346,6 +348,7 @@
     <Compile Include="Areas\Operaciones\Controllers\NoConformidadesController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\OrigenesController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\ParosController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\VolumenesDeProduccionController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\WorkCentersController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\ListaDistribucionController.cs" />
     <Compile Include="Areas\Operaciones\OperacionesAreaRegistration.cs" />
@@ -7995,6 +7998,11 @@
     <Content Include="Areas\Operaciones\Views\StatusVentana\Edit.cshtml" />
     <Content Include="Areas\Operaciones\Views\StatusVentana\Index.cshtml" />
     <Content Include="Areas\Operaciones\Views\Evento\_ListaDistribucion.cshtml" />
+    <Content Include="Areas\Operaciones\Views\VolumenesDeProduccion\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\VolumenesDeProduccion\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\VolumenesDeProduccion\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\VolumenesDeProduccion\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\VolumenesDeProduccion\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">

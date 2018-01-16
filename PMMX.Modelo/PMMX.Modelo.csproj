@@ -139,6 +139,7 @@
     <Compile Include="Entidades\User.cs" />
     <Compile Include="Entidades\UsuariosPorPersona.cs" />
     <Compile Include="Entidades\Video.cs" />
+    <Compile Include="Entidades\VolumenDeProduccion.cs" />
     <Compile Include="Entidades\Warehouse\ActividadEnVentana.cs" />
     <Compile Include="Entidades\Warehouse\BitacoraVentana.cs" />
     <Compile Include="Entidades\Warehouse\Carrier.cs" />
@@ -188,6 +189,7 @@
     <Compile Include="Map\UsuariosPorPersonaMap.cs" />
     <Compile Include="Map\VentanaMap.cs" />
     <Compile Include="Entidades\PesadorMap.cs" />
+    <Compile Include="Map\VolumenDeProduccionMap.cs" />
     <Compile Include="RespuestaGenerica\IRespuestaServicio.cs" />
     <Compile Include="Map\ActividadEnDefectoMap.cs" />
     <Compile Include="Map\ActividadEnParoMap.cs" />
@@ -218,6 +220,7 @@
     <Compile Include="Vistas\CategoriaView.cs" />
     <Compile Include="Vistas\ClasificacionView.cs" />
     <Compile Include="Vistas\ComentarioView.cs" />
+    <Compile Include="Vistas\CRRView.cs" />
     <Compile Include="Vistas\DefectoView.cs" />
     <Compile Include="Vistas\DispositivoView.cs" />
     <Compile Include="Vistas\EntornoView.cs" />

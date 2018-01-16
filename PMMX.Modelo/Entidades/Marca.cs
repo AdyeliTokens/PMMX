@@ -14,5 +14,6 @@ namespace PMMX.Modelo.Entidades
         public Boolean Activo { get; set; }
 
         public ICollection<Desperdicio> Desperdicios { get; set; }
+        public ICollection<VolumenDeProduccion> VolumenesProducidos { get; set; }
     }
 }
