@@ -35,6 +35,9 @@
                                 @Html.DisplayNameFor(model => model.NombreCorto)
                             </th>
                             <th>
+                                @Html.DisplayNameFor(model => model.Responsable.Nombre)
+                            </th>
+                            <th>
                                 @Html.DisplayNameFor(model => model.Activo)
                             </th>
                             <th></th>
@@ -53,6 +56,21 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.NombreCorto)
+                                </td>
+                                <td>
+                                    @if (item.Responsable != null)
+                                    {
+                                        <div class="user-block">
+                                            <img class="img-circle img-responsive img-bordered-sm" src="@Url.Action("Usuario", "Fotos", new { idPersona = item.IdResponsable, area = "" })" alt="User Image">
+                                            <span class="username">
+                                                <a href="#">
+                                                    @Html.DisplayFor(modelItem => item.Responsable.Nombre) @Html.DisplayFor(modelItem => item.Responsable.Apellido1) @Html.DisplayFor(modelItem => item.Responsable.Apellido2).
+                                                </a>
+                                            </span>
+                                            @*<span class="description">Asignado el - @Html.DisplayFor(modelItem => item.FechaReporte)</span>*@
+                                        </div>
+                                    }
+
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Activo)
