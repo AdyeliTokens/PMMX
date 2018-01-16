@@ -16,14 +16,12 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
     public class VolumenesDeProduccionController : ApiController
     {
         private PMMXContext db = new PMMXContext();
-
-        // GET: api/VolumenesDeProduccion
+        
         public IQueryable<VolumenDeProduccion> GetVolumenesDeProduccion()
         {
             return db.VolumenesDeProduccion;
         }
 
-        // GET: api/VolumenesDeProduccion/5
         [ResponseType(typeof(VolumenDeProduccion))]
         public IHttpActionResult GetVolumenDeProduccion(int id)
         {
@@ -36,7 +34,6 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
             return Ok(volumenDeProduccion);
         }
 
-        // PUT: api/VolumenesDeProduccion/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutVolumenDeProduccion(int id, VolumenDeProduccion volumenDeProduccion)
         {
@@ -71,10 +68,10 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/VolumenesDeProduccion
         [ResponseType(typeof(VolumenDeProduccion))]
         public IHttpActionResult PostVolumenDeProduccion(VolumenDeProduccion volumenDeProduccion)
         {
+            volumenDeProduccion.Fecha = DateTime.Now;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -86,7 +83,6 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
             return CreatedAtRoute("DefaultApi", new { id = volumenDeProduccion.Id }, volumenDeProduccion);
         }
 
-        // DELETE: api/VolumenesDeProduccion/5
         [ResponseType(typeof(VolumenDeProduccion))]
         public IHttpActionResult DeleteVolumenDeProduccion(int id)
         {
