@@ -72,7 +72,6 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
         public IHttpActionResult PostDesperdicio(Desperdicio desperdicio)
         {
             desperdicio.Fecha = DateTime.Now;
-            desperdicio.IdPersona = 66;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -84,7 +83,6 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
             return CreatedAtRoute("DefaultApi", new { id = desperdicio.Id }, desperdicio);
         }
 
-        // DELETE: api/Desperdicios/5
         [ResponseType(typeof(Desperdicio))]
         public IHttpActionResult DeleteDesperdicio(int id)
         {
