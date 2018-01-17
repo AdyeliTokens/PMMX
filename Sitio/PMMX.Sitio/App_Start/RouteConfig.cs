@@ -44,6 +44,18 @@ namespace Sitio
             );
 
             routes.MapRoute(
+            name: "FotosDeEntornos",
+            url: "Fotos/Entornos/{idEntorno}",
+            defaults: new { controller = "Fotos", action = "Entorno", idEntorno = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+            name: "FotosDeMarcas",
+            url: "Fotos/Marcas/{idMarca}",
+            defaults: new { controller = "Fotos", action = "Marca", idMarca = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
