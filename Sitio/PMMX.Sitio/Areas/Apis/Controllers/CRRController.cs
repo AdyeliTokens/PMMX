@@ -25,7 +25,7 @@ namespace Sitio.Areas.Apis.Controllers
 
             var desperdicios = db.Desperdicios
                 .Where(x => (x.IdWorkCenter == IdWorkCenter) && (x.Fecha >= monday && x.Fecha <= diaSeleccionado))
-                .Select(y => new Desperdicio
+                .Select(y => new DesperdicioView
                 {
                     Id = y.Id,
                     Cantidad = y.Cantidad,
