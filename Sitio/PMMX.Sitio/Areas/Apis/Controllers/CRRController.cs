@@ -25,13 +25,40 @@ namespace Sitio.Areas.Apis.Controllers
             DateTime monday = diaSeleccionado.AddDays(delta);
             var primerDiaDelAnio = new DateTime(DateTime.Now.Year, 1, 1);
 
-            var desperdicios = db.Desperdicios.Where(x => (x.IdWorkCenter == IdWorkCenter) && (x.Fecha >= monday && x.Fecha <= diaSeleccionado)).ToList();
-            //var objetivos = db.ObjetivosVQI.Select(x => x).Where(x => (x.IdWorkCenter == IdWorkCenter) && (x.FechaInicial >= primerDiaDelAnio)).ToList();
+            var desperdicios = db.Desperdicios
+                .Where(x => (x.IdWorkCenter == IdWorkCenter) && (x.Fecha >= monday && x.Fecha <= diaSeleccionado))
+                .Select(y => new Desperdicio
+                {
+                    Id = y.Id,
+                    Cantidad = y.Cantidad,
+                    Fecha = y.Fecha,
+                    IdMarca = y.IdMarca,
+                    IdPersona = y.IdPersona,
+                    IdSeccion = y.IdSeccion,
+                    IdWorkCenter = y.IdWorkCenter,
+                    MarcaDelCigarrillo = y.MarcaDelCigarrillo
+                })
+                .ToList();
+
+            var volumenes = db.VolumenesDeProduccion
+                .Where(x => (x.IdWorkCenter == IdWorkCenter) && (x.Fecha >= monday && x.Fecha <= diaSeleccionado))
+                .Select(x => x)
+                .ToList();
+
+            var marcas = desperdicios.Select(x => x.MarcaDelCigarrillo).Distinct();
 
             IList<CRRView> crr = new List<CRRView>();
             for (int i = delta; i <= (6 + delta); i++)
             {
-                Double crrTotal = desperdicios.Where(x => x.Fecha.Date == diaSeleccionado.AddDays(i).Date).Sum(o => o.Cantidad);
+                Double crrTotal = 0;
+                foreach (var item in marcas)
+                {
+                    Double crrTotalPorMarca= desperdicios.Where(x => (x.Fecha.Date == diaSeleccionado.AddDays(i).Date) && (x.IdMarca == item.Id) ).Sum(o => o.Cantidad);
+                    Double volumen = volumenes.Where(v => (v.IdMarca == item.Id) && (v.Fecha.Date == diaSeleccionado.AddDays(i).Date)).Sum(o => o.Cantidad);
+
+                    crrTotal = crrTotalPorMarca / volumen;
+                }
+                //Double crrTotal = desperdicios.Where(x => x.Fecha.Date == diaSeleccionado.AddDays(i).Date).Sum(o => o.Cantidad);
                 //int objetivo = objetivos.Where(x => x.FechaInicial <= diaSeleccionado.AddDays(i).Date).OrderByDescending(x => x.FechaInicial).Select(x => x.Objetivo).FirstOrDefault();
 
                 crr.Add(new CRRView { Fecha = diaSeleccionado.AddDays(i), CRR_Total = crrTotal, Objetivo = 0 });

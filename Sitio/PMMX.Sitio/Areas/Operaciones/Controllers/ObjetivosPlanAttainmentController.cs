@@ -7,111 +7,116 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PMMX.Infraestructura.Contexto;
-using PMMX.Modelo.Entidades;
+using PMMX.Modelo.Entidades.Maquinaria;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
-    public class MarcasController : Controller
+    public class ObjetivosPlanAttainmentController : Controller
     {
         private PMMXContext db = new PMMXContext();
 
-        // GET: Operaciones/Marcas
+        // GET: Operaciones/ObjetivosPlanAttainment
         public ActionResult Index()
         {
-            return View(db.Marcas.ToList());
+            var objetivosPlanAttainment = db.ObjetivosPlanAttainment.Include(o => o.WorkCenter);
+            return View(objetivosPlanAttainment.ToList());
         }
 
-        // GET: Operaciones/Marcas/Details/5
+        // GET: Operaciones/ObjetivosPlanAttainment/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Marca marca = db.Marcas.Find(id);
-            if (marca == null)
+            ObjetivoPlanAttainment objetivoPlanAttainment = db.ObjetivosPlanAttainment.Find(id);
+            if (objetivoPlanAttainment == null)
             {
                 return HttpNotFound();
             }
-            return View(marca);
+            return View(objetivoPlanAttainment);
         }
 
-        // GET: Operaciones/Marcas/Create
+        // GET: Operaciones/ObjetivosPlanAttainment/Create
         public ActionResult Create()
         {
+            ViewBag.IdWorkCenter = new SelectList(db.WorkCenters, "Id", "Nombre");
             return View();
         }
 
-        // POST: Operaciones/Marcas/Create
+        // POST: Operaciones/ObjetivosPlanAttainment/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Marca marca)
+        public ActionResult Create([Bind(Include = "Id,IdWorkCenter,Objetivo,FechaInicial")] ObjetivoPlanAttainment objetivoPlanAttainment)
         {
             if (ModelState.IsValid)
             {
-                db.Marcas.Add(marca);
+                db.ObjetivosPlanAttainment.Add(objetivoPlanAttainment);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(marca);
+            ViewBag.IdWorkCenter = new SelectList(db.WorkCenters, "Id", "Nombre", objetivoPlanAttainment.IdWorkCenter);
+            return View(objetivoPlanAttainment);
         }
 
-        // GET: Operaciones/Marcas/Edit/5
+        // GET: Operaciones/ObjetivosPlanAttainment/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Marca marca = db.Marcas.Find(id);
-            if (marca == null)
+            ObjetivoPlanAttainment objetivoPlanAttainment = db.ObjetivosPlanAttainment.Find(id);
+            if (objetivoPlanAttainment == null)
             {
                 return HttpNotFound();
             }
-            return View(marca);
+            ViewBag.IdWorkCenter = new SelectList(db.WorkCenters, "Id", "Nombre", objetivoPlanAttainment.IdWorkCenter);
+            return View(objetivoPlanAttainment);
         }
 
-        // POST: Operaciones/Marcas/Edit/5
+        // POST: Operaciones/ObjetivosPlanAttainment/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Marca marca)
+        public ActionResult Edit([Bind(Include = "Id,IdWorkCenter,Objetivo,FechaInicial")] ObjetivoPlanAttainment objetivoPlanAttainment)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(marca).State = EntityState.Modified;
+                db.Entry(objetivoPlanAttainment).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(marca);
+            ViewBag.IdWorkCenter = new SelectList(db.WorkCenters, "Id", "Nombre", objetivoPlanAttainment.IdWorkCenter);
+            return View(objetivoPlanAttainment);
         }
 
-        // GET: Operaciones/Marcas/Delete/5
+        // GET: Operaciones/ObjetivosPlanAttainment/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Marca marca = db.Marcas.Find(id);
-            if (marca == null)
+            ObjetivoPlanAttainment objetivoPlanAttainment = db.ObjetivosPlanAttainment.Find(id);
+            if (objetivoPlanAttainment == null)
             {
                 return HttpNotFound();
             }
-            return View(marca);
+            return View(objetivoPlanAttainment);
         }
 
-        // POST: Operaciones/Marcas/Delete/5
+        // POST: Operaciones/ObjetivosPlanAttainment/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Marca marca = db.Marcas.Find(id);
-            db.Marcas.Remove(marca);
+            ObjetivoPlanAttainment objetivoPlanAttainment = db.ObjetivosPlanAttainment.Find(id);
+            db.ObjetivosPlanAttainment.Remove(objetivoPlanAttainment);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

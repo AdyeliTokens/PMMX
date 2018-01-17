@@ -12,6 +12,7 @@ namespace PMMX.Modelo.Entidades
         public String Nombre { get; set; }
         public String Codigo { get; set; }
         public Boolean Activo { get; set; }
+        public Double? PesoPorCigarrillo { get; set; }
 
         public ICollection<Desperdicio> Desperdicios { get; set; }
         public ICollection<VolumenDeProduccion> VolumenesProducidos { get; set; }
