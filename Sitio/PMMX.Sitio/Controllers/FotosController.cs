@@ -201,5 +201,16 @@ namespace Sitio.Controllers
             return base.File(folderName, "image/png");
         }
 
+        public ActionResult Entornos(string idEntorno)
+        {
+
+            string folderName = Server.MapPath("~/img/default.png");
+
+            WebClient client = new WebClient();
+            Stream stream = client.OpenRead(folderName);
+            Bitmap bitmap; bitmap = new Bitmap(stream);
+            return base.File(folderName, "image/png");
+        }
+
     }
 }
