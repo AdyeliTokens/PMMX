@@ -93,6 +93,8 @@
     <Compile Include="Entidades\JustDoIts\Status.cs" />
     <Compile Include="Entidades\JustDoIts\StatusVentana.cs" />
     <Compile Include="Entidades\ListaDistribucion.cs" />
+    <Compile Include="Entidades\Maquinaria\ObjetivoCRR.cs" />
+    <Compile Include="Entidades\Maquinaria\ObjetivoPlanAttainment.cs" />
     <Compile Include="Entidades\Maquinaria\ObjetivoVQI.cs" />
     <Compile Include="Entidades\Marca.cs" />
     <Compile Include="Entidades\NoConformidad.cs" />
@@ -175,6 +177,8 @@
     <Compile Include="Map\MantenimientoMap.cs" />
     <Compile Include="Map\MecanicoMap.cs" />
     <Compile Include="Map\ModuloSeccionMap.cs" />
+    <Compile Include="Map\ObjetivoCRRMap.cs" />
+    <Compile Include="Map\ObjetivoPlanAttainmentMap.cs" />
     <Compile Include="Map\ObjetivoVQIMap.cs" />
     <Compile Include="Map\OperadoresMap.cs" />
     <Compile Include="Map\ProveedoresMap.cs" />
