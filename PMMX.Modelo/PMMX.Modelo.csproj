@@ -226,6 +226,7 @@
     <Compile Include="Vistas\ComentarioView.cs" />
     <Compile Include="Vistas\CRRView.cs" />
     <Compile Include="Vistas\DefectoView.cs" />
+    <Compile Include="Vistas\DesperdicioView.cs" />
     <Compile Include="Vistas\DispositivoView.cs" />
     <Compile Include="Vistas\EntornoView.cs" />
     <Compile Include="Vistas\EventoOrigenView.cs" />
