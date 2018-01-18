@@ -248,6 +248,7 @@
     <Compile Include="Vistas\OrigenView.cs" />
     <Compile Include="Vistas\ParoView.cs" />
     <Compile Include="Vistas\PersonaView.cs" />
+    <Compile Include="Vistas\PlanAttainmentView.cs" />
     <Compile Include="Vistas\PreguntaTurnoView.cs" />
     <Compile Include="Vistas\PreguntaView.cs" />
     <Compile Include="Vistas\ProveedoresView.cs" />
