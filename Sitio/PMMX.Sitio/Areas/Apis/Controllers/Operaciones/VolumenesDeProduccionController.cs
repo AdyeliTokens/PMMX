@@ -23,7 +23,7 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
         [ResponseType(typeof(VolumenDeProduccion))]
         public IHttpActionResult GetVolumenesPorIdWorkCenter(int IdWorkCenter)
         {
-
+            RespuestaServicio<List<PlanAttainmentView>> respuesta = new RespuestaServicio<List<PlanAttainmentView>>();
             DateTime diaSeleccionado = DateTime.Now.Date;
             int delta = DayOfWeek.Monday - diaSeleccionado.DayOfWeek;
             DateTime monday = diaSeleccionado.AddDays(delta);
@@ -32,7 +32,7 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
             var volumenesDeProduccion = db.VolumenesDeProduccion.Where(x => (x.IdWorkCenter == IdWorkCenter) && (x.Fecha >= monday && x.Fecha <= diaSeleccionado)).ToList();
             var objetivos = db.ObjetivosPlanAttainment.Select(x => x).Where(x => (x.IdWorkCenter == IdWorkCenter) && (x.FechaInicial >= primerDiaDelAnio)).ToList();
 
-            IList<PlanAttainmentView> volumenes = new List<PlanAttainmentView>();
+            List<PlanAttainmentView> volumenes = new List<PlanAttainmentView>();
             for (int i = delta; i <= (6 + delta); i++)
             {
                 double volumenTotal = volumenesDeProduccion.Where(x => x.Fecha.Date == diaSeleccionado.AddDays(i).Date).Sum(o => o.Cantidad);
@@ -40,6 +40,8 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
 
                 volumenes.Add(new PlanAttainmentView { Fecha = diaSeleccionado.AddDays(i), Plan_Attainment_Total = volumenTotal, Objetivo = objetivo });
             }
+
+            respuesta.Respuesta = volumenes;
 
             return Ok(volumenes);
         }
