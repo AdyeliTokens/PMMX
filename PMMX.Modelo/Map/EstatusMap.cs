@@ -17,6 +17,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
             Property(c => c.Id).HasColumnName("Id");
             Property(c => c.Nombre).HasColumnName("Nombre");
             Property(c => c.NombreCorto).HasColumnName("NombreCorto");
+            Property(c => c.IdCategoria).HasColumnName("IdCategoria");
             Property(c => c.Activo).HasColumnName("Activo");
             #endregion
 
@@ -28,6 +29,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
             #endregion
 
             #region HasRequired
+            this.HasRequired(c => c.Categoria).WithMany(x => x.Estatus);
             #endregion
         }
     }
