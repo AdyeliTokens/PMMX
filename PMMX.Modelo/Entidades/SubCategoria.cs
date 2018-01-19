@@ -1,4 +1,5 @@
 ﻿using PMMX.Modelo.Entidades;
+using PMMX.Modelo.Entidades.Warehouse;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +19,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
 
         public Persona Responsable { get; set; }
         public Categoria Categoria { get; set; }
+
+        public ICollection<Ventana> Ventanas { get; set; }
     }
 }

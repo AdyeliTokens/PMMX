@@ -16,6 +16,7 @@ namespace PMMX.Modelo.Map
             ToTable("Ventana");
             HasKey(c => c.Id);
             Property(c => c.Id).HasColumnName("Id");
+            Property(c => c.IdCarrier).HasColumnName("IdSubCategoria");
             Property(c => c.IdCarrier).HasColumnName("IdCarrier");
             Property(c => c.IdDestino).HasColumnName("IdDestino");
             Property(c => c.IdEvento).HasColumnName("IdEvento");
@@ -44,6 +45,7 @@ namespace PMMX.Modelo.Map
             #region HasRequired
             this.HasRequired(c => c.Evento).WithMany(x => x.Ventanas);
             this.HasRequired(c => c.Carrier).WithMany(x => x.Ventanas);
+            this.HasRequired(c => c.SubCategoria).WithMany(x => x.Ventanas);
             #endregion
         }
     }
