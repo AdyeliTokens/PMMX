@@ -8,7 +8,7 @@ using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
 
-namespace Sitio.Areas.Apis.Controllers
+namespace Sitio.Areas.Apis.Controllers.Operaciones
 {
     public class CRRController : ApiController
     {

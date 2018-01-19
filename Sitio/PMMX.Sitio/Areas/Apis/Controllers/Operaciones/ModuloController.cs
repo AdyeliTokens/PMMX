@@ -9,48 +9,49 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using PMMX.Infraestructura.Contexto;
-using PMMX.Modelo.Entidades;
+using PMMX.Modelo.Entidades.Maquinaria;
 
-namespace Sitio.Areas.Apis.Controllers
+namespace Sitio.Areas.Apis.Controllers.Operaciones
 {
-    public class EntornoController : ApiController
+    public class ModuloController : ApiController
     {
         private PMMXContext db = new PMMXContext();
 
-        // GET: api/Entorno
-        public IQueryable<Entorno> GetEntorno()
+        // GET: api/Modulo
+        public IQueryable<Modulo> GetModulo()
         {
-            return db.Entornos;
+            return db.Modulos;
         }
 
-        // GET: api/Entorno/5
-        [ResponseType(typeof(Entorno))]
-        public IHttpActionResult GetEntorno(int id)
+        // GET: api/Modulo/5
+        [ResponseType(typeof(Modulo))]
+        public IHttpActionResult GetModulo(int id)
         {
-            Entorno entorno = db.Entornos.Find(id);
-            if (entorno == null)
+            Modulo modulo = db.Modulos.Find(id);
+            if (modulo == null)
             {
                 return NotFound();
             }
 
-            return Ok(entorno);
+            return Ok(modulo);
         }
 
-        // PUT: api/Entorno/5
+
+        // PUT: api/Modulo/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutEntorno(int id, Entorno entorno)
+        public IHttpActionResult PutModulo(int id, Modulo modulo)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != entorno.Id)
+            if (id != modulo.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(entorno).State = EntityState.Modified;
+            db.Entry(modulo).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +59,7 @@ namespace Sitio.Areas.Apis.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EntornoExists(id))
+                if (!ModuloExists(id))
                 {
                     return NotFound();
                 }
@@ -71,35 +72,35 @@ namespace Sitio.Areas.Apis.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Entorno
-        [ResponseType(typeof(Entorno))]
-        public IHttpActionResult PostEntorno(Entorno entorno)
+        // POST: api/Modulo
+        [ResponseType(typeof(Modulo))]
+        public IHttpActionResult PostModulo(Modulo modulo)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Entornos.Add(entorno);
+            db.Modulos.Add(modulo);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = entorno.Id }, entorno);
+            return CreatedAtRoute("DefaultApi", new { id = modulo.Id }, modulo);
         }
 
-        // DELETE: api/Entorno/5
-        [ResponseType(typeof(Entorno))]
-        public IHttpActionResult DeleteEntorno(int id)
+        // DELETE: api/Modulo/5
+        [ResponseType(typeof(Modulo))]
+        public IHttpActionResult DeleteModulo(int id)
         {
-            Entorno entorno = db.Entornos.Find(id);
-            if (entorno == null)
+            Modulo modulo = db.Modulos.Find(id);
+            if (modulo == null)
             {
                 return NotFound();
             }
 
-            db.Entornos.Remove(entorno);
+            db.Modulos.Remove(modulo);
             db.SaveChanges();
 
-            return Ok(entorno);
+            return Ok(modulo);
         }
 
         protected override void Dispose(bool disposing)
@@ -111,9 +112,9 @@ namespace Sitio.Areas.Apis.Controllers
             base.Dispose(disposing);
         }
 
-        private bool EntornoExists(int id)
+        private bool ModuloExists(int id)
         {
-            return db.Entornos.Count(e => e.Id == id) > 0;
+            return db.Modulos.Count(e => e.Id == id) > 0;
         }
     }
 }

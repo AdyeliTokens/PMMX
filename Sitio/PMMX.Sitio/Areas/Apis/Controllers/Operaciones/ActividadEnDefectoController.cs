@@ -11,7 +11,7 @@ using System.Web.Http.Description;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.Defectos;
 
-namespace Sitio.Areas.Apis.Controllers
+namespace Sitio.Areas.Apis.Controllers.Operaciones
 {
     public class ActividadEnDefectoController : ApiController
     {
