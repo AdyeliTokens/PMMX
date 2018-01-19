@@ -26,33 +26,7 @@ namespace Sitio.Areas.Apis.Controllers
             AccountService servicio = new AccountService(  );
             LoginModel model = new LoginModel() { Email = Email , Password = Password , Llave = Llave };
             var respuesta = await servicio.Login(model);
-
-            //switch (respuesta.Respuesta)
-            //{
-            //    case SignInStatus.Success:
-            //        return RedirectToLocal(returnUrl);
-            //    case SignInStatus.LockedOut:
-            //        return View("Lockout");
-            //    case SignInStatus.RequiresVerification:
-            //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-            //    case SignInStatus.Failure:
-            //    default:
-            //        ModelState.AddModelError("", "Invalid login attempt.");
-            //        return View(model);
-            //}
-
-
-            //AccountServicio servicio = new AccountServicio();
-            //RespuestaServicio<UserView> respuesta = new RespuestaServicio<UserView>();
-            //LoginModel login = new LoginModel();
-            //login.Email = Email;
-            //login.Password = Password;
-            //login.Llave = Llave;
-
-            //respuesta = servicio.Login(login);
-
             return Ok(respuesta.Respuesta);
-
         }
 
         [HttpPost]
