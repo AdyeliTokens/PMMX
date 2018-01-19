@@ -31,16 +31,12 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
             return _servicio.GetActividadesEnParo();
         }
 
-        [ResponseType(typeof(ActividadEnParo))]
+        [ResponseType(typeof(RespuestaServicio<ActividadEnParo>))]
         public IHttpActionResult GetActividadEnParo(int id)
         {
-            ActividadEnParo actividadEnParo = db.ActividadEnParos.Find(id);
-            if (actividadEnParo == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(actividadEnParo);
+            var respuesta = _servicio.GetActividadEnParo(id);
+            
+            return Ok(respuesta);
         }
 
         [ResponseType(typeof(void))]
