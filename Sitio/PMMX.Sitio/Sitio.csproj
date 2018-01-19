@@ -308,7 +308,7 @@
     <Compile Include="Areas\Operaciones\Controllers\ObjetivosCRRController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\ObjetivosPlanAttainmentController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\ObjetivosVQIController.cs" />
-    <Compile Include="Areas\Operaciones\Controllers\StatusController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\EstatusController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\StatusVentanaController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\SubCategoriaController.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />

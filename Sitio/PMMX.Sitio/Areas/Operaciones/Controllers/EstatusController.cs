@@ -28,7 +28,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Estatus Estatus = db.Estatus.Find(id);
+            Estatus Estatus = db.Estatus.Where(x => (x.Id == id)).Include(x => x.Categoria).FirstOrDefault();
             if (Estatus == null)
             {
                 return HttpNotFound();
@@ -39,6 +39,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // GET: Operaciones/Estatus/Create
         public ActionResult Create()
         {
+            ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View();
         }
 
@@ -47,7 +48,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nombre,NombreCorto,Activo")] Estatus Estatus)
+        public ActionResult Create(Estatus Estatus)
         {
             if (ModelState.IsValid)
             {
@@ -55,7 +56,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View(Estatus);
         }
 
@@ -66,11 +67,12 @@ namespace Sitio.Areas.Operaciones.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Estatus Estatus = db.Estatus.Find(id);
+            Estatus Estatus = db.Estatus.Where(x=> (x.Id ==id)).Include(x=> x.Categoria).FirstOrDefault();
             if (Estatus == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", Estatus.IdCategoria);
             return View(Estatus);
         }
 
@@ -79,7 +81,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nombre,NombreCorto,Activo")] Estatus Estatus)
+        public ActionResult Edit(Estatus Estatus)
         {
             if (ModelState.IsValid)
             {
@@ -87,6 +89,8 @@ namespace Sitio.Areas.Operaciones.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", Estatus.IdCategoria);
+
             return View(Estatus);
         }
 
@@ -97,7 +101,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Estatus Estatus = db.Estatus.Find(id);
+            Estatus Estatus = db.Estatus.Where(x => (x.Id == id)).Include(x => x.Categoria).FirstOrDefault();
             if (Estatus == null)
             {
                 return HttpNotFound();

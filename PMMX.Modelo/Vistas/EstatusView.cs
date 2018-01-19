@@ -14,7 +14,6 @@ namespace PMMX.Modelo.Vistas
         #region Propiedades
         public int Id { get; set; }
         public string Nombre { get; set; }
-        public string NombreCorto { get; set; }
         public int IdCategoria { get; set; }
         public bool Activo { get; set; }
         #endregion

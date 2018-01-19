@@ -16,7 +16,6 @@ namespace PMMX.Modelo.Entidades.Operaciones
             HasKey(c => c.Id);
             Property(c => c.Id).HasColumnName("Id");
             Property(c => c.Nombre).HasColumnName("Nombre");
-            Property(c => c.NombreCorto).HasColumnName("NombreCorto");
             Property(c => c.IdCategoria).HasColumnName("IdCategoria");
             Property(c => c.Activo).HasColumnName("Activo");
             #endregion
