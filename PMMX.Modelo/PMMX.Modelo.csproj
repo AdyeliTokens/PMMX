@@ -90,7 +90,7 @@
     <Compile Include="Entidades\Horario.cs" />
     <Compile Include="Entidades\JustDoIts\EventoOrigen.cs" />
     <Compile Include="Entidades\JustDoIts\EventoResponsable.cs" />
-    <Compile Include="Entidades\JustDoIts\Status.cs" />
+    <Compile Include="Entidades\JustDoIts\Estatus.cs" />
     <Compile Include="Entidades\JustDoIts\StatusVentana.cs" />
     <Compile Include="Entidades\ListaDistribucion.cs" />
     <Compile Include="Entidades\Maquinaria\ObjetivoCRR.cs" />
@@ -186,7 +186,7 @@
     <Compile Include="Map\RemitentesMap.cs" />
     <Compile Include="Map\RequisicionDeDescargaMap.cs" />
     <Compile Include="Map\ShiftLeaderMap.cs" />
-    <Compile Include="Map\StatusMap.cs" />
+    <Compile Include="Map\EstatusMap.cs" />
     <Compile Include="Map\StatusVentanaMap.cs" />
     <Compile Include="Map\SubAreaMap.cs" />
     <Compile Include="Map\SubCategoriaMap.cs" />
@@ -257,7 +257,7 @@
     <Compile Include="Vistas\RespuestaView.cs" />
     <Compile Include="Vistas\ShiftLeadersView.cs" />
     <Compile Include="Vistas\StatusVentanaView.cs" />
-    <Compile Include="Vistas\StatusView.cs" />
+    <Compile Include="Vistas\EstatusView.cs" />
     <Compile Include="Vistas\SubAreaView.cs" />
     <Compile Include="Vistas\SubCategoriaView.cs" />
     <Compile Include="Vistas\TiempoDeParoView.cs" />

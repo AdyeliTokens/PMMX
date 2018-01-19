@@ -137,7 +137,7 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new ListaDistribucionMap());
             modelBuilder.Configurations.Add(new EventoOrigenMap());
             modelBuilder.Configurations.Add(new EventoResponsableMap());
-            modelBuilder.Configurations.Add(new StatusMap());
+            modelBuilder.Configurations.Add(new EstatusMap());
             modelBuilder.Configurations.Add(new StatusVentanaMap());
 
         }
@@ -226,7 +226,7 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<ListaDistribucion> ListaDistribucion { get; set; }
         public DbSet<EventoOrigen> EventoOrigen { get; set; }
         public DbSet<EventoResponsable> EventoResponsable { get; set; }
-        public DbSet<Status> Status { get; set; }
+        public DbSet<Estatus> Estatus { get; set; }
         public DbSet<StatusVentana> StatusVentana { get; set; }
 
     }

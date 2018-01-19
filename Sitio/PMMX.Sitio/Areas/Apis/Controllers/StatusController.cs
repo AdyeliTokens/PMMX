@@ -13,44 +13,44 @@ using PMMX.Modelo.Entidades.Operaciones;
 
 namespace Sitio.Areas.Apis
 {
-    public class StatusController : ApiController
+    public class EstatusController : ApiController
     {
         private PMMXContext db = new PMMXContext();
 
-        // GET: api/Status
-        public IQueryable<Status> GetStatus()
+        // GET: api/Estatus
+        public IQueryable<Estatus> GetEstatus()
         {
-            return db.Status;
+            return db.Estatus;
         }
 
-        // GET: api/Status/5
-        [ResponseType(typeof(Status))]
-        public IHttpActionResult GetStatus(int id)
+        // GET: api/Estatus/5
+        [ResponseType(typeof(Estatus))]
+        public IHttpActionResult GetEstatus(int id)
         {
-            Status status = db.Status.Find(id);
-            if (status == null)
+            Estatus Estatus = db.Estatus.Find(id);
+            if (Estatus == null)
             {
                 return NotFound();
             }
 
-            return Ok(status);
+            return Ok(Estatus);
         }
 
-        // PUT: api/Status/5
+        // PUT: api/Estatus/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutStatus(int id, Status status)
+        public IHttpActionResult PutEstatus(int id, Estatus Estatus)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != status.Id)
+            if (id != Estatus.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(status).State = EntityState.Modified;
+            db.Entry(Estatus).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +58,7 @@ namespace Sitio.Areas.Apis
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StatusExists(id))
+                if (!EstatusExists(id))
                 {
                     return NotFound();
                 }
@@ -71,35 +71,35 @@ namespace Sitio.Areas.Apis
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Status
-        [ResponseType(typeof(Status))]
-        public IHttpActionResult PostStatus(Status status)
+        // POST: api/Estatus
+        [ResponseType(typeof(Estatus))]
+        public IHttpActionResult PostEstatus(Estatus Estatus)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Status.Add(status);
+            db.Estatus.Add(Estatus);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = status.Id }, status);
+            return CreatedAtRoute("DefaultApi", new { id = Estatus.Id }, Estatus);
         }
 
-        // DELETE: api/Status/5
-        [ResponseType(typeof(Status))]
-        public IHttpActionResult DeleteStatus(int id)
+        // DELETE: api/Estatus/5
+        [ResponseType(typeof(Estatus))]
+        public IHttpActionResult DeleteEstatus(int id)
         {
-            Status status = db.Status.Find(id);
-            if (status == null)
+            Estatus Estatus = db.Estatus.Find(id);
+            if (Estatus == null)
             {
                 return NotFound();
             }
 
-            db.Status.Remove(status);
+            db.Estatus.Remove(Estatus);
             db.SaveChanges();
 
-            return Ok(status);
+            return Ok(Estatus);
         }
 
         protected override void Dispose(bool disposing)
@@ -111,9 +111,9 @@ namespace Sitio.Areas.Apis
             base.Dispose(disposing);
         }
 
-        private bool StatusExists(int id)
+        private bool EstatusExists(int id)
         {
-            return db.Status.Count(e => e.Id == id) > 0;
+            return db.Estatus.Count(e => e.Id == id) > 0;
         }
     }
 }

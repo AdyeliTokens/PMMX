@@ -19,7 +19,7 @@ namespace PMMX.Modelo.Vistas
 
 
         public VentanaView Ventana { get; set; }
-        public StatusView Status { get; set; }
+        public EstatusView Status { get; set; }
         public PersonaView Responsable { get; set; }
     }
 }
