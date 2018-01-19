@@ -8,18 +8,27 @@
     @Styles.Render("~/Style/Select2")
 }
 
-<h2>Create</h2>
+<h2>Edit</h2>
 
 @using (Html.BeginForm("Edit", "Ventana", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Ventana</h4>
-        <hr />
-
+        
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IdSubCategoria, "Tipo de Ventana:", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("IdSubCategoria", null, htmlAttributes: new { @class = "form-control select2", @style = "width: 100%;" })
+                        @Html.ValidationMessageFor(model => model.IdSubCategoria, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -54,10 +63,8 @@
                 </div>
             </div>
             <div class="form-group">
-                @Html.Hidden("IdEvento", Model.IdEvento)
-            </div>
-            <div class="form-group">
-                @Html.Hidden("Activo", Model.Activo)
+                @Html.Hidden("IdEvento")
+                @Html.Hidden("Activo")
             </div>
         </div>
 
@@ -197,19 +204,46 @@
         </div>
 
         <div class="form-group">
-            <input type="submit" value="Save" class="btn btn-default" />
+            <input type="submit" value="Editar" class="btn btn-block btn-primary btn-sm" />
         </div>
     </div>
 }
-
 
 @section Scripts {
     @Scripts.Render("~/JS/Select2")
     <script>
         $(function () {
+            var IdEvento = parseInt(getUrlVar("IdEvento"), 10);
+
             $('.select2').select2();
-           
+            $("#Activo").val(true);
+            $("#IdEvento").val(IdEvento);
+
             $('.collapse').collapse()
         });
+
+        function getUrlVar(key) {
+            var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search);
+            return result && unescape(result[1]) || "";
+        }
+
+        function getSubCategorias() {
+            $.ajax({
+                dataType: "json",
+                contentType: "application/json",
+                url: "/Warehouse/Ventana/GetSubCategorias?idCategoria=10",
+                success: function (data) {
+                    items = '<option></option>';
+                    $.each(data.subcategorias, function (i, k) {
+                        items += "<option value='" + k.Id + "'>" + k.NombreCorto + "</option>";
+                    });
+                    $('#IdSubCategoria').html(items);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('There was an error while fetching Work Centers!');
+                }
+            });
+        }
+
     </script>
 }

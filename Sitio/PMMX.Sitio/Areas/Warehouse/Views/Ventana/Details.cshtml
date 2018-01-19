@@ -18,7 +18,7 @@
             <td>
                 @Html.DisplayFor(model => model.PO)
             </td>
-            <td></td>
+            <td>@Html.DisplayFor(model => model.SubCategoria.NombreCorto) (@Html.DisplayFor(model => model.SubCategoria.Nombre))</td>
         </tr>
         <tr class="bg-success">
             <td class="bg-primary"><i class="fa fa-dropbox"></i></td>
