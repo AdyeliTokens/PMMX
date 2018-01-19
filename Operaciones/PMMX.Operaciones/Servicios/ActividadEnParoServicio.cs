@@ -40,5 +40,15 @@ namespace PMMX.Operaciones.Servicios
 
             return respuesta;
         }
+
+        public RespuestaServicio<ActividadEnParo> GetActividadEnParo(int id)
+        {
+            RespuestaServicio<ActividadEnParo> respuesta = new RespuestaServicio<ActividadEnParo>();
+            ActividadEnParo actividadEnParo = _context.ActividadEnParos.Find(id);
+
+            respuesta.Respuesta = actividadEnParo;
+
+            return respuesta;
+        }
     }
 }
