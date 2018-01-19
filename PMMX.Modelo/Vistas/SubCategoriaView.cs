@@ -22,6 +22,7 @@ namespace PMMX.Modelo.Vistas
         public CategoriaView Categoria { get; set; }
         
         public ICollection<VentanaView> Ventanas { get; set; }
+        public ICollection<JustDoItView> JustDoIt { get; set; }
         #endregion
     }
 }

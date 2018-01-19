@@ -136,7 +136,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         {
             ViewBag.IdOrigen = new SelectList(db.Origens, "Id", "Id", justDoIt.IdOrigen);
             ViewBag.IdReportador = new SelectList(db.Personas, "Id", "Nombre", justDoIt.IdReportador);
-            ViewBag.IdCategoria = new SelectList(db.Categoria, "Id", "Id", justDoIt.IdCategoria);
+            ViewBag.IdSubCategoria = new SelectList(db.SubCategoria, "Id", "Id", justDoIt.IdSubCategoria);
             return View();
         }
 

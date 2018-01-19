@@ -39,11 +39,14 @@ namespace Sitio.Areas.Apis.Controllers
                    IdOrigen = d.IdOrigen,
                    IdReportador = d.IdReportador,
                    IdResponsable = d.IdResponsable,
+                   IdSubCategoria = d.IdSubCategoria,
+                   IdEvento = d.IdEvento,
                    Descripcion = d.Descripcion,
                    Activo = d.Activo,
                    FechaReporte = d.FechaReporte,
                    FechaEstimada = d.FechaEstimada,
                    Prioridad = d.Prioridad,
+                   Tipo = d.Tipo,
                    Reportador = new PersonaView
                    {
                        Id = d.Reportador.Id,
@@ -108,11 +111,14 @@ namespace Sitio.Areas.Apis.Controllers
                     IdOrigen = d.IdOrigen,
                     IdReportador = d.IdReportador,
                     IdResponsable = d.IdResponsable,
+                    IdEvento = d.IdEvento,
+                    IdSubCategoria = d.IdSubCategoria,
                     Descripcion = d.Descripcion,
                     Activo = d.Activo,
                     FechaReporte = d.FechaReporte,
                     FechaEstimada = d.FechaEstimada,
                     Prioridad = d.Prioridad,
+                    Tipo = d.Tipo,
                     Reportador = new PersonaView
                     {
                         Id = d.Reportador.Id,
@@ -167,11 +173,14 @@ namespace Sitio.Areas.Apis.Controllers
                     IdOrigen = d.IdOrigen,
                     IdReportador = d.IdReportador,
                     IdResponsable = d.IdResponsable,
+                    IdEvento = d.IdEvento,
+                    IdSubCategoria = d.IdSubCategoria,
                     Descripcion = d.Descripcion,
                     Activo = d.Activo,
                     FechaReporte = d.FechaReporte,
                     FechaEstimada = d.FechaEstimada,
                     Prioridad = d.Prioridad,
+                    Tipo = d.Tipo,
                     Reportador = new PersonaView
                     {
                         Id = d.Reportador.Id,
@@ -226,11 +235,14 @@ namespace Sitio.Areas.Apis.Controllers
                     IdOrigen = d.IdOrigen,
                     IdReportador = d.IdReportador,
                     IdResponsable = d.IdResponsable,
+                    IdEvento = d.IdEvento,
+                    IdSubCategoria = d.IdSubCategoria,
                     Descripcion = d.Descripcion,
                     Activo = d.Activo,
                     FechaReporte = d.FechaReporte,
                     FechaEstimada = d.FechaEstimada,
                     Prioridad = d.Prioridad,
+                    Tipo = d.Tipo,
                     Reportador = new PersonaView
                     {
                         Id = d.Reportador.Id,
@@ -329,10 +341,14 @@ namespace Sitio.Areas.Apis.Controllers
                     IdOrigen = d.IdOrigen,
                     IdReportador = d.IdReportador,
                     IdResponsable = d.IdResponsable,
+                    IdEvento = d.IdEvento,
+                    IdSubCategoria = d.IdSubCategoria,
                     Descripcion = d.Descripcion,
                     Activo = d.Activo,
                     FechaReporte = d.FechaReporte,
                     FechaEstimada = d.FechaEstimada,
+                    Prioridad = d.Prioridad,
+                    Tipo = d.Tipo,
                     Reportador = new PersonaView
                     {
                         Id = d.Reportador.Id,
@@ -407,10 +423,14 @@ namespace Sitio.Areas.Apis.Controllers
                     IdOrigen = d.IdOrigen,
                     IdReportador = d.IdReportador,
                     IdResponsable = d.IdResponsable,
+                    IdEvento = d.IdEvento,
+                    IdSubCategoria = d.IdSubCategoria,
                     Descripcion = d.Descripcion,
                     Activo = d.Activo,
                     FechaReporte = d.FechaReporte,
                     FechaEstimada = d.FechaEstimada,
+                    Prioridad = d.Prioridad,
+                    Tipo = d.Tipo,
                     Reportador = new PersonaView
                     {
                         Id = d.Reportador.Id,
@@ -477,16 +497,20 @@ namespace Sitio.Areas.Apis.Controllers
 
             var justDoItView = db.JustDoIt
                 .Where(d => (d.Id == id))
-                .Select(d => new DefectoView
+                .Select(d => new JustDoItView
                 {
                     Id = d.Id,
                     IdOrigen = d.IdOrigen,
                     IdReportador = d.IdReportador,
                     IdResponsable = d.IdResponsable,
+                    IdEvento = d.IdEvento,
+                    IdSubCategoria = d.IdSubCategoria,
                     Descripcion = d.Descripcion,
                     Activo = d.Activo,
                     FechaReporte = d.FechaReporte,
                     FechaEstimada = d.FechaEstimada,
+                    Prioridad = d.Prioridad,
+                    Tipo = d.Tipo,
                     Reportador = new PersonaView
                     {
                         Id = d.Reportador.Id,
@@ -528,6 +552,7 @@ namespace Sitio.Areas.Apis.Controllers
                         Path = f.Path
                     }).ToList()
                 }).FirstOrDefault();
+
 
             return Ok(justDoItView);
         }

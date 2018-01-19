@@ -28,6 +28,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
 
             #region HasMany
             this.HasMany(c => c.Ventanas).WithRequired(x => x.SubCategoria).HasForeignKey(x => x.IdSubCategoria);
+            this.HasMany(c => c.JustDoIt).WithRequired(x => x.SubCategoria).HasForeignKey(x => x.IdSubCategoria);
             #endregion
 
         }

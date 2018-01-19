@@ -68,7 +68,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                     .Select(j => new JustDoItView
                     {
                         Id = j.Id,
-                        IdCategoria = j.IdCategoria
+                        IdSubCategoria = j.IdSubCategoria
                     }).ToList(),
                 }).FirstOrDefault();
             

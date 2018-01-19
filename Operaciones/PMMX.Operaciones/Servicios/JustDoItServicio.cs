@@ -37,7 +37,8 @@ namespace PMMX.Operaciones.Servicios
                 FechaEstimada = d.FechaEstimada,
                 Descripcion = d.Descripcion,
                 IdResponsable = d.IdResponsable,
-                IdCategoria = d.IdCategoria,
+                IdSubCategoria = d.IdSubCategoria,
+                Tipo = d.Tipo,
                 Reportador = new PersonaView
                 {
                     Id = d.Reportador.Id,
@@ -78,14 +79,13 @@ namespace PMMX.Operaciones.Servicios
                         }
                     }
                 },
-                Categoria = new CategoriaView
+                SubCategoria = new SubCategoriaView
                 {
-                    Id = d.Categoria.Id,
-                    Nombre = d.Categoria.Nombre,
-                    NombreCorto = d.Categoria.NombreCorto,
-                    IdResponsable = d.Categoria.IdResponsable,
-                    Color = d.Categoria.Color,
-                    Activo = d.Categoria.Activo
+                    Id = d.SubCategoria.Id,
+                    Nombre = d.SubCategoria.Nombre,
+                    NombreCorto = d.SubCategoria.NombreCorto,
+                    IdResponsable = d.SubCategoria.IdResponsable,
+                    Activo = d.SubCategoria.Activo
                 }
                 });
             return respuesta;
@@ -109,7 +109,8 @@ namespace PMMX.Operaciones.Servicios
                     Prioridad = d.Prioridad,
                     FechaReporte = d.FechaReporte,
                     FechaEstimada = d.FechaEstimada,
-                    IdCategoria = d.IdCategoria,
+                    IdSubCategoria = d.IdSubCategoria,
+                    Tipo = d.Tipo,
                     Reportador = new PersonaView
                     {
                         Id = d.Reportador.Id,
@@ -165,22 +166,14 @@ namespace PMMX.Operaciones.Servicios
                         }
 
                     },
-                    Categoria = new CategoriaView
+                    SubCategoria = new SubCategoriaView
                     {
-                        Id = d.Categoria.Id,
-                        Nombre = d.Categoria.Nombre,
-                        NombreCorto = d.Categoria.NombreCorto,
-                        IdResponsable = d.Categoria.IdResponsable,
-                        Color = d.Categoria.Color,
-                        Activo = d.Categoria.Activo
-                    }
-                    /*Fotos = d.Fotos.Select(f => new FotoView
-                    {
-                        Id = f.Id,
-                        Nombre = f.Nombre,
-                        Path = f.Path,
-                        IdJustDoIt = f.IdJustDoIt
-                    }).ToList()*/
+                        Id = d.SubCategoria.Id,
+                        Nombre = d.SubCategoria.Nombre,
+                        NombreCorto = d.SubCategoria.NombreCorto,
+                        IdResponsable = d.SubCategoria.IdResponsable,
+                        Activo = d.SubCategoria.Activo
+                    }                    
                 }).FirstOrDefault();
             if (JustDoIt != null)
             {
