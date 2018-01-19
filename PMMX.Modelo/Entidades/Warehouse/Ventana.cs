@@ -9,8 +9,10 @@ namespace PMMX.Modelo.Entidades.Warehouse
 {
     public class Ventana
     {
+        #region Propiedades
         public int Id { get; set; }
         public string PO { get; set; }
+        public int IdSubCategoria { get; set; }
         public int IdEvento { get; set; }
         public string Recurso { get; set; }
         public double Cantidad { get; set; }
@@ -29,13 +31,17 @@ namespace PMMX.Modelo.Entidades.Warehouse
         public string MovilConductor { get; set; }
         //
         public bool Activo { get; set; }
+        #endregion
 
+        #region Navegacion
         public Evento Evento { get; set; }
         public Carrier Carrier { get; set; }
         public Locacion Procedencia { get; set; }
         public Locacion Destino { get; set; }
         public Proveedores Proveedor { get; set; }
+        public SubCategoria SubCategoria { get; set; }
 
         public ICollection<StatusVentana> StatusVentana { get; set; }
+        #endregion 
     }
 }

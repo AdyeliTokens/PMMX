@@ -8,8 +8,10 @@ namespace PMMX.Modelo.Vistas
 {
     public class VentanaView
     {
+        #region Propiedades
         public int Id { get; set; }
         public string PO { get; set; }
+        public int IdSubCategoria { get; set; }
         public int IdEvento { get; set; }
         public string Recurso { get; set; }
         public double Cantidad { get; set; }
@@ -28,13 +30,17 @@ namespace PMMX.Modelo.Vistas
         public string MovilConductor { get; set; }
         //
         public bool Activo { get; set; }
+        #endregion
 
+        #region Navegacion
         public EventoView Evento { get; set; }
         public CarrierView Carrier { get; set; }
         public LocacionView Procedencia { get; set; }
         public LocacionView Destino { get; set; }
         public ProveedoresView Proveedor { get; set; }
+        public SubCategoriaView SubCategoria { get; set; }
 
         public ICollection<StatusVentanaView> StatusVentana { get; set; }
+        #endregion 
     }
 }

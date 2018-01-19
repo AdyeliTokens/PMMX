@@ -11,6 +11,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
     {
         public SubCategoriaMap()
         {
+            #region Propiedades
             this.ToTable("SubCategorias");
             this.HasKey(c => c.Id);
             this.Property(c => c.Id).HasColumnName("Id");
@@ -18,9 +19,17 @@ namespace PMMX.Modelo.Entidades.Operaciones
             this.Property(c => c.NombreCorto).HasColumnName("NombreCorto");
             this.Property(c => c.IdResponsable).HasColumnName("IdResponsable");
             this.Property(c => c.Activo).HasColumnName("Activo");
+            #endregion
 
+            #region HasRequired
             this.HasRequired(c => c.Responsable).WithMany(x => x.SubCategorias).HasForeignKey(c => c.IdResponsable);
             this.HasRequired(c => c.Categoria).WithMany(x => x.SubCategorias).HasForeignKey(c => c.IdCategoria);
+            #endregion
+
+            #region HasMany
+            this.HasMany(c => c.Ventanas).WithRequired(x => x.SubCategoria).HasForeignKey(x => x.IdSubCategoria);
+            #endregion
+
         }
     }
 }
