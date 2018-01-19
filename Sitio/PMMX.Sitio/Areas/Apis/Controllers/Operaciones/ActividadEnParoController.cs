@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
 using PMMX.Infraestructura.Contexto;
@@ -20,12 +13,13 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
         private PMMXContext db;
         private ActividadEnParoServicio _servicio;
 
-        ActividadEnParoController() {
+        ActividadEnParoController()
+        {
             db = new PMMXContext();
             _servicio = new ActividadEnParoServicio(db);
         }
 
-
+        #region GET
         public RespuestaServicio<IQueryable<ActividadEnParo>> GetActividadEnParo()
         {
             return _servicio.GetActividadesEnParo();
@@ -35,72 +29,42 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
         public IHttpActionResult GetActividadEnParo(int id)
         {
             var respuesta = _servicio.GetActividadEnParo(id);
-            
+
             return Ok(respuesta);
         }
 
-        [ResponseType(typeof(void))]
+        #endregion
+
+        #region PUT
+        [ResponseType(typeof(RespuestaServicio<ActividadEnParo>))]
         public IHttpActionResult PutActividadEnParo(int id, ActividadEnParo actividadEnParo)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var respuesta = _servicio.PutActividadEnParo(id, actividadEnParo);
 
-            if (id != actividadEnParo.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(actividadEnParo).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ActividadEnParoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(respuesta);
         }
+        #endregion
 
-        [ResponseType(typeof(ActividadEnParo))]
+        #region Post
+        [ResponseType(typeof(RespuestaServicio<ActividadEnParo>))]
         public IHttpActionResult PostActividadEnParo(ActividadEnParo actividadEnParo)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var respuesta = _servicio.PostActividadEnParo(actividadEnParo);
 
-            db.ActividadEnParos.Add(actividadEnParo);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = actividadEnParo.Id }, actividadEnParo);
+            return Ok(respuesta);
         }
+        #endregion
 
-        [ResponseType(typeof(ActividadEnParo))]
+        #region Delete
+        [ResponseType(typeof(RespuestaServicio<ActividadEnParo>))]
         public IHttpActionResult DeleteActividadEnParo(int id)
         {
-            ActividadEnParo actividadEnParo = db.ActividadEnParos.Find(id);
-            if (actividadEnParo == null)
-            {
-                return NotFound();
-            }
+            var respuesta = _servicio.DeleteActividadEnParo(id);
 
-            db.ActividadEnParos.Remove(actividadEnParo);
-            db.SaveChanges();
-
-            return Ok(actividadEnParo);
+            return Ok(respuesta);
         }
+        #endregion
+
 
         protected override void Dispose(bool disposing)
         {
@@ -111,9 +75,5 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
             base.Dispose(disposing);
         }
 
-        private bool ActividadEnParoExists(int id)
-        {
-            return db.ActividadEnParos.Count(e => e.Id == id) > 0;
-        }
     }
 }
