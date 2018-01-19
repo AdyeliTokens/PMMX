@@ -21,5 +21,6 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public Categoria Categoria { get; set; }
 
         public ICollection<Ventana> Ventanas { get; set; }
+        public ICollection<JustDoIt> JustDoIt { get; set; }
     }
 }

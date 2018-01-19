@@ -19,6 +19,5 @@ namespace PMMX.Modelo.Vistas
 
         public ICollection<SubCategoriaView> SubCategorias { get; set; }
         public ICollection<GrupoPreguntasView> GrupoPreguntas { get; set; }
-        public ICollection<JustDoItView> JustDoIt { get; set; }
     }
 }

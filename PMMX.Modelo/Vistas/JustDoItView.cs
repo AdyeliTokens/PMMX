@@ -20,7 +20,7 @@ namespace PMMX.Modelo.Vistas
         public DateTime FechaEstimada { get; set; }
         public int Prioridad { get; set; }
         public int IdResponsable { get; set; }
-        public int IdCategoria { get; set; }
+        public int IdSubCategoria { get; set; }
 
         public int? ActividadesCount { get; set; }
         
@@ -28,7 +28,7 @@ namespace PMMX.Modelo.Vistas
         public PersonaView Responsable { get; set; }
         public OrigenView Origen { get; set; }
         public EventoView Evento { get; set; }
-        public CategoriaView Categoria { get; set; }
+        public SubCategoriaView SubCategoria { get; set; }
 
         public List<FotoView> Fotos { get; set; }
     }
