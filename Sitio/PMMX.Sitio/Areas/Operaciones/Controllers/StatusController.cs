@@ -11,107 +11,107 @@ using PMMX.Modelo.Entidades.Operaciones;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
-    public class StatusController : Controller
+    public class EstatusController : Controller
     {
         private PMMXContext db = new PMMXContext();
 
-        // GET: Operaciones/Status
+        // GET: Operaciones/Estatus
         public ActionResult Index()
         {
-            return View(db.Status.ToList());
+            return View(db.Estatus.ToList());
         }
 
-        // GET: Operaciones/Status/Details/5
+        // GET: Operaciones/Estatus/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Status status = db.Status.Find(id);
-            if (status == null)
+            Estatus Estatus = db.Estatus.Find(id);
+            if (Estatus == null)
             {
                 return HttpNotFound();
             }
-            return View(status);
+            return View(Estatus);
         }
 
-        // GET: Operaciones/Status/Create
+        // GET: Operaciones/Estatus/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Operaciones/Status/Create
+        // POST: Operaciones/Estatus/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nombre,NombreCorto,Activo")] Status status)
+        public ActionResult Create([Bind(Include = "Id,Nombre,NombreCorto,Activo")] Estatus Estatus)
         {
             if (ModelState.IsValid)
             {
-                db.Status.Add(status);
+                db.Estatus.Add(Estatus);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(status);
+            return View(Estatus);
         }
 
-        // GET: Operaciones/Status/Edit/5
+        // GET: Operaciones/Estatus/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Status status = db.Status.Find(id);
-            if (status == null)
+            Estatus Estatus = db.Estatus.Find(id);
+            if (Estatus == null)
             {
                 return HttpNotFound();
             }
-            return View(status);
+            return View(Estatus);
         }
 
-        // POST: Operaciones/Status/Edit/5
+        // POST: Operaciones/Estatus/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nombre,NombreCorto,Activo")] Status status)
+        public ActionResult Edit([Bind(Include = "Id,Nombre,NombreCorto,Activo")] Estatus Estatus)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(status).State = EntityState.Modified;
+                db.Entry(Estatus).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(status);
+            return View(Estatus);
         }
 
-        // GET: Operaciones/Status/Delete/5
+        // GET: Operaciones/Estatus/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Status status = db.Status.Find(id);
-            if (status == null)
+            Estatus Estatus = db.Estatus.Find(id);
+            if (Estatus == null)
             {
                 return HttpNotFound();
             }
-            return View(status);
+            return View(Estatus);
         }
 
-        // POST: Operaciones/Status/Delete/5
+        // POST: Operaciones/Estatus/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Status status = db.Status.Find(id);
-            db.Status.Remove(status);
+            Estatus Estatus = db.Estatus.Find(id);
+            db.Estatus.Remove(Estatus);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -1,4 +1,4 @@
-﻿@model PMMX.Modelo.Entidades.Operaciones.Status
+﻿@model PMMX.Modelo.Entidades.Operaciones.Estatus
 
 @{
     Layout = null;
@@ -9,9 +9,10 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
+    <title>Delete</title>
 </head>
 <body>
+    <h3>Are you sure you want to delete this?</h3>
     <div>
         <h4>Status</h4>
         <hr />
@@ -41,10 +42,15 @@
             </dd>
     
         </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
     </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
 </body>
 </html>

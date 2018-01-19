@@ -47,7 +47,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                         Id = s.Ventana.Id,
                         PO = s.Ventana.PO
                     },
-                    Status = new StatusView
+                    Status = new EstatusView
                     {
                         Id = s.Status.Id,
                         Nombre = s.Status.Nombre
@@ -72,7 +72,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // GET: Operaciones/StatusVentana/Create
         public ActionResult Create()
         {
-            ViewBag.IdStatus = new SelectList(db.Status.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
+            ViewBag.IdStatus = new SelectList(db.Estatus.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
             ViewBag.IdVentana = new SelectList(db.Ventana.Select(x => new { Id = x.Id, PO = x.PO }).OrderBy(x => x.PO), "Id", "PO");
             return View();
         }
@@ -101,7 +101,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdStatus = new SelectList(db.Status.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", statusVentana.IdStatus);
+            ViewBag.IdStatus = new SelectList(db.Estatus.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", statusVentana.IdStatus);
             ViewBag.IdVentana = new SelectList(db.Ventana.Select(x => new { Id = x.Id, PO = x.PO }).OrderBy(x => x.PO), "Id", "PO", statusVentana.IdVentana);
             return View(statusVentana);
         }
@@ -120,7 +120,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.IdStatus = new SelectList(db.Status.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
+            ViewBag.IdStatus = new SelectList(db.Estatus.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
             ViewBag.IdVentana = new SelectList(db.Ventana.Select(x => new { Id = x.Id, PO = x.PO }).OrderBy(x => x.PO), "Id", "PO");
             ViewBag.IdResponsable = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido1 }).OrderBy(x => x.Nombre), "Id", "Nombre");
 
@@ -141,7 +141,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdStatus = new SelectList(db.Status.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", statusVentana.IdStatus);
+            ViewBag.IdStatus = new SelectList(db.Estatus.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", statusVentana.IdStatus);
             ViewBag.IdVentana = new SelectList(db.Ventana.Select(x => new { Id = x.Id, PO = x.PO }).OrderBy(x => x.PO), "Id", "PO", statusVentana.IdVentana);
             ViewBag.IdResponsable = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre +" "+ x.Apellido1 +" "+ x.Apellido1 }).OrderBy(x => x.Nombre), "Id", "Nombre", statusVentana.IdResponsable);
             return View(statusVentana);
@@ -167,7 +167,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                         Id = s.Ventana.Id,
                         PO = s.Ventana.PO
                     },
-                    Status = new StatusView
+                    Status = new EstatusView
                     {
                         Id = s.Status.Id,
                         Nombre = s.Status.Nombre

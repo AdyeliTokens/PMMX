@@ -7,12 +7,12 @@ using System.Web;
 
 namespace PMMX.Modelo.Entidades.Operaciones
 {
-    public class StatusMap : EntityTypeConfiguration<Status>
+    public class EstatusMap : EntityTypeConfiguration<Estatus>
     {
-        public StatusMap()
+        public EstatusMap()
         {
             #region Propiedades
-            ToTable("Status");
+            ToTable("Estatus");
             HasKey(c => c.Id);
             Property(c => c.Id).HasColumnName("Id");
             Property(c => c.Nombre).HasColumnName("Nombre");

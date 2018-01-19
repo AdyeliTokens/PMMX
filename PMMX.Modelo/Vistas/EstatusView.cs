@@ -9,7 +9,7 @@ using System.Web;
 
 namespace PMMX.Modelo.Vistas
 {
-    public class StatusView
+    public class EstatusView
     {
         public int Id { get; set; }
         public string Nombre { get; set; }

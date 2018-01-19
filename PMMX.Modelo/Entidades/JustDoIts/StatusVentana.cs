@@ -21,7 +21,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public DateTime Fecha { get; set; }
         
         public Ventana Ventana { get; set; }
-        public Status Status { get; set; }
+        public Estatus Status { get; set; }
         public Persona Responsable { get; set; }
     }
 }

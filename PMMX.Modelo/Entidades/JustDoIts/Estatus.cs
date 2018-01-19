@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PMMX.Modelo.Entidades.Operaciones
 {
-    public class Status
+    public class Estatus
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
