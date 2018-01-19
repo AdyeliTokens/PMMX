@@ -24,7 +24,7 @@ namespace PMMX.Infraestructura.Contexto
         /// <summary>
         /// Contructor del contexto PMMXContext tomando como base PMMXcontext de los settings
         /// </summary>
-        public PMMXContext() : base("name=PMMXContext")
+        public PMMXContext() : base("PMMXContext")
         {
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
