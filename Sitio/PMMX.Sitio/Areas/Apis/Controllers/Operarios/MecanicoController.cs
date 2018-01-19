@@ -12,7 +12,7 @@ using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades;
 using PMMX.Modelo.Vistas;
 
-namespace Sitio.Areas.Apis.Controllers
+namespace Sitio.Areas.Apis.Controllers.Operarios
 {
     public class MecanicoController : ApiController
     {

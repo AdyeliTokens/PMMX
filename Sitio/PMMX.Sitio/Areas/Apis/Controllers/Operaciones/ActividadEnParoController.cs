@@ -10,20 +10,27 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.Paros;
+using PMMX.Operaciones.Servicios;
+using PMMX.Modelo.RespuestaGenerica;
 
-namespace Sitio.Areas.Apis.Controllers
+namespace Sitio.Areas.Apis.Controllers.Operaciones
 {
     public class ActividadEnParoController : ApiController
     {
-        private PMMXContext db = new PMMXContext();
+        private PMMXContext db;
+        private ActividadEnParoServicio _servicio;
 
-        // GET: api/ActividadEnParos
-        public IQueryable<ActividadEnParo> GetActividadEnParo()
-        {
-            return db.ActividadEnParos;
+        ActividadEnParoController() {
+            db = new PMMXContext();
+            _servicio = new ActividadEnParoServicio(db);
         }
 
-        // GET: api/ActividadEnParos/5
+
+        public RespuestaServicio<IQueryable<ActividadEnParo>> GetActividadEnParo()
+        {
+            return _servicio.GetActividadesEnParo();
+        }
+
         [ResponseType(typeof(ActividadEnParo))]
         public IHttpActionResult GetActividadEnParo(int id)
         {
@@ -36,7 +43,6 @@ namespace Sitio.Areas.Apis.Controllers
             return Ok(actividadEnParo);
         }
 
-        // PUT: api/ActividadEnParos/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutActividadEnParo(int id, ActividadEnParo actividadEnParo)
         {
@@ -71,7 +77,6 @@ namespace Sitio.Areas.Apis.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/ActividadEnParos
         [ResponseType(typeof(ActividadEnParo))]
         public IHttpActionResult PostActividadEnParo(ActividadEnParo actividadEnParo)
         {
@@ -86,7 +91,6 @@ namespace Sitio.Areas.Apis.Controllers
             return CreatedAtRoute("DefaultApi", new { id = actividadEnParo.Id }, actividadEnParo);
         }
 
-        // DELETE: api/ActividadEnParos/5
         [ResponseType(typeof(ActividadEnParo))]
         public IHttpActionResult DeleteActividadEnParo(int id)
         {

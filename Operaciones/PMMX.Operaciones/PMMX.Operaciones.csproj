@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Servicios\ActividadEnParoServicio.cs" />
     <Compile Include="Servicios\ComentarioServicio.cs" />
     <Compile Include="Servicios\DefectoServicio.cs" />
     <Compile Include="Servicios\DesperdicioServicio.cs" />

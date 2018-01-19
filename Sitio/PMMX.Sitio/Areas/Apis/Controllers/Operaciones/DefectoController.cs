@@ -15,7 +15,7 @@ using PMMX.Seguridad.Servicios;
 using PMMX.Operaciones.Servicios;
 using PMMX.Modelo.RespuestaGenerica;
 
-namespace Sitio.Areas.Apis.Controllers
+namespace Sitio.Areas.Apis.Controllers.Operaciones
 {
     public class DefectoController : ApiController
     {

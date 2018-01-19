@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System;
 using PMMX.Modelo.Entidades.Maquinaria;
 
-namespace Sitio.Areas.Apis.Controllers
+namespace Sitio.Areas.Apis.Controllers.Operaciones
 {
     public class NoConformidadesController : ApiController
     {

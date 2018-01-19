@@ -12,7 +12,7 @@ using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.Defectos;
 using PMMX.Modelo.Vistas;
 
-namespace Sitio.Areas.Apis.Controllers
+namespace Sitio.Areas.Apis.Controllers.Operaciones
 {
     public class ComentariosController : ApiController
     {

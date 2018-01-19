@@ -14,7 +14,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 
-namespace Sitio.Areas.Apis.Controllers
+namespace Sitio.Areas.Apis.Controllers.Multimedia
 {
     public class FotosController : ApiController
     {
