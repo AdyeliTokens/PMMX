@@ -6,28 +6,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 
 namespace PMMX.Operaciones.Servicios.Tests
 {
     [TestClass()]
     public class WorkCenterServicioTests
     {
+        private readonly WorkCenterServicio _servicio;
+        private readonly PMMXContext _context;
+
+        public WorkCenterServicioTests()
+        {
+            _context = new PMMXContext();
+            _servicio = new WorkCenterServicio(_context);
+
+        }
+
         [TestMethod()]
+
         public void GetWorkCentersTest()
         {
-            Assert.Fail();
+            var respuesta = _servicio.GetWorkCenters();
+            Assert.IsNotNull(respuesta);
         }
 
         [TestMethod()]
-        public void GetWorkCenterTest()
+        [DataRow(12)]
+        [DataRow(6)]
+        [DataRow(3)]
+        [DataRow(0)]
+        public void GetWorkCenterTest(int idWorkCenter)
         {
-            Assert.Fail();
+            var respuesta = _servicio.GetWorkCenter(idWorkCenter);
+
+            Assert.IsNotNull(respuesta);
         }
 
         [TestMethod()]
-        public void GetWorkCentersByPersonaTest()
+        public void GetWorkCentersByPersonaTest(int idPersona)
         {
-            Assert.Fail();
+            PMMXContext _context = new PMMXContext();
+            WorkCenterServicio _servicio = new WorkCenterServicio(_context);
+            var respuesta = _servicio.GetWorkCentersByPersona(idPersona);
+
+            Assert.IsNotNull(respuesta);
         }
 
         [TestMethod()]
@@ -62,6 +85,7 @@ namespace PMMX.Operaciones.Servicios.Tests
             var respuesta = new WorkCenterServicio(_context).GetWorkCenterByOperador(66);
             Assert.Fail();
         }
-        
+
+
     }
 }
