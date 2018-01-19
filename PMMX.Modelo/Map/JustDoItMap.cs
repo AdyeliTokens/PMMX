@@ -24,6 +24,7 @@ namespace PMMX.Modelo.Map
             this.Property(c => c.FechaReporte).HasColumnName("FechaReporte");
             this.Property(c => c.FechaEstimada).HasColumnName("FechaEstimada");
             this.Property(c => c.Prioridad).HasColumnName("Prioridad");
+            this.Property(c => c.Tipo).HasColumnName("Tipo");
             this.Property(c => c.Activo).HasColumnName("Activo");
 
             this.HasRequired(c => c.Reportador).WithMany(p => p.JustDoItReportados);

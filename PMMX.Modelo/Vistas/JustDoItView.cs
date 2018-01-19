@@ -21,6 +21,7 @@ namespace PMMX.Modelo.Vistas
         public int Prioridad { get; set; }
         public int IdResponsable { get; set; }
         public int IdSubCategoria { get; set; }
+        public int Tipo { get; set; }
 
         public int? ActividadesCount { get; set; }
         

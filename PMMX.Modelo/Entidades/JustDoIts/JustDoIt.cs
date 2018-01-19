@@ -21,6 +21,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public int Prioridad { get; set; }
         public int IdResponsable { get; set; }
         public int IdSubCategoria { get; set; }
+        public int Tipo { get; set; }
         public Boolean Activo { get; set; }
         
         public Persona Reportador { get; set; }

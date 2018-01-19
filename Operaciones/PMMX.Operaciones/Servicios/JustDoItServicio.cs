@@ -38,6 +38,7 @@ namespace PMMX.Operaciones.Servicios
                 Descripcion = d.Descripcion,
                 IdResponsable = d.IdResponsable,
                 IdSubCategoria = d.IdSubCategoria,
+                Tipo = d.Tipo,
                 Reportador = new PersonaView
                 {
                     Id = d.Reportador.Id,
@@ -109,6 +110,7 @@ namespace PMMX.Operaciones.Servicios
                     FechaReporte = d.FechaReporte,
                     FechaEstimada = d.FechaEstimada,
                     IdSubCategoria = d.IdSubCategoria,
+                    Tipo = d.Tipo,
                     Reportador = new PersonaView
                     {
                         Id = d.Reportador.Id,
