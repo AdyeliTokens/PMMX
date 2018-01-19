@@ -15,7 +15,17 @@ namespace PMMX.Seguridad.Servicios
 {
     public class AccountServicio
     {
-        private PMMXContext db = new PMMXContext();
+        private PMMXContext _context;
+
+        public AccountServicio(PMMXContext context)
+        {
+            _context = context;
+        }
+
+        public AccountServicio()
+        {
+            _context = new PMMXContext();
+        }
 
         public RespuestaServicio<UserView> Login(LoginModel login)
         {
@@ -30,7 +40,6 @@ namespace PMMX.Seguridad.Servicios
                     dispositivoRespuesta = dispositivoServicio.DispositivoActualByPersona(respuesta.Respuesta.Persona.Id, login.Llave);
                     if (dispositivoRespuesta.EjecucionCorrecta == false)
                     {
-                        //respuesta.Mensaje = dispositivoRespuesta.Mensaje;
                         return respuesta;
                     }
                 }
@@ -43,12 +52,11 @@ namespace PMMX.Seguridad.Servicios
             }
 
         }
-
-
+        
         public RespuestaServicio<UserView> GetUser(LoginModel login)
         {
             RespuestaServicio<UserView> respuesta = new RespuestaServicio<UserView>();
-            var user = db.Users
+            var user = _context.Users
                 .Where(x => x.Email == login.Email && x.Password == login.Password)
                 .Select(u => new UserView
                 {

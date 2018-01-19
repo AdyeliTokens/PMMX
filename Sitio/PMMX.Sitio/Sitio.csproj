@@ -305,6 +305,8 @@
     <Compile Include="Areas\Operaciones\Controllers\JustDoItController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\MantenimientoController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\MarcasController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\ObjetivosCRRController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\ObjetivosPlanAttainmentController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\ObjetivosVQIController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\StatusController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\StatusVentanaController.cs" />
@@ -8004,6 +8006,16 @@
     <Content Include="Areas\Operaciones\Views\VolumenesDeProduccion\Details.cshtml" />
     <Content Include="Areas\Operaciones\Views\VolumenesDeProduccion\Edit.cshtml" />
     <Content Include="Areas\Operaciones\Views\VolumenesDeProduccion\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ObjetivosCRR\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ObjetivosCRR\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ObjetivosCRR\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ObjetivosCRR\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ObjetivosCRR\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ObjetivosPlanAttainment\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ObjetivosPlanAttainment\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ObjetivosPlanAttainment\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ObjetivosPlanAttainment\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ObjetivosPlanAttainment\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">

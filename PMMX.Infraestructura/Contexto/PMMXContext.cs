@@ -74,6 +74,8 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new BussinesUnitMap());
             modelBuilder.Configurations.Add(new TiempoDeParoMap());
             modelBuilder.Configurations.Add(new ObjetivoVQIMap());
+            modelBuilder.Configurations.Add(new ObjetivoCRRMap());
+            modelBuilder.Configurations.Add(new ObjetivoPlanAttainmentMap());
             modelBuilder.Configurations.Add(new DesperdicioMap());
             modelBuilder.Configurations.Add(new MarcaMap());
             modelBuilder.Configurations.Add(new ModuloSeccionMap());
@@ -167,6 +169,8 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<TiempoDeParo> TiemposDeParo { get; set; }
         public DbSet<ModuloSeccion> ModuloSeccion { get; set; }
         public DbSet<ObjetivoVQI> ObjetivosVQI { get; set; }
+        public DbSet<ObjetivoCRR> ObjetivosCRR { get; set; }
+        public DbSet<ObjetivoPlanAttainment> ObjetivosPlanAttainment { get; set; }
         public DbSet<Desperdicio> Desperdicios { get; set; }
         public DbSet<Marca> Marcas { get; set; }
         public DbSet<Horario> Horarios { get; set; }

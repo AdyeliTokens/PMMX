@@ -7,7 +7,7 @@ using PMMX.Modelo.Account;
 using Sitio.Helpers;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.Owin;
-
+using PMMX.Infraestructura.Contexto;
 
 namespace Sitio.Areas.Apis.Controllers
 {
@@ -23,26 +23,21 @@ namespace Sitio.Areas.Apis.Controllers
                 return BadRequest(ModelState);
             }
 
-            AccountService servicio = new AccountService(  );
-            LoginModel model = new LoginModel() { Email = Email , Password = Password , Llave = Llave };
+            AccountService servicio = new AccountService();
+            LoginModel model = new LoginModel() { Email = Email, Password = Password, Llave = Llave };
             var respuesta = await servicio.Login(model);
             return Ok(respuesta.Respuesta);
         }
 
         [HttpPost]
-        [ResponseType(typeof(UserView))]
+        [ResponseType(typeof(RespuestaServicio<UserView>))]
         public IHttpActionResult PostLogin(LoginModel login)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             AccountServicio servicio = new AccountServicio();
             RespuestaServicio<UserView> respuesta = new RespuestaServicio<UserView>();
             respuesta = servicio.Login(login);
 
-            return Ok(respuesta.Respuesta);
+            return Ok(respuesta);
 
         }
 

@@ -1,4 +1,4 @@
-﻿using PMMX.Modelo.Entidades;
+﻿using PMMX.Modelo.Entidades.Maquinaria;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -8,30 +8,29 @@ using System.Threading.Tasks;
 
 namespace PMMX.Modelo.Map
 {
-
-    public class MarcaMap : EntityTypeConfiguration<Marca>
+    
+    public class ObjetivoCRRMap : EntityTypeConfiguration<ObjetivoCRR>
     {
-        public MarcaMap()
+        public ObjetivoCRRMap()
         {
             #region Propiedades
-            ToTable("Marcas");
+            ToTable("objetivoCRR");
             HasKey(c => c.Id);
             Property(c => c.Id).HasColumnName("Id");
-            Property(c => c.Nombre).HasColumnName("Nombre");
-            Property(c => c.Codigo).HasColumnName("Codigo");
-            Property(c => c.PesoPorCigarrillo).HasColumnName("Peso");
-            Property(c => c.Activo).HasColumnName("Activo");
+            Property(c => c.IdWorkCenter).HasColumnName("IdWorkCenter");
+            Property(c => c.Objetivo).HasColumnName("Objetivo");
+            Property(c => c.FechaInicial).HasColumnName("FechaInicial");
             #endregion
 
             #region HasMany
-            HasMany(c => c.Desperdicios).WithRequired(x => x.MarcaDelCigarrillo).HasForeignKey(c => c.IdMarca);
+
             #endregion
 
             #region HasOptional
             #endregion
 
             #region HasRequired
-
+            HasRequired(c => c.WorkCenter).WithMany(x => x.ObjetivosCRR).HasForeignKey(c => c.IdWorkCenter);
             #endregion
 
 
