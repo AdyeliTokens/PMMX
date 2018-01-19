@@ -267,7 +267,7 @@
     <Compile Include="Areas\Apis\Controllers\VentanaController.cs" />
     <Compile Include="Areas\Apis\Controllers\VQIController.cs" />
     <Compile Include="Areas\Apis\Controllers\NoConformidadesController.cs" />
-    <Compile Include="Areas\Apis\Controllers\StatusController.cs" />
+    <Compile Include="Areas\Apis\Controllers\EstatusController.cs" />
     <Compile Include="Areas\Apis\Controllers\StatusVentanaController.cs" />
     <Compile Include="Areas\Cuestionario\Controllers\WebApiConfig.cs" />
     <Compile Include="Areas\Apis\Controllers\OrigenRespuestaController.cs" />
@@ -7990,11 +7990,11 @@
     <Content Include="Areas\Operaciones\Views\Desperdicios\Details.cshtml" />
     <Content Include="Areas\Operaciones\Views\Desperdicios\Edit.cshtml" />
     <Content Include="Areas\Operaciones\Views\Desperdicios\Index.cshtml" />
-    <Content Include="Areas\Operaciones\Views\Status\Create.cshtml" />
-    <Content Include="Areas\Operaciones\Views\Status\Delete.cshtml" />
-    <Content Include="Areas\Operaciones\Views\Status\Details.cshtml" />
-    <Content Include="Areas\Operaciones\Views\Status\Edit.cshtml" />
-    <Content Include="Areas\Operaciones\Views\Status\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Estatus\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Estatus\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Estatus\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Estatus\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Estatus\Index.cshtml" />
     <Content Include="Areas\Operaciones\Views\StatusVentana\Create.cshtml" />
     <Content Include="Areas\Operaciones\Views\StatusVentana\Delete.cshtml" />
     <Content Include="Areas\Operaciones\Views\StatusVentana\Details.cshtml" />
