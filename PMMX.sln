@@ -35,6 +35,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WareHouse", "WareHouse", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMMX.WareHouseTests", "WareHouse\PMMX.WareHouseTests\PMMX.WareHouseTests.csproj", "{89700C50-38C1-4B32-80A1-63762F0C7234}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMMX.MultimediaTests", "Multimedia\PMMX.MultimediaTests\PMMX.MultimediaTests.csproj", "{4CA49F83-588A-4F26-8BC2-6F97CD30F42C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{89700C50-38C1-4B32-80A1-63762F0C7234}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89700C50-38C1-4B32-80A1-63762F0C7234}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89700C50-38C1-4B32-80A1-63762F0C7234}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CA49F83-588A-4F26-8BC2-6F97CD30F42C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CA49F83-588A-4F26-8BC2-6F97CD30F42C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CA49F83-588A-4F26-8BC2-6F97CD30F42C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CA49F83-588A-4F26-8BC2-6F97CD30F42C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,5 +105,6 @@ Global
 		{E6523638-C794-4570-BC8F-87309ECAAA3B} = {85D2B293-20E4-4136-924A-F775C6A2B47D}
 		{B089CAD5-4515-475E-862E-F3A9641F66A4} = {73517B94-DF65-4C80-80D0-0236B96D8693}
 		{89700C50-38C1-4B32-80A1-63762F0C7234} = {73517B94-DF65-4C80-80D0-0236B96D8693}
+		{4CA49F83-588A-4F26-8BC2-6F97CD30F42C} = {85D2B293-20E4-4136-924A-F775C6A2B47D}
 	EndGlobalSection
 EndGlobal
