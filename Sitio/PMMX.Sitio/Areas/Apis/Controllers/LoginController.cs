@@ -26,9 +26,7 @@ namespace Sitio.Areas.Apis.Controllers
             AccountService servicio = new AccountService();
             LoginModel model = new LoginModel() { Email = Email, Password = Password, Llave = Llave };
             var respuesta = await servicio.Login(model);
-
             return Ok(respuesta.Respuesta);
-
         }
 
         [HttpPost]
