@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PMMX.Modelo.Entidades.Operaciones;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,12 +11,13 @@ namespace PMMX.Modelo.Entidades.Warehouse
     {
         #region Propiedades
         public int Id { get; set; }
+        public int IdStatus { get; set; }
         public string Nombre { get; set; }
-        public string NombreCorto { get; set; }
         public bool Activo { get; set; }
         #endregion
 
         #region Navegacion
+        public Estatus Estatus { get; set; }
         #endregion
     }
 }

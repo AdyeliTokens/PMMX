@@ -13,11 +13,11 @@ namespace PMMX.Modelo.Map
         public ActividadEnVentanaMap()
         {
             #region Propiedades
-            ToTable("ActividadEnVentana");
+            ToTable("Rechazos");
             HasKey(c => c.Id);
             Property(c => c.Id).HasColumnName("Id");
+            Property(c => c.IdStatus).HasColumnName("IdStatus");
             Property(c => c.Nombre).HasColumnName("Nombre");
-            Property(c => c.NombreCorto).HasColumnName("NombreCorto");
             Property(c => c.Activo).HasColumnName("Activo");
             #endregion
 
@@ -28,6 +28,7 @@ namespace PMMX.Modelo.Map
             #endregion
 
             #region HasRequired
+            this.HasRequired(x => x.Estatus).WithMany(c => c.ActividadEnVentana);
             #endregion
         }
     }
