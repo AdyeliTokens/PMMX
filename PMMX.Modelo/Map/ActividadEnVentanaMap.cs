@@ -8,7 +8,7 @@ using System.Web;
 
 namespace PMMX.Modelo.Map
 {
-    public class ActividadEnVentanaMap : EntityTypeConfiguration<ActividadEnVentana>
+    public class ActividadEnVentanaMap : EntityTypeConfiguration<Rechazos>
     {
         public ActividadEnVentanaMap()
         {
@@ -28,7 +28,7 @@ namespace PMMX.Modelo.Map
             #endregion
 
             #region HasRequired
-            this.HasRequired(x => x.Estatus).WithMany(c => c.ActividadEnVentana);
+            this.HasRequired(x => x.Estatus).WithMany(c => c.Rechazos);
             #endregion
         }
     }

@@ -214,7 +214,7 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<Mantenimiento> Mantenimiento { get; set; }
         public DbSet<JustDoIt> JustDoIt { get; set; }
         public DbSet<RequisicionDeDescarga> RequisicionDeDescargas { get; set; }
-        public DbSet<ActividadEnVentana> ActividadEnVentana { get; set; }
+        public DbSet<Rechazos> Rechazos { get; set; }
         public DbSet<BitacoraVentana> BitacoraVentana { get; set; }
         public DbSet<Carrier> Carrier { get; set; }
         public DbSet<Locacion> Locacion { get; set; }

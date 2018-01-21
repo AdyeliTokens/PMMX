@@ -44,7 +44,7 @@ namespace Sitio.Areas.Warehouse.Controllers
         public ActionResult Create()
         {
             ViewBag.IdVentana = new SelectList(db.Ventana.Select(x => new { Id = x.Id, PO = x.PO }).OrderBy(x => x.PO), "Id", "PO");
-            ViewBag.IdActividadVentana = new SelectList(db.ActividadEnVentana.Select(x => new { Id = x.Id, Nombre = x.Nombre}).OrderBy(x => x.Nombre), "Id", "Nombre");
+            ViewBag.IdActividadVentana = new SelectList(db.Rechazos.Select(x => new { Id = x.Id, Nombre = x.Nombre}).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View();
         }
 
@@ -56,7 +56,7 @@ namespace Sitio.Areas.Warehouse.Controllers
         public ActionResult Create(BitacoraVentana bitacoraVentana)
         {
             ViewBag.IdVentana = new SelectList(db.Ventana.Select(x => new { Id = x.Id, PO = x.PO }).OrderBy(x => x.PO), "Id", "PO", bitacoraVentana.IdVentana);
-            ViewBag.IdActividadVentana = new SelectList(db.ActividadEnVentana.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", bitacoraVentana.IdActividadVentana);
+            ViewBag.IdActividadVentana = new SelectList(db.Rechazos.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", bitacoraVentana.IdActividadVentana);
             
             PersonaServicio personaServicio = new PersonaServicio();
             IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());

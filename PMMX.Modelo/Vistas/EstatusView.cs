@@ -22,7 +22,7 @@ namespace PMMX.Modelo.Vistas
         public CategoriaView Categoria { get; set; }
 
         public ICollection<StatusVentanaView> StatusVentana { get; set; }
-        public ICollection<ActividadEnVentana> ActividadEnVentana { get; set; }
+        public ICollection<Rechazos> Rechazos { get; set; }
         #endregion
     }
 }

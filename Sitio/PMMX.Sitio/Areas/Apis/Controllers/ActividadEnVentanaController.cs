@@ -17,40 +17,40 @@ namespace Sitio.Areas.Apis.Controllers
     {
         private PMMXContext db = new PMMXContext();
 
-        // GET: api/ActividadEnVentana
-        public IQueryable<ActividadEnVentana> GetActividadEnVentana()
+        // GET: api/Rechazos
+        public IQueryable<Rechazos> GetActividadEnVentana()
         {
-            return db.ActividadEnVentana;
+            return db.Rechazos;
         }
 
-        // GET: api/ActividadEnVentana/5
-        [ResponseType(typeof(ActividadEnVentana))]
+        // GET: api/Rechazos/5
+        [ResponseType(typeof(Rechazos))]
         public IHttpActionResult GetActividadEnVentana(int id)
         {
-            ActividadEnVentana actividadEnVentana = db.ActividadEnVentana.Find(id);
-            if (actividadEnVentana == null)
+            Rechazos Rechazos = db.Rechazos.Find(id);
+            if (Rechazos == null)
             {
                 return NotFound();
             }
 
-            return Ok(actividadEnVentana);
+            return Ok(Rechazos);
         }
 
-        // PUT: api/ActividadEnVentana/5
+        // PUT: api/Rechazos/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutActividadEnVentana(int id, ActividadEnVentana actividadEnVentana)
+        public IHttpActionResult PutActividadEnVentana(int id, Rechazos Rechazos)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != actividadEnVentana.Id)
+            if (id != Rechazos.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(actividadEnVentana).State = EntityState.Modified;
+            db.Entry(Rechazos).State = EntityState.Modified;
 
             try
             {
@@ -71,35 +71,35 @@ namespace Sitio.Areas.Apis.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/ActividadEnVentana
-        [ResponseType(typeof(ActividadEnVentana))]
-        public IHttpActionResult PostActividadEnVentana(ActividadEnVentana actividadEnVentana)
+        // POST: api/Rechazos
+        [ResponseType(typeof(Rechazos))]
+        public IHttpActionResult PostActividadEnVentana(Rechazos Rechazos)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.ActividadEnVentana.Add(actividadEnVentana);
+            db.Rechazos.Add(Rechazos);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = actividadEnVentana.Id }, actividadEnVentana);
+            return CreatedAtRoute("DefaultApi", new { id = Rechazos.Id }, Rechazos);
         }
 
-        // DELETE: api/ActividadEnVentana/5
-        [ResponseType(typeof(ActividadEnVentana))]
+        // DELETE: api/Rechazos/5
+        [ResponseType(typeof(Rechazos))]
         public IHttpActionResult DeleteActividadEnVentana(int id)
         {
-            ActividadEnVentana actividadEnVentana = db.ActividadEnVentana.Find(id);
-            if (actividadEnVentana == null)
+            Rechazos Rechazos = db.Rechazos.Find(id);
+            if (Rechazos == null)
             {
                 return NotFound();
             }
 
-            db.ActividadEnVentana.Remove(actividadEnVentana);
+            db.Rechazos.Remove(Rechazos);
             db.SaveChanges();
 
-            return Ok(actividadEnVentana);
+            return Ok(Rechazos);
         }
 
         protected override void Dispose(bool disposing)
@@ -113,7 +113,7 @@ namespace Sitio.Areas.Apis.Controllers
 
         private bool ActividadEnVentanaExists(int id)
         {
-            return db.ActividadEnVentana.Count(e => e.Id == id) > 0;
+            return db.Rechazos.Count(e => e.Id == id) > 0;
         }
     }
 }
