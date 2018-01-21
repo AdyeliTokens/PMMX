@@ -23,6 +23,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public Categoria Categoria { get; set; }
         public ICollection<StatusVentana> StatusVentana { get; set; }
         public ICollection<Rechazo> Rechazo { get; set; }
+        public ICollection<BitacoraVentana> BitacoraVentana { get; set; }
         #endregion
     }
 }

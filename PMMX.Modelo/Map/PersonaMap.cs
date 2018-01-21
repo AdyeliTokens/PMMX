@@ -62,6 +62,7 @@ namespace PMMX.Modelo.Map
             HasMany(c => c.EventoResponsable).WithRequired(b => b.Responsable).HasForeignKey(c => c.IdResponsable);
             HasMany(c => c.EventosReportados).WithRequired(b => b.Asignador).HasForeignKey(c => c.IdAsignador);
             HasMany(c => c.StatusVentana).WithRequired(b => b.Responsable).HasForeignKey(c => c.IdResponsable);
+            HasMany(c => c.BitacoraVentana).WithRequired(b => b.Responsable).HasForeignKey(c => c.IdResponsable);
             #endregion
 
             #region HasRequired

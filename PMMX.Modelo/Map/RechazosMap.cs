@@ -22,6 +22,7 @@ namespace PMMX.Modelo.Map
             #endregion
 
             #region HasMany
+            this.HasMany(x => x.BitacoraVentana).WithRequired(c => c.Rechazo).HasForeignKey(x => x.IdRechazo);
             #endregion
 
             #region HasOptional

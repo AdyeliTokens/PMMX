@@ -56,7 +56,7 @@ namespace Sitio.Areas.Warehouse.Controllers
         public ActionResult Create(BitacoraVentana bitacoraVentana)
         {
             ViewBag.IdVentana = new SelectList(db.Ventana.Select(x => new { Id = x.Id, PO = x.PO }).OrderBy(x => x.PO), "Id", "PO", bitacoraVentana.IdVentana);
-            ViewBag.IdActividadVentana = new SelectList(db.Rechazo.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", bitacoraVentana.IdActividadVentana);
+            ViewBag.IdRechazo = new SelectList(db.Rechazo.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", bitacoraVentana.IdRechazo);
             
             PersonaServicio personaServicio = new PersonaServicio();
             IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());

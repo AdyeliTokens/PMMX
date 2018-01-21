@@ -23,6 +23,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
             #region HasMany
             this.HasMany(c => c.StatusVentana).WithRequired(x => x.Status).HasForeignKey(c => c.IdStatus);
             this.HasMany(c => c.Rechazo).WithRequired(x => x.Estatus).HasForeignKey(c => c.IdStatus);
+            this.HasMany(c => c.BitacoraVentana).WithRequired(x => x.Estatus).HasForeignKey(c => c.IdStatus);
             #endregion
 
             #region HasOptional
