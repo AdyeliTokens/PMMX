@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PMMX.Modelo.Entidades.Warehouse
 {
-    public class Rechazos
+    public class Rechazo
     {
         #region Propiedades
         public int Id { get; set; }

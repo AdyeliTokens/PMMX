@@ -13,44 +13,44 @@ using PMMX.Modelo.Entidades.Warehouse;
 
 namespace Sitio.Areas.Apis.Controllers
 {
-    public class ActividadEnVentanaController : ApiController
+    public class RechazoController : ApiController
     {
         private PMMXContext db = new PMMXContext();
 
-        // GET: api/Rechazos
-        public IQueryable<Rechazos> GetActividadEnVentana()
+        // GET: api/Rechazo
+        public IQueryable<Rechazo> GetRechazo()
         {
-            return db.Rechazos;
+            return db.Rechazo;
         }
 
-        // GET: api/Rechazos/5
-        [ResponseType(typeof(Rechazos))]
-        public IHttpActionResult GetActividadEnVentana(int id)
+        // GET: api/Rechazo/5
+        [ResponseType(typeof(Rechazo))]
+        public IHttpActionResult GetRechazo(int id)
         {
-            Rechazos Rechazos = db.Rechazos.Find(id);
-            if (Rechazos == null)
+            Rechazo Rechazo = db.Rechazo.Find(id);
+            if (Rechazo == null)
             {
                 return NotFound();
             }
 
-            return Ok(Rechazos);
+            return Ok(Rechazo);
         }
 
-        // PUT: api/Rechazos/5
+        // PUT: api/Rechazo/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutActividadEnVentana(int id, Rechazos Rechazos)
+        public IHttpActionResult PutRechazo(int id, Rechazo Rechazo)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != Rechazos.Id)
+            if (id != Rechazo.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(Rechazos).State = EntityState.Modified;
+            db.Entry(Rechazo).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +58,7 @@ namespace Sitio.Areas.Apis.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ActividadEnVentanaExists(id))
+                if (!RechazoExists(id))
                 {
                     return NotFound();
                 }
@@ -71,35 +71,35 @@ namespace Sitio.Areas.Apis.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Rechazos
-        [ResponseType(typeof(Rechazos))]
-        public IHttpActionResult PostActividadEnVentana(Rechazos Rechazos)
+        // POST: api/Rechazo
+        [ResponseType(typeof(Rechazo))]
+        public IHttpActionResult PostRechazo(Rechazo Rechazo)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Rechazos.Add(Rechazos);
+            db.Rechazo.Add(Rechazo);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = Rechazos.Id }, Rechazos);
+            return CreatedAtRoute("DefaultApi", new { id = Rechazo.Id }, Rechazo);
         }
 
-        // DELETE: api/Rechazos/5
-        [ResponseType(typeof(Rechazos))]
-        public IHttpActionResult DeleteActividadEnVentana(int id)
+        // DELETE: api/Rechazo/5
+        [ResponseType(typeof(Rechazo))]
+        public IHttpActionResult DeleteRechazo(int id)
         {
-            Rechazos Rechazos = db.Rechazos.Find(id);
-            if (Rechazos == null)
+            Rechazo Rechazo = db.Rechazo.Find(id);
+            if (Rechazo == null)
             {
                 return NotFound();
             }
 
-            db.Rechazos.Remove(Rechazos);
+            db.Rechazo.Remove(Rechazo);
             db.SaveChanges();
 
-            return Ok(Rechazos);
+            return Ok(Rechazo);
         }
 
         protected override void Dispose(bool disposing)
@@ -111,9 +111,9 @@ namespace Sitio.Areas.Apis.Controllers
             base.Dispose(disposing);
         }
 
-        private bool ActividadEnVentanaExists(int id)
+        private bool RechazoExists(int id)
         {
-            return db.Rechazos.Count(e => e.Id == id) > 0;
+            return db.Rechazo.Count(e => e.Id == id) > 0;
         }
     }
 }

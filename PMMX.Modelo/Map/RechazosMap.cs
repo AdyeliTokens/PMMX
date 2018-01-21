@@ -8,9 +8,9 @@ using System.Web;
 
 namespace PMMX.Modelo.Map
 {
-    public class ActividadEnVentanaMap : EntityTypeConfiguration<Rechazos>
+    public class RechazosMap : EntityTypeConfiguration<Rechazo>
     {
-        public ActividadEnVentanaMap()
+        public RechazosMap()
         {
             #region Propiedades
             ToTable("Rechazos");
@@ -28,7 +28,7 @@ namespace PMMX.Modelo.Map
             #endregion
 
             #region HasRequired
-            this.HasRequired(x => x.Estatus).WithMany(c => c.Rechazos);
+            this.HasRequired(x => x.Estatus).WithMany(c => c.Rechazo);
             #endregion
         }
     }

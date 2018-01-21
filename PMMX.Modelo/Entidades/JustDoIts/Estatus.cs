@@ -22,7 +22,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         #region Navegacion
         public Categoria Categoria { get; set; }
         public ICollection<StatusVentana> StatusVentana { get; set; }
-        public ICollection<Rechazos> Rechazos { get; set; }
+        public ICollection<Rechazo> Rechazo { get; set; }
         #endregion
     }
 }

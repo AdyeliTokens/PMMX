@@ -11,107 +11,107 @@ using PMMX.Modelo.Entidades.Warehouse;
 
 namespace Sitio.Areas.Warehouse.Controllers
 {
-    public class ActividadEnVentanaController : Controller
+    public class RechazoController : Controller
     {
         private PMMXContext db = new PMMXContext();
 
-        // GET: Warehouse/Rechazos
+        // GET: Warehouse/Rechazo
         public ActionResult Index()
         {
-            return View(db.Rechazos.ToList());
+            return View(db.Rechazo.ToList());
         }
 
-        // GET: Warehouse/Rechazos/Details/5
+        // GET: Warehouse/Rechazo/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rechazos Rechazos = db.Rechazos.Find(id);
-            if (Rechazos == null)
+            Rechazo Rechazo = db.Rechazo.Find(id);
+            if (Rechazo == null)
             {
                 return HttpNotFound();
             }
-            return View(Rechazos);
+            return View(Rechazo);
         }
 
-        // GET: Warehouse/Rechazos/Create
+        // GET: Warehouse/Rechazo/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Warehouse/Rechazos/Create
+        // POST: Warehouse/Rechazo/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nombre,NombreCorto,Activo")] Rechazos Rechazos)
+        public ActionResult Create([Bind(Include = "Id,Nombre,NombreCorto,Activo")] Rechazo Rechazo)
         {
             if (ModelState.IsValid)
             {
-                db.Rechazos.Add(Rechazos);
+                db.Rechazo.Add(Rechazo);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(Rechazos);
+            return View(Rechazo);
         }
 
-        // GET: Warehouse/Rechazos/Edit/5
+        // GET: Warehouse/Rechazo/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rechazos Rechazos = db.Rechazos.Find(id);
-            if (Rechazos == null)
+            Rechazo Rechazo = db.Rechazo.Find(id);
+            if (Rechazo == null)
             {
                 return HttpNotFound();
             }
-            return View(Rechazos);
+            return View(Rechazo);
         }
 
-        // POST: Warehouse/Rechazos/Edit/5
+        // POST: Warehouse/Rechazo/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nombre,NombreCorto,Activo")] Rechazos Rechazos)
+        public ActionResult Edit([Bind(Include = "Id,Nombre,NombreCorto,Activo")] Rechazo Rechazo)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(Rechazos).State = EntityState.Modified;
+                db.Entry(Rechazo).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(Rechazos);
+            return View(Rechazo);
         }
 
-        // GET: Warehouse/Rechazos/Delete/5
+        // GET: Warehouse/Rechazo/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rechazos Rechazos = db.Rechazos.Find(id);
-            if (Rechazos == null)
+            Rechazo Rechazo = db.Rechazo.Find(id);
+            if (Rechazo == null)
             {
                 return HttpNotFound();
             }
-            return View(Rechazos);
+            return View(Rechazo);
         }
 
-        // POST: Warehouse/Rechazos/Delete/5
+        // POST: Warehouse/Rechazo/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Rechazos Rechazos = db.Rechazos.Find(id);
-            db.Rechazos.Remove(Rechazos);
+            Rechazo Rechazo = db.Rechazo.Find(id);
+            db.Rechazo.Remove(Rechazo);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
