@@ -16,7 +16,7 @@ using PMMX.Modelo.Entidades;
 using Sitio.Helpers;
 using PMMX.Seguridad.Servicios;
 
-namespace Sitio.Areas.Apis.Controllers
+namespace Sitio.Areas.Apis.Controllers.Operaciones
 {
     public class ParoController : ApiController
     {
@@ -645,6 +645,7 @@ namespace Sitio.Areas.Apis.Controllers
             actividades.Add(new ActividadEnParo { Fecha = DateTime.Now, Descripcion = "Reporte de Paro", IdPersona = paro.IdReportador });
             List<TiempoDeParo> tiempoDeParo = new List<TiempoDeParo>();
             tiempoDeParo.Add(new TiempoDeParo { Inicio = DateTime.Now });
+            paro.ActividadesEnParo = actividades;
             paro.TiemposDeParo = tiempoDeParo;
 
 
