@@ -42,6 +42,7 @@ namespace PMMX.Modelo.Entidades.Warehouse
         public SubCategoria SubCategoria { get; set; }
 
         public ICollection<StatusVentana> StatusVentana { get; set; }
+        public ICollection<BitacoraVentana> BitacoraVentana { get; set; }
         #endregion 
     }
 }

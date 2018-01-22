@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PMMX.Modelo.Entidades.Warehouse.ActividadEnVentana>
+﻿@model IEnumerable<PMMX.Modelo.Entidades.Warehouse.Rechazo>
 
 @{
     ViewBag.Title = "Index";
@@ -35,9 +35,6 @@
                                 @Html.DisplayNameFor(model => model.Nombre)
                             </th>
                             <th style="width:20%">
-                                @Html.DisplayNameFor(model => model.NombreCorto)
-                            </th>
-                            <th style="width:20%">
                                 @Html.DisplayNameFor(model => model.Activo)
                             </th>
                             <th style="width:10%"></th>
@@ -54,9 +51,6 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Nombre)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.NombreCorto)
                                 </td>
                                 <td>
                                     @Html.CheckBoxFor(modelItem => item.Activo)

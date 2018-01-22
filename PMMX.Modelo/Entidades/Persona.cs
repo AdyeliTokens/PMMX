@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using PMMX.Modelo.Entidades.JustDoIts;
+using PMMX.Modelo.Entidades.Warehouse;
 
 namespace PMMX.Modelo.Entidades
 {
@@ -68,6 +69,7 @@ namespace PMMX.Modelo.Entidades
         public ICollection<VolumenDeProduccion> VolumenReportado { get; set; }
 
         public List<StatusVentana> StatusVentana { get; set; }
+        public List<BitacoraVentana> BitacoraVentana { get; set; }
         #endregion
 
     }

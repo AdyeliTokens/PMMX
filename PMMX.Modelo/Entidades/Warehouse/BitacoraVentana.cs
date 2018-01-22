@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PMMX.Modelo.Entidades.Operaciones;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,14 +12,19 @@ namespace PMMX.Modelo.Entidades.Warehouse
         #region Propiedades
         public int Id { get; set; }
         public int IdVentana { get; set; }
-        public DateTime Fecha { get; set; }
+        public int IdStatus { get; set; }
         public int IdResponsable { get; set; }
+        public int IdRechazo { get; set; }
+        public DateTime Fecha { get; set; }
         public string Comentarios { get; set; }
-        public int IdActividadVentana { get; set; }
         public bool Activo { get; set; }
         #endregion
 
         #region Navegacion
+        public Estatus Estatus { get; set; }
+        public Ventana Ventana { get; set; }
+        public Persona Responsable { get; set; }
+        public Rechazo Rechazo { get; set; }
         #endregion
     }
 }

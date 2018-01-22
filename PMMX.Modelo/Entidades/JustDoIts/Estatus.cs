@@ -16,13 +16,14 @@ namespace PMMX.Modelo.Entidades.Operaciones
         #region Propiedades
         public int Id { get; set; }
         public string Nombre { get; set; }
-        public string NombreCorto { get; set; }
         public int IdCategoria { get; set; }
         public bool Activo { get; set; }
         #endregion
         #region Navegacion
         public Categoria Categoria { get; set; }
         public ICollection<StatusVentana> StatusVentana { get; set; }
+        public ICollection<Rechazo> Rechazo { get; set; }
+        public ICollection<BitacoraVentana> BitacoraVentana { get; set; }
         #endregion
     }
 }

@@ -231,7 +231,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Areas\Apis\Controllers\ActividadEnVentanaController.cs" />
+    <Compile Include="Areas\Apis\Controllers\RechazoController.cs" />
     <Compile Include="Areas\Apis\Controllers\AreaController.cs" />
     <Compile Include="Areas\Apis\Controllers\BitacoraVentanaController.cs" />
     <Compile Include="Areas\Apis\Controllers\CarrierController.cs" />
@@ -308,7 +308,7 @@
     <Compile Include="Areas\Operaciones\Controllers\ObjetivosCRRController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\ObjetivosPlanAttainmentController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\ObjetivosVQIController.cs" />
-    <Compile Include="Areas\Operaciones\Controllers\StatusController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\EstatusController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\StatusVentanaController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\SubCategoriaController.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
@@ -369,7 +369,7 @@
     <Compile Include="Areas\Seguridad\Controllers\UsuariosController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\UsuariosPorPersonasController.cs" />
     <Compile Include="Areas\Seguridad\SeguridadAreaRegistration.cs" />
-    <Compile Include="Areas\Warehouse\Controllers\ActividadEnVentanaController.cs" />
+    <Compile Include="Areas\Warehouse\Controllers\RechazoController.cs" />
     <Compile Include="Areas\Warehouse\Controllers\BitacoraVentanaController.cs" />
     <Compile Include="Areas\Warehouse\Controllers\CarrierController.cs" />
     <Compile Include="Areas\Warehouse\Controllers\LocacionController.cs" />
@@ -7897,11 +7897,11 @@
     <Content Include="Areas\Operaciones\Views\NoConformidades\Index.cshtml" />
     <Content Include="Areas\Operaciones\Views\Area\Index.cshtml" />
     <Content Include="Areas\Warehouse\Views\web.config" />
-    <Content Include="Areas\Warehouse\Views\ActividadEnVentana\Create.cshtml" />
-    <Content Include="Areas\Warehouse\Views\ActividadEnVentana\Delete.cshtml" />
-    <Content Include="Areas\Warehouse\Views\ActividadEnVentana\Details.cshtml" />
-    <Content Include="Areas\Warehouse\Views\ActividadEnVentana\Edit.cshtml" />
-    <Content Include="Areas\Warehouse\Views\ActividadEnVentana\Index.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Rechazo\Create.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Rechazo\Delete.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Rechazo\Details.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Rechazo\Edit.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Rechazo\Index.cshtml" />
     <Content Include="Areas\Warehouse\Views\BitacoraVentana\Create.cshtml" />
     <Content Include="Areas\Warehouse\Views\BitacoraVentana\Delete.cshtml" />
     <Content Include="Areas\Warehouse\Views\BitacoraVentana\Details.cshtml" />

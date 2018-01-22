@@ -125,7 +125,7 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new MantenimientoMap());
             modelBuilder.Configurations.Add(new JustDoItMap());
             modelBuilder.Configurations.Add(new RequisicionDeDescargaMap());
-            modelBuilder.Configurations.Add(new ActividadEnVentanaMap());
+            modelBuilder.Configurations.Add(new RechazosMap());
             modelBuilder.Configurations.Add(new BitacoraVentanaMap());
             modelBuilder.Configurations.Add(new CarrierMap());
             modelBuilder.Configurations.Add(new LocacionMap());
@@ -214,7 +214,7 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<Mantenimiento> Mantenimiento { get; set; }
         public DbSet<JustDoIt> JustDoIt { get; set; }
         public DbSet<RequisicionDeDescarga> RequisicionDeDescargas { get; set; }
-        public DbSet<ActividadEnVentana> ActividadEnVentana { get; set; }
+        public DbSet<Rechazo> Rechazo { get; set; }
         public DbSet<BitacoraVentana> BitacoraVentana { get; set; }
         public DbSet<Carrier> Carrier { get; set; }
         public DbSet<Locacion> Locacion { get; set; }

@@ -7,111 +7,115 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PMMX.Infraestructura.Contexto;
-using PMMX.Modelo.Entidades.Warehouse;
+using PMMX.Modelo.Entidades.Operaciones;
 
-namespace Sitio.Areas.Warehouse.Controllers
+namespace Sitio.Areas.Operaciones.Controllers
 {
-    public class ActividadEnVentanaController : Controller
+    public class EstatusController : Controller
     {
         private PMMXContext db = new PMMXContext();
 
-        // GET: Warehouse/ActividadEnVentana
+        // GET: Operaciones/Estatus
         public ActionResult Index()
         {
-            return View(db.ActividadEnVentana.ToList());
+            return View(db.Estatus.ToList());
         }
 
-        // GET: Warehouse/ActividadEnVentana/Details/5
+        // GET: Operaciones/Estatus/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ActividadEnVentana actividadEnVentana = db.ActividadEnVentana.Find(id);
-            if (actividadEnVentana == null)
+            Estatus Estatus = db.Estatus.Where(x => (x.Id == id)).Include(x => x.Categoria).FirstOrDefault();
+            if (Estatus == null)
             {
                 return HttpNotFound();
             }
-            return View(actividadEnVentana);
+            return View(Estatus);
         }
 
-        // GET: Warehouse/ActividadEnVentana/Create
+        // GET: Operaciones/Estatus/Create
         public ActionResult Create()
         {
+            ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View();
         }
 
-        // POST: Warehouse/ActividadEnVentana/Create
+        // POST: Operaciones/Estatus/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nombre,NombreCorto,Activo")] ActividadEnVentana actividadEnVentana)
+        public ActionResult Create(Estatus Estatus)
         {
             if (ModelState.IsValid)
             {
-                db.ActividadEnVentana.Add(actividadEnVentana);
+                db.Estatus.Add(Estatus);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            return View(actividadEnVentana);
+            ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
+            return View(Estatus);
         }
 
-        // GET: Warehouse/ActividadEnVentana/Edit/5
+        // GET: Operaciones/Estatus/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ActividadEnVentana actividadEnVentana = db.ActividadEnVentana.Find(id);
-            if (actividadEnVentana == null)
+            Estatus Estatus = db.Estatus.Where(x=> (x.Id ==id)).Include(x=> x.Categoria).FirstOrDefault();
+            if (Estatus == null)
             {
                 return HttpNotFound();
             }
-            return View(actividadEnVentana);
+            ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", Estatus.IdCategoria);
+            return View(Estatus);
         }
 
-        // POST: Warehouse/ActividadEnVentana/Edit/5
+        // POST: Operaciones/Estatus/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nombre,NombreCorto,Activo")] ActividadEnVentana actividadEnVentana)
+        public ActionResult Edit(Estatus Estatus)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(actividadEnVentana).State = EntityState.Modified;
+                db.Entry(Estatus).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(actividadEnVentana);
+            ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", Estatus.IdCategoria);
+
+            return View(Estatus);
         }
 
-        // GET: Warehouse/ActividadEnVentana/Delete/5
+        // GET: Operaciones/Estatus/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ActividadEnVentana actividadEnVentana = db.ActividadEnVentana.Find(id);
-            if (actividadEnVentana == null)
+            Estatus Estatus = db.Estatus.Where(x => (x.Id == id)).Include(x => x.Categoria).FirstOrDefault();
+            if (Estatus == null)
             {
                 return HttpNotFound();
             }
-            return View(actividadEnVentana);
+            return View(Estatus);
         }
 
-        // POST: Warehouse/ActividadEnVentana/Delete/5
+        // POST: Operaciones/Estatus/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            ActividadEnVentana actividadEnVentana = db.ActividadEnVentana.Find(id);
-            db.ActividadEnVentana.Remove(actividadEnVentana);
+            Estatus Estatus = db.Estatus.Find(id);
+            db.Estatus.Remove(Estatus);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -7,111 +7,111 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PMMX.Infraestructura.Contexto;
-using PMMX.Modelo.Entidades.Operaciones;
+using PMMX.Modelo.Entidades.Warehouse;
 
-namespace Sitio.Areas.Operaciones.Controllers
+namespace Sitio.Areas.Warehouse.Controllers
 {
-    public class EstatusController : Controller
+    public class RechazoController : Controller
     {
         private PMMXContext db = new PMMXContext();
 
-        // GET: Operaciones/Estatus
+        // GET: Warehouse/Rechazo
         public ActionResult Index()
         {
-            return View(db.Estatus.ToList());
+            return View(db.Rechazo.ToList());
         }
 
-        // GET: Operaciones/Estatus/Details/5
+        // GET: Warehouse/Rechazo/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Estatus Estatus = db.Estatus.Find(id);
-            if (Estatus == null)
+            Rechazo Rechazo = db.Rechazo.Find(id);
+            if (Rechazo == null)
             {
                 return HttpNotFound();
             }
-            return View(Estatus);
+            return View(Rechazo);
         }
 
-        // GET: Operaciones/Estatus/Create
+        // GET: Warehouse/Rechazo/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Operaciones/Estatus/Create
+        // POST: Warehouse/Rechazo/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nombre,NombreCorto,Activo")] Estatus Estatus)
+        public ActionResult Create([Bind(Include = "Id,Nombre,NombreCorto,Activo")] Rechazo Rechazo)
         {
             if (ModelState.IsValid)
             {
-                db.Estatus.Add(Estatus);
+                db.Rechazo.Add(Rechazo);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(Estatus);
+            return View(Rechazo);
         }
 
-        // GET: Operaciones/Estatus/Edit/5
+        // GET: Warehouse/Rechazo/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Estatus Estatus = db.Estatus.Find(id);
-            if (Estatus == null)
+            Rechazo Rechazo = db.Rechazo.Find(id);
+            if (Rechazo == null)
             {
                 return HttpNotFound();
             }
-            return View(Estatus);
+            return View(Rechazo);
         }
 
-        // POST: Operaciones/Estatus/Edit/5
+        // POST: Warehouse/Rechazo/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nombre,NombreCorto,Activo")] Estatus Estatus)
+        public ActionResult Edit([Bind(Include = "Id,Nombre,NombreCorto,Activo")] Rechazo Rechazo)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(Estatus).State = EntityState.Modified;
+                db.Entry(Rechazo).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(Estatus);
+            return View(Rechazo);
         }
 
-        // GET: Operaciones/Estatus/Delete/5
+        // GET: Warehouse/Rechazo/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Estatus Estatus = db.Estatus.Find(id);
-            if (Estatus == null)
+            Rechazo Rechazo = db.Rechazo.Find(id);
+            if (Rechazo == null)
             {
                 return HttpNotFound();
             }
-            return View(Estatus);
+            return View(Rechazo);
         }
 
-        // POST: Operaciones/Estatus/Delete/5
+        // POST: Warehouse/Rechazo/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Estatus Estatus = db.Estatus.Find(id);
-            db.Estatus.Remove(Estatus);
+            Rechazo Rechazo = db.Rechazo.Find(id);
+            db.Rechazo.Remove(Rechazo);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
