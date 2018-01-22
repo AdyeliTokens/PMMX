@@ -23,11 +23,9 @@ namespace PMMX.Modelo.Map
             Property(c => c.Apellido2).HasColumnName("Apellido2");
             Property(c => c.IdPuesto).HasColumnName("IdPuesto");
             Property(c => c.Activo).HasColumnName("Activo");
-
             #endregion
 
             #region HasMany
-
             HasMany(c => c.Usuarios).WithRequired(p => p.Persona).HasForeignKey(c => c.IdPersona);
             HasMany(c => c.ParosReportados).WithRequired(p => p.Reportador).HasForeignKey(c => c.IdReportador);
             HasMany(c => c.DefectosReportados).WithRequired(p => p.Reportador).HasForeignKey(c => c.IdReportador);
@@ -41,7 +39,6 @@ namespace PMMX.Modelo.Map
             HasMany(c => c.CelulasPorVigilar).WithRequired(b => b.ShiftLeader).HasForeignKey(c => c.IdShiftLeader);
             HasMany(c => c.Encuestado).WithRequired(b => b.Entrevistado).HasForeignKey(c => c.IdEntrevistado);
             HasMany(c => c.Supervisor).WithRequired(b => b.Supervisor).HasForeignKey(c => c.IdSupervisor);
-            HasMany(c => c.Dispositivos).WithRequired(x => x.Propietario).HasForeignKey(c => c.IdPersona);
             HasMany(c => c.Comentarios).WithRequired(x => x.Comentador).HasForeignKey(c => c.IdComentador);
             HasMany(c => c.MantenimientosAsignados).WithRequired(x => x.Responsable).HasForeignKey(c => c.IdResponsable);
             HasMany(c => c.MantenimientosReportados).WithRequired(x => x.Reportador).HasForeignKey(c => c.IdReportador);
