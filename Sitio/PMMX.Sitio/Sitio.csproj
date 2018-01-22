@@ -231,7 +231,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Areas\Apis\Controllers\BitacoraJustDoItController.cs" />
+    <Compile Include="Areas\Apis\Controllers\BitacoraGembaWalkController.cs" />
     <Compile Include="Areas\Apis\Controllers\RechazoController.cs" />
     <Compile Include="Areas\Apis\Controllers\AreaController.cs" />
     <Compile Include="Areas\Apis\Controllers\BitacoraVentanaController.cs" />
@@ -245,7 +245,7 @@
     <Compile Include="Areas\Apis\Controllers\EventoResponsableController.cs" />
     <Compile Include="Areas\Apis\Controllers\Multimedia\FotosController.cs" />
     <Compile Include="Areas\Apis\Controllers\Operaciones\IndicadoresController.cs" />
-    <Compile Include="Areas\Apis\Controllers\JustDoItController.cs" />
+    <Compile Include="Areas\Apis\Controllers\GembaWalkController.cs" />
     <Compile Include="Areas\Apis\Controllers\InSiteLAC\KPIsController.cs" />
     <Compile Include="Areas\Apis\Controllers\ListaDistribucionController.cs" />
     <Compile Include="Areas\Apis\Controllers\LocacionController.cs" />
@@ -297,7 +297,7 @@
     <Compile Include="Areas\Cuestionario\Controllers\GrupoPreguntasController.cs" />
     <Compile Include="Areas\Cuestionario\Controllers\RespuestasController.cs" />
     <Compile Include="Areas\Cuestionario\CuestionarioAreaRegistration.cs" />
-    <Compile Include="Areas\Operaciones\Controllers\BitacoraJustDoItController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\BitacoraGembaWalkController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\AreaController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\CategoriaController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\DesperdiciosController.cs" />
@@ -306,7 +306,7 @@
     <Compile Include="Areas\Operaciones\Controllers\EventoOrigenController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\EventoResponsableController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\HorariosController.cs" />
-    <Compile Include="Areas\Operaciones\Controllers\JustDoItController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\GembaWalkController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\MantenimientoController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\MarcasController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\ObjetivosCRRController.cs" />
@@ -7865,11 +7865,11 @@
     <Content Include="Areas\Operaciones\Views\Evento\Details.cshtml" />
     <Content Include="Areas\Operaciones\Views\Evento\Edit.cshtml" />
     <Content Include="Areas\Operaciones\Views\Evento\Index.cshtml" />
-    <Content Include="Areas\Operaciones\Views\JustDoIt\Index.cshtml" />
-    <Content Include="Areas\Operaciones\Views\JustDoIt\Details.cshtml" />
-    <Content Include="Areas\Operaciones\Views\JustDoIt\Create.cshtml" />
-    <Content Include="Areas\Operaciones\Views\JustDoIt\Edit.cshtml" />
-    <Content Include="Areas\Operaciones\Views\JustDoIt\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\GembaWalk\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\GembaWalk\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\GembaWalk\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\GembaWalk\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\GembaWalk\Delete.cshtml" />
     <Content Include="Areas\Operaciones\Views\Mantenimiento\Index.cshtml" />
     <Content Include="Areas\Operaciones\Views\Mantenimiento\Details.cshtml" />
     <Content Include="Areas\Operaciones\Views\Mantenimiento\Create.cshtml" />

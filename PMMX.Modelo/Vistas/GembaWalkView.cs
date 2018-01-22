@@ -7,7 +7,7 @@ using System.Web;
 
 namespace PMMX.Modelo.Vistas
 {
-    public class JustDoItView
+    public class GembaWalkView
     {
         #region Propiedades
         public int Id { get; set; }
@@ -35,7 +35,7 @@ namespace PMMX.Modelo.Vistas
         public SubCategoriaView SubCategoria { get; set; }
 
         public List<FotoView> Fotos { get; set; }
-        public ICollection<BitacoraJustDoIt> BitacoraJustDoIt { get; set; }
+        public ICollection<Entidades.Operaciones.BitacoraGembaWalk> BitacoraGembaWalk { get; set; }
         #endregion
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PMMX.Modelo.Entidades.Operaciones.BitacoraJustDoIt>
+﻿@model IEnumerable<PMMX.Modelo.Entidades.Operaciones.BitacoraGembaWalk>
 
 @{
     Layout = null;
@@ -21,7 +21,7 @@
                 @Html.DisplayNameFor(model => model.Estatus.Nombre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.JustDoIt.Descripcion)
+                @Html.DisplayNameFor(model => model.GembaWalk.Descripcion)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Rechazo.Nombre)
@@ -44,7 +44,7 @@
                 @Html.DisplayFor(modelItem => item.Estatus.Nombre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.JustDoIt.Descripcion)
+                @Html.DisplayFor(modelItem => item.GembaWalk.Descripcion)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Rechazo.Nombre)

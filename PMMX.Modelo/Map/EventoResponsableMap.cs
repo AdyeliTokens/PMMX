@@ -1,5 +1,5 @@
 ﻿using PMMX.Modelo.Entidades;
-using PMMX.Modelo.Entidades.JustDoIts;
+using PMMX.Modelo.Entidades.GembaWalks;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;

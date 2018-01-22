@@ -46,12 +46,12 @@ namespace Sitio.Controllers
         }
 
         // GET: FotosJustDoIt
-        public ActionResult JustDoIt(string idJustDoIt)
+        public ActionResult GembaWalk(string IdGembaWalk)
         {
-            int Id = Convert.ToInt32(idJustDoIt);
+            int Id = Convert.ToInt32(IdGembaWalk);
             PMMXContext db = new PMMXContext();
 
-            var fotos = db.JustDoIt.Where(p => p.Id == Id).Select(p => p.Fotos.Where(f => f.Fecha != null)).FirstOrDefault();
+            var fotos = db.GembaWalk.Where(p => p.Id == Id).Select(p => p.Fotos.Where(f => f.Fecha != null)).FirstOrDefault();
 
             string folderName;
             if (fotos.Count() > 0)

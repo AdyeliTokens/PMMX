@@ -7,12 +7,12 @@ using System.Web;
 
 namespace PMMX.Modelo.Map
 {
-    public class JustDoItMap : EntityTypeConfiguration<JustDoIt>
+    public class GembaWalkMap : EntityTypeConfiguration<GembaWalk>
     {
-        public JustDoItMap()
+        public GembaWalkMap()
         {
             #region Propiedades
-            this.ToTable("JustDoIt");
+            this.ToTable("GembaWalk");
             this.HasKey(c => c.Id);
             this.Property(c => c.Id).HasColumnName("Id");
             this.Property(c => c.IdEvento).HasColumnName("IdEvento");
@@ -32,20 +32,20 @@ namespace PMMX.Modelo.Map
             #region HasRequired
             this.HasRequired(c => c.Reportador).WithMany(p => p.JustDoItReportados);
             this.HasRequired(c => c.Responsable).WithMany(p => p.JustDoItAsignados);
-            this.HasRequired(c => c.Origen).WithMany(p => p.JustDoIt);
-            this.HasRequired(c => c.Evento).WithMany(p => p.JustDoIt);
-            this.HasRequired(c => c.SubCategoria).WithMany(p => p.JustDoIt);
+            this.HasRequired(c => c.Origen).WithMany(p => p.GembaWalk);
+            this.HasRequired(c => c.Evento).WithMany(p => p.GembaWalk);
+            this.HasRequired(c => c.SubCategoria).WithMany(p => p.GembaWalk);
             #endregion
 
             #region HasMany
-            this.HasMany(c => c.Fotos).WithMany(x => x.JustDoIts).Map(cs =>
+            this.HasMany(c => c.Fotos).WithMany(x => x.GembaWalks).Map(cs =>
             {
-                cs.MapLeftKey("IdJustDoIt");
+                cs.MapLeftKey("IdGembaWalk");
                 cs.MapRightKey("IdFoto");
-                cs.ToTable("JustDoItFotos");
+                cs.ToTable("GembaWalkFotos");
             });
 
-            this.HasMany(x => x.BitacoraJustDoIt).WithRequired(c => c.JustDoIt).HasForeignKey(c => c.IdJustDoIt);
+            this.HasMany(x => x.BitacoraGembaWalk).WithRequired(c => c.GembaWalk).HasForeignKey(c => c.IdGembaWalk);
             #endregion
         }
     }

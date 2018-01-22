@@ -54,11 +54,11 @@ namespace PMMX.Modelo.Map
                 cs.MapRightKey("IdPersona");
                 cs.ToTable("PersonasFotos");
             });
-            HasMany(c => c.JustDoIts).WithMany(x => x.Fotos).Map(cs =>
+            HasMany(c => c.GembaWalks).WithMany(x => x.Fotos).Map(cs =>
             {
                 cs.MapLeftKey("IdFoto");
-                cs.MapRightKey("IdJustDoIt");
-                cs.ToTable("JustDoItFotos");
+                cs.MapRightKey("IdGembaWalk");
+                cs.ToTable("GembaWalkFotos");
             });
 
             #endregion

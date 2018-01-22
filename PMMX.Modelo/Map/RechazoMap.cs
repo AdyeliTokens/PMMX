@@ -23,7 +23,7 @@ namespace PMMX.Modelo.Map
 
             #region HasMany
             this.HasMany(x => x.BitacoraVentana).WithOptional(c => c.Rechazo).HasForeignKey(x => x.IdRechazo);
-            this.HasMany(x => x.BitacoraJustDoIt).WithOptional(c => c.Rechazo).HasForeignKey(x => x.IdRechazo);
+            this.HasMany(x => x.BitacoraGembaWalk).WithOptional(c => c.Rechazo).HasForeignKey(x => x.IdRechazo);
             #endregion
 
             #region HasOptional

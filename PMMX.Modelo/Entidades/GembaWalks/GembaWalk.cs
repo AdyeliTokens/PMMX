@@ -9,7 +9,7 @@ using PMMX.Modelo.Entidades.Operaciones;
 
 namespace PMMX.Modelo.Entidades.Operaciones
 {
-    public class JustDoIt
+    public class GembaWalk
     {
         #region Propiedades
         public int Id { get; set; }
@@ -33,7 +33,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public Evento Evento { get; set; }
         public SubCategoria SubCategoria { get; set; }
         public List<Foto> Fotos { get; set; }
-        public ICollection<BitacoraJustDoIt> BitacoraJustDoIt { get; set; }
+        public ICollection<BitacoraGembaWalk> BitacoraGembaWalk { get; set; }
         #endregion
     }
 }

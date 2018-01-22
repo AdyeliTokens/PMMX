@@ -26,7 +26,7 @@ namespace Sitio.Areas.Apis.Controllers
             return db.Evento;
         }
 
-        // GET: api/JustDoIt/5
+        // GET: api/GembaWalk/5
         [ResponseType(typeof(EventoView))]
         public IHttpActionResult GetEventobyResponsableandFecha(int idResponsable, int dias, bool activo)
         {
@@ -92,7 +92,7 @@ namespace Sitio.Areas.Apis.Controllers
                     Nota = d.Nota,
                     IdCategoria = d.IdCategoria,
                     Activo = d.Activo,
-                    JustDoIt = d.JustDoIt.Select(j => new JustDoItView
+                    GembaWalk = d.GembaWalk.Select(j => new GembaWalkView
                     {
                         Id = j.Id,
                         IdEvento = j.IdEvento,

@@ -151,7 +151,7 @@ namespace Sitio.Areas.Apis.Controllers
             return Ok(mantenimiento);
         }
 
-        [ResponseType(typeof(IList<JustDoItView>))]
+        [ResponseType(typeof(IList<GembaWalkView>))]
         public IHttpActionResult GetMantenimientoByReportador(int idReportador, Boolean activo, int diasDesde, int diasHasta)
         {
             DateTime fechaInicial = DateTime.Now.AddDays(-diasDesde);
@@ -210,7 +210,7 @@ namespace Sitio.Areas.Apis.Controllers
             return Ok(mantenimiento);
         }
 
-        [ResponseType(typeof(IList<JustDoItView>))]
+        [ResponseType(typeof(IList<GembaWalkView>))]
         public IHttpActionResult GetMantenimientotByArea(int idArea, Boolean activo, int diasDesde, int diasHasta)
         {
             DateTime fechaInicial = DateTime.Now.AddDays(-diasDesde);

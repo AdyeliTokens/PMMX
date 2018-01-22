@@ -83,12 +83,12 @@ namespace PMMX.Seguridad.Servicios
             return dispositivos;
         }
 
-        public List<DispositivoView> GetDispositivoByJDI(int idJustDoIt)
+        public List<DispositivoView> GetDispositivoByJDI(int IdGembaWalk)
         {
             List<DispositivoView> dispositivos = new List<DispositivoView>();
 
-            dispositivos = db.JustDoIt
-                .Where(e => e.Id == idJustDoIt)
+            dispositivos = db.GembaWalk
+                .Where(e => e.Id == IdGembaWalk)
                 .Select(e => e.Responsable.Dispositivos.Where(d => d.Activo == true).Select(v => new DispositivoView
                 {
                     Id = v.Id,

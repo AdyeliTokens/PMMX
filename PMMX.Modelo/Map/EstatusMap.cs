@@ -24,7 +24,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
             this.HasMany(c => c.StatusVentana).WithRequired(x => x.Status).HasForeignKey(c => c.IdStatus);
             this.HasMany(c => c.Rechazo).WithRequired(x => x.Estatus).HasForeignKey(c => c.IdStatus);
             this.HasMany(c => c.BitacoraVentana).WithRequired(x => x.Estatus).HasForeignKey(c => c.IdStatus);
-            this.HasMany(c => c.BitacoraJustDoIt).WithRequired(x => x.Estatus).HasForeignKey(c => c.IdStatus);
+            this.HasMany(c => c.BitacoraGembaWalk).WithRequired(x => x.Estatus).HasForeignKey(c => c.IdStatus);
 
             this.HasMany(c => c.WorkFlowInicial).WithOptional(x => x.EstatusInicial).HasForeignKey(c => c.Inicial);
             this.HasMany(c => c.WorkFlowAnterior).WithOptional(x => x.EstatusAnterior).HasForeignKey(c => c.Anterior);

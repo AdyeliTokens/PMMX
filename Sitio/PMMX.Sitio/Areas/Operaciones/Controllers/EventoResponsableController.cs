@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PMMX.Infraestructura.Contexto;
-using PMMX.Modelo.Entidades.JustDoIts;
+using PMMX.Modelo.Entidades.GembaWalks;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {

@@ -1,4 +1,4 @@
-﻿using PMMX.Modelo.Entidades.JustDoIts;
+﻿using PMMX.Modelo.Entidades.GembaWalks;
 using PMMX.Modelo.Entidades.Maquinaria;
 using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo.Entidades.Warehouse;
@@ -27,7 +27,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
 
         public Persona Asignador { get; set; }
         public Categoria Categoria { get; set; }
-        public List<JustDoIt> JustDoIt { get; set; }
+        public List<GembaWalk> GembaWalk { get; set; }
         public List<Ventana> Ventanas { get; set; }
         public List<EventoOrigen> EventoOrigen { get; set; }
         public List<EventoResponsable> EventoResponsable { get; set; }

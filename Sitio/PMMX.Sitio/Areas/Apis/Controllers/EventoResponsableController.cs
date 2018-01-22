@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using PMMX.Infraestructura.Contexto;
-using PMMX.Modelo.Entidades.JustDoIts;
+using PMMX.Modelo.Entidades.GembaWalks;
 
 namespace Sitio.Areas.Apis.Controllers
 {

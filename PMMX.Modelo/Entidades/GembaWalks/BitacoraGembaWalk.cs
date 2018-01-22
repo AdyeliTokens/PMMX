@@ -10,11 +10,11 @@ using PMMX.Modelo.Entidades.Warehouse;
 
 namespace PMMX.Modelo.Entidades.Operaciones
 {
-    public class BitacoraJustDoIt
+    public class BitacoraGembaWalk
     {
         #region Propiedades
         public int Id { get; set; }
-        public int IdJustDoIt { get; set; }
+        public int IdGembaWalk { get; set; }
         public int IdStatus { get; set; }
         public int IdResponsable { get; set; }
         public int? IdRechazo { get; set; }
@@ -23,7 +23,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         #endregion
 
         #region Navegacion
-        public JustDoIt JustDoIt { get; set; }
+        public GembaWalk GembaWalk { get; set; }
         public Estatus Estatus { get; set; }
         public Persona Responsable { get; set; }
         public Rechazo Rechazo { get; set; }

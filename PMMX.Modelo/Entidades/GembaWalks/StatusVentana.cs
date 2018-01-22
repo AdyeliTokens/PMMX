@@ -1,4 +1,4 @@
-﻿using PMMX.Modelo.Entidades.JustDoIts;
+﻿using PMMX.Modelo.Entidades.GembaWalks;
 using PMMX.Modelo.Entidades.Maquinaria;
 using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo.Entidades.Warehouse;

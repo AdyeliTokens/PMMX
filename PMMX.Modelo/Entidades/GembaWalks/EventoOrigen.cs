@@ -8,17 +8,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PMMX.Modelo.Entidades.JustDoIts
+namespace PMMX.Modelo.Entidades.GembaWalks
 {
-    public class EventoResponsable
+    public class EventoOrigen
     {
         public int Id { get; set; }
         public int IdEvento { get; set; }
-        public int IdResponsable { get; set; }
+        public int IdOrigen { get; set; }
 
         #region Navegacion
         public Evento Evento { get; set; }
-        public Persona Responsable { get; set; }
+        public Origen Origen { get; set; }
         #endregion
     }
 }
