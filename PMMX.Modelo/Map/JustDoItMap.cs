@@ -11,6 +11,7 @@ namespace PMMX.Modelo.Map
     {
         public JustDoItMap()
         {
+            #region Propiedades
             this.ToTable("JustDoIt");
             this.HasKey(c => c.Id);
             this.Property(c => c.Id).HasColumnName("Id");
@@ -26,13 +27,17 @@ namespace PMMX.Modelo.Map
             this.Property(c => c.Prioridad).HasColumnName("Prioridad");
             this.Property(c => c.Tipo).HasColumnName("Tipo");
             this.Property(c => c.Activo).HasColumnName("Activo");
+            #endregion
 
+            #region HasRequired
             this.HasRequired(c => c.Reportador).WithMany(p => p.JustDoItReportados);
             this.HasRequired(c => c.Responsable).WithMany(p => p.JustDoItAsignados);
             this.HasRequired(c => c.Origen).WithMany(p => p.JustDoIt);
             this.HasRequired(c => c.Evento).WithMany(p => p.JustDoIt);
             this.HasRequired(c => c.SubCategoria).WithMany(p => p.JustDoIt);
-            
+            #endregion
+
+            #region HasMany
             this.HasMany(c => c.Fotos).WithMany(x => x.JustDoIts).Map(cs =>
             {
                 cs.MapLeftKey("IdJustDoIt");
@@ -40,6 +45,8 @@ namespace PMMX.Modelo.Map
                 cs.ToTable("JustDoItFotos");
             });
 
+            this.HasMany(x => x.BitacoraJustDoIt).WithRequired(c => c.JustDoIt).HasForeignKey(c => c.IdJustDoIt);
+            #endregion
         }
     }
 }

@@ -24,6 +24,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public ICollection<GrupoPreguntas> GrupoPreguntas { get; set; }
         public ICollection<Evento> Eventos { get; set; }
         public ICollection<Estatus> Estatus { get; set; }
+        public ICollection<WorkFlow> WorkFlows { get; set; }
         #endregion
     }
 }

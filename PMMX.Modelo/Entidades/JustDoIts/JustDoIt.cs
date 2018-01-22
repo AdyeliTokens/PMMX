@@ -11,6 +11,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
 {
     public class JustDoIt
     {
+        #region Propiedades
         public int Id { get; set; }
         public int IdEvento { get; set; }
         public int IdReportador { get; set; }
@@ -23,12 +24,16 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public int IdSubCategoria { get; set; }
         public int Tipo { get; set; }
         public Boolean Activo { get; set; }
-        
+        #endregion
+
+        #region Navegacion
         public Persona Reportador { get; set; }
         public Persona Responsable { get; set; }
         public Origen Origen { get; set; }
         public Evento Evento { get; set; }
         public SubCategoria SubCategoria { get; set; }
         public List<Foto> Fotos { get; set; }
+        public ICollection<BitacoraJustDoIt> BitacoraJustDoIt { get; set; }
+        #endregion
     }
 }

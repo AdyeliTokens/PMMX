@@ -19,11 +19,18 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public int IdCategoria { get; set; }
         public bool Activo { get; set; }
         #endregion
+
         #region Navegacion
         public Categoria Categoria { get; set; }
+
         public ICollection<StatusVentana> StatusVentana { get; set; }
         public ICollection<Rechazo> Rechazo { get; set; }
         public ICollection<BitacoraVentana> BitacoraVentana { get; set; }
+        public ICollection<BitacoraJustDoIt> BitacoraJustDoIt { get; set; }
+        public ICollection<WorkFlow> WorkFlowInicial { get; set; }
+        public ICollection<WorkFlow> WorkFlowAnterior { get; set; }
+        public ICollection<WorkFlow> WorkFlowSiguiente { get; set; }
+        public ICollection<WorkFlow> WorkFlowCancelado { get; set; }
         #endregion
     }
 }

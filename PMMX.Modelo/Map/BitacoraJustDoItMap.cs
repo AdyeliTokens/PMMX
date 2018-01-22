@@ -34,8 +34,8 @@ namespace PMMX.Modelo.Map
 
             #region HasRequired
             this.HasRequired(x => x.JustDoIt).WithMany(c => c.BitacoraJustDoIt);
-            this.HasRequired(x => x.Estatus).WithMany(c => c.BitacoraVentana);
-            this.HasRequired(x => x.Responsable).WithMany(c => c.BitacoraVentana);
+            this.HasRequired(x => x.Estatus).WithMany(c => c.BitacoraJustDoIt);
+            this.HasRequired(x => x.Responsable).WithMany(c => c.BitacoraJustDoIt);
             #endregion
         }
     }

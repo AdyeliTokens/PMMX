@@ -19,6 +19,7 @@ namespace PMMX.Modelo.Entidades.Warehouse
         #region Navegacion
         public Estatus Estatus { get; set; }
         public ICollection<BitacoraVentana> BitacoraVentana { get; set; }
+        public ICollection<BitacoraJustDoIt> BitacoraJustDoIt { get; set; }
         #endregion
     }
 }

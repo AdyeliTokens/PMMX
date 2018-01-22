@@ -70,6 +70,7 @@ namespace PMMX.Modelo.Entidades
 
         public List<StatusVentana> StatusVentana { get; set; }
         public List<BitacoraVentana> BitacoraVentana { get; set; }
+        public List<BitacoraJustDoIt> BitacoraJustDoIt { get; set; }
         #endregion
 
     }

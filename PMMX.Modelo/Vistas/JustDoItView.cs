@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PMMX.Modelo.Entidades.Operaciones;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,6 +9,7 @@ namespace PMMX.Modelo.Vistas
 {
     public class JustDoItView
     {
+        #region Propiedades
         public int Id { get; set; }
         public int IdReportador { get; set; }
         public int IdEvento { get; set; }
@@ -22,9 +24,10 @@ namespace PMMX.Modelo.Vistas
         public int IdResponsable { get; set; }
         public int IdSubCategoria { get; set; }
         public int Tipo { get; set; }
-
         public int? ActividadesCount { get; set; }
-        
+        #endregion
+
+        #region Navegacion
         public PersonaView Reportador { get; set; }
         public PersonaView Responsable { get; set; }
         public OrigenView Origen { get; set; }
@@ -32,5 +35,7 @@ namespace PMMX.Modelo.Vistas
         public SubCategoriaView SubCategoria { get; set; }
 
         public List<FotoView> Fotos { get; set; }
+        public ICollection<BitacoraJustDoIt> BitacoraJustDoIt { get; set; }
+        #endregion
     }
 }

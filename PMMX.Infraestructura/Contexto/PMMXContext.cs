@@ -125,7 +125,7 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new MantenimientoMap());
             modelBuilder.Configurations.Add(new JustDoItMap());
             modelBuilder.Configurations.Add(new RequisicionDeDescargaMap());
-            modelBuilder.Configurations.Add(new RechazosMap());
+            modelBuilder.Configurations.Add(new RechazoMap());
             modelBuilder.Configurations.Add(new BitacoraVentanaMap());
             modelBuilder.Configurations.Add(new CarrierMap());
             modelBuilder.Configurations.Add(new LocacionMap());
