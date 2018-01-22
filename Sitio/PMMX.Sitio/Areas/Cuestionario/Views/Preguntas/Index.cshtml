@@ -32,11 +32,17 @@
                             <th style="width:5%">
                                 @Html.DisplayNameFor(model => model.Id)
                             </th>
-                            <th style="width:50%">
+                            <th style="width:20%">
                                 @Html.DisplayNameFor(model => model.Interrogante)
                             </th>
                             <th style="width:20%">
-                                @Html.DisplayNameFor(model => model.Herramientas)
+                                @Html.DisplayNameFor(model => model.Anexo1)
+                            </th>
+                            <th style="width:20%">
+                                @Html.DisplayNameFor(model => model.Anexo2)
+                            </th>
+                            <th style="width:20%">
+                                @Html.DisplayNameFor(model => model.Tipo)
                             </th>
                             <th style="width:10%">
                                 @Html.DisplayNameFor(model => model.Activo)
@@ -57,7 +63,13 @@
                                     @Html.DisplayFor(modelItem => item.Interrogante)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Herramientas)
+                                    @Html.DisplayFor(modelItem => item.Anexo1)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Anexo2)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Tipo)
                                 </td>
                                 <td>
                                     @Html.CheckBoxFor(modelItem => item.Activo)
