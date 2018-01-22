@@ -285,7 +285,7 @@
     <Compile Include="Areas\Apis\Controllers\GrupoPreguntasController.cs" />
     <Compile Include="Areas\Apis\Controllers\Operaciones\ModuloController.cs" />
     <Compile Include="Areas\Apis\Controllers\OrigenController.cs" />
-    <Compile Include="Areas\Apis\Controllers\ParoController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operaciones\ParoController.cs" />
     <Compile Include="Areas\Apis\Controllers\PersonaController.cs" />
     <Compile Include="Areas\Apis\Controllers\PreguntaController.cs" />
     <Compile Include="Areas\Apis\Controllers\PuestoController.cs" />
