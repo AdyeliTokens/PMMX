@@ -1,4 +1,5 @@
 ﻿using PMMX.Modelo.Entidades.JustDoIts;
+using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo.Entidades.Warehouse;
 using PMMX.Modelo.Vistas;
 using System;
@@ -22,7 +23,13 @@ namespace PMMX.Modelo.Vistas
         public CategoriaView Categoria { get; set; }
 
         public ICollection<StatusVentanaView> StatusVentana { get; set; }
-        public ICollection<Rechazo> Rechazo { get; set; }
+        public ICollection<RechazoView> Rechazo { get; set; }
+        public ICollection<BitacoraVentanaView> BitacoraVentana { get; set; }
+        public ICollection<BitacoraJustDoItView> BitacoraJustDoIt { get; set; }
+        public ICollection<WorkFlowView> WorkFlowInicial { get; set; }
+        public ICollection<WorkFlowView> WorkFlowAnterior { get; set; }
+        public ICollection<WorkFlowView> WorkFlowSiguiente { get; set; }
+        public ICollection<WorkFlowView> WorkFlowCancelado { get; set; }
         #endregion
     }
 }

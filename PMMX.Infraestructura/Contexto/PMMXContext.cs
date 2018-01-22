@@ -125,7 +125,7 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new MantenimientoMap());
             modelBuilder.Configurations.Add(new JustDoItMap());
             modelBuilder.Configurations.Add(new RequisicionDeDescargaMap());
-            modelBuilder.Configurations.Add(new RechazosMap());
+            modelBuilder.Configurations.Add(new RechazoMap());
             modelBuilder.Configurations.Add(new BitacoraVentanaMap());
             modelBuilder.Configurations.Add(new CarrierMap());
             modelBuilder.Configurations.Add(new LocacionMap());
@@ -139,6 +139,8 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new EventoResponsableMap());
             modelBuilder.Configurations.Add(new EstatusMap());
             modelBuilder.Configurations.Add(new StatusVentanaMap());
+            modelBuilder.Configurations.Add(new BitacoraJustDoItMap());
+            modelBuilder.Configurations.Add(new WorkFlowMap());
 
         }
 
@@ -229,6 +231,9 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<Estatus> Estatus { get; set; }
         public DbSet<StatusVentana> StatusVentana { get; set; }
 
+        public System.Data.Entity.DbSet<PMMX.Modelo.Entidades.WorkFlow> WorkFlows { get; set; }
+
+        public System.Data.Entity.DbSet<PMMX.Modelo.Entidades.Operaciones.BitacoraJustDoIt> BitacoraJustDoIts { get; set; }
     }
 }
 

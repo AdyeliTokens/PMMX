@@ -1,13 +1,12 @@
-﻿using PMMX.Modelo.Entidades.Operaciones;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PMMX.Modelo.Entidades.Warehouse
+namespace PMMX.Modelo.Vistas
 {
-    public class Rechazo
+    public class RechazoView
     {
         #region Propiedades
         public int Id { get; set; }
@@ -17,9 +16,9 @@ namespace PMMX.Modelo.Entidades.Warehouse
         #endregion
 
         #region Navegacion
-        public Estatus Estatus { get; set; }
-        public ICollection<BitacoraVentana> BitacoraVentana { get; set; }
-        public ICollection<BitacoraJustDoIt> BitacoraJustDoIt { get; set; }
+        public EstatusView Estatus { get; set; }
+        public ICollection<BitacoraVentanaView> BitacoraVentana { get; set; }
+        public ICollection<BitacoraJustDoItView> BitacoraJustDoIt { get; set; }
         #endregion
     }
 }
