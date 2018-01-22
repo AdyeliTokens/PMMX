@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace PMMX.Operaciones.Servicios
 {
-    public class JustDoItServicio
+    public class GembaWalkServicio
     {
         #region Contexto
 
@@ -22,10 +22,10 @@ namespace PMMX.Operaciones.Servicios
 
         #region Gets
 
-        public RespuestaServicio<IQueryable<JustDoItView>> GetJustDoIt()
+        public RespuestaServicio<IQueryable<GembaWalkView>> GetGembaWalk()
         {
-            RespuestaServicio<IQueryable<JustDoItView>> respuesta = new RespuestaServicio<IQueryable<JustDoItView>>();
-            respuesta.Respuesta = db.JustDoIt.Select(d => new JustDoItView
+            RespuestaServicio<IQueryable<GembaWalkView>> respuesta = new RespuestaServicio<IQueryable<GembaWalkView>>();
+            respuesta.Respuesta = db.GembaWalk.Select(d => new GembaWalkView
             {
                 Id = d.Id,
                 IdOrigen = d.IdOrigen,
@@ -91,13 +91,13 @@ namespace PMMX.Operaciones.Servicios
             return respuesta;
         }
 
-        public RespuestaServicio<JustDoItView> GetJustDoIt(int id)
+        public RespuestaServicio<GembaWalkView> GetGembaWalk(int id)
         {
-            RespuestaServicio<JustDoItView> respuesta = new RespuestaServicio<JustDoItView>();
+            RespuestaServicio<GembaWalkView> respuesta = new RespuestaServicio<GembaWalkView>();
 
-            JustDoItView JustDoIt = db.JustDoIt
+            GembaWalkView GembaWalk = db.GembaWalk
                 .Where(d => (d.Id == id))
-                .Select(d => new JustDoItView
+                .Select(d => new GembaWalkView
                 {
                     Id = d.Id,
                     IdEvento = d.IdEvento,
@@ -175,13 +175,13 @@ namespace PMMX.Operaciones.Servicios
                         Activo = d.SubCategoria.Activo
                     }                    
                 }).FirstOrDefault();
-            if (JustDoIt != null)
+            if (GembaWalk != null)
             {
-                respuesta.Respuesta = JustDoIt;
+                respuesta.Respuesta = GembaWalk;
             }
             else
             {
-                respuesta.Mensaje = "JustDoIt inexistente";
+                respuesta.Mensaje = "GembaWalk inexistente";
             }
 
             return respuesta;
@@ -191,18 +191,18 @@ namespace PMMX.Operaciones.Servicios
 
         #region Puts
 
-        public RespuestaServicio<JustDoItView> PutJustDoIt(int id, string NotificacionSAP)
+        public RespuestaServicio<GembaWalkView> PutGembaWalk(int id, string NotificacionSAP)
         {
-            RespuestaServicio<JustDoItView> respuesta = new RespuestaServicio<JustDoItView>();
+            RespuestaServicio<GembaWalkView> respuesta = new RespuestaServicio<GembaWalkView>();
 
-            JustDoIt JustDoIt = db.JustDoIt.Find(id);
+            GembaWalk GembaWalk = db.GembaWalk.Find(id);
 
-            if (JustDoIt == null)
+            if (GembaWalk == null)
             {
                 return respuesta;
             }
             
-            db.Entry(JustDoIt).State = EntityState.Modified;
+            db.Entry(GembaWalk).State = EntityState.Modified;
 
             try
             {
@@ -216,7 +216,7 @@ namespace PMMX.Operaciones.Servicios
 
             }
 
-            respuesta = GetJustDoIt(JustDoIt.Id);
+            respuesta = GetGembaWalk(GembaWalk.Id);
 
             return respuesta;
         }
@@ -256,9 +256,9 @@ namespace PMMX.Operaciones.Servicios
             db.Dispose();
         }
 
-        private bool JustDoItExists(int id)
+        private bool GembaWalkExists(int id)
         {
-            return db.JustDoIt.Count(e => e.Id == id) > 0;
+            return db.GembaWalk.Count(e => e.Id == id) > 0;
         }
 
         #endregion

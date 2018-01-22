@@ -6,11 +6,11 @@ using System.Web;
 
 namespace PMMX.Modelo.Vistas
 {
-    public class BitacoraJustDoItView
+    public class BitacoraGembaWalk
     {
         #region Propiedades
         public int Id { get; set; }
-        public int IdJustDoIt { get; set; }
+        public int IdGembaWalk { get; set; }
         public int IdStatus { get; set; }
         public int IdResponsable { get; set; }
         public int? IdRechazo { get; set; }
@@ -19,7 +19,7 @@ namespace PMMX.Modelo.Vistas
         #endregion
 
         #region Navegacion
-        public JustDoItView JustDoIt { get; set; }
+        public GembaWalkView GembaWalk { get; set; }
         public EstatusView Estatus { get; set; }
         public PersonaView Responsable { get; set; }
         public RechazoView Rechazo { get; set; }

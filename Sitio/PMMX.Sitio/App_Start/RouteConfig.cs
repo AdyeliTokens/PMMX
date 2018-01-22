@@ -33,8 +33,8 @@ namespace Sitio
 
             routes.MapRoute(
             name: "FotosDeJustDoIt",
-            url: "Fotos/JustDoIt/{idJustDoIt}",
-            defaults: new { controller = "Fotos", action = "JustDoIt", idJustDoIt = UrlParameter.Optional }
+            url: "Fotos/GembaWalk/{IdGembaWalk}",
+            defaults: new { controller = "Fotos", action = "GembaWalk", IdGembaWalk = UrlParameter.Optional }
             );
 
             routes.MapRoute(

@@ -59,7 +59,7 @@
     <Compile Include="Servicios\DefectoServicio.cs" />
     <Compile Include="Servicios\DesperdicioServicio.cs" />
     <Compile Include="Servicios\EventoServicio.cs" />
-    <Compile Include="Servicios\JustDoItServicio.cs" />
+    <Compile Include="Servicios\GembaWalkServicio.cs" />
     <Compile Include="Servicios\MantenimientoServicio.cs" />
     <Compile Include="Servicios\ParoServicio.cs" />
     <Compile Include="Servicios\PesadorServicio.cs" />

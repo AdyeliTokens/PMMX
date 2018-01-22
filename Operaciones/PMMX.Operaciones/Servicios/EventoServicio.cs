@@ -44,8 +44,8 @@ namespace PMMX.Operaciones.Servicios
                     Apellido2 = d.Asignador.Apellido2,
                     IdPuesto = d.Asignador.IdPuesto
                 },
-                JustDoIt = d.JustDoIt.Where(j => (j.IdEvento == d.Id))
-                .Select(j => new JustDoItView
+                GembaWalk = d.GembaWalk.Where(j => (j.IdEvento == d.Id))
+                .Select(j => new GembaWalkView
                 {
                     Id = j.Id,
                     IdEvento = j.IdEvento,
@@ -85,8 +85,8 @@ namespace PMMX.Operaciones.Servicios
                         Apellido2 = d.Asignador.Apellido2,
                         IdPuesto = d.Asignador.IdPuesto
                     },
-                    JustDoIt = d.JustDoIt.Where(j => (j.IdEvento == d.Id))
-                    .Select(j => new JustDoItView
+                    GembaWalk = d.GembaWalk.Where(j => (j.IdEvento == d.Id))
+                    .Select(j => new GembaWalkView
                     {
                         Id = j.Id,
                         IdEvento = j.IdEvento,

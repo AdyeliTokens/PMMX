@@ -9,15 +9,15 @@ using System.Web;
 
 namespace PMMX.Modelo.Map
 {
-    public class BitacoraJustDoItMap : EntityTypeConfiguration<BitacoraJustDoIt>
+    public class BitacoraGembaWalkMap : EntityTypeConfiguration<BitacoraGembaWalk>
     {
-        public BitacoraJustDoItMap()
+        public BitacoraGembaWalkMap()
         {
             #region Propiedades
-            ToTable("BitacoraJustDoIt");
+            ToTable("BitacoraGembaWalk");
             HasKey(c => c.Id);
             Property(c => c.Id).HasColumnName("Id");
-            Property(c => c.IdJustDoIt).HasColumnName("IdJustDoIt");
+            Property(c => c.IdGembaWalk).HasColumnName("IdGembaWalk");
             Property(c => c.IdStatus).HasColumnName("IdStatus");
             Property(c => c.IdResponsable).HasColumnName("IdResponsable");
             Property(c => c.IdRechazo).HasColumnName("IdRechazo");
@@ -29,13 +29,13 @@ namespace PMMX.Modelo.Map
             #endregion
 
             #region HasOptional
-            this.HasOptional(x => x.Rechazo).WithMany(c => c.BitacoraJustDoIt);
+            this.HasOptional(x => x.Rechazo).WithMany(c => c.BitacoraGembaWalk);
             #endregion
 
             #region HasRequired
-            this.HasRequired(x => x.JustDoIt).WithMany(c => c.BitacoraJustDoIt);
-            this.HasRequired(x => x.Estatus).WithMany(c => c.BitacoraJustDoIt);
-            this.HasRequired(x => x.Responsable).WithMany(c => c.BitacoraJustDoIt);
+            this.HasRequired(x => x.GembaWalk).WithMany(c => c.BitacoraGembaWalk);
+            this.HasRequired(x => x.Estatus).WithMany(c => c.BitacoraGembaWalk);
+            this.HasRequired(x => x.Responsable).WithMany(c => c.BitacoraGembaWalk);
             #endregion
         }
     }

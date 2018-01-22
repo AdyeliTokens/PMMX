@@ -5,7 +5,7 @@ using PMMX.Modelo.Entidades.Maquinaria;
 using PMMX.Modelo.Entidades.Paros;
 using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo.Entidades.Warehouse;
-using PMMX.Modelo.Entidades.JustDoIts;
+using PMMX.Modelo.Entidades.GembaWalks;
 using PMMX.Modelo.Entidades.InsiteLAC;
 using PMMX.Modelo.Map;
 using PMMX.Modelo.Map.InsiteLAC;
@@ -123,7 +123,7 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new SubCategoriaMap());
             modelBuilder.Configurations.Add(new EventoMap());
             modelBuilder.Configurations.Add(new MantenimientoMap());
-            modelBuilder.Configurations.Add(new JustDoItMap());
+            modelBuilder.Configurations.Add(new GembaWalkMap());
             modelBuilder.Configurations.Add(new RequisicionDeDescargaMap());
             modelBuilder.Configurations.Add(new RechazoMap());
             modelBuilder.Configurations.Add(new BitacoraVentanaMap());
@@ -139,7 +139,7 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new EventoResponsableMap());
             modelBuilder.Configurations.Add(new EstatusMap());
             modelBuilder.Configurations.Add(new StatusVentanaMap());
-            modelBuilder.Configurations.Add(new BitacoraJustDoItMap());
+            modelBuilder.Configurations.Add(new BitacoraGembaWalkMap());
             modelBuilder.Configurations.Add(new WorkFlowMap());
 
         }
@@ -214,7 +214,7 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<SubCategoria> SubCategoria { get; set; }
         public DbSet<Evento> Evento { get; set; }
         public DbSet<Mantenimiento> Mantenimiento { get; set; }
-        public DbSet<JustDoIt> JustDoIt { get; set; }
+        public DbSet<GembaWalk> GembaWalk { get; set; }
         public DbSet<RequisicionDeDescarga> RequisicionDeDescargas { get; set; }
         public DbSet<Rechazo> Rechazo { get; set; }
         public DbSet<BitacoraVentana> BitacoraVentana { get; set; }
@@ -233,7 +233,7 @@ namespace PMMX.Infraestructura.Contexto
 
         public System.Data.Entity.DbSet<PMMX.Modelo.Entidades.WorkFlow> WorkFlows { get; set; }
 
-        public System.Data.Entity.DbSet<PMMX.Modelo.Entidades.Operaciones.BitacoraJustDoIt> BitacoraJustDoIts { get; set; }
+        public System.Data.Entity.DbSet<PMMX.Modelo.Entidades.Operaciones.BitacoraGembaWalk> BitacoraGembaWalks { get; set; }
     }
 }
 

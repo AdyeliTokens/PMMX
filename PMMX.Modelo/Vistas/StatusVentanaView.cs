@@ -1,4 +1,4 @@
-﻿using PMMX.Modelo.Entidades.JustDoIts;
+﻿using PMMX.Modelo.Entidades.GembaWalks;
 using PMMX.Modelo.Entidades.Warehouse;
 using PMMX.Modelo.Vistas;
 using System;

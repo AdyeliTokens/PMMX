@@ -13,44 +13,44 @@ using PMMX.Modelo.Entidades.Operaciones;
 
 namespace Sitio.Areas.Apis.Controllers
 {
-    public class BitacoraJustDoItController : ApiController
+    public class BitacoraGembaWalkController : ApiController
     {
         private PMMXContext db = new PMMXContext();
 
-        // GET: api/BitacoraJustDoIt
-        public IQueryable<BitacoraJustDoIt> GetBitacoraJustDoIts()
+        // GET: api/BitacoraGembaWalk
+        public IQueryable<BitacoraGembaWalk> GetBitacoraJustDoIts()
         {
-            return db.BitacoraJustDoIts;
+            return db.BitacoraGembaWalks;
         }
 
-        // GET: api/BitacoraJustDoIt/5
-        [ResponseType(typeof(BitacoraJustDoIt))]
+        // GET: api/BitacoraGembaWalk/5
+        [ResponseType(typeof(BitacoraGembaWalk))]
         public IHttpActionResult GetBitacoraJustDoIt(int id)
         {
-            BitacoraJustDoIt bitacoraJustDoIt = db.BitacoraJustDoIts.Find(id);
-            if (bitacoraJustDoIt == null)
+            BitacoraGembaWalk BitacoraGembaWalk = db.BitacoraGembaWalks.Find(id);
+            if (BitacoraGembaWalk == null)
             {
                 return NotFound();
             }
 
-            return Ok(bitacoraJustDoIt);
+            return Ok(BitacoraGembaWalk);
         }
 
-        // PUT: api/BitacoraJustDoIt/5
+        // PUT: api/BitacoraGembaWalk/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutBitacoraJustDoIt(int id, BitacoraJustDoIt bitacoraJustDoIt)
+        public IHttpActionResult PutBitacoraJustDoIt(int id, BitacoraGembaWalk BitacoraGembaWalk)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != bitacoraJustDoIt.Id)
+            if (id != BitacoraGembaWalk.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(bitacoraJustDoIt).State = EntityState.Modified;
+            db.Entry(BitacoraGembaWalk).State = EntityState.Modified;
 
             try
             {
@@ -71,35 +71,35 @@ namespace Sitio.Areas.Apis.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/BitacoraJustDoIt
-        [ResponseType(typeof(BitacoraJustDoIt))]
-        public IHttpActionResult PostBitacoraJustDoIt(BitacoraJustDoIt bitacoraJustDoIt)
+        // POST: api/BitacoraGembaWalk
+        [ResponseType(typeof(BitacoraGembaWalk))]
+        public IHttpActionResult PostBitacoraJustDoIt(BitacoraGembaWalk BitacoraGembaWalk)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.BitacoraJustDoIts.Add(bitacoraJustDoIt);
+            db.BitacoraGembaWalks.Add(BitacoraGembaWalk);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = bitacoraJustDoIt.Id }, bitacoraJustDoIt);
+            return CreatedAtRoute("DefaultApi", new { id = BitacoraGembaWalk.Id }, BitacoraGembaWalk);
         }
 
-        // DELETE: api/BitacoraJustDoIt/5
-        [ResponseType(typeof(BitacoraJustDoIt))]
+        // DELETE: api/BitacoraGembaWalk/5
+        [ResponseType(typeof(BitacoraGembaWalk))]
         public IHttpActionResult DeleteBitacoraJustDoIt(int id)
         {
-            BitacoraJustDoIt bitacoraJustDoIt = db.BitacoraJustDoIts.Find(id);
-            if (bitacoraJustDoIt == null)
+            BitacoraGembaWalk BitacoraGembaWalk = db.BitacoraGembaWalks.Find(id);
+            if (BitacoraGembaWalk == null)
             {
                 return NotFound();
             }
 
-            db.BitacoraJustDoIts.Remove(bitacoraJustDoIt);
+            db.BitacoraGembaWalks.Remove(BitacoraGembaWalk);
             db.SaveChanges();
 
-            return Ok(bitacoraJustDoIt);
+            return Ok(BitacoraGembaWalk);
         }
 
         protected override void Dispose(bool disposing)
@@ -113,7 +113,7 @@ namespace Sitio.Areas.Apis.Controllers
 
         private bool BitacoraJustDoItExists(int id)
         {
-            return db.BitacoraJustDoIts.Count(e => e.Id == id) > 0;
+            return db.BitacoraGembaWalks.Count(e => e.Id == id) > 0;
         }
     }
 }

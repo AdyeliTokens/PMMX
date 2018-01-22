@@ -1,4 +1,4 @@
-﻿using PMMX.Modelo.Entidades.JustDoIts;
+﻿using PMMX.Modelo.Entidades.GembaWalks;
 using PMMX.Modelo.Entidades.Maquinaria;
 using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo.Entidades.Warehouse;
@@ -26,7 +26,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public ICollection<StatusVentana> StatusVentana { get; set; }
         public ICollection<Rechazo> Rechazo { get; set; }
         public ICollection<BitacoraVentana> BitacoraVentana { get; set; }
-        public ICollection<BitacoraJustDoIt> BitacoraJustDoIt { get; set; }
+        public ICollection<BitacoraGembaWalk> BitacoraGembaWalk { get; set; }
         public ICollection<WorkFlow> WorkFlowInicial { get; set; }
         public ICollection<WorkFlow> WorkFlowAnterior { get; set; }
         public ICollection<WorkFlow> WorkFlowSiguiente { get; set; }

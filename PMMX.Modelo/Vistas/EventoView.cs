@@ -1,4 +1,4 @@
-﻿using PMMX.Modelo.Entidades.JustDoIts;
+﻿using PMMX.Modelo.Entidades.GembaWalks;
 using PMMX.Modelo.Entidades.Warehouse;
 using PMMX.Modelo.Vistas;
 using System;
@@ -26,7 +26,7 @@ namespace PMMX.Modelo.Vistas
         public PersonaView Asignador { get; set; }
         public CategoriaView Categoria { get; set; }
 
-        public List<JustDoItView> JustDoIt { get; set; }
+        public List<GembaWalkView> GembaWalk { get; set; }
         public List<Ventana> Ventanas { get; set; }
         public List<EventoOrigen> EventoOrigen { get; set; }
         public List<EventoResponsable> EventoResponsable { get; set; }

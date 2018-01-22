@@ -17,23 +17,23 @@ using PMMX.Modelo.Entidades.Operaciones;
 
 namespace Sitio.Areas.Apis.Controllers
 {
-    public class JustDoItController : ApiController
+    public class GembaWalkController : ApiController
     {
         private PMMXContext db = new PMMXContext();
 
-        // GET: api/JustDoIt
-        public IQueryable<JustDoIt> GetJustDoIt()
+        // GET: api/GembaWalk
+        public IQueryable<GembaWalk> GetGembaWalk()
         {
-            return db.JustDoIt;
+            return db.GembaWalk;
         }
 
-        // GET: api/JustDoIt/5
-        [ResponseType(typeof(JustDoItView))]
-        public IHttpActionResult GetJustDoIt(int id)
+        // GET: api/GembaWalk/5
+        [ResponseType(typeof(GembaWalkView))]
+        public IHttpActionResult GetGembaWalk(int id)
         {
-            var justDoIt = db.JustDoIt
+            var GembaWalk = db.GembaWalk
                .Where(d => (d.Id == id))
-               .Select(d => new JustDoItView
+               .Select(d => new GembaWalkView
                {
                    Id = d.Id,
                    IdOrigen = d.IdOrigen,
@@ -89,23 +89,23 @@ namespace Sitio.Areas.Apis.Controllers
                    }).ToList()
                }).FirstOrDefault();
 
-            if (justDoIt == null)
+            if (GembaWalk == null)
             {
                 return NotFound();
             }
 
-            return Ok(justDoIt);
+            return Ok(GembaWalk);
         }
 
-        [ResponseType(typeof(IList<JustDoItView>))]
-        public IHttpActionResult getJustDoItByResponsable(int idResponsable, Boolean activo, int diasDesde, int diasHasta)
+        [ResponseType(typeof(IList<GembaWalkView>))]
+        public IHttpActionResult getGembaWalkByResponsable(int idResponsable, Boolean activo, int diasDesde, int diasHasta)
         {
             DateTime fechaInicial = DateTime.Now.AddDays(-diasDesde);
             DateTime fechaFinal = DateTime.Now.AddDays(diasHasta);
             
-            IList<JustDoItView> justDoIt = db.JustDoIt
+            IList<GembaWalkView> GembaWalk = db.GembaWalk
                 .Where(d => (d.Activo == activo) && (d.FechaReporte >= fechaInicial && d.FechaReporte <= fechaFinal) && (d.IdResponsable == idResponsable))
-                .Select(d => new JustDoItView
+                .Select(d => new GembaWalkView
                 {
                     Id = d.Id,
                     IdOrigen = d.IdOrigen,
@@ -156,18 +156,18 @@ namespace Sitio.Areas.Apis.Controllers
                     }).ToList()
                 }).ToList();
 
-            return Ok(justDoIt);
+            return Ok(GembaWalk);
         }
 
-        [ResponseType(typeof(IList<JustDoItView>))]
-        public IHttpActionResult GetJustDoItByReportador(int idReportador, Boolean activo, int diasDesde, int diasHasta)
+        [ResponseType(typeof(IList<GembaWalkView>))]
+        public IHttpActionResult GetGembaWalkByReportador(int idReportador, Boolean activo, int diasDesde, int diasHasta)
         {
             DateTime fechaInicial = DateTime.Now.AddDays(-diasDesde);
             DateTime fechaFinal = DateTime.Now.AddDays(diasHasta);
 
-            IList<JustDoItView> justDoIt = db.JustDoIt
+            IList<GembaWalkView> GembaWalk = db.GembaWalk
                 .Where(d => (d.Activo == activo) && (d.FechaReporte >= fechaInicial && d.FechaReporte <= fechaFinal) && (d.IdResponsable == idReportador))
-                .Select(d => new JustDoItView
+                .Select(d => new GembaWalkView
                 {
                     Id = d.Id,
                     IdOrigen = d.IdOrigen,
@@ -218,18 +218,18 @@ namespace Sitio.Areas.Apis.Controllers
                     }).ToList()
                 }).ToList();
 
-            return Ok(justDoIt);
+            return Ok(GembaWalk);
         }
 
-        [ResponseType(typeof(IList<JustDoItView>))]
-        public IHttpActionResult GetJustDoItByArea(int idArea, Boolean activo, int diasDesde, int diasHasta)
+        [ResponseType(typeof(IList<GembaWalkView>))]
+        public IHttpActionResult GetGembaWalkByArea(int idArea, Boolean activo, int diasDesde, int diasHasta)
         {
             DateTime fechaInicial = DateTime.Now.AddDays(-diasDesde);
             DateTime fechaFinal = DateTime.Now.AddDays(diasHasta);
 
-            IList<JustDoItView> justDoIt = db.JustDoIt
+            IList<GembaWalkView> GembaWalk = db.GembaWalk
                 .Where(d => (d.Activo == activo) && (d.FechaReporte >= fechaInicial && d.FechaReporte <= fechaFinal) && (d.Origen.WorkCenter.BussinesUnit.IdArea == idArea))
-                .Select(d => new JustDoItView
+                .Select(d => new GembaWalkView
                 {
                     Id = d.Id,
                     IdOrigen = d.IdOrigen,
@@ -280,24 +280,24 @@ namespace Sitio.Areas.Apis.Controllers
                     }).ToList()
                 }).ToList();
 
-            return Ok(justDoIt);
+            return Ok(GembaWalk);
         }
         
-        // PUT: api/JustDoIt/5
+        // PUT: api/GembaWalk/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutJustDoIt(int id, JustDoIt justDoIt)
+        public IHttpActionResult PutGembaWalk(int id, GembaWalk GembaWalk)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != justDoIt.Id)
+            if (id != GembaWalk.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(justDoIt).State = EntityState.Modified;
+            db.Entry(GembaWalk).State = EntityState.Modified;
 
             try
             {
@@ -305,7 +305,7 @@ namespace Sitio.Areas.Apis.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!JustDoItExists(id))
+                if (!GembaWalkExists(id))
                 {
                     return NotFound();
                 }
@@ -319,23 +319,23 @@ namespace Sitio.Areas.Apis.Controllers
         }
 
         [HttpPut]
-        [ResponseType(typeof(JustDoItView))]
-        public IHttpActionResult JustDoItByActivo(int id, Boolean activo)
+        [ResponseType(typeof(GembaWalkView))]
+        public IHttpActionResult GembaWalkByActivo(int id, Boolean activo)
         {
-            JustDoIt justDoIt = db.JustDoIt.Where(x => x.Id == id).FirstOrDefault();
+            GembaWalk GembaWalk = db.GembaWalk.Where(x => x.Id == id).FirstOrDefault();
 
-            if (justDoIt == null)
+            if (GembaWalk == null)
             {
                 return NotFound();
             }
             
-            justDoIt.Activo = activo;
-            db.Entry(justDoIt).State = EntityState.Modified;
+            GembaWalk.Activo = activo;
+            db.Entry(GembaWalk).State = EntityState.Modified;
             db.SaveChanges();
 
-            var justDoItView = db.JustDoIt
+            var GembaWalkView = db.GembaWalk
                 .Where(d => (d.Id == id))
-                .Select(d => new JustDoItView
+                .Select(d => new GembaWalkView
                 {
                     Id = d.Id,
                     IdOrigen = d.IdOrigen,
@@ -391,33 +391,33 @@ namespace Sitio.Areas.Apis.Controllers
                     }).ToList()
                 }).FirstOrDefault();
 
-            if (justDoItView == null)
+            if (GembaWalkView == null)
             {
                 return NotFound();
             }
 
-            return Ok(justDoItView);
+            return Ok(GembaWalkView);
         }
 
         [HttpPut]
-        [ResponseType(typeof(JustDoItView))]
-        public IHttpActionResult PutJustDoItByFechaEstimada(int id, int dia, int mes, int year)
+        [ResponseType(typeof(GembaWalkView))]
+        public IHttpActionResult PutGembaWalkByFechaEstimada(int id, int dia, int mes, int year)
         {
-            JustDoIt justDoIt = db.JustDoIt.Where(x => x.Id == id).FirstOrDefault();
+            GembaWalk GembaWalk = db.GembaWalk.Where(x => x.Id == id).FirstOrDefault();
 
-            if (justDoIt == null)
+            if (GembaWalk == null)
             {
                 return NotFound();
             }
             DateTime fechaEstimada = new DateTime(year, mes, dia);
 
-            justDoIt.FechaEstimada = fechaEstimada;
-            db.Entry(justDoIt).State = EntityState.Modified;
+            GembaWalk.FechaEstimada = fechaEstimada;
+            db.Entry(GembaWalk).State = EntityState.Modified;
             db.SaveChanges();
 
-            var justDoItView = db.JustDoIt
+            var GembaWalkView = db.GembaWalk
                 .Where(d => (d.Id == id))
-                .Select(d => new JustDoItView
+                .Select(d => new GembaWalkView
                 {
                     Id = d.Id,
                     IdOrigen = d.IdOrigen,
@@ -473,31 +473,31 @@ namespace Sitio.Areas.Apis.Controllers
                     }).ToList()
                 }).FirstOrDefault();
 
-            if (justDoItView == null)
+            if (GembaWalkView == null)
             {
                 return NotFound();
             }
 
-            return Ok(justDoItView);
+            return Ok(GembaWalkView);
         }
 
         [HttpPut]
-        [ResponseType(typeof(JustDoItView))]
-        public IHttpActionResult PutJustDoItByResponsable(int id, int idResponsable)
+        [ResponseType(typeof(GembaWalkView))]
+        public IHttpActionResult PutGembaWalkByResponsable(int id, int idResponsable)
         {
-            JustDoIt justDoIt = db.JustDoIt.Where(x => x.Id == id).FirstOrDefault();
+            GembaWalk GembaWalk = db.GembaWalk.Where(x => x.Id == id).FirstOrDefault();
 
-            if (justDoIt == null)
+            if (GembaWalk == null)
             {
                 return NotFound();
             }
 
-            justDoIt.IdResponsable = idResponsable;
+            GembaWalk.IdResponsable = idResponsable;
             db.SaveChanges();
 
-            var justDoItView = db.JustDoIt
+            var GembaWalkView = db.GembaWalk
                 .Where(d => (d.Id == id))
-                .Select(d => new JustDoItView
+                .Select(d => new GembaWalkView
                 {
                     Id = d.Id,
                     IdOrigen = d.IdOrigen,
@@ -554,28 +554,28 @@ namespace Sitio.Areas.Apis.Controllers
                 }).FirstOrDefault();
 
 
-            return Ok(justDoItView);
+            return Ok(GembaWalkView);
         }
 
-        // POST: api/JustDoIt
-        [ResponseType(typeof(JustDoItView))]
-        public IHttpActionResult PostJustDoIt(JustDoIt justDoIt)
+        // POST: api/GembaWalk
+        [ResponseType(typeof(GembaWalkView))]
+        public IHttpActionResult PostGembaWalk(GembaWalk GembaWalk)
         {
-            justDoIt.Activo = true;
-            justDoIt.FechaReporte = DateTime.Now;
-            justDoIt.Fotos = null;
+            GembaWalk.Activo = true;
+            GembaWalk.FechaReporte = DateTime.Now;
+            GembaWalk.Fotos = null;
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.JustDoIt.Add(justDoIt);
+            db.GembaWalk.Add(GembaWalk);
             db.SaveChanges();
             
-            var justDoItView = db.JustDoIt
-                .Where(d => d.Id == justDoIt.Id)
-                .Select(d => new JustDoItView
+            var GembaWalkView = db.GembaWalk
+                .Where(d => d.Id == GembaWalk.Id)
+                .Select(d => new GembaWalkView
                 {
                     Id = d.Id,
                     Origen = new OrigenView
@@ -605,31 +605,31 @@ namespace Sitio.Areas.Apis.Controllers
             NotificationService notify = new NotificationService();
             UsuarioServicio usuarioServicio = new UsuarioServicio();
 
-            List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByJDI(justDoIt.Id);
+            List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByJDI(GembaWalk.Id);
             List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
 
             foreach (string notificacion in llaves)
             {
-                notify.SendPushNotification(notificacion, "Se le ha asignado el JustDoIt " + justDoItView.Descripcion + ".", "Nuevo Just Do It reportado en " + justDoItView.Origen.WorkCenter.BussinesUnit.Area.Nombre + ".");
+                notify.SendPushNotification(notificacion, "Se le ha asignado el GembaWalk " + GembaWalkView.Descripcion + ".", "Nuevo Just Do It reportado en " + GembaWalkView.Origen.WorkCenter.BussinesUnit.Area.Nombre + ".");
             }
 
-            return Ok(justDoItView);
+            return Ok(GembaWalkView);
         }
 
-        // DELETE: api/JustDoIt/5
-        [ResponseType(typeof(JustDoIt))]
-        public IHttpActionResult DeleteJustDoIt(int id)
+        // DELETE: api/GembaWalk/5
+        [ResponseType(typeof(GembaWalk))]
+        public IHttpActionResult DeleteGembaWalk(int id)
         {
-            JustDoIt justDoIt = db.JustDoIt.Find(id);
-            if (justDoIt == null)
+            GembaWalk GembaWalk = db.GembaWalk.Find(id);
+            if (GembaWalk == null)
             {
                 return NotFound();
             }
 
-            db.JustDoIt.Remove(justDoIt);
+            db.GembaWalk.Remove(GembaWalk);
             db.SaveChanges();
 
-            return Ok(justDoIt);
+            return Ok(GembaWalk);
         }
 
         protected override void Dispose(bool disposing)
@@ -641,9 +641,9 @@ namespace Sitio.Areas.Apis.Controllers
             base.Dispose(disposing);
         }
 
-        private bool JustDoItExists(int id)
+        private bool GembaWalkExists(int id)
         {
-            return db.JustDoIt.Count(e => e.Id == id) > 0;
+            return db.GembaWalk.Count(e => e.Id == id) > 0;
         }
     }
 }

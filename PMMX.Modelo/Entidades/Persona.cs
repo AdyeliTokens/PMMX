@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using PMMX.Modelo.Entidades.JustDoIts;
+using PMMX.Modelo.Entidades.GembaWalks;
 using PMMX.Modelo.Entidades.Warehouse;
 
 namespace PMMX.Modelo.Entidades
@@ -53,8 +53,8 @@ namespace PMMX.Modelo.Entidades
         public ICollection<Categoria> Categorias { get; set; }
         public ICollection<SubCategoria> SubCategorias { get; set; }
         public ICollection<Evento> EventosReportados { get; set; }
-        public ICollection<JustDoIt> JustDoItReportados { get; set; }
-        public ICollection<JustDoIt> JustDoItAsignados { get; set; }
+        public ICollection<GembaWalk> JustDoItReportados { get; set; }
+        public ICollection<GembaWalk> JustDoItAsignados { get; set; }
         public ICollection<Mantenimiento> MantenimientosReportados { get; set; }
         public ICollection<Mantenimiento> MantenimientosAsignados { get; set; }
         public ICollection<Foto> FotosPersonales { get; set; }
@@ -70,7 +70,7 @@ namespace PMMX.Modelo.Entidades
 
         public List<StatusVentana> StatusVentana { get; set; }
         public List<BitacoraVentana> BitacoraVentana { get; set; }
-        public List<BitacoraJustDoIt> BitacoraJustDoIt { get; set; }
+        public List<BitacoraGembaWalk> BitacoraGembaWalk { get; set; }
         #endregion
 
     }

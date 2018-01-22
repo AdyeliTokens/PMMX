@@ -14,7 +14,7 @@ using PMMX.Seguridad.Servicios;
 using PMMX.Modelo.RespuestaGenerica;
 using PMMX.Modelo.Entidades;
 using Microsoft.AspNet.Identity;
-using PMMX.Modelo.Entidades.JustDoIts;
+using PMMX.Modelo.Entidades.GembaWalks;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -64,8 +64,8 @@ namespace Sitio.Areas.Operaciones.Controllers
                     Nota = e.Nota,
                     EsRecurrente = e.EsRecurrente,
                     Activo = e.Activo,
-                    JustDoIt = e.JustDoIt.Where(j => j.IdEvento == e.Id)
-                    .Select(j => new JustDoItView
+                    GembaWalk = e.GembaWalk.Where(j => j.IdEvento == e.Id)
+                    .Select(j => new GembaWalkView
                     {
                         Id = j.Id,
                         IdSubCategoria = j.IdSubCategoria

@@ -269,7 +269,7 @@ namespace Sitio.Areas.Apis.Controllers.Multimedia
             }
         }
 
-        public async Task<HttpResponseMessage> PostFotoJustDoIt(int IdJustDoIt)
+        public async Task<HttpResponseMessage> PostFotoJustDoIt(int IdGembaWalk)
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             try
@@ -299,8 +299,8 @@ namespace Sitio.Areas.Apis.Controllers.Multimedia
                         }
                         else
                         {
-                            string folderName = @"c:\PMMX\Fotos\JustDoIt";
-                            string pathString = Path.Combine(folderName, IdJustDoIt.ToString());
+                            string folderName = @"c:\PMMX\Fotos\GembaWalk";
+                            string pathString = Path.Combine(folderName, IdGembaWalk.ToString());
                             Directory.CreateDirectory(pathString);
                             string fileName = Path.GetRandomFileName();
                             pathString = Path.Combine(pathString, fileName);
@@ -320,9 +320,9 @@ namespace Sitio.Areas.Apis.Controllers.Multimedia
                             foto.Path = pathString + extension;
                             
                             foto.IdMantenimiento = 0;
-                            foto.JustDoIts = new List<JustDoIt>
+                            foto.GembaWalks = new List<GembaWalk>
                             {
-                                db.JustDoIt.Find(IdJustDoIt)
+                                db.GembaWalk.Find(IdGembaWalk)
                             };
                             foto.Nombre = fileName + extension;
                             
