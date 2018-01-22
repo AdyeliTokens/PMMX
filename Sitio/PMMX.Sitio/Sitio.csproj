@@ -236,6 +236,7 @@
     <Compile Include="Areas\Apis\Controllers\BitacoraVentanaController.cs" />
     <Compile Include="Areas\Apis\Controllers\CarrierController.cs" />
     <Compile Include="Areas\Apis\Controllers\CategoriaController.cs" />
+    <Compile Include="Areas\Apis\Controllers\FeedController.cs" />
     <Compile Include="Areas\Apis\Controllers\Operaciones\ComentariosController.cs" />
     <Compile Include="Areas\Apis\Controllers\Operaciones\CRRController.cs" />
     <Compile Include="Areas\Apis\Controllers\EventoController.cs" />
@@ -269,6 +270,7 @@
     <Compile Include="Areas\Apis\Controllers\Operaciones\NoConformidadesController.cs" />
     <Compile Include="Areas\Apis\Controllers\EstatusController.cs" />
     <Compile Include="Areas\Apis\Controllers\StatusVentanaController.cs" />
+    <Compile Include="Areas\Apis\Controllers\WorkCenterController.cs" />
     <Compile Include="Areas\Cuestionario\Controllers\WebApiConfig.cs" />
     <Compile Include="Areas\Apis\Controllers\OrigenRespuestaController.cs" />
     <Compile Include="Areas\Apis\Controllers\PreguntaTurnoController.cs" />
@@ -289,7 +291,6 @@
     <Compile Include="Areas\Apis\Controllers\PuestoController.cs" />
     <Compile Include="Areas\Apis\Controllers\RespuestaController.cs" />
     <Compile Include="Areas\Apis\Controllers\UserController.cs" />
-    <Compile Include="Areas\Apis\Controllers\WorkCenterController.cs" />
     <Compile Include="Areas\Cuestionario\Controllers\PreguntasController.cs" />
     <Compile Include="Areas\Cuestionario\Controllers\GrupoPreguntasController.cs" />
     <Compile Include="Areas\Cuestionario\Controllers\RespuestasController.cs" />

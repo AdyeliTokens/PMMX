@@ -232,6 +232,7 @@
     <Compile Include="Vistas\EventoOrigenView.cs" />
     <Compile Include="Vistas\EventoResponsableView.cs" />
     <Compile Include="Vistas\EventoView.cs" />
+    <Compile Include="Vistas\FeedView.cs" />
     <Compile Include="Vistas\FotoView.cs" />
     <Compile Include="Vistas\GrupoPreguntasView.cs" />
     <Compile Include="Vistas\IntervencionView.cs" />
