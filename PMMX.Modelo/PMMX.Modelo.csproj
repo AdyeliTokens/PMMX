@@ -222,6 +222,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RespuestaGenerica\RespuestaServicio.cs" />
     <Compile Include="Servicios\IAccountServicio.cs" />
+    <Compile Include="Vistas\ActividadEnDefectoView.cs" />
+    <Compile Include="Vistas\ActividadEnParoView.cs" />
     <Compile Include="Vistas\BitacoraGembaWalk.cs" />
     <Compile Include="Vistas\BitacoraVentanaView.cs" />
     <Compile Include="Vistas\BussinesUnitView.cs" />

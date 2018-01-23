@@ -11,8 +11,8 @@ namespace PMMX.Modelo.Vistas
     public class FeedView
     {
         public DateTime Fecha { get; set; }
-        public ActividadEnParo actividadEnParo { get; set; }
-        public ActividadEnDefecto actividadEnDefecto { get; set; }
+        public ActividadEnParoView actividadEnParo { get; set; }
+        public ActividadEnDefectoView actividadEnDefecto { get; set; }
 
     }
 }
