@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Sitio.Areas.HelpPage.ModelDescriptions
 {
@@ -13,6 +14,7 @@ namespace Sitio.Areas.HelpPage.ModelDescriptions
             Name = name;
         }
 
+        [StringLength(250)]
         public string Name { get; private set; }
     }
 }

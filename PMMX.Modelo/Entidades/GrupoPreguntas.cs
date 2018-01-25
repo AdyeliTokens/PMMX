@@ -14,6 +14,8 @@ namespace PMMX.Modelo.Entidades
     public class GrupoPreguntas
     {
         public int Id { get; set; }
+
+        [StringLength(250)]
         public string Nombre { get; set; }
         public bool DDS { get; set; }
         public int IdCategoria { get; set; }

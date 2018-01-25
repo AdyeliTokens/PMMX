@@ -323,7 +323,7 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
             }
 
             paro.IdMecanico = idMecanico;
-            ActividadEnParo actividad = new ActividadEnParo() { IdParo = id, Fecha = DateTime.Now, IdPersona = idMecanico, Descripcion = "Asignacion de paro" };
+            ActividadEnParo actividad = new ActividadEnParo() { IdParo = id, Fecha = DateTime.Now, IdPersona = idMecanico, Descripcion = "Nueva Asignacion dentro de una Falla!!" };
             if (paro.ActividadesEnParo == null)
             {
                 paro.ActividadesEnParo = new List<ActividadEnParo>() { actividad };
@@ -415,7 +415,7 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
 
             paro.Motivo = motivo;
 
-            ActividadEnParo actividad = new ActividadEnParo() { IdParo = id, Fecha = DateTime.Now, IdPersona = idMecanico, Descripcion = "Motivo de Paro: " + motivo };
+            ActividadEnParo actividad = new ActividadEnParo() { IdParo = id, Fecha = DateTime.Now, IdPersona = idMecanico, Descripcion = "Se cambio el motivo del la Falla!!"};
             if (paro.ActividadesEnParo == null)
             {
                 paro.ActividadesEnParo = new List<ActividadEnParo>() { actividad };
@@ -536,7 +536,15 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
             }
 
             paro.Activo = activo;
-            ActividadEnParo actividad = new ActividadEnParo() { IdParo = id, Fecha = DateTime.Now, IdPersona = idPersona, Descripcion = "Cambio de Activo en paro" };
+            string descripcion = "";
+            if (activo)
+            {
+                descripcion = "Se Abrio nuevamente una Falla reportada!!";
+            }
+            else {
+                descripcion = "Falla cerrada!!";
+            }
+            ActividadEnParo actividad = new ActividadEnParo() { IdParo = id, Fecha = DateTime.Now, IdPersona = idPersona, Descripcion = descripcion };
             if (paro.ActividadesEnParo == null)
             {
                 paro.ActividadesEnParo = new List<ActividadEnParo>() { actividad };
@@ -642,7 +650,7 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
             paro.Motivo = "";
             
             List<ActividadEnParo> actividades = new List<ActividadEnParo>();
-            actividades.Add(new ActividadEnParo { Fecha = DateTime.Now, Descripcion = "Reporte de Paro", IdPersona = paro.IdReportador });
+            actividades.Add(new ActividadEnParo { Fecha = DateTime.Now, Descripcion = "Nueva Falla reportada!!", IdPersona = paro.IdReportador });
             List<TiempoDeParo> tiempoDeParo = new List<TiempoDeParo>();
             tiempoDeParo.Add(new TiempoDeParo { Inicio = DateTime.Now });
             paro.ActividadesEnParo = actividades;

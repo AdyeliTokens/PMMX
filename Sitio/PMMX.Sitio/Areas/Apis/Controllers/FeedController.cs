@@ -5,8 +5,8 @@ using System.Web.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PMMX.Modelo.Entidades.Paros;
-using PMMX.Modelo.Entidades.Defectos;
+
+
 
 namespace Sitio.Areas.Apis.Controllers
 {
@@ -14,12 +14,11 @@ namespace Sitio.Areas.Apis.Controllers
     {
 
         private PMMXContext db;
-        //private FeedServicio _servicio;
+
 
         public FeedController()
         {
             db = new PMMXContext();
-            //_servicio = new FeedServicio(db);
         }
 
         #region GET

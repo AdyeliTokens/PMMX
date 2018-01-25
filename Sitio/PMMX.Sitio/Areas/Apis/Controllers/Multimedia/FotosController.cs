@@ -35,9 +35,6 @@ namespace Sitio.Areas.Apis.Controllers.Multimedia
                     var postedFile = httpRequest.Files[file];
                     if (postedFile != null && postedFile.ContentLength > 0)
                     {
-
-                        int MaxContentLength = 1024 * 1024 * 1; //Size = 1 MB  
-
                         IList<string> AllowedFileExtensions = new List<string> { ".jpg", ".gif", ".png" };
                         var ext = postedFile.FileName.Substring(postedFile.FileName.LastIndexOf('.'));
                         var extension = ext.ToLower();
@@ -119,9 +116,6 @@ namespace Sitio.Areas.Apis.Controllers.Multimedia
                     var postedFile = httpRequest.Files[file];
                     if (postedFile != null && postedFile.ContentLength > 0)
                     {
-
-                        int MaxContentLength = 1024 * 1024 * 1; //Size = 1 MB  
-
                         IList<string> AllowedFileExtensions = new List<string> { ".jpg", ".gif", ".png" };
                         var ext = postedFile.FileName.Substring(postedFile.FileName.LastIndexOf('.'));
                         var extension = ext.ToLower();
@@ -203,9 +197,7 @@ namespace Sitio.Areas.Apis.Controllers.Multimedia
                     var postedFile = httpRequest.Files[file];
                     if (postedFile != null && postedFile.ContentLength > 0)
                     {
-
-                        int MaxContentLength = 1024 * 1024 * 1; //Size = 1 MB  
-
+                        
                         IList<string> AllowedFileExtensions = new List<string> { ".jpg", ".gif", ".png" };
                         var ext = postedFile.FileName.Substring(postedFile.FileName.LastIndexOf('.'));
                         var extension = ext.ToLower();
@@ -283,8 +275,6 @@ namespace Sitio.Areas.Apis.Controllers.Multimedia
                     var postedFile = httpRequest.Files[file];
                     if (postedFile != null && postedFile.ContentLength > 0)
                     {
-
-                        int MaxContentLength = 1024 * 1024 * 1; //Size = 1 MB  
 
                         IList<string> AllowedFileExtensions = new List<string> { ".jpg", ".gif", ".png" };
                         var ext = postedFile.FileName.Substring(postedFile.FileName.LastIndexOf('.'));
@@ -366,9 +356,6 @@ namespace Sitio.Areas.Apis.Controllers.Multimedia
                     var postedFile = httpRequest.Files[file];
                     if (postedFile != null && postedFile.ContentLength > 0)
                     {
-
-                        int MaxContentLength = 1024 * 1024 * 1; //Size = 1 MB  
-
                         IList<string> AllowedFileExtensions = new List<string> { ".jpg", ".gif", ".png" };
                         var ext = postedFile.FileName.Substring(postedFile.FileName.LastIndexOf('.'));
                         var extension = ext.ToLower();

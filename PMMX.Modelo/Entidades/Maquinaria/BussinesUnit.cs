@@ -3,6 +3,7 @@ using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo.Entidades.Paros;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -13,13 +14,17 @@ namespace PMMX.Modelo.Entidades.Maquinaria
     /// </summary>
     public class BussinesUnit
     {
-        
+
         #region Propiedades
 
         public int Id { get; set; }
         public int IdResponsable { get; set; }
         public int IdArea { get; set; }
+
+        [StringLength(250)]
         public string Nombre { get; set; }
+
+        [StringLength(250)]
         public string NombreCorto { get; set; }
         public Boolean Activo { get; set; }
 

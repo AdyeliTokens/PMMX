@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PMMX.Modelo.Entidades.Operaciones;
+using System.ComponentModel.DataAnnotations;
 
 namespace PMMX.Modelo.Entidades.Operaciones
 {
@@ -16,6 +17,8 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public int IdEvento { get; set; }
         public int IdReportador { get; set; }
         public int IdOrigen { get; set; }
+
+        [StringLength(250)]
         public string Descripcion { get; set; }
         public DateTime FechaReporte { get; set; }
         public DateTime FechaEstimada { get; set; }

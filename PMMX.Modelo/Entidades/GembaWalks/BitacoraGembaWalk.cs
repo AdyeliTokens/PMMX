@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo.Entidades.Warehouse;
+using System.ComponentModel.DataAnnotations;
 
 namespace PMMX.Modelo.Entidades.Operaciones
 {
@@ -19,7 +20,9 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public int IdResponsable { get; set; }
         public int? IdRechazo { get; set; }
         public DateTime Fecha { get; set; }
-        public String Comentario { get; set; }
+
+        [StringLength(250)]
+        public string Comentario { get; set; }
         #endregion
 
         #region Navegacion
