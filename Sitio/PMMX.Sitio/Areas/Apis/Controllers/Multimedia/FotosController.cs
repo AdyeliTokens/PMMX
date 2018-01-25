@@ -68,7 +68,6 @@ namespace Sitio.Areas.Apis.Controllers.Multimedia
                             foto.Fecha = DateTime.Now;
                             foto.Path = pathString + extension;
                             
-                            foto.IdMantenimiento = 0;
                             foto.Defectos = new List<Defecto>
                             {
                                 db.Defectos.Find(IdDefecto)
@@ -149,7 +148,6 @@ namespace Sitio.Areas.Apis.Controllers.Multimedia
                             foto.Fecha = DateTime.Now;
                             foto.Path = pathString + extension;
                             
-                            foto.IdMantenimiento = 0;
                             foto.Origenes = new List<Origen>
                             {
                                 db.Origens.Find(IdOrigen)
@@ -231,7 +229,6 @@ namespace Sitio.Areas.Apis.Controllers.Multimedia
                             foto.Fecha = DateTime.Now;
                             foto.Path = pathString + extension;
                             
-                            foto.IdMantenimiento = 0;
                             foto.Personas = new List<Persona>
                             {
                                 db.Personas.Find(IdPersona)
@@ -309,7 +306,6 @@ namespace Sitio.Areas.Apis.Controllers.Multimedia
                             foto.Fecha = DateTime.Now;
                             foto.Path = pathString + extension;
                             
-                            foto.IdMantenimiento = 0;
                             foto.GembaWalks = new List<GembaWalk>
                             {
                                 db.GembaWalk.Find(IdGembaWalk)
@@ -386,7 +382,6 @@ namespace Sitio.Areas.Apis.Controllers.Multimedia
 
                             Foto foto = new Foto();
                             foto.Path = pathString + extension;
-                            foto.IdMantenimiento = IdMantenimiento;
                             
                             foto.Nombre = IdMantenimiento.ToString() + extension;
 

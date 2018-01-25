@@ -28,6 +28,6 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public Persona Responsable { get; set; }
         public Origen Origen { get; set; }
 
-        public List<Foto> Fotos { get; set; }
+        
     }
 }

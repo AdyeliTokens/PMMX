@@ -139,14 +139,7 @@ namespace PMMX.Operaciones.Servicios
 
                         }
 
-                    },
-                    Fotos = d.Fotos.Select(f => new FotoView
-                    {
-                        Id = f.Id,
-                        Nombre = f.Nombre,
-                        Path = f.Path
-                        
-                    }).ToList()
+                    }
                 }).FirstOrDefault();
             if (Mantenimiento != null)
             {
