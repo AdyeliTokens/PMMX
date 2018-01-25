@@ -19,8 +19,14 @@ namespace PMMX.Modelo.Entidades
         #region Propiedades
         public int Id { get; set; }
         public int IdPuesto { get; set; }
+
+        [StringLength(250)]
         public string Nombre { get; set; }
+
+        [StringLength(250)]
         public string Apellido1 { get; set; }
+
+        [StringLength(250)]
         public string Apellido2 { get; set; }
         public bool Activo { get; set; }
 

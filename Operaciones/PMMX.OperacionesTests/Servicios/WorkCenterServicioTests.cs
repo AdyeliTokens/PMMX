@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Configuration;
+using System.Configuration;
 
 namespace PMMX.Operaciones.Servicios.Tests
 {
@@ -15,9 +16,11 @@ namespace PMMX.Operaciones.Servicios.Tests
     {
         private readonly WorkCenterServicio _servicio;
         private readonly PMMXContext _context;
+        
 
         public WorkCenterServicioTests()
         {
+            
             _context = new PMMXContext();
             _servicio = new WorkCenterServicio(_context);
 

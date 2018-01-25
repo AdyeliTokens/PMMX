@@ -144,8 +144,8 @@ namespace PMMX.Operaciones.Servicios
                     {
                         Id = f.Id,
                         Nombre = f.Nombre,
-                        Path = f.Path,
-                        IdMantenimiento = f.IdMantenimiento
+                        Path = f.Path
+                        
                     }).ToList()
                 }).FirstOrDefault();
             if (Mantenimiento != null)

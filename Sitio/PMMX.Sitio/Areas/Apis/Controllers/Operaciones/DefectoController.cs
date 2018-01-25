@@ -307,6 +307,18 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
                 return NotFound();
             }
 
+            ActividadEnDefecto actividad = new ActividadEnDefecto();
+            if (activo)
+            {
+                actividad.Descripcion = "Defecto Abierto nuevamente!!";
+            }
+            else {
+                actividad.Descripcion = "Defecto Cerrado!!";
+            }
+            actividad.IdEjecutante = defecto.IdReportador;
+            actividad.Fecha = DateTime.Now;
+            defecto.Actividades = new List<ActividadEnDefecto>();
+            defecto.Actividades.Add(actividad);
 
             defecto.Activo = activo;
             db.Entry(defecto).State = EntityState.Modified;
@@ -383,6 +395,15 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
             }
             DateTime fechaEstimada = new DateTime(year, mes, dia);
 
+
+            ActividadEnDefecto actividad = new ActividadEnDefecto();
+            actividad.Descripcion = "Nueva Fecha Estimada";
+            actividad.IdEjecutante = defecto.IdReportador;
+            actividad.Fecha = DateTime.Now;
+            defecto.Actividades = new List<ActividadEnDefecto>();
+            defecto.Actividades.Add(actividad);
+
+
             defecto.FechaEstimada = fechaEstimada;
             db.Entry(defecto).State = EntityState.Modified;
             db.SaveChanges();
@@ -456,6 +477,13 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
             {
                 return NotFound();
             }
+
+            ActividadEnDefecto actividad = new ActividadEnDefecto();
+            actividad.Descripcion = "Nueva Asignacion a Defecto";
+            actividad.IdEjecutante = defecto.IdReportador;
+            actividad.Fecha = DateTime.Now;
+            defecto.Actividades = new List<ActividadEnDefecto>();
+            defecto.Actividades.Add(actividad);
 
             defecto.IdResponsable = idResponsable;
             db.SaveChanges();

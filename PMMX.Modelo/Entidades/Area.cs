@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace PMMX.Modelo.Entidades.Operaciones
 {
@@ -12,7 +13,11 @@ namespace PMMX.Modelo.Entidades.Operaciones
     {
         #region Propiedades
         public int Id { get; set; }
+
+        [StringLength(250)]
         public string Nombre { get; set; }
+
+        [StringLength(250)]
         public string NombreCorto { get; set; }
         public int IdResponsable { get; set; }
         public bool Activo { get; set; }

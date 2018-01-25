@@ -1,6 +1,7 @@
 ﻿using PMMX.Modelo.Vistas;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -15,7 +16,9 @@ namespace PMMX.Modelo.Vistas
         public int IdResponsable { get; set; }
         public int? IdRechazo { get; set; }
         public DateTime Fecha { get; set; }
-        public String Comentario { get; set; }
+
+        [StringLength(250)]
+        public string Comentario { get; set; }
         #endregion
 
         #region Navegacion

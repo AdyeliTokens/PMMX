@@ -12,6 +12,8 @@ namespace PMMX.Modelo.Entidades.Warehouse
         #region Propiedades
         public int Id { get; set; }
         public int IdStatus { get; set; }
+
+        [StringLength(250)]
         public string Nombre { get; set; }
         public bool Activo { get; set; }
         #endregion

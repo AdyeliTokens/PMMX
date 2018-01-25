@@ -11,6 +11,8 @@ namespace PMMX.Modelo.Entidades
     public class Entorno
     {
         public int Id { get; set; }
+
+        [StringLength(250)]
         public string Nombre { get; set; }
         public Boolean Activo { get; set; }
 

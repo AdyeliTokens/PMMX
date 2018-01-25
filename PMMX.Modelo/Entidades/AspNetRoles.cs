@@ -9,6 +9,8 @@ namespace PMMX.Modelo.Entidades
     public class AspNetRoles
     {
         public int Id { get; set; }
+
+        [StringLength(250)]
         public string Name { get; set; }
     }
 }

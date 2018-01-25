@@ -1,10 +1,13 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace PMMX.Modelo.Vistas
 {
     public class NoConformidadView
     {
         public int Id { get; set; }
+
+        [StringLength(250)]
         public string Descripcion { get; set; }
         public int Calificacion_Low { get; set; }
         public int Calificacion_High { get; set; }

@@ -20,7 +20,6 @@ namespace PMMX.Modelo.Map
             Property(c => c.Id).HasColumnName("Id");
             Property(c => c.IdModulo).HasColumnName("IdModulo");
             Property(c => c.IdWorkCenter).HasColumnName("IdWorkCenter");
-            Property(c => c.Foto).HasColumnName("Foto");
             Property(c => c.Orden).HasColumnName("Orden");
 
             #endregion

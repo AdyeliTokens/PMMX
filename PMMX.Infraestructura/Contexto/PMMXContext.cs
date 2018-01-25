@@ -11,6 +11,7 @@ using PMMX.Modelo.Map;
 using PMMX.Modelo.Map.InsiteLAC;
 
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace PMMX.Infraestructura.Contexto
 {
@@ -32,6 +33,7 @@ namespace PMMX.Infraestructura.Contexto
             Database.SetInitializer<PMMXContext>(new CreateDatabaseIfNotExists<PMMXContext>());
 
         }
+        
 
         /// <summary>
         /// Contructor "Estatico" que retorna la entidad creada sin necesidad de intanciar previamente
@@ -141,6 +143,8 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new StatusVentanaMap());
             modelBuilder.Configurations.Add(new BitacoraGembaWalkMap());
             modelBuilder.Configurations.Add(new WorkFlowMap());
+
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
         }
 

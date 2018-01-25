@@ -1,11 +1,14 @@
 ﻿using PMMX.Modelo.Entidades.Maquinaria;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace PMMX.Modelo.Entidades
 {
     public class NoConformidad
     {
         public int Id { get; set; }
+
+        [StringLength(250)]
         public string Descripcion { get; set; }
         public int Calificacion_Low { get; set; }
         public int Calificacion_High { get; set; }

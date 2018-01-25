@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PMMX.Infraestructura.Contexto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,13 @@ namespace Sitio.Controllers
 {
     public class ProfileController : Controller
     {
+        private PMMXContext _context;
+
+        public ProfileController() {
+            _context = new PMMXContext();
+        }
+
+
         // GET: Profile
         public ActionResult Index()
         {
@@ -17,11 +25,11 @@ namespace Sitio.Controllers
         // GET: Profile/Details/5
         public ActionResult Details(int id)
         {
-            
+            var persona = _context.Personas.Where(p => p.Id == id).FirstOrDefault();
             if (Request.IsAjaxRequest())
-                return PartialView();
+                return PartialView(persona);
             else
-                return View();
+                return View(persona);
             
         }
 

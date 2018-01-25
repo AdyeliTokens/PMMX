@@ -14,6 +14,8 @@ namespace PMMX.Modelo.Vistas
         public int IdReportador { get; set; }
         public int IdEvento { get; set; }
         public int IdOrigen { get; set; }
+
+        [StringLength(250)]
         public string Descripcion { get; set; }
         public Boolean Activo { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]

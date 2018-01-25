@@ -9,6 +9,7 @@ using PMMX.Infraestructura.Helpers;
 using System.Collections.Generic;
 using PMMX.Modelo.Entidades;
 using PMMX.Modelo.Entidades.Maquinaria;
+using System;
 
 namespace PMMX.Operaciones.Servicios
 {
@@ -191,6 +192,14 @@ namespace PMMX.Operaciones.Servicios
                 return respuesta;
             }
 
+            ActividadEnDefecto actividad = new ActividadEnDefecto();
+            actividad.Descripcion = "#SAP Actualizado!!";
+            actividad.IdEjecutante = defecto.IdReportador;
+            actividad.Fecha = DateTime.Now;
+            defecto.Actividades = new List<ActividadEnDefecto>();
+            defecto.Actividades.Add(actividad);
+
+
             defecto.NotificacionSAP = NotificacionSAP;
             _context.Entry(defecto).State = EntityState.Modified;
 
@@ -222,8 +231,16 @@ namespace PMMX.Operaciones.Servicios
                 respuesta.Mensaje = "El defecto no puede ser null al momento de guardar";
                 return respuesta;
             }
+            ActividadEnDefecto actividad = new ActividadEnDefecto();
+            actividad.Descripcion = "Nuevo defecto Reportado!!";
+            actividad.IdEjecutante = defecto.IdReportador;
+            actividad.Fecha = DateTime.Now;
+            defecto.Actividades = new List<ActividadEnDefecto>();
+            defecto.Actividades.Add(actividad);
             try
             {
+                
+
                 _context.Defectos.Add(defecto);
                 _context.SaveChanges();
 

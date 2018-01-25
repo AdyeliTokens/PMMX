@@ -12,6 +12,8 @@ namespace PMMX.Modelo.Vistas
     public class EventoView
     {
         public int Id { get; set; }
+
+        [StringLength(250)]
         public string Descripcion { get; set; }
         public int IdAsignador { get; set; }
         public int IdCategoria { get; set; }
@@ -19,6 +21,8 @@ namespace PMMX.Modelo.Vistas
         public DateTime FechaInicio { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]
         public DateTime FechaFin { get; set; }
+
+        [StringLength(250)]
         public string Nota { get; set; }
         public bool EsRecurrente { get; set; }
         public bool Activo { get; set; }

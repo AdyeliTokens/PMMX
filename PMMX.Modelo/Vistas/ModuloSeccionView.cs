@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PMMX.Modelo.Vistas
 {
@@ -6,6 +7,8 @@ namespace PMMX.Modelo.Vistas
     {
         #region Propiedades
         public int Id { get; set; }
+
+        [StringLength(250)]
         public string Nombre { get; set; }
         public bool Activo { get; set; }
         #endregion

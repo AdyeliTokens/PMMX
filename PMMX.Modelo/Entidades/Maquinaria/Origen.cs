@@ -18,7 +18,6 @@ namespace PMMX.Modelo.Entidades.Maquinaria
         public int Id { get; set; }
         public int? IdModulo { get; set; }
         public int IdWorkCenter { get; set; }
-        public string Foto { get; set; }
         public int? Orden { get; set; }
 
         #endregion

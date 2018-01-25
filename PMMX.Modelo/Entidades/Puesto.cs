@@ -13,7 +13,8 @@ namespace PMMX.Modelo.Entidades
     public class Puesto
     {
         public int Id { get; set; }
-        
+
+        [StringLength(250)]
         public string Nombre { get; set; }
         public Boolean Activo { get; set; }
 

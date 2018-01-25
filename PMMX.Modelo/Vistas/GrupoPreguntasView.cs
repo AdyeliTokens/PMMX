@@ -2,6 +2,7 @@
 using PMMX.Modelo.Entidades.Maquinaria;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -10,6 +11,8 @@ namespace PMMX.Modelo.Vistas
     public class GrupoPreguntasView
     {
         public int Id { get; set; }
+
+        [StringLength(250)]
         public string Nombre { get; set; }
         public bool DDS { get; set; }
         public int IdCategoria { get; set; }

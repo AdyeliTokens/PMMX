@@ -8,6 +8,7 @@ using Microsoft.Owin.Security;
 using PMMX.Modelo.Account;
 using Sitio.Models;
 using Sitio.Helpers;
+using System.ComponentModel.DataAnnotations;
 
 namespace Sitio.Areas.Seguridad.Controllers
 {
@@ -463,9 +464,11 @@ namespace Sitio.Areas.Seguridad.Controllers
                 RedirectUri = redirectUri;
                 UserId = userId;
             }
-
+            [StringLength(250)]
             public string LoginProvider { get; set; }
+            [StringLength(250)]
             public string RedirectUri { get; set; }
+            [StringLength(250)]
             public string UserId { get; set; }
 
             public override void ExecuteResult(ControllerContext context)
