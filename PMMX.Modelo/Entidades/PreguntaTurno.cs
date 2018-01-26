@@ -20,7 +20,7 @@ namespace PMMX.Modelo.Entidades
 
         public Pregunta Pregunta { get; set; }
         public Origen Origen { get; set; }
-        public GrupoPreguntas HealthCheck { get; set; }
+        public GrupoPreguntas GrupoPregunta { get; set; }
         public ICollection<Respuesta> Respuestas { get; set; }
         public Dia Dia { get; set; }
         public Turno Turno { get; set; }

@@ -19,7 +19,7 @@ namespace PMMX.Modelo.Entidades
 
         public Puesto Puesto { get; set; }
         public Origen Origen { get; set; }
-        public GrupoPreguntas HealthCheck { get; set; }
+        public GrupoPreguntas GrupoPregunta { get; set; }
         
     }
 }

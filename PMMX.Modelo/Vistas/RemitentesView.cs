@@ -16,11 +16,11 @@ namespace PMMX.Modelo.Vistas
 
         public string Email { get; set; }
         public string NombreWorkCenter { get; set; }
-        public string NombreHealthcheck { get; set; }
+        public string NombreGrupoPregunta { get; set; }
 
         public PuestoView Puesto { get; set; }
         public OrigenView Origen { get; set; }
-        public GrupoPreguntasView HealthCheck { get; set; }
+        public GrupoPreguntasView GrupoPregunta { get; set; }
 
         public ICollection<PersonaView> Destinatarios { get; set; }
     }

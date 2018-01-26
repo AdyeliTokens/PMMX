@@ -22,8 +22,8 @@ namespace PMMX.Modelo.Map
             this.HasRequired(c => c.Categoria).WithMany(p => p.GrupoPreguntas);
 
             this.HasMany(c => c.WorkCenters).WithMany(p => p.Formatos);
-            this.HasMany(c => c.PreguntaTurno).WithRequired(x => x.HealthCheck);
-            this.HasMany(c => c.Remitentes).WithRequired(p => p.HealthCheck).HasForeignKey(c => c.IdGrupo);
+            this.HasMany(c => c.PreguntaTurno).WithRequired(x => x.GrupoPregunta);
+            this.HasMany(c => c.Remitentes).WithRequired(p => p.GrupoPregunta).HasForeignKey(c => c.IdGrupo);
         }
 
     }
