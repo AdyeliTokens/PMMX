@@ -38,7 +38,6 @@ namespace PMMX.Operaciones.Servicios.Tests
         [DataRow(12)]
         [DataRow(6)]
         [DataRow(3)]
-        [DataRow(0)]
         public void GetWorkCenterTest(int idWorkCenter)
         {
             var respuesta = _servicio.GetWorkCenter(idWorkCenter);
@@ -47,10 +46,11 @@ namespace PMMX.Operaciones.Servicios.Tests
         }
 
         [TestMethod()]
+        [DataRow(12)]
+        [DataRow(6)]
+        [DataRow(3)]
         public void GetWorkCentersByPersonaTest(int idPersona)
         {
-            PMMXContext _context = new PMMXContext();
-            WorkCenterServicio _servicio = new WorkCenterServicio(_context);
             var respuesta = _servicio.GetWorkCentersByPersona(idPersona);
 
             Assert.IsNotNull(respuesta);
@@ -65,6 +65,9 @@ namespace PMMX.Operaciones.Servicios.Tests
         [TestMethod()]
         public void ActualizarWorkCenterTest()
         {
+            //var respuesta = _servicio.ActualizarWorkCenter();
+
+
             Assert.Fail();
         }
 

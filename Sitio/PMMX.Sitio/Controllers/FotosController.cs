@@ -162,8 +162,8 @@ namespace Sitio.Controllers
             IRespuestaServicio<Persona> persona = personaServicio.GetPersona(idUser);
             if (persona.EjecucionCorrecta)
             {
-                var fotos = db.Personas.Where(p => p.Id == persona.Respuesta.Id).Select(p => p.FotosPersonales.Where(f => f.Fecha != null)).FirstOrDefault();
-
+                var query = db.Personas.Where(p => p.Id == persona.Respuesta.Id).Select(p => p.FotosPersonales.Where(f => f.Fecha != null));
+                var fotos = query.FirstOrDefault();
                 if (fotos.Count() > 0)
                 {
                     folderName = fotos.OrderByDescending(w => w.Fecha).FirstOrDefault().Path;

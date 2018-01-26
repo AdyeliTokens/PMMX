@@ -100,51 +100,53 @@ namespace PMMX.Operaciones.Servicios
         {
             RespuestaServicio<List<WorkCenterView>> respuesta = new RespuestaServicio<List<WorkCenterView>>();
 
-            List<WorkCenterView> workCenters = _context.WorkCenters.Select(x => new WorkCenterView
-            {
-                Id = x.Id,
-                Nombre = x.Nombre,
-                NombreCorto = x.NombreCorto,
-                Activo = x.Activo,
-                IdBussinesUnit = x.IdBussinesUnit,
-                BussinesUnit = new BussinesUnitView
+            List<WorkCenterView> workCenters = _context.WorkCenters
+                .Where(b => b.Operadores.Any(u => u.Id == idPersona))
+                .Select(x => new WorkCenterView
                 {
-                    Id = x.BussinesUnit.Id,
-                    Nombre = x.BussinesUnit.Nombre,
-                    NombreCorto = x.BussinesUnit.NombreCorto,
-                    Activo = x.BussinesUnit.Activo,
-                    IdResponsable = x.BussinesUnit.IdResponsable,
-                    Responsable = new PersonaView
+                    Id = x.Id,
+                    Nombre = x.Nombre,
+                    NombreCorto = x.NombreCorto,
+                    Activo = x.Activo,
+                    IdBussinesUnit = x.IdBussinesUnit,
+                    BussinesUnit = new BussinesUnitView
                     {
-                        Id = x.BussinesUnit.Responsable.Id,
-                        Nombre = x.BussinesUnit.Responsable.Nombre,
-                        Apellido1 = x.BussinesUnit.Responsable.Apellido1,
-                        Apellido2 = x.BussinesUnit.Responsable.Apellido2
-                    }
-
-                },
-                Modulos = x.Origenes.Where(o => (o.IdModulo > 0 && o.IdModulo != null)).Select(o => new OrigenView
-                {
-                    Id = o.Id,
-                    IdModulo = o.IdModulo,
-                    IdWorkCenter = o.IdWorkCenter,
-                    Orden = o.Orden,
-                    DefectosActivos = o.Defectos.Where(d => d.Activo == true).Count(),
-                    ParosActivos = o.Paros.Where(p => p.Activo == true).Count(),
-                    Modulo = new ModuloView
-                    {
-                        Id = o.Modulo.Id,
-                        Nombre = o.Modulo.Nombre,
-                        NombreCorto = o.Modulo.NombreCorto,
-                        Seccion = new ModuloSeccionView
+                        Id = x.BussinesUnit.Id,
+                        Nombre = x.BussinesUnit.Nombre,
+                        NombreCorto = x.BussinesUnit.NombreCorto,
+                        Activo = x.BussinesUnit.Activo,
+                        IdResponsable = x.BussinesUnit.IdResponsable,
+                        Responsable = new PersonaView
                         {
-
+                            Id = x.BussinesUnit.Responsable.Id,
+                            Nombre = x.BussinesUnit.Responsable.Nombre,
+                            Apellido1 = x.BussinesUnit.Responsable.Apellido1,
+                            Apellido2 = x.BussinesUnit.Responsable.Apellido2
                         }
 
-                    }
-                }).ToList()
-            }
-            ).Where(x => x.Operadores.Any(u => u.Id == idPersona)).ToList();
+                    },
+                    Modulos = x.Origenes.Where(o => (o.IdModulo > 0 && o.IdModulo != null)).Select(o => new OrigenView
+                    {
+                        Id = o.Id,
+                        IdModulo = o.IdModulo,
+                        IdWorkCenter = o.IdWorkCenter,
+                        Orden = o.Orden,
+                        DefectosActivos = o.Defectos.Where(d => d.Activo == true).Count(),
+                        ParosActivos = o.Paros.Where(p => p.Activo == true).Count(),
+                        Modulo = new ModuloView
+                        {
+                            Id = o.Modulo.Id,
+                            Nombre = o.Modulo.Nombre,
+                            NombreCorto = o.Modulo.NombreCorto,
+                            Seccion = new ModuloSeccionView
+                            {
+
+                            }
+
+                        }
+                    }).ToList()
+                }
+            ).ToList();
             if (workCenters != null)
             {
                 respuesta.Respuesta = workCenters;
