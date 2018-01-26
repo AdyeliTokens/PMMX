@@ -55,7 +55,7 @@ namespace Sitio.Helpers
 
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         [System.Web.Http.HttpGet]
-        public string PostSendGmailParameters(int idOrigen, int idHealthCheck, List<PMMX.Modelo.Vistas.RespuestaView> lista)
+        public string PostSendGmailParameters(int idOrigen, int IdGrupo, List<PMMX.Modelo.Vistas.RespuestaView> lista)
         {
             SmtpClient client = new SmtpClient();
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
@@ -72,7 +72,7 @@ namespace Sitio.Helpers
             msg.From = new MailAddress("pmm.isoperation@gmail.com", "maya@pmi.com");
 
             var elements = db.Remitentes
-                .Where(q => (q.IdHealthCheck.Equals(idHealthCheck)) && (q.Origen.Id.Equals(idOrigen)))
+                .Where(q => (q.IdGrupo.Equals(IdGrupo)) && (q.Origen.Id.Equals(idOrigen)))
                 .Select(x => new RemitentesView
                 {
                     NombreHealthcheck = x.HealthCheck.Nombre,
@@ -84,7 +84,7 @@ namespace Sitio.Helpers
                r => r.IdPuesto,
                p => p.Persona.Puesto.Id,
                (r, p) => new { Remitentes = r, User = p })
-               .Where(q => (q.Remitentes.IdHealthCheck.Equals(idHealthCheck)) && (q.Remitentes.Origen.Id.Equals(idOrigen)))
+               .Where(q => (q.Remitentes.IdGrupo.Equals(IdGrupo)) && (q.Remitentes.Origen.Id.Equals(idOrigen)))
                .Select( x => new UserView {
                    Email = x.User.Email
                })

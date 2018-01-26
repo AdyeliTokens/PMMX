@@ -11,7 +11,7 @@ namespace PMMX.Modelo.Vistas
         public int Id { get; set; }
         public int IdPuesto { get; set; }
         public int IdOrigen { get; set; }
-        public int IdHealthCheck { get; set; }
+        public int IdGrupo { get; set; }
         public bool Activo { get; set; }
 
         public string Email { get; set; }

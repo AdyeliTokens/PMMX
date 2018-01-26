@@ -16,7 +16,7 @@ namespace PMMX.Modelo.Entidades
         public bool Activo { get; set; }
         public int IdDia { get; set; }
         public int IdTurno { get; set; }
-        public int IdHealthCheck { get; set; }
+        public int IdGrupo { get; set; }
 
         public Pregunta Pregunta { get; set; }
         public Origen Origen { get; set; }

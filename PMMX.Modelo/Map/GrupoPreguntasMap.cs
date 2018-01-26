@@ -23,7 +23,7 @@ namespace PMMX.Modelo.Map
 
             this.HasMany(c => c.WorkCenters).WithMany(p => p.Formatos);
             this.HasMany(c => c.PreguntaTurno).WithRequired(x => x.HealthCheck);
-            this.HasMany(c => c.Remitentes).WithRequired(p => p.HealthCheck).HasForeignKey(c => c.IdHealthCheck);
+            this.HasMany(c => c.Remitentes).WithRequired(p => p.HealthCheck).HasForeignKey(c => c.IdGrupo);
         }
 
     }

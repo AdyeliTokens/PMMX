@@ -18,13 +18,13 @@ namespace PMMX.Modelo.Map
             this.Property(c => c.IdDia).HasColumnName("IdDia");
             this.Property(c => c.IdTurno).HasColumnName("IdTurno");
             this.Property(c => c.IdOrigen).HasColumnName("IdModuloWorkCenter");
-            this.Property(c => c.IdHealthCheck).HasColumnName("IdHealthCheck");
+            this.Property(c => c.IdGrupo).HasColumnName("IdGrupo");
             this.Property(c => c.Activo).HasColumnName("Activo");
 
             this.HasRequired(c => c.Origen).WithMany(x => x.PreguntaTurno).HasForeignKey(c => c.IdOrigen);
             this.HasRequired(c => c.Dia).WithMany(x => x.PreguntasTurno).HasForeignKey(c => c.IdDia);
             this.HasRequired(c => c.Turno).WithMany(x => x.PreguntaTurno).HasForeignKey(c => c.IdTurno);
-            this.HasRequired(c => c.HealthCheck).WithMany(x => x.PreguntaTurno).HasForeignKey(c => c.IdHealthCheck);
+            this.HasRequired(c => c.HealthCheck).WithMany(x => x.PreguntaTurno).HasForeignKey(c => c.IdGrupo);
 
             this.HasMany(c => c.Respuestas).WithMany(x => x.PreguntasTurno);
 
