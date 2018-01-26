@@ -55,7 +55,7 @@ namespace Sitio.Helpers
 
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         [System.Web.Http.HttpGet]
-        public string PostSendGmailParameters(int idOrigen, int idHealthCheck, List<PMMX.Modelo.Vistas.RespuestaView> lista)
+        public string PostSendGmailParameters(int idOrigen, int IdGrupo, List<PMMX.Modelo.Vistas.RespuestaView> lista)
         {
             SmtpClient client = new SmtpClient();
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
@@ -72,10 +72,10 @@ namespace Sitio.Helpers
             msg.From = new MailAddress("pmm.isoperation@gmail.com", "maya@pmi.com");
 
             var elements = db.Remitentes
-                .Where(q => (q.IdHealthCheck.Equals(idHealthCheck)) && (q.Origen.Id.Equals(idOrigen)))
+                .Where(q => (q.IdGrupo.Equals(IdGrupo)) && (q.Origen.Id.Equals(idOrigen)))
                 .Select(x => new RemitentesView
                 {
-                    NombreHealthcheck = x.HealthCheck.Nombre,
+                    NombreGrupoPregunta = x.GrupoPregunta.Nombre,
                     NombreWorkCenter = x.Origen.WorkCenter.Nombre
                 }).FirstOrDefault();
             
@@ -84,7 +84,7 @@ namespace Sitio.Helpers
                r => r.IdPuesto,
                p => p.Persona.Puesto.Id,
                (r, p) => new { Remitentes = r, User = p })
-               .Where(q => (q.Remitentes.IdHealthCheck.Equals(idHealthCheck)) && (q.Remitentes.Origen.Id.Equals(idOrigen)))
+               .Where(q => (q.Remitentes.IdGrupo.Equals(IdGrupo)) && (q.Remitentes.Origen.Id.Equals(idOrigen)))
                .Select( x => new UserView {
                    Email = x.User.Email
                })
@@ -98,7 +98,7 @@ namespace Sitio.Helpers
             msg.To.Add(new MailAddress("adriana.flores@contracted.pmi.com"));
 
             
-            msg.Subject = "[Health Checks] Info: "+elements.NombreWorkCenter+" " +elements.NombreHealthcheck;
+            msg.Subject = "[Health Checks] Info: "+elements.NombreWorkCenter+" " +elements.NombreGrupoPregunta;
             msg.IsBodyHtml = true;
             msg.Body = string.Format("<html><head><meta charset='UTF-8'></head><body>  ");
             msg.Body = msg.Body + string.Format(" <table border='0' cellpadding='0' cellspacing='0' height='100%' width='100%' bgcolor='#f3f2f2' id='bodyTable'> ");
@@ -107,7 +107,7 @@ namespace Sitio.Helpers
             msg.Body = msg.Body + string.Format(" <tr><td align='center' valign='top'> ");
             msg.Body = msg.Body + string.Format("  <table border='0' cellpadding='20' cellspacing='0' width='100%' id='emailHeader'> ");
             msg.Body = msg.Body + string.Format(" <tr><td align='left' valign='top' > ");
-            msg.Body = msg.Body + string.Format("  <h3> Se ha realizado el Health Check "+elements.NombreHealthcheck+" en el modulo "+elements.NombreWorkCenter+"</h3>");
+            msg.Body = msg.Body + string.Format("  <h3> Se ha realizado el Health Check "+elements.NombreGrupoPregunta+" en el modulo "+elements.NombreWorkCenter+"</h3>");
             msg.Body = msg.Body + string.Format(" </td></tr></table> ");
             msg.Body = msg.Body + string.Format("  </td></tr> ");
             msg.Body = msg.Body + string.Format(" <tr><td align='center' valign='top'> ");

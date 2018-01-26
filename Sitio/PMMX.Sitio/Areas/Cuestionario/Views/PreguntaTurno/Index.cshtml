@@ -41,7 +41,7 @@
                                 @Html.DisplayNameFor(model => model.IdDia)
                             </th>
                             <th style="width:10%">
-                                @Html.DisplayNameFor(model => model.Pregunta.HealthCheck.Nombre)
+                                @Html.DisplayNameFor(model => model.Pregunta.GrupoPregunta.Nombre)
                             </th>
                             <th style="width:5%">
                                 @Html.DisplayNameFor(model => model.Activo)
@@ -68,7 +68,7 @@
                                     @Html.DisplayFor(modelItem => item.IdDia)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Pregunta.HealthCheck.Nombre)
+                                    @Html.DisplayFor(modelItem => item.Pregunta.GrupoPregunta.Nombre)
                                 </td>
                                 <td>
                                     @Html.CheckBoxFor(modelItem => item.Activo)

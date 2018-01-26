@@ -16,12 +16,12 @@ namespace PMMX.Modelo.Map
             this.Property(c => c.Id).HasColumnName("Id");
             this.Property(c => c.IdPuesto).HasColumnName("IdPuesto");
             this.Property(c => c.IdOrigen).HasColumnName("IdOrigen");
-            this.Property(c => c.IdHealthCheck).HasColumnName("IdHealthCheck");
+            this.Property(c => c.IdGrupo).HasColumnName("IdGrupo");
             this.Property(c => c.Activo).HasColumnName("Activo");
             
             this.HasRequired(c => c.Puesto).WithMany(x => x.Remitentes).HasForeignKey(c => c.IdPuesto);
             this.HasRequired(c => c.Origen).WithMany(x => x.Remitentes).HasForeignKey(c => c.IdOrigen);
-            this.HasRequired(c => c.HealthCheck).WithMany(x => x.Remitentes).HasForeignKey(c => c.IdHealthCheck);
+            this.HasRequired(c => c.GrupoPregunta).WithMany(x => x.Remitentes).HasForeignKey(c => c.IdGrupo);
         }
     }
 }

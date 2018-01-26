@@ -24,7 +24,7 @@ namespace PMMX.Seguridad.Servicios.Tests
         }
 
         [TestMethod()]
-        public void GetDispositivosByOrigenAndHealthCheckTest()
+        public void GetDispositivosByOrigenAndGrupoPreguntaTest()
         {
             Assert.Fail();
         }

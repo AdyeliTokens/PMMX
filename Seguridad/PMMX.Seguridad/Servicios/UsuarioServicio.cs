@@ -32,7 +32,7 @@ namespace PMMX.Seguridad.Servicios
 
         public List<DispositivoView> GetDispositivosByOrigenAndGrupoPreguntas(int idOrigen, int idGrupo)
         {
-            /*var dispositivos = db.Remitentes.Where(x => (x.IdHealthCheck == idGrupo))
+            /*var dispositivos = db.Remitentes.Where(x => (x.IdGrupo == idGrupo))
                 .Select(d => d.Puesto.Personas.SelectMany(p => p.Dispositivos.Select(r => new DispositivoView { Llave = r.Llave })).ToList()).FirstOrDefault();
             return dispositivos;*/
             var dispositivos = db.Origens.Where(o => (o.Id == idOrigen))

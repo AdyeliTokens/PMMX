@@ -14,12 +14,12 @@ namespace PMMX.Modelo.Entidades
         public int Id { get; set; }
         public int IdPuesto { get; set; }
         public int IdOrigen { get; set; }
-        public int IdHealthCheck { get; set; }
+        public int IdGrupo { get; set; }
         public bool Activo { get; set; }
 
         public Puesto Puesto { get; set; }
         public Origen Origen { get; set; }
-        public GrupoPreguntas HealthCheck { get; set; }
+        public GrupoPreguntas GrupoPregunta { get; set; }
         
     }
 }
