@@ -33,6 +33,7 @@ namespace Sitio.Areas.Apis.Controllers
         public IHttpActionResult GetOrigens()
         {
             var origens = db.Origens
+                .Where(o => o.IdModulo != null)
                 .Select(o => new OrigenView
                 {
                     Id = o.Id,
