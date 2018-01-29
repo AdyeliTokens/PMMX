@@ -47,7 +47,9 @@ namespace Sitio.Areas.Apis.Controllers
                 Nombre = s.Nombre,
                 NombreCorto = s.NombreCorto,
                 IdCategoria = s.IdCategoria,
-                Activo = s.Activo
+                IdResponsable = s.IdResponsable,
+                IdGrupo = s.Categoria.GrupoPreguntas.Where(g => (g.IdCategoria == idCategoria) && (s.NombreCorto.Equals(g.Nombre))).Select(g => g.Id).FirstOrDefault(),
+                Activo = s.Activo                
             }).ToList();
 
             if (subCategoria == null)
