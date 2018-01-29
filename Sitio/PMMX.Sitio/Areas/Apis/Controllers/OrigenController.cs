@@ -29,9 +29,24 @@ namespace Sitio.Areas.Apis.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        public IQueryable<Origen> GetOrigens()
+        [ResponseType(typeof(List<OrigenView>))]
+        public IHttpActionResult GetOrigens()
         {
-            return db.Origens;
+            var origens = db.Origens
+                .Select(o => new OrigenView
+                {
+                    Id = o.Id,
+                    IdModulo = o.IdModulo,
+                    IdWorkCenter = o.IdWorkCenter,
+                    NombreOrigen = o.WorkCenter.BussinesUnit.Area.NombreCorto + " " + o.WorkCenter.NombreCorto + " " + o.Modulo.NombreCorto,
+                }).ToList();
+
+            if (origens == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(origens);
         }
 
         /// <summary>
@@ -168,7 +183,7 @@ namespace Sitio.Areas.Apis.Controllers
 
             return Ok(modulo);
         }
-
+        
         /// <summary>
         /// 
         /// </summary>

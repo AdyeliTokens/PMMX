@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.GembaWalks;
+using PMMX.Modelo.Vistas;
 
 namespace Sitio.Areas.Apis.Controllers
 {
@@ -35,7 +36,7 @@ namespace Sitio.Areas.Apis.Controllers
 
             return Ok(eventoOrigen);
         }
-
+        
         // PUT: api/EventoOrigen/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutEventoOrigen(int id, EventoOrigen eventoOrigen)
