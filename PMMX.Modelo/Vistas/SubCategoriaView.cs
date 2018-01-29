@@ -14,6 +14,7 @@ namespace PMMX.Modelo.Vistas
         public string Nombre { get; set; }
         public string NombreCorto { get; set; }
         public int IdResponsable { get; set; }
+        public int IdGrupo { get; set; }
         public bool Activo { get; set; }
         #endregion
 
