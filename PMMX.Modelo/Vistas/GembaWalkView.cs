@@ -1,4 +1,4 @@
-﻿using PMMX.Modelo.Entidades.Operaciones;
+﻿using PMMX.Modelo.Vistas;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
