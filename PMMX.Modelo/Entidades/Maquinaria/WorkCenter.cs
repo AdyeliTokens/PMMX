@@ -39,6 +39,7 @@ namespace PMMX.Modelo.Entidades.Maquinaria
         public ICollection<ObjetivoCRR> ObjetivosCRR { get; set; }
         public ICollection<ObjetivoPlanAttainment> ObjetivosPlanAttainment { get; set; }
         public ICollection<VolumenDeProduccion> VolumenesDeProduccion { get; set; }
+        public ICollection<Alias> Alias { get; set; }
 
         #endregion
 
