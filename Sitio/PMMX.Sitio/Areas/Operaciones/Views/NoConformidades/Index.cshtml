@@ -30,35 +30,27 @@
                     <thead>
                         <tr class="info">
                             <th>
+                                @Html.DisplayNameFor(model => model.Fecha)
+                            </th>
+                            <th>
                                 @Html.DisplayNameFor(model => model.Persona.Nombre)
                             </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.IdAuditoria)
-                            </th>
-                            <th>
+                           <th>
                                 @Html.DisplayNameFor(model => model.Seccion.Nombre)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.WorkCenter.Nombre)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Descripcion)
+                                @Html.DisplayNameFor(model => model.Code)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Calificacion_Low)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Calificacion_High)
+                                @Html.DisplayNameFor(model => model.CodeDescription)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Calificacion_VQI)
                             </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Calificacion_CSVQI)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Fecha)
-                            </th>
+                            
                             <th></th>
                         </tr>
                     </thead>
@@ -67,10 +59,10 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Persona.Nombre)
+                                    @Html.DisplayFor(modelItem => item.Fecha)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.IdAuditoria)
+                                    @Html.DisplayFor(modelItem => item.Persona.Nombre)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Seccion.Nombre)
@@ -79,23 +71,15 @@
                                     @Html.DisplayFor(modelItem => item.WorkCenter.Nombre)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Descripcion)
+                                    @Html.DisplayFor(modelItem => item.Code)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Calificacion_Low)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Calificacion_High)
+                                    @Html.DisplayFor(modelItem => item.CodeDescription)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Calificacion_VQI)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Calificacion_CSVQI)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Fecha)
-                                </td>
+                                
                                 <td>
                                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                                     @Html.ActionLink("Details", "Details", new { id = item.Id }) |
@@ -107,10 +91,10 @@
                     <tfoot>
                         <tr class="info">
                             <th>
-                                @Html.DisplayNameFor(model => model.Persona.Nombre)
+                                @Html.DisplayNameFor(model => model.Fecha)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.IdAuditoria)
+                                @Html.DisplayNameFor(model => model.Persona.Nombre)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Seccion.Nombre)
@@ -119,23 +103,15 @@
                                 @Html.DisplayNameFor(model => model.WorkCenter.Nombre)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Descripcion)
+                                @Html.DisplayNameFor(model => model.Code)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Calificacion_Low)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Calificacion_High)
+                                @Html.DisplayNameFor(model => model.CodeDescription)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Calificacion_VQI)
                             </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Calificacion_CSVQI)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Fecha)
-                            </th>
+
                             <th></th>
                         </tr>
                     </tfoot>
