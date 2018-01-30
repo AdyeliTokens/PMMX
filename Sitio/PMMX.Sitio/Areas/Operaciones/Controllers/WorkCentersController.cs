@@ -39,12 +39,14 @@ namespace Sitio.Areas.Operaciones.Controllers
         public ActionResult Create()
         {
             ViewBag.IdBussinesUnit = new SelectList(db.BussinesUnits, "Id", "Nombre");
+            ViewBag.IdResponsable = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
+
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,IdBussinesUnit,Nombre,NombreCorto,Activo")] WorkCenter workCenter)
+        public ActionResult Create( WorkCenter workCenter)
         {
             if (ModelState.IsValid)
             {
@@ -54,6 +56,8 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
 
             ViewBag.IdBussinesUnit = new SelectList(db.BussinesUnits, "Id", "Nombre", workCenter.IdBussinesUnit);
+            ViewBag.IdResponsable = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre", workCenter.IdResponsable);
+
             return View(workCenter);
         }
 
@@ -70,6 +74,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
             ViewBag.IdBussinesUnit = new SelectList(db.BussinesUnits, "Id", "Nombre", workCenter.IdBussinesUnit);
             ViewBag.IdResponsable = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre", workCenter.IdResponsable);
+
             return View(workCenter);
         }
 
