@@ -155,6 +155,7 @@
     <Compile Include="Interfaces\IPMMXRepositorio.cs" />
     <Compile Include="Interfaces\Seguridad\IDispositivoServicio.cs" />
     <Compile Include="Interfaces\Seguridad\IUsuarioServicio.cs" />
+    <Compile Include="Map\AliasMap.cs" />
     <Compile Include="Map\BitacoraGembaWalkMap.cs" />
     <Compile Include="Map\RechazoMap.cs" />
     <Compile Include="Map\AreaMap.cs" />
