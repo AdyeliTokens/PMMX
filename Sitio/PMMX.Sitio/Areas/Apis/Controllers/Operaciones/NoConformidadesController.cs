@@ -51,6 +51,7 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
                 {
                     Id = n.Id,
                     Calificacion_VQI = n.Calificacion_VQI,
+                     Descripcion = n.Code + " " + n.CodeDescription ,
                     Fecha = n.Fecha
                 }).ToList()
             }
