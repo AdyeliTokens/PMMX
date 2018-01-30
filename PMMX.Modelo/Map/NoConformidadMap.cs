@@ -16,17 +16,16 @@ namespace PMMX.Modelo.Map
 
             ToTable("NoConformidades");
             HasKey(c => c.Id);
+
             Property(c => c.Id).HasColumnName("Id");
-            Property(c => c.Descripcion).HasColumnName("Descripcion");
-            Property(c => c.Calificacion_Low).HasColumnName("LOW");
-            Property(c => c.Calificacion_High).HasColumnName("HIGH");
             Property(c => c.Calificacion_VQI).HasColumnName("VQI");
-            Property(c => c.Calificacion_CSVQI).HasColumnName("CSVQI");
+            Property(c => c.Code).HasColumnName("Code");
+            Property(c => c.CodeDescription).HasColumnName("CodeDescription");
+            
             Property(c => c.Fecha).HasColumnName("Fecha");
             Property(c => c.IdPersona).HasColumnName("IdPersona");
             Property(c => c.IdWorkCenter).HasColumnName("IdWorkCenter");
             Property(c => c.IdSeccion).HasColumnName("IdSeccion");
-            Property(c => c.IdAuditoria).HasColumnName("IdAuditoria");
 
             #endregion
 
