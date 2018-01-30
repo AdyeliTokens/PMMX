@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PMMX.Modelo.Entidades.Maquinaria;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace PMMX.Modelo.Entidades
         public int IdPersona { get; set; }
 
         public Persona PersonaQueDioDeAlta { get; set; }
+        public ICollection<WorkCenter> WorkCenters { get; set; }
 
     }
 }

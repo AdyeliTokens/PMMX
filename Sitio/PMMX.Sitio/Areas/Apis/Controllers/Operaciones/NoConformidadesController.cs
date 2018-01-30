@@ -50,11 +50,7 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
                 NoConformidades = x.NoConformidades.Where(n => (n.IdWorkCenter == IdWorkCenter) && (n.Fecha >= hoy && n.Fecha <= mañana)).Select(n => new NoConformidadView
                 {
                     Id = n.Id,
-                    Calificacion_CSVQI = n.Calificacion_CSVQI,
-                    Calificacion_High = n.Calificacion_High,
-                    Calificacion_Low = n.Calificacion_Low,
                     Calificacion_VQI = n.Calificacion_VQI,
-                    Descripcion = n.Descripcion,
                     Fecha = n.Fecha
                 }).ToList()
             }

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Sitio.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,11 +29,17 @@ namespace Sitio.Controllers
         {
             byte[] fileBytes = System.IO.File.ReadAllBytes(@"c:\PMMX\Aplicaciones\Maya\info.json");
 
-            using (StreamReader sr = new StreamReader(@"c:\PMMX\Aplicaciones\Maya\info.json"))
+            UpdateMaya update = new UpdateMaya
             {
-                
-                return Json(sr.ReadToEnd(), JsonRequestBehavior.AllowGet);
-            }
+                NewVersion = 1.02,
+                Fecha = DateTime.Now,
+                url = "",
+                releaseNotes = ""
+            };
+
+            
+            return Json(update, JsonRequestBehavior.AllowGet);
+
         }
 
     }
