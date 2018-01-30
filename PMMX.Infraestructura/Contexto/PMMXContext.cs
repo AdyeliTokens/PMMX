@@ -83,6 +83,7 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new ModuloSeccionMap());
             modelBuilder.Configurations.Add(new NoConformidadMap());
             modelBuilder.Configurations.Add(new VolumenDeProduccionMap());
+            modelBuilder.Configurations.Add(new AliasMap());
 
             #endregion
 
@@ -143,6 +144,7 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new StatusVentanaMap());
             modelBuilder.Configurations.Add(new BitacoraGembaWalkMap());
             modelBuilder.Configurations.Add(new WorkFlowMap());
+            
 
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
@@ -182,6 +184,7 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<Horario> Horarios { get; set; }
         public DbSet<Indicador> Indicadores { get; set; }
         public DbSet<VolumenDeProduccion> VolumenesDeProduccion { get; set; }
+        public DbSet<Alias> Alias{ get; set; }
         #endregion
 
         #region Seguridad
@@ -234,10 +237,8 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<EventoResponsable> EventoResponsable { get; set; }
         public DbSet<Estatus> Estatus { get; set; }
         public DbSet<StatusVentana> StatusVentana { get; set; }
-
-        public System.Data.Entity.DbSet<PMMX.Modelo.Entidades.WorkFlow> WorkFlows { get; set; }
-
-        public System.Data.Entity.DbSet<PMMX.Modelo.Entidades.Operaciones.BitacoraGembaWalk> BitacoraGembaWalks { get; set; }
+        public DbSet<WorkFlow> WorkFlows { get; set; }
+        public DbSet<BitacoraGembaWalk> BitacoraGembaWalks { get; set; }
     }
 }
 
