@@ -44,7 +44,7 @@ namespace Sitio.Areas.Warehouse.Controllers
         public ActionResult Create()
         {
             ViewBag.IdVentana = new SelectList(db.Ventana.Select(x => new { Id = x.Id, PO = x.PO }).OrderBy(x => x.PO), "Id", "PO");
-            ViewBag.IdActividadVentana = new SelectList(db.Rechazo.Select(x => new { Id = x.Id, Nombre = x.Nombre}).OrderBy(x => x.Nombre), "Id", "Nombre");
+            ViewBag.IdRechazo = new SelectList(db.Rechazo.Select(x => new { Id = x.Id, Nombre = x.Nombre}).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View();
         }
 
