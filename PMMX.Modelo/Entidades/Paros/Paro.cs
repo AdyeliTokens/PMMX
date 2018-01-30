@@ -30,8 +30,7 @@ namespace PMMX.Modelo.Entidades.Paros
         public Origen Origen { get; set; }
 
 
-
-        public ICollection<OrigenRespuesta> OrigenRespuesta { get; set; }
+        
         public ICollection<ActividadEnParo> ActividadesEnParo { get; set; }
         public ICollection<TiempoDeParo> TiemposDeParo { get; set; }
         public ICollection<Asignacion> Asignaciones { get; set; }

@@ -16,7 +16,6 @@ namespace PMMX.Modelo.Entidades
         public int IdOperador { get; set; }
         public int IdEntrevistado { get; set; }
         public int IdSupervisor { get; set; }
-        public int IdParo { get; set; }
         public DateTime Fecha { get; set; }
         public bool Activo { get; set; }
         
@@ -24,9 +23,7 @@ namespace PMMX.Modelo.Entidades
         public Persona Operador { get; set; }
         public Persona Entrevistado { get; set; }
         public Persona Supervisor { get; set; }
-
-        public Paro Paro { get; set; }
-
+        
         public ICollection<Respuesta> Respuestas { get; set; }
     }
 }

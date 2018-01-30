@@ -97,7 +97,6 @@ namespace Sitio.Areas
                 IdOrigen = x.IdOrigen,
                 IdEntrevistado = x.IdEntrevistado,
                 IdSupervisor  = x.IdSupervisor,
-                IdParo = x.IdParo,
                 Fecha = x.Fecha,
                 Activo = x.Activo}).FirstOrDefault();
 
