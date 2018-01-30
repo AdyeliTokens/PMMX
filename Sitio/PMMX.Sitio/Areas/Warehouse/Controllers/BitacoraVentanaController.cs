@@ -65,7 +65,10 @@ namespace Sitio.Areas.Warehouse.Controllers
             {
                 bitacoraVentana.IdResponsable = persona.Respuesta.Id;                    
             }
-                
+
+            var estatus = db.StatusVentana.Where(v => (v.IdVentana == bitacoraVentana.IdVentana)).OrderByDescending(v => v.Fecha).Select(v => v.IdStatus).FirstOrDefault();
+            
+            bitacoraVentana.IdStatus = estatus;
             bitacoraVentana.Fecha = DateTime.Now;
                
             db.BitacoraVentana.Add(bitacoraVentana);
