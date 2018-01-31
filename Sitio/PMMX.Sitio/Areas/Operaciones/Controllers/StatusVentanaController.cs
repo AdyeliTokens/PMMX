@@ -72,7 +72,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // GET: Operaciones/StatusVentana/Create
         public ActionResult Create()
         {
-            ViewBag.IdStatus = new SelectList(db.Estatus.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
+            //ViewBag.IdStatus = new SelectList(db.Estatus.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
             ViewBag.IdVentana = new SelectList(db.Ventana.Select(x => new { Id = x.Id, PO = x.PO }).OrderBy(x => x.PO), "Id", "PO");
             return View();
         }

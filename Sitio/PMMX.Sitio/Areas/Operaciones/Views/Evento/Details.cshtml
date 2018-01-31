@@ -96,9 +96,7 @@
                 var idCategoria = $("#IdCategoria").val();
                 $("#opciones-ventana").hide();
                 $('#subVista').hide();
-
-                if (idCategoria == 10)
-                    $("#opciones-ventana").show();
+                
             }
 
             $("#btn-Editar").on("click", function ()
@@ -120,6 +118,9 @@
                     success: function (data) {
                         $.each(data, function (i, k) {
                             var url = ("/Warehouse/Ventana/Details/" + k.Id);
+                            $("#IdVentanaEvento").val(k.Id);
+
+                            $("#opciones-ventana").show();
 
                             $.get(url, function (data) {
                                 $('#subVista').show();
@@ -145,7 +146,7 @@
             });
 
             $("#btn-Continuar").on("click", function () {
-                var url = ("/Operaciones/StatusVentana/Create?IdVentana=" + id);
+                var url = ("/Operaciones/StatusVentana/Create");
 
                 $.get(url, function (data) {
                     $('#createAssetContainer').html(data);
@@ -155,7 +156,7 @@
             });
 
             $("#btn-Rechazo").on("click", function (e) {
-                var url = ("/Warehouse/BitacoraVentana/Create?IdVentana=" + id);
+                var url = ("/Warehouse/BitacoraVentana/Create");
                 
                 $.get(url, function (data) {
                     $('#createAssetContainer').html(data);

@@ -20,20 +20,13 @@
             <h4>StatusVentana</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.Hidden("IdVentana")
             
-            <div class="form-group">
-                @Html.LabelFor(model => model.IdVentana, "PO: ", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("IdVentana", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.IdVentana, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
             <div class="form-group">
                 @Html.LabelFor(model => model.IdStatus, "Status: ", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("IdStatus", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.IdStatus, "", new { @class = "text-danger" })
+                    <select id="slt-status" class="form-control"></select>
+                    @Html.Hidden("IdStatus")
                 </div>
             </div>
 
@@ -46,3 +39,44 @@
     }
 </body>
 </html>
+
+@Scripts.Render("~/JS/jquery")
+@Scripts.Render("~/JS/Bootstrap")
+@Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+<script>
+    $(function ()
+    {
+        start();
+        
+        function start() {
+            var IdEvento = $('#IdEvento').val();
+            var IdVentana = $('#IdVentanaEvento').val();
+            
+            $("#IdVentana").val(IdVentana);
+            getEstatus();
+        }  
+
+        function getEstatus() {
+            $.ajax({
+                dataType: "json",
+                contentType: "application/json",
+                url: "/Operaciones/Estatus/GetEstatusbyCategoria?IdCategoria=10",
+                success: function (data) {
+                    items = '<option></option>';
+                    $.each(data.estatus, function (i, k) {
+                        items += "<option value='" + k.Id + "'>" + k.Nombre + "</option>";
+                    });
+                    $('#slt-status').html(items);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('There was an error while fetching data!');
+                }
+            });
+        }
+
+        $("#slt-status").on("change", function () {
+            $("#IdStatus").val($(this).val());
+        });
+
+     });
+</script>
