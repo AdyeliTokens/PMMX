@@ -72,7 +72,8 @@
                             @Html.Hidden("IdGembaWalk", Model.Id)
                             
                             <div class="img-push">
-                                @Html.DropDownList("IdEstatus", null, "Select a name")
+                                @*@Html.DropDownList("IdEstatus", null, "Select a name")*@
+                                <select id="IdEstatus" class="form-control"></select>
                             </div>
                         }
                     </div>
@@ -179,6 +180,26 @@
 <script>
     $(function ()
     {
+        getEstatus();
+
+        function getEstatus() {
+            $.ajax({
+                dataType: "json",
+                contentType: "application/json",
+                url: "/Operaciones/Estatus/GetEstatusbyCategoria?IdCategoria=7",
+                success: function (data) {
+                    items = '<option></option>';
+                    $.each(data.estatus, function (i, k) {
+                        items += "<option value='" + k.Id + "'>" + k.Nombre + "</option>";
+                    });
+                    $('#IdEstatus').html(items);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('There was an error while fetching Work Centers!');
+                }
+            });
+        }
+        
         $("#IdEstatus").on("change", function () {
 
             var IdGembaWalk = $("#IdGembaWalk").val();

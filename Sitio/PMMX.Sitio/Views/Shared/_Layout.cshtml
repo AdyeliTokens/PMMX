@@ -323,23 +323,6 @@
                                 </ul>
                             </li>
 
-                            <li class="treeview">
-                                <a href="#">
-                                    <i class="fa fa-calendar-check-o"></i>GembaWalks
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li>
-                                        @Ajax.MenuLink("Calendario", string.Format("{0:c}", "fa fa-link"), "Index", "Evento", new { area = "Operaciones" }, null, null)
-                                    </li>
-                                    <li>
-                                        @Ajax.MenuLink("GembaWalks", string.Format("{0:c}", "fa fa-link"), "Index", "GembaWalk", new { area = "Operaciones" }, null, null)
-                                    </li>
-                                </ul>
-                            </li>
-
                             <li>
                                 @Ajax.MenuLink("Horarios", string.Format("{0:c}", "fa fa-link"), "Index", "Horarios", new { area = "Operaciones" }, null, null)
                             </li>
@@ -387,6 +370,22 @@
                             </li>
                             <li>
                                 @Ajax.MenuLink("Respuestas", string.Format("{0:c}", "fa fa-link"), "Index", "Respuesta", new { area = "Cuestionario" }, null, null)
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-calendar-check-o"></i>GembaWalks
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                @Ajax.MenuLink("Calendario", string.Format("{0:c}", "fa fa-link"), "Index", "Evento", new { area = "Operaciones" }, null, null)
+                            </li>
+                            <li>
+                                @Ajax.MenuLink("GembaWalks", string.Format("{0:c}", "fa fa-link"), "Index", "GembaWalk", new { area = "Operaciones" }, null, null)
                             </li>
                         </ul>
                     </li>
