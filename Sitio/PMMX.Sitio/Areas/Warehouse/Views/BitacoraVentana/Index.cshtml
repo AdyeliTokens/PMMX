@@ -32,13 +32,13 @@
                                 @Html.DisplayNameFor(model => model.Id)
                             </th>
                             <th style="width:20%">
-                                @Html.DisplayNameFor(model => model.IdActividadVentana)
+                                @Html.DisplayNameFor(model => model.Rechazo)
                             </th>
                             <th style="width:20%">
                                 @Html.DisplayNameFor(model => model.Fecha)
                             </th>
                             <th style="width:20%">
-                                @Html.DisplayNameFor(model => model.IdResponsable)
+                                @Html.DisplayNameFor(model => model.Responsable)
                             </th>
                             <th style="width:20%">
                                 @Html.DisplayNameFor(model => model.Comentarios)
@@ -59,13 +59,13 @@
 
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.IdActividadVentana)
+                                    @Html.DisplayFor(modelItem => item.Rechazo.Nombre)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Fecha)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.IdResponsable)
+                                    @Html.DisplayFor(modelItem => item.Responsable.Nombre) @Html.DisplayFor(modelItem => item.Responsable.Apellido1) @Html.DisplayFor(modelItem => item.Responsable.Apellido2)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Comentarios)

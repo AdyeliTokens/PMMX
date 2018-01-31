@@ -22,7 +22,7 @@ namespace Sitio.Areas.Warehouse.Controllers
         // GET: Warehouse/BitacoraVentana
         public ActionResult Index()
         {
-            return View(db.BitacoraVentana.ToList());
+            return View(db.BitacoraVentana.Include(b => b.Rechazo).Include(b => b.Ventana).Include(b => b.Estatus).Include(b => b.Responsable).ToList());
         }
 
         // GET: Warehouse/BitacoraVentana/Details/5
@@ -44,7 +44,7 @@ namespace Sitio.Areas.Warehouse.Controllers
         public ActionResult Create()
         {
             ViewBag.IdVentana = new SelectList(db.Ventana.Select(x => new { Id = x.Id, PO = x.PO }).OrderBy(x => x.PO), "Id", "PO");
-            ViewBag.IdActividadVentana = new SelectList(db.Rechazo.Select(x => new { Id = x.Id, Nombre = x.Nombre}).OrderBy(x => x.Nombre), "Id", "Nombre");
+            ViewBag.IdRechazo = new SelectList(db.Rechazo.Select(x => new { Id = x.Id, Nombre = x.Nombre}).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View();
         }
 
@@ -65,7 +65,10 @@ namespace Sitio.Areas.Warehouse.Controllers
             {
                 bitacoraVentana.IdResponsable = persona.Respuesta.Id;                    
             }
-                
+
+            var estatus = db.StatusVentana.Where(v => (v.IdVentana == bitacoraVentana.IdVentana)).OrderByDescending(v => v.Fecha).Select(v => v.IdStatus).FirstOrDefault();
+            
+            bitacoraVentana.IdStatus = estatus;
             bitacoraVentana.Fecha = DateTime.Now;
                
             db.BitacoraVentana.Add(bitacoraVentana);
