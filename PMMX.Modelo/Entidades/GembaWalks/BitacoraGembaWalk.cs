@@ -18,7 +18,6 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public int IdGembaWalk { get; set; }
         public int IdStatus { get; set; }
         public int IdResponsable { get; set; }
-        public int? IdRechazo { get; set; }
         public DateTime Fecha { get; set; }
 
         [StringLength(250)]
@@ -29,7 +28,6 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public GembaWalk GembaWalk { get; set; }
         public Estatus Estatus { get; set; }
         public Persona Responsable { get; set; }
-        public Rechazo Rechazo { get; set; }
         #endregion
     }
 }

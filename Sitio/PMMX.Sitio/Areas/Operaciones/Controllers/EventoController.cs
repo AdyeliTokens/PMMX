@@ -246,17 +246,14 @@ namespace Sitio.Areas.Operaciones.Controllers
                     EmailService emailService = new EmailService();
                     emailService.SendMail(senders, evento);
                 }
-
+                
                 switch (evento.IdCategoria)
                 {
                     case 10:
                         return RedirectToAction("Create", "Ventana", new { IdEvento = evento.Id, Area = "Warehouse" });
-
                     default:
                         return RedirectToAction("Index");
-
                 }
-
             }
 
             return View(evento);

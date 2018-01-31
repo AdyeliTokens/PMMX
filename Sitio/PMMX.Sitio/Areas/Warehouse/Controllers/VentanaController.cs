@@ -29,7 +29,7 @@ namespace Sitio.Areas.Warehouse.Controllers
 
             return View(ventana);
         }
-
+        
         // GET: Warehouse/Ventana/Details/5
         public ActionResult Details(int? id)
         {
@@ -53,12 +53,25 @@ namespace Sitio.Areas.Warehouse.Controllers
             return View(ventana);
         }
         
-        public ActionResult GetSubCategorias(int idCategoria)
+        public ActionResult GetStatusActualVentana(int idVentana)
         {
             if (ModelState.IsValid)
             {
-                var subcategorias = db.SubCategoria.Where(o => (o.IdCategoria == idCategoria)).Select(o => new { Id = o.Id, NombreCorto = o.NombreCorto }).ToList();
-                return Json(new { subcategorias }, JsonRequestBehavior.AllowGet);
+                var status = db.StatusVentana.Where(s => (s.IdVentana == idVentana)).OrderByDescending(s => s.Fecha).Select(s => s.Status.Nombre).FirstOrDefault();
+                return Json(new { status }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult GetRechazoActualVentana(int idVentana)
+        {
+            if (ModelState.IsValid)
+            {
+                var rechazo = db.BitacoraVentana.Where(s => (s.IdVentana == idVentana)).OrderByDescending(s => s.Fecha).Select(s => s.Rechazo.Nombre).FirstOrDefault();
+                return Json(new { rechazo }, JsonRequestBehavior.AllowGet);
             }
             else
             {
