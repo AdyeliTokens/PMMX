@@ -20,18 +20,13 @@ namespace PMMX.Modelo.Map
             Property(c => c.IdGembaWalk).HasColumnName("IdGembaWalk");
             Property(c => c.IdStatus).HasColumnName("IdStatus");
             Property(c => c.IdResponsable).HasColumnName("IdResponsable");
-            Property(c => c.IdRechazo).HasColumnName("IdRechazo");
             Property(c => c.Fecha).HasColumnName("Fecha");
-            Property(c => c.Comentario).HasColumnName("Comentarios");
+            Property(c => c.Comentario).HasColumnName("Comentario");
             #endregion
 
             #region HasMany
             #endregion
-
-            #region HasOptional
-            this.HasOptional(x => x.Rechazo).WithMany(c => c.BitacoraGembaWalk);
-            #endregion
-
+            
             #region HasRequired
             this.HasRequired(x => x.GembaWalk).WithMany(c => c.BitacoraGembaWalk);
             this.HasRequired(x => x.Estatus).WithMany(c => c.BitacoraGembaWalk);
