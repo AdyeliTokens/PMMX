@@ -28,7 +28,7 @@ namespace Sitio.Areas.Apis.Controllers
 
         // GET: api/GembaWalk/5
         [ResponseType(typeof(EventoView))]
-        public IHttpActionResult GetEventobyResponsableandFecha(int idResponsable, int dias, bool activo)
+        public IHttpActionResult GetEventobyResponsableporDias(int idResponsable, int dias, bool activo)
         {
             var today = DateTime.Now.Date;
             DateTime dateInit = today.AddDays(dias);
@@ -55,8 +55,8 @@ namespace Sitio.Areas.Apis.Controllers
             return Ok(evento);
         }
 
-        [ResponseType(typeof(ModuloSeccionView))]
-        public IHttpActionResult GetEventobyResponsableandFecha(int idResponsable, DateTime fecha, bool activo)
+        [ResponseType(typeof(EventoView))]
+        public IHttpActionResult GetEventobyResponsableporFecha(int idResponsable, DateTime fecha, bool activo)
         {
             DateTime hoy = fecha.Date;
             DateTime mañana = hoy.AddDays(1);
@@ -77,7 +77,7 @@ namespace Sitio.Areas.Apis.Controllers
 
             return Ok(evento);
         }
-
+        
         // GET: api/Evento/5
         [ResponseType(typeof(EventoView))]
         public IHttpActionResult GetEvento(int id)
