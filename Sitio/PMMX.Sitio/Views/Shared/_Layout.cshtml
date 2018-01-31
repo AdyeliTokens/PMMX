@@ -20,8 +20,13 @@
     <div class="wrapper">
         <header class="main-header">
             <a href="~/" class="logo">
-                <span class="logo-mini"><b>PM</b></span>
-                <span class="logo-lg"><b>Philip Morris </b></span>
+                <span class="logo-mini">
+                    <img src="~/img/logo-mini.png" class="img-responsive center-block" />
+                </span>
+                <span class="logo-lg">
+                    <img src="~/img/pmm-mini.png" class="img-responsive center-block" />
+
+                </span>
             </a>
             <nav class="navbar navbar-static-top" style="box-shadow: 4px 4px 20px 0px #444;">
                 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
@@ -74,7 +79,7 @@
 
                     </div>
                     <div class="pull-left info">
-                        <p>@Ajax.MenuLink(User.Identity.GetUserName().ToString() , string.Format("{0:c}", ""), "Details", "Profile", new { area = "", id = 66 }, null, null)</p>
+                        <p>@Ajax.MenuLink(User.Identity.GetUserName().ToString(), string.Format("{0:c}", ""), "Details", "Profile", new { area = "", id = 66 }, null, null)</p>
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
@@ -113,7 +118,7 @@
                                         </a>
                                         <ul class="treeview-menu">
                                             <li>
-                                                @Ajax.MenuLink("Mecanicos",string.Format("{0:c}", "fa fa-chrome"), "Index", "Mecanicos", new { area = "Seguridad" }, null, null)
+                                                @Ajax.MenuLink("Mecanicos", string.Format("{0:c}", "fa fa-chrome"), "Index", "Mecanicos", new { area = "Seguridad" }, null, null)
                                             </li>
                                             <li>
                                                 @Ajax.MenuLink("Electricos", string.Format("{0:c}", "fa fa-circle-o"), "Index", "Electricos", new { area = "Seguridad" }, null, null)
@@ -462,7 +467,7 @@
                         @Ajax.MenuLink("Augmented Reality", string.Format("{0:c}", "fa fa-link"), "Index", "AugmentedReality", null, null, null)
                     </li>
                     <li>
-                        
+
                         @Html.ActionLink("InSiteLAC", "Index", "InSiteLAC", new { area = "" }, null)
                     </li>
                     <li class="header">Help</li>
@@ -481,11 +486,11 @@
             </section>
         </div>
         <footer class="main-footer">
-                <div class="pull-right hidden-xs">
-                    <b>Version <small>0.4.0 (BETA) </small></b>
-                </div>
-                <strong>Copyright &copy; @DateTime.Now.Year </strong> Derechos reservados.
-            </footer>
+            <div class="pull-right hidden-xs">
+                <b>Version <small>0.4.0 (BETA) </small></b>
+            </div>
+            <strong>Copyright &copy; @DateTime.Now.Year </strong> Derechos reservados.
+        </footer>
         <aside class="control-sidebar control-sidebar-dark">
             <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
                 <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
