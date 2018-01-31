@@ -45,8 +45,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             RespuestaServicio<GembaWalkView> GembaWalk = servicio.GetGembaWalk(IdGembaWalk);
 
             ViewBag.Estatus = db.BitacoraGembaWalks.Where(x => x.IdGembaWalk == GembaWalk.Respuesta.Id).OrderByDescending(x => x.Fecha).Select(x => x.Estatus.Nombre).FirstOrDefault().ToString();
-            //ViewBag.IdEstatus = new SelectList(db.Estatus.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
-
+            
             if (GembaWalk == null)
             {
                 return HttpNotFound();
