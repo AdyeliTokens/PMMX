@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.Operaciones;
+using PMMX.Modelo.Vistas;
 
 namespace Sitio.Areas.Apis
 {
@@ -28,6 +29,27 @@ namespace Sitio.Areas.Apis
         public IHttpActionResult GetEstatus(int id)
         {
             Estatus Estatus = db.Estatus.Find(id);
+            if (Estatus == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(Estatus);
+        }
+
+        [ResponseType(typeof(Estatus))]
+        public IHttpActionResult GetEstatusbyCategoria(int idCategoria)
+        {
+            var Estatus = db.Estatus
+                .Where(e => (e.IdCategoria == idCategoria))
+                .Select(e => new EstatusView
+                {
+                    Id = e.Id,
+                    IdCategoria = e.IdCategoria,
+                    Nombre = e.Nombre,
+                    Activo = e.Activo
+                }).ToList();
+
             if (Estatus == null)
             {
                 return NotFound();

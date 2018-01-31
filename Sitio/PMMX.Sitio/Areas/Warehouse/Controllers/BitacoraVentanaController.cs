@@ -22,7 +22,7 @@ namespace Sitio.Areas.Warehouse.Controllers
         // GET: Warehouse/BitacoraVentana
         public ActionResult Index()
         {
-            return View(db.BitacoraVentana.ToList());
+            return View(db.BitacoraVentana.Include(b => b.Rechazo).Include(b => b.Ventana).Include(b => b.Estatus).Include(b => b.Responsable).ToList());
         }
 
         // GET: Warehouse/BitacoraVentana/Details/5
