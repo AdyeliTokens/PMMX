@@ -27,7 +27,7 @@ namespace Sitio.Controllers
 
         public FileResult Upload()
         {
-            byte[] fileBytes = System.IO.File.ReadAllBytes(@"c:\PMMX\Aplicaciones\Maya\Maya.apk");
+            byte[] fileBytes = System.IO.File.ReadAllBytes(@"c:\PMMX\Aplicaciones\Maya\app-release.apk");
             string fileName = "Maya.apk";
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
 
@@ -52,18 +52,13 @@ namespace Sitio.Controllers
 
         public ActionResult Info()
         {
-            byte[] fileBytes = System.IO.File.ReadAllBytes(@"c:\PMMX\Aplicaciones\Maya\info.json");
-
-            UpdateMaya update = new UpdateMaya
+            using (StreamReader r = new StreamReader(@"c:\PMMX\Aplicaciones\Maya\output.json"))
             {
-                NewVersion = 1,
-                Fecha = DateTime.Now,
-                url = "",
-                releaseNotes = ""
-            };
+                string json = r.ReadToEnd();
+                UpdateMaya update = JsonConvert.DeserializeObject<UpdateMaya>(json);
 
-            
-            return Json(update, JsonRequestBehavior.AllowGet);
+                return Json(update, JsonRequestBehavior.AllowGet);
+            }
 
         }
 
