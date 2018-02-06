@@ -15,14 +15,14 @@ namespace Sitio.Areas.Operaciones.Controllers
     {
         private PMMXContext db = new PMMXContext();
 
-        // GET: Operaciones/VolumenesDeProduccion
+        
         public ActionResult Index()
         {
             var volumenesDeProduccion = db.VolumenesDeProduccion.Include(v => v.MarcaDelCigarrillo).Include(v => v.Reportante).Include(v => v.WorkCenter);
             return View(volumenesDeProduccion.ToList());
         }
 
-        // GET: Operaciones/VolumenesDeProduccion/Details/5
+        
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,7 +37,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(volumenDeProduccion);
         }
 
-        // GET: Operaciones/VolumenesDeProduccion/Create
+        
         public ActionResult Create()
         {
             ViewBag.IdMarca = new SelectList(db.Marcas, "Id", "Nombre");
@@ -46,12 +46,10 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View();
         }
 
-        // POST: Operaciones/VolumenesDeProduccion/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Cantidad,Fecha,IdPersona,IdWorkCenter,IdMarca")] VolumenDeProduccion volumenDeProduccion)
+        public ActionResult Create(VolumenDeProduccion volumenDeProduccion)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +64,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(volumenDeProduccion);
         }
 
-        // GET: Operaciones/VolumenesDeProduccion/Edit/5
+        
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -84,12 +82,10 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(volumenDeProduccion);
         }
 
-        // POST: Operaciones/VolumenesDeProduccion/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Cantidad,Fecha,IdPersona,IdWorkCenter,IdMarca")] VolumenDeProduccion volumenDeProduccion)
+        public ActionResult Edit(VolumenDeProduccion volumenDeProduccion)
         {
             if (ModelState.IsValid)
             {
@@ -103,7 +99,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(volumenDeProduccion);
         }
 
-        // GET: Operaciones/VolumenesDeProduccion/Delete/5
+        
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -118,7 +114,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(volumenDeProduccion);
         }
 
-        // POST: Operaciones/VolumenesDeProduccion/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -128,6 +124,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
 
         protected override void Dispose(bool disposing)
         {
