@@ -73,8 +73,7 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         public ActionResult Upload()
         {
-            ViewBag.IdSeccion = new SelectList(db.ModuloSeccion, "Id", "Nombre");
-            ViewBag.IdWorkCenter = new SelectList(db.WorkCenters, "Id", "Nombre");
+            
             return View();
         }
 
