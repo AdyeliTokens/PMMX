@@ -73,10 +73,11 @@ namespace PMMX.Modelo.Entidades
         public ICollection<ListaDistribucion> ListaDistribucion { get; set; }
         public ICollection<EventoResponsable> EventoResponsable { get; set; }
         public ICollection<VolumenDeProduccion> VolumenReportado { get; set; }
+        public ICollection<Marca> MarcasDadasDeAlta { get; set; }
 
-        public List<StatusVentana> StatusVentana { get; set; }
-        public List<BitacoraVentana> BitacoraVentana { get; set; }
-        public List<BitacoraGembaWalk> BitacoraGembaWalk { get; set; }
+        public ICollection<StatusVentana> StatusVentana { get; set; }
+        public ICollection<BitacoraVentana> BitacoraVentana { get; set; }
+        public ICollection<BitacoraGembaWalk> BitacoraGembaWalk { get; set; }
         #endregion
 
     }
