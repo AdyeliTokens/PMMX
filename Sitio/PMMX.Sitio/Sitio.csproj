@@ -415,6 +415,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -8031,6 +8032,7 @@
     <Content Include="Areas\Operaciones\Views\BitacoraJustDoIt\Details.cshtml" />
     <Content Include="Areas\Operaciones\Views\BitacoraJustDoIt\Edit.cshtml" />
     <Content Include="Areas\Operaciones\Views\BitacoraJustDoIt\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Marcas\Upload.cshtml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
