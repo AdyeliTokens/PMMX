@@ -73,8 +73,7 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         public ActionResult Upload()
         {
-            ViewBag.IdSeccion = new SelectList(db.ModuloSeccion, "Id", "Nombre");
-            ViewBag.IdWorkCenter = new SelectList(db.WorkCenters, "Id", "Nombre");
+            
             return View();
         }
 
@@ -179,7 +178,7 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Descripcion,Calificacion_Low,Calificacion_High,Calificacion_VQI,Calificacion_CSVQI,Fecha,IdPersona,IdWorkCenter,IdSeccion")] NoConformidad noConformidad)
+        public ActionResult Edit(NoConformidad noConformidad)
         {
             if (ModelState.IsValid)
             {

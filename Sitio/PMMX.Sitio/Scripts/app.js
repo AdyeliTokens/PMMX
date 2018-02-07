@@ -48,4 +48,18 @@
 
 
      $("#row-content").html(div);
- }
+     //ChangeUrl("Cambio", "Peru/Cambio");
+}
+
+
+
+function ChangeUrl(page, url) {
+    if (typeof (history.pushState) != "undefined") {
+        var obj = { Page: page, Url: url };
+        history.pushState(obj, obj.Page, obj.Url);
+
+    } else {
+        alert("Browser does not support HTML5.");
+    }
+
+}

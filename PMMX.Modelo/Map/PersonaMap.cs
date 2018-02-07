@@ -26,6 +26,7 @@ namespace PMMX.Modelo.Map
             #endregion
 
             #region HasMany
+
             HasMany(c => c.Usuarios).WithRequired(p => p.Persona).HasForeignKey(c => c.IdPersona);
             HasMany(c => c.ParosReportados).WithRequired(p => p.Reportador).HasForeignKey(c => c.IdReportador);
             HasMany(c => c.DefectosReportados).WithRequired(p => p.Reportador).HasForeignKey(c => c.IdReportador);
@@ -61,6 +62,8 @@ namespace PMMX.Modelo.Map
             HasMany(c => c.StatusVentana).WithRequired(b => b.Responsable).HasForeignKey(c => c.IdResponsable);
             HasMany(c => c.BitacoraVentana).WithRequired(b => b.Responsable).HasForeignKey(c => c.IdResponsable);
             HasMany(c => c.BitacoraGembaWalk).WithRequired(b => b.Responsable).HasForeignKey(c => c.IdResponsable);
+            HasMany(c => c.MarcasDadasDeAlta).WithRequired(b => b.PersonaQueDioDeAlta).HasForeignKey(c => c.IdPersonaQueDioDeAlta);
+
             #endregion
 
             #region HasRequired

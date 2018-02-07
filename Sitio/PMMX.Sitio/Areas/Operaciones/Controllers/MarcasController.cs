@@ -8,6 +8,10 @@ using System.Web;
 using System.Web.Mvc;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades;
+using OfficeOpenXml;
+using PMMX.Seguridad.Servicios;
+using PMMX.Modelo.RespuestaGenerica;
+using Microsoft.AspNet.Identity;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -15,13 +19,13 @@ namespace Sitio.Areas.Operaciones.Controllers
     {
         private PMMXContext db = new PMMXContext();
 
-        // GET: Operaciones/Marcas
+
         public ActionResult Index()
         {
             return View(db.Marcas.ToList());
         }
 
-        // GET: Operaciones/Marcas/Details/5
+
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,21 +40,97 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(marca);
         }
 
-        // GET: Operaciones/Marcas/Create
+
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Operaciones/Marcas/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        public ActionResult Upload()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase file)
+        {
+            if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+            {
+                string fileName = file.FileName;
+                string fileContentType = file.ContentType;
+                byte[] fileBytes = new byte[file.ContentLength];
+                var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+                //var aliasWorkCenter = db.Alias.Include(w => w.WorkCenters).ToList();
+                var wcs = db.WorkCenters.ToList();
+
+                var marcas = new List<Marca>();
+                using (var package = new ExcelPackage(file.InputStream))
+                {
+                    PersonaServicio personaServicio = new PersonaServicio();
+                    IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
+
+
+                    var currentSheet = package.Workbook.Worksheets;
+
+                    foreach (var workSheet in currentSheet)
+                    {
+                        var noOfCol = workSheet.Dimension.End.Column;
+                        var noOfRow = workSheet.Dimension.End.Row;
+
+                        for (int rowIterator = 4; rowIterator <= noOfRow; rowIterator++)
+                        {
+
+                            var marca = new Marca();
+
+
+                            marca.IdPersonaQueDioDeAlta = persona.Respuesta.Id;
+                            marca.FechaDeAlta = DateTime.Now;
+
+
+
+                            marca.Codigo_FA = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
+                            marca.Descripcion = workSheet.Cells[rowIterator, 4].Value.ToString().Trim();
+                            marca.Codigo_Cigarrillo = workSheet.Cells[rowIterator, 6].Value.ToString().Trim();
+                            marca.Activo = false;
+
+                            if (workSheet.Cells[rowIterator, 9].Value != null)
+                            {
+                                marca.PesoPorCigarrillo = Convert.ToDouble(workSheet.Cells[rowIterator, 9].Value.ToString().Trim());
+                                marca.Activo = true;
+                            }
+                            if (workSheet.Cells[rowIterator, 12].Value != null)
+                            {
+                                marca.PesoTabacco = Convert.ToDouble(workSheet.Cells[rowIterator, 12].Value.ToString().Trim());
+                            }
+                            marcas.Add(marca);
+                        }
+
+                    }
+
+
+
+
+                    db.Marcas.AddRange(marcas);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+
+            return View("Index");
+        }
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Marca marca)
         {
+            PersonaServicio personaServicio = new PersonaServicio();
+            IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
+            marca.IdPersonaQueDioDeAlta = persona.Respuesta.Id;
             if (ModelState.IsValid)
             {
+
                 db.Marcas.Add(marca);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -59,7 +139,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(marca);
         }
 
-        // GET: Operaciones/Marcas/Edit/5
+
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -74,9 +154,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(marca);
         }
 
-        // POST: Operaciones/Marcas/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Marca marca)
@@ -90,7 +168,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(marca);
         }
 
-        // GET: Operaciones/Marcas/Delete/5
+
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -105,7 +183,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(marca);
         }
 
-        // POST: Operaciones/Marcas/Delete/5
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

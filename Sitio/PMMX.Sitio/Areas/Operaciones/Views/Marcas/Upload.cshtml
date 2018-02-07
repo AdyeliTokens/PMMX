@@ -1,4 +1,4 @@
-﻿@model PMMX.Modelo.Entidades.NoConformidad
+﻿@model PMMX.Modelo.Entidades.Marca
 
 @{
     ViewBag.Title = "Upload";
@@ -7,7 +7,7 @@
 
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title">Cargar condiciones anormales.</h3>
+        <h3 class="box-title">Cargar Marca de cigarrillos (FA).</h3>
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                 <i class="fa fa-minus"></i>
@@ -15,24 +15,24 @@
             <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
         </div>
     </div>
-    @using (Html.BeginForm("Upload", "NoConformidades", FormMethod.Post, new { area = "Operaciones", enctype = "multipart/form-data" , @class = "form-horizontal" }))
+    @using (Html.BeginForm("Upload", "Marcas", FormMethod.Post, new { area = "Operaciones", enctype = "multipart/form-data", @class = "form-horizontal" }))
     {
         @Html.AntiForgeryToken()
         <div class="box-body">
-            
+
             <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Excel</label>
+                <label class="col-sm-2 control-label">Excel</label>
                 <div class="col-md-10">
                     <input type="file" name="file" id="file" />
                 </div>
             </div>
 
-            
-            
+
+
         </div>
 
         <div class="box-footer clearfix">
-            <input class="btn btn-sm btn-info btn-flat  pull-right" type="submit" value="Upload Image"/>
+            <input class="btn btn-sm btn-info btn-flat  pull-right" type="submit" value="Upload Image" />
         </div>
     }
 </div>
