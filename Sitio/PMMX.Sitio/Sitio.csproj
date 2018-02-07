@@ -415,7 +415,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -8384,6 +8383,7 @@
   <ItemGroup>
     <Folder Include="Areas\Warehouse\Models\" />
     <Folder Include="Areas\Warehouse\Views\Shared\" />
+    <Folder Include="providers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
