@@ -14,6 +14,7 @@ using PMMX.Seguridad.Servicios;
 using PMMX.Modelo.RespuestaGenerica;
 using Microsoft.AspNet.Identity;
 using System.Text.RegularExpressions;
+using PMMX.Operaciones.Servicios;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -23,8 +24,9 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         public ActionResult Index()
         {
-            var noConformidades = db.NoConformidades.Include(n => n.Persona).Include(n => n.Seccion).Include(n => n.WorkCenter);
-            return View(noConformidades.ToList());
+            NoConformidadServicio servicio = new NoConformidadServicio(db);
+            var respuesta = servicio.GetNoConformidades();
+            return View(respuesta.Respuesta.ToList());
         }
 
 
@@ -34,12 +36,14 @@ namespace Sitio.Areas.Operaciones.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            NoConformidad noConformidad = db.NoConformidades.Find(id);
-            if (noConformidad == null)
+            NoConformidadServicio servicio = new NoConformidadServicio(db);
+            var respuesta = servicio.GetNoConformidad((int)id);
+
+            if (respuesta.Respuesta == null)
             {
                 return HttpNotFound();
             }
-            return View(noConformidad);
+            return View(respuesta.Respuesta);
         }
 
         public ActionResult Create()
@@ -52,7 +56,7 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( NoConformidad noConformidad)
+        public ActionResult Create(NoConformidad noConformidad)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +77,7 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         public ActionResult Upload()
         {
-            
+
             return View();
         }
 
@@ -106,7 +110,7 @@ namespace Sitio.Areas.Operaciones.Controllers
 
                         for (int rowIterator = 3; rowIterator <= noOfRow; rowIterator++)
                         {
-                            if (workSheet.Cells[rowIterator, 6].Value != null )
+                            if (workSheet.Cells[rowIterator, 6].Value != null)
                             {
                                 var noconformidad = new NoConformidad();
 
@@ -130,11 +134,11 @@ namespace Sitio.Areas.Operaciones.Controllers
                                 var wc = palabra.Substring(palabra.Length - 2, 2);
 
                                 //var idWC = aliasWorkCenter.Where(w => w.Nombre == str.Substring(0, str.IndexOf(" "))).Select(a => a.WorkCenters.Select(f=> f.Id).FirstOrDefault()).FirstOrDefault();
-                                var idWorkCenter = wcs.Where(w=> w.NombreCorto == wc).Select(w => w.Id).FirstOrDefault(); 
+                                var idWorkCenter = wcs.Where(w => w.NombreCorto == wc).Select(w => w.Id).FirstOrDefault();
                                 noconformidad.IdWorkCenter = idWorkCenter;
-            
 
-                                
+
+
                                 noConformidades.Add(noconformidad);
                             }
 
