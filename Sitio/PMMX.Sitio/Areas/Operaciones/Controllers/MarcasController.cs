@@ -90,16 +90,17 @@ namespace Sitio.Areas.Operaciones.Controllers
 
                             marca.Codigo_FA = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                             marca.Descripcion = workSheet.Cells[rowIterator, 4].Value.ToString().Trim();
-                            marca.Codigo_Cigarrillo = workSheet.Cells[rowIterator, 5].Value.ToString().Trim();
+                            marca.Codigo_Cigarrillo = workSheet.Cells[rowIterator, 6].Value.ToString().Trim();
+                            marca.Activo = false;
 
-
-                            if (workSheet.Cells[rowIterator, 6].Value != null)
-                            {
-                                marca.PesoPorCigarrillo = Convert.ToDouble(workSheet.Cells[rowIterator, 6].Value.ToString().Trim());
-                            }
                             if (workSheet.Cells[rowIterator, 9].Value != null)
                             {
-                                marca.PesoTabacco = Convert.ToDouble(workSheet.Cells[rowIterator, 9].Value.ToString().Trim());
+                                marca.PesoPorCigarrillo = Convert.ToDouble(workSheet.Cells[rowIterator, 9].Value.ToString().Trim());
+                                marca.Activo = true;
+                            }
+                            if (workSheet.Cells[rowIterator, 12].Value != null)
+                            {
+                                marca.PesoTabacco = Convert.ToDouble(workSheet.Cells[rowIterator, 12].Value.ToString().Trim());
                             }
                             marcas.Add(marca);
                         }
@@ -124,8 +125,12 @@ namespace Sitio.Areas.Operaciones.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Marca marca)
         {
+            PersonaServicio personaServicio = new PersonaServicio();
+            IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
+            marca.IdPersonaQueDioDeAlta = persona.Respuesta.Id;
             if (ModelState.IsValid)
             {
+
                 db.Marcas.Add(marca);
                 db.SaveChanges();
                 return RedirectToAction("Index");
