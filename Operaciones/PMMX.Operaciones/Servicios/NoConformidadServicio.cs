@@ -55,5 +55,24 @@ namespace PMMX.Operaciones.Servicios
         }
 
         #endregion
+
+        #region PUT
+
+        public RespuestaServicio<NoConformidad> PutNoConformidad(NoConformidad noConformidad)
+        {
+            RespuestaServicio<NoConformidad> respuesta = new RespuestaServicio<NoConformidad>();
+            try
+            {
+                _context.NoConformidades.Add(noConformidad);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = ex.Message;
+            }
+            return respuesta;
+        }
+
+        #endregion
     }
 }
