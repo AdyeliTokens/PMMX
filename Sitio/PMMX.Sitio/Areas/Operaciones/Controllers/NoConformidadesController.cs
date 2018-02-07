@@ -63,9 +63,17 @@ namespace Sitio.Areas.Operaciones.Controllers
                 PersonaServicio personaServicio = new PersonaServicio();
                 IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
                 noConformidad.IdPersona = persona.Respuesta.Id;
-                db.NoConformidades.Add(noConformidad);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                NoConformidadServicio servicio = new NoConformidadServicio(db);
+                var respuesta = servicio.PutNoConformidad(noConformidad);
+
+                if (respuesta.EjecucionCorrecta)
+                {
+                    return RedirectToAction("Index");
+                }
+                else {
+                    ModelState.AddModelError("error", "Serial is invalid");
+                }
+                
             }
 
             ViewBag.IdPersona = new SelectList(db.Personas, "Id", "Nombre", noConformidad.IdPersona);
