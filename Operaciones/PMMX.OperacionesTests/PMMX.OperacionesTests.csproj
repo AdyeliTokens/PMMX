@@ -83,6 +83,7 @@
     <Compile Include="Servicios\ActividadEnParoServicioTests.cs" />
     <Compile Include="Servicios\ComentarioServicioTests.cs" />
     <Compile Include="Servicios\DefectoServicioTests.cs" />
+    <Compile Include="Servicios\MarcaServicioTests.cs" />
     <Compile Include="Servicios\NoConformidadServicioTests.cs" />
     <Compile Include="Servicios\ParoServicioTests.cs" />
     <Compile Include="Servicios\WorkCenterServicioTests.cs" />
