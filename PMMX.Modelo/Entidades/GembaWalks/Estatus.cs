@@ -32,7 +32,6 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public ICollection<WorkFlow> WorkFlowInicial { get; set; }
         public ICollection<WorkFlow> WorkFlowAnterior { get; set; }
         public ICollection<WorkFlow> WorkFlowSiguiente { get; set; }
-        public ICollection<WorkFlow> WorkFlowCancelado { get; set; }
         #endregion
     }
 }

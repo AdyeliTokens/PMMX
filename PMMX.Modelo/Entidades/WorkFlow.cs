@@ -14,20 +14,19 @@ namespace PMMX.Modelo.Entidades
     {
         #region Propiedades
         public int Id { get; set; }
-        public int IdCategoria { get; set; }
+        public int IdSubCategoria { get; set; }
         public int? Inicial { get; set; }
         public int? Anterior { get; set; }
         public int? Siguiente { get; set; }
-        public int? Cancelado { get; set; }
+        public bool Cancelado { get; set; }
         public bool Activo { get; set; }
         #endregion
 
         #region Navegacion
-        public Categoria Categoria { get; set; }
+        public SubCategoria SubCategoria { get; set; }
         public Estatus EstatusInicial { get; set; }
         public Estatus EstatusAnterior { get; set; }
         public Estatus EstatusSiguiente { get; set; }
-        public Estatus EstatusCancelado { get; set; }
         #endregion
     }
 }
