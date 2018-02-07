@@ -12,6 +12,7 @@ using OfficeOpenXml;
 using PMMX.Seguridad.Servicios;
 using PMMX.Modelo.RespuestaGenerica;
 using Microsoft.AspNet.Identity;
+using PMMX.Operaciones.Servicios;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -22,7 +23,9 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Marcas.ToList());
+            MarcaServicio servicio = new MarcaServicio(db);
+            var respuesta = servicio.GetMarcas();
+            return View(respuesta.Respuesta.ToList());
         }
 
 
