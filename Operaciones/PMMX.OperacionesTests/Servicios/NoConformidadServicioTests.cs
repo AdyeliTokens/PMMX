@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PMMX.Infraestructura.Contexto;
+using PMMX.Modelo.Entidades;
 using PMMX.Operaciones.Servicios;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,22 @@ namespace PMMX.Operaciones.Servicios.Tests
         public void GetNoConformidTest(int id)
         {
             var respuesta = _servicio.GetNoConformidad(id);
+            Assert.IsTrue(respuesta.EjecucionCorrecta);
+        }
+
+        [TestMethod()]
+        public void PutNoConformidadTest()
+        {
+            NoConformidad noConformidad = new NoConformidad();
+            noConformidad.IdPersona = 66;
+            noConformidad.IdSeccion = 1;
+            noConformidad.IdWorkCenter = 4;
+            noConformidad.Fecha = DateTime.Now;
+            noConformidad.Code = "PRUEBA TEST";
+            noConformidad.CodeDescription = "PRUEBA TEST";
+            noConformidad.Calificacion_VQI = 0;
+
+            var respuesta = _servicio.PutNoConformidad(noConformidad);
             Assert.IsTrue(respuesta.EjecucionCorrecta);
         }
     }
