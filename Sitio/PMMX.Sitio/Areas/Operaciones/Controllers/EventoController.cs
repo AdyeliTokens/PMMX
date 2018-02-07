@@ -43,6 +43,45 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
         }
 
+        public ActionResult GetEventsByCategoria(int IdCategoria)
+        {
+            if (ModelState.IsValid)
+            {
+                var events = db.Evento.Where(e => e.IdCategoria == IdCategoria).ToList();
+                return Json(new { events }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult GetEventsBySubCategoria(int IdSubCategoria)
+        {
+            if (ModelState.IsValid)
+            {
+                var events = db.Ventana.Where(v => (v.IdSubCategoria == IdSubCategoria))
+                    .Select( e => new EventoView
+                    {
+                        Id = e.Evento.Id,
+                        Descripcion = e.Evento.Descripcion,
+                        IdAsignador = e.Evento.IdAsignador,
+                        IdCategoria = e.Evento.IdCategoria,
+                        FechaInicio = e.Evento.FechaInicio,
+                        FechaFin = e.Evento.FechaFin,
+                        Nota = e.Evento.Nota,
+                        EsRecurrente = e.Evento.EsRecurrente,
+                        Activo = e.Evento.Activo
+                    }).ToList();
+                    
+                return Json(new { events }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         // GET: Eventos/Evento/Details/5
         public ActionResult Details(int? id)
         {
