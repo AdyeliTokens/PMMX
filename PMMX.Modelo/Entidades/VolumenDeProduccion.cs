@@ -11,6 +11,17 @@ namespace PMMX.Modelo.Entidades
     {
         public int Id { get; set; }
         public Double Cantidad { get; set; }
+        public string Conteiner { get; set; }
+        public string Code_FA { get; set; }
+        public string Source_WH { get; set; }
+        public string Source_Loc { get; set; }
+        public string Dest_WH { get; set; }
+        public string Dest_Loc { get; set; }
+        public int Old_Qty { get; set; }
+        public int New_Qty { get; set; }
+        public string UOM { get; set; }
+        public string SAP_Batch { get; set; }
+
         public DateTime Fecha { get; set; }
         public int IdPersona { get; set; }
         public int IdWorkCenter { get; set; }
