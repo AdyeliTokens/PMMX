@@ -31,7 +31,10 @@
                     <thead>
                         <tr class="info">
                             <th>
-                                @* @Html.DisplayNameFor(model => model.MarcaDelCigarrillo.Nombre)*@
+                                @Html.DisplayNameFor(model => model.MarcaDelCigarrillo.Code_FA)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MarcaDelCigarrillo.Descripcion)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Reportante.Nombre)
@@ -39,10 +42,10 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.WorkCenter.Nombre)
                             </th>
-
                             <th>
-                                @Html.DisplayNameFor(model => model.Fecha)
+                                @Html.DisplayNameFor(model => model.New_Qty)
                             </th>
+
                             <th></th>
                         </tr>
                     </thead>
@@ -52,18 +55,33 @@
 
                             <tr>
                                 <td>
+                                    @Html.DisplayFor(modelItem => item.MarcaDelCigarrillo.Code_FA)
+                                </td>
+                                <td>
                                     @Html.DisplayFor(modelItem => item.MarcaDelCigarrillo.Descripcion)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Reportante.Nombre)
+                                    <div class="user-block">
+                                        <img class="img-circle img-responsive img-bordered-sm" src="@Url.Action("Usuario", "Fotos", new { idPersona = item.IdPersona, area = "" })" alt="User Image">
+                                        <span class="username">
+                                            <a href="#">
+                                                @Html.DisplayFor(modelItem => item.Reportante.Nombre) @Html.DisplayFor(modelItem => item.Reportante.Apellido1) @Html.DisplayFor(modelItem => item.Reportante.Apellido2).
+                                            </a>
+                                        </span>
+                                        <span class="description">Reporto el - @Html.DisplayFor(modelItem => item.Fecha)</span>
+                                    </div>
+
+
+                                    
+                                
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.WorkCenter.Nombre)
                                 </td>
-
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Fecha)
+                                    @Html.DisplayFor(modelItem => item.New_Qty)
                                 </td>
+
                                 <td>
                                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                                     @Html.ActionLink("Details", "Details", new { id = item.Id }) |
@@ -75,7 +93,10 @@
                     <tfoot>
                         <tr class="info">
                             <th>
-                                @* @Html.DisplayNameFor(model => model.MarcaDelCigarrillo.Nombre)*@
+                                @Html.DisplayNameFor(model => model.MarcaDelCigarrillo.Code_FA)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MarcaDelCigarrillo.Descripcion)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Reportante.Nombre)
@@ -83,10 +104,10 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.WorkCenter.Nombre)
                             </th>
-
                             <th>
-                                @Html.DisplayNameFor(model => model.Fecha)
+                                @Html.DisplayNameFor(model => model.New_Qty)
                             </th>
+                            
                             <th></th>
                         </tr>
                     </tfoot>
