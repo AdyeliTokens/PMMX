@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades;
+using PMMX.Modelo.Entidades.Operaciones;
 
 namespace Sitio.Areas.Operaciones
 {
@@ -25,7 +26,7 @@ namespace Sitio.Areas.Operaciones
                 .Include(w => w.EstatusSiguiente);
             return View(workFlows.ToList());
         }
-
+        
         // GET: Operaciones/WorkFlows/Details/5
         public ActionResult Details(int? id)
         {

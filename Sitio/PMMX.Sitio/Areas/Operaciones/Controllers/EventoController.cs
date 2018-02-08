@@ -15,6 +15,7 @@ using PMMX.Modelo.RespuestaGenerica;
 using PMMX.Modelo.Entidades;
 using Microsoft.AspNet.Identity;
 using PMMX.Modelo.Entidades.GembaWalks;
+using PMMX.Operaciones.Servicios;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -285,14 +286,8 @@ namespace Sitio.Areas.Operaciones.Controllers
                     EmailService emailService = new EmailService();
                     emailService.SendMail(senders, evento);
                 }
-                
-                switch (evento.IdCategoria)
-                {
-                    case 10:
-                        return RedirectToAction("Create", "Ventana", new { IdEvento = evento.Id, Area = "Warehouse" });
-                    default:
-                        return RedirectToAction("Index");
-                }
+
+                return RedirectToAction("Index");
             }
 
             return View(evento);

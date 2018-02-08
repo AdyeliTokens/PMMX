@@ -37,7 +37,7 @@
             </div>
             <div id="createAssetContainer" class="modal-body"></div>
             <div id="subVista" class="modal-body"></div>
-            <input id="IdEvento" type="hidden" />
+            <input id="IdEventoModal" type="hidden" />
             <input id="IdVentanaEvento" type="hidden" />
         </div>
     </div>
@@ -125,7 +125,7 @@
                                     $.get(url, function (data) {
                                         $('#createAssetContainer').html(data);
                                         $('#createAssetModal').modal('show');
-                                        $('#IdEvento').val(calEvent.id);
+                                        $('#IdEventoModal').val(calEvent.id);
                                     });
                                 }
 
@@ -180,7 +180,7 @@
                                     $.get(url, function (data) {
                                         $('#createAssetContainer').html(data);
                                         $('#createAssetModal').modal('show');
-                                        $('#IdEvento').val(calEvent.id);
+                                        $('#IdEventoModal').val(calEvent.id);
                                     });
                                 }
 
@@ -236,7 +236,7 @@
                                     $.get(url, function (data) {
                                         $('#createAssetContainer').html(data);
                                         $('#createAssetModal').modal('show');
-                                        $('#IdEvento').val(calEvent.id);
+                                        $('#IdEventoModal').val(calEvent.id);
                                     });
                                 }
 
