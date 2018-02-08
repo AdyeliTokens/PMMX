@@ -83,33 +83,39 @@ namespace Sitio.Areas.Operaciones.Controllers
                         for (int rowIterator = 4; rowIterator <= noOfRow; rowIterator++)
                         {
 
-                            var marca = new Marca();
-
-
-                            marca.IdPersonaQueDioDeAlta = persona.Respuesta.Id;
-                            marca.FechaDeAlta = DateTime.Now;
-
-
-
-                            marca.Codigo_FA = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
-                            marca.Descripcion = workSheet.Cells[rowIterator, 4].Value.ToString().Trim();
-                            marca.Codigo_Cigarrillo = workSheet.Cells[rowIterator, 6].Value.ToString().Trim();
-                            marca.Activo = false;
-
-                            if (workSheet.Cells[rowIterator, 9].Value != null)
+                            if (workSheet.Cells[rowIterator, 3].Value != null)
                             {
-                                marca.PesoPorCigarrillo = Convert.ToDouble(workSheet.Cells[rowIterator, 9].Value.ToString().Trim());
-                                marca.Activo = true;
+
+                                string code_FA = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
+                                code_FA = code_FA.Replace(" ", "");
+
+                                if (marcas.Where(m => m.Code_FA == code_FA).Count() == 0)
+                                {
+                                    var marca = new Marca();
+
+                                    marca.IdPersonaQueDioDeAlta = persona.Respuesta.Id;
+                                    marca.FechaDeAlta = DateTime.Now;
+
+                                    marca.Code_FA = code_FA;
+                                    marca.Descripcion = workSheet.Cells[rowIterator, 4].Value.ToString().Trim();
+                                    marca.Codigo_Cigarrillo = workSheet.Cells[rowIterator, 6].Value.ToString().Trim();
+                                    marca.Activo = false;
+
+                                    if (workSheet.Cells[rowIterator, 9].Value != null)
+                                    {
+                                        marca.PesoPorCigarrillo = Convert.ToDouble(workSheet.Cells[rowIterator, 9].Value.ToString().Trim());
+                                        marca.Activo = true;
+                                    }
+                                    if (workSheet.Cells[rowIterator, 12].Value != null)
+                                    {
+                                        marca.PesoTabacco = Convert.ToDouble(workSheet.Cells[rowIterator, 12].Value.ToString().Trim());
+                                    }
+                                    marcas.Add(marca);
+                                }
                             }
-                            if (workSheet.Cells[rowIterator, 12].Value != null)
-                            {
-                                marca.PesoTabacco = Convert.ToDouble(workSheet.Cells[rowIterator, 12].Value.ToString().Trim());
-                            }
-                            marcas.Add(marca);
                         }
 
                     }
-
 
 
 
