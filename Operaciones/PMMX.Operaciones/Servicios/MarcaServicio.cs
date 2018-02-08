@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.RespuestaGenerica;
 using PMMX.Modelo.Entidades;
@@ -37,5 +35,24 @@ namespace PMMX.Operaciones.Servicios
             }
             return respuesta;
         }
+
+        public RespuestaServicio<Marca> GetMarca(string code_FA)
+        {
+            RespuestaServicio<Marca> respuesta = new RespuestaServicio<Marca>();
+            try
+            {
+                var marca = _context.Marcas.Where(m => m.Code_FA == code_FA).FirstOrDefault();
+                respuesta.Respuesta = marca;
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = ex.Message;
+            }
+            return respuesta;
+        }
+
+        
+        
+
     }
 }
