@@ -61,6 +61,8 @@
     <Compile Include="Servicios\EventoServicio.cs" />
     <Compile Include="Servicios\GembaWalkServicio.cs" />
     <Compile Include="Servicios\MantenimientoServicio.cs" />
+    <Compile Include="Servicios\MarcaServicio.cs" />
+    <Compile Include="Servicios\NoConformidadServicio.cs" />
     <Compile Include="Servicios\ParoServicio.cs" />
     <Compile Include="Servicios\PesadorServicio.cs" />
     <Compile Include="Servicios\VolumenDeProduccionServicio.cs" />

@@ -11,10 +11,9 @@ namespace PMMX.Modelo.Map
         {
             #region Propiedades
             ToTable("Marcas");
-            HasKey(c => c.Id);
-            Property(c => c.Id).HasColumnName("Id");
+            HasKey(c => c.Code_FA);
+            Property(c => c.Code_FA).HasColumnName("Codigo_FA");
             Property(c => c.Descripcion).HasColumnName("Descripcion");
-            Property(c => c.Codigo_FA).HasColumnName("Codigo_FA");
             Property(c => c.Codigo_Cigarrillo).HasColumnName("Codigo_Cigarrillo");
             Property(c => c.PesoPorCigarrillo).HasColumnName("PesoPorCigarrillo");
             Property(c => c.PesoTabacco).HasColumnName("PesoTabacco");
@@ -24,7 +23,7 @@ namespace PMMX.Modelo.Map
             #endregion
 
             #region HasMany
-            HasMany(c => c.Desperdicios).WithRequired(x => x.MarcaDelCigarrillo).HasForeignKey(c => c.IdMarca);
+            HasMany(c => c.Desperdicios).WithRequired(x => x.MarcaDelCigarrillo).HasForeignKey(c => c.Code_FA);
             #endregion
 
             #region HasOptional

@@ -9,11 +9,13 @@ namespace PMMX.Modelo.Entidades
 {
     public class Marca
     {
-        public int Id { get; set; }
+        [StringLength(250)]
+        [Key]
+        public string Code_FA { get; set; }
+
         [StringLength(250)]
         public string Descripcion { get; set; }
-        [StringLength(250)]
-        public string Codigo_FA { get; set; }
+        
         [StringLength(250)]
         public string Codigo_Cigarrillo { get; set; }
         public Double? PesoPorCigarrillo { get; set; }

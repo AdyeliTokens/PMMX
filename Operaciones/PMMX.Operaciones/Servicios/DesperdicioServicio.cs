@@ -43,7 +43,7 @@ namespace PMMX.Operaciones.Servicios
                     Id = y.Id,
                     Cantidad = y.Cantidad,
                     Fecha = y.Fecha,
-                    IdMarca = y.IdMarca,
+                    Code_FA = y.Code_FA,
                     IdPersona = y.IdPersona,
                     IdSeccion = y.IdSeccion,
                     IdWorkCenter = y.IdWorkCenter,
@@ -66,8 +66,8 @@ namespace PMMX.Operaciones.Servicios
                 Double crrTotal = 0;
                 foreach (var item in marcas)
                 {
-                    Double crrTotalPorMarca = desperdicios.Where(x => (x.Fecha.Date == diaSeleccionado.AddDays(i).Date) && (x.IdMarca == item.Id)).Sum(o => o.Cantidad);
-                    Double volumen = volumenes.Where(v => (v.IdMarca == item.Id) && (v.Fecha.Date == diaSeleccionado.AddDays(i).Date)).Sum(o => o.Cantidad);
+                    Double crrTotalPorMarca = desperdicios.Where(x => (x.Fecha.Date == diaSeleccionado.AddDays(i).Date) && (x.Code_FA == item.Code_FA)).Sum(o => o.Cantidad);
+                    Double volumen = volumenes.Where(v => (v.Code_FA == item.Code_FA) && (v.Fecha.Date == diaSeleccionado.AddDays(i).Date)).Sum(o => o.New_Qty);
                     if (volumen > 0)
                     {
                         crrTotal = crrTotal + (crrTotalPorMarca / volumen);
@@ -107,7 +107,7 @@ namespace PMMX.Operaciones.Servicios
                     Id = y.Id,
                     Cantidad = y.Cantidad,
                     Fecha = y.Fecha,
-                    IdMarca = y.IdMarca,
+                    Code_FA = y.Code_FA,
                     IdPersona = y.IdPersona,
                     IdSeccion = y.IdSeccion,
                     IdWorkCenter = y.IdWorkCenter,
@@ -130,8 +130,8 @@ namespace PMMX.Operaciones.Servicios
                 Double crrTotal = 0;
                 foreach (var item in marcas)
                 {
-                    Double crrTotalPorMarca = desperdicios.Where(x => (x.Fecha.Date == diaSeleccionado.AddDays(i).Date) && (x.IdMarca == item.Id)).Sum(o => o.Cantidad);
-                    Double volumen = volumenes.Where(v => (v.IdMarca == item.Id) && (v.Fecha.Date == diaSeleccionado.AddDays(i).Date)).Sum(o => o.Cantidad);
+                    Double crrTotalPorMarca = desperdicios.Where(x => (x.Fecha.Date == diaSeleccionado.AddDays(i).Date) && (x.Code_FA == item.Code_FA)).Sum(o => o.Cantidad);
+                    Double volumen = volumenes.Where(v => (v.Code_FA == item.Code_FA) && (v.Fecha.Date == diaSeleccionado.AddDays(i).Date)).Sum(o => o.New_Qty);
                     if (volumen > 0)
                     {
                         crrTotal = crrTotal + (crrTotalPorMarca / volumen);

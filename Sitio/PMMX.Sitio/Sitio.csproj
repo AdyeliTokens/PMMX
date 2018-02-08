@@ -8032,6 +8032,7 @@
     <Content Include="Areas\Operaciones\Views\BitacoraJustDoIt\Edit.cshtml" />
     <Content Include="Areas\Operaciones\Views\BitacoraJustDoIt\Index.cshtml" />
     <Content Include="Areas\Operaciones\Views\Marcas\Upload.cshtml" />
+    <Content Include="Areas\Operaciones\Views\VolumenesDeProduccion\Upload.cshtml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -8383,7 +8384,6 @@
   <ItemGroup>
     <Folder Include="Areas\Warehouse\Models\" />
     <Folder Include="Areas\Warehouse\Views\Shared\" />
-    <Folder Include="providers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

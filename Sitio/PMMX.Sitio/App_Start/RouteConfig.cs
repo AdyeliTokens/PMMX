@@ -51,8 +51,8 @@ namespace Sitio
 
             routes.MapRoute(
             name: "FotosDeMarcas",
-            url: "Fotos/Marcas/{idMarca}",
-            defaults: new { controller = "Fotos", action = "Marca", idMarca = UrlParameter.Optional }
+            url: "Fotos/Marcas/{Code_FA}",
+            defaults: new { controller = "Fotos", action = "Marca", Code_FA = UrlParameter.Optional }
             );
 
             routes.MapRoute(

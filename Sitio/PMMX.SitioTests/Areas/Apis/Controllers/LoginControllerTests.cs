@@ -23,15 +23,6 @@ namespace Sitio.Areas.Apis.Controllers.Tests
         }
 
         
-        [TestMethod()]
-        public void PostLoginTest()
-        {
-            LoginModel model = new LoginModel();
-            model.Email = "mario.chan@contracted.pmi.com";
-            model.Password = "mario.chan";
-
-            var respuesta = _controller.PostLoginAsync(model);
-            Assert.IsNotNull(respuesta);
-        }
+        
     }
 }
