@@ -22,7 +22,10 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         public ActionResult Index()
         {
-            var volumenesDeProduccion = db.VolumenesDeProduccion.Include(v => v.MarcaDelCigarrillo).Include(v => v.Reportante).Include(v => v.WorkCenter);
+            var volumenesDeProduccion = db.VolumenesDeProduccion
+                .Include(v => v.MarcaDelCigarrillo)
+                .Include(v => v.Reportante)
+                .Include(v => v.WorkCenter);
             return View(volumenesDeProduccion.ToList());
         }
 
@@ -44,7 +47,7 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.IdMarca = new SelectList(db.Marcas, "Id", "Nombre");
+            ViewBag.Code_FA = new SelectList(db.Marcas, "Code_FA", "Descripcion");
             ViewBag.IdPersona = new SelectList(db.Personas, "Id", "Nombre");
             ViewBag.IdWorkCenter = new SelectList(db.WorkCenters, "Id", "Nombre");
             return View();
