@@ -33,5 +33,15 @@ namespace PMMX.Operaciones.Servicios.Tests
             var respuesta = _servicio.GetMarcas();
             Assert.IsTrue(respuesta.EjecucionCorrecta);
         }
+
+        [TestMethod()]
+        [DataRow("")]
+        [DataRow("")]
+        [DataRow(null)]
+        public void GetMarcaTest(string code_FA)
+        {
+            var respuesta = _servicio.GetMarca(code_FA);
+            Assert.IsTrue(respuesta.EjecucionCorrecta);
+        }
     }
 }
