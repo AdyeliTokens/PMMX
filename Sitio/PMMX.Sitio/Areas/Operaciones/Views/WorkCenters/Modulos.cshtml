@@ -1,0 +1,41 @@
+﻿@model IList<PMMX.Modelo.Entidades.Maquinaria.Origen>
+
+@{
+    
+}
+
+<div class="row">
+
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+
+            <div class="box box-widget widget-user-2">
+                <div class="widget-user-header bg-gray">
+                    
+                    <div class="widget-user-image">
+                        
+                            <img class="img-circle" src="@Url.Action("Origenes", "Fotos", new { idOrigen = item.Id, area = "" })" alt="User Avatar">
+                        
+                    </div>
+
+                    <h3 class="widget-user-username">@Html.DisplayFor(modelItem => item.Modulo.Nombre)</h3>
+                    <h5 class="widget-user-desc">@Html.DisplayFor(modelItem => item.Modulo.NombreCorto)</h5>
+
+                    @*@Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-danger pull-right" })
+                        @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-default pull-right" })
+                        @Html.ActionLink("Detalles", "Details", new { id = item.Id }, new { @class = "btn btn-default pull-right" })*@
+
+                </div>
+                
+            </div>
+
+        </div>
+
+        
+
+    }
+
+   
+
+</div>

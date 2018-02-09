@@ -31,7 +31,7 @@
                     <thead>
                         <tr class="info">
                             <th>
-                                @Html.DisplayNameFor(model => model.Codigo_FA)
+                                @Html.DisplayNameFor(model => model.Code_FA)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Descripcion)
@@ -60,7 +60,7 @@
 
                             <tr class=@(item.Activo ? "success" : "danger")>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Codigo_FA)
+                                    @Html.DisplayFor(modelItem => item.Code_FA)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Descripcion)
@@ -81,9 +81,9 @@
                                     @Html.DisplayFor(modelItem => item.Activo)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.Codigo_FA }) |
-                                    @Html.ActionLink("Details", "Details", new { id = item.Codigo_FA }) |
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.Codigo_FA })
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Code_FA }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.Code_FA }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Code_FA })
                                 </td>
                             </tr>
                         }
@@ -91,7 +91,7 @@
                     <tfoot>
                         <tr class="info">
                             <th>
-                                @Html.DisplayNameFor(model => model.Codigo_FA)
+                                @Html.DisplayNameFor(model => model.Code_FA)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Descripcion)

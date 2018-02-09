@@ -8033,6 +8033,8 @@
     <Content Include="Areas\Operaciones\Views\BitacoraJustDoIt\Index.cshtml" />
     <Content Include="Areas\Operaciones\Views\Marcas\Upload.cshtml" />
     <Content Include="Areas\Operaciones\Views\VolumenesDeProduccion\Upload.cshtml" />
+    <Content Include="Areas\Operaciones\Views\WorkCenters\Modulos.cshtml" />
+    <Content Include="Areas\Operaciones\Views\WorkCenters\Operadores.cshtml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
