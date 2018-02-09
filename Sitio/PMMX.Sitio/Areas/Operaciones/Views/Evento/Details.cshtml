@@ -10,8 +10,9 @@
 
 <div>
     <p align="right">
-        <button id="btn-Editar" class="btn btn-default" alt="Editar"><i class="fa fa-pencil text-info"></i></button>
+        <button id="btn-CreateVentana" class="btn btn-default" alt="Crear Ventana"><i class="fa fa-paperclip text-info"></i></button>
         <button id="btn-Info" class="btn btn-default" alt="Mas Informacion"><i class="fa fa-info-circle text-info"></i></button>
+        <button id="btn-Editar" class="btn btn-default" alt="Editar"><i class="fa fa-pencil text-info"></i></button>
         <button id="btn-Delete" class="btn btn-default" alt="Eliminar"><i class="fa fa-trash text-danger"></i></button>
     </p>
     <hr />
@@ -98,6 +99,16 @@
                 $('#subVista').hide();
                 
             }
+
+            $("#btn-CreateVentana").on("click", function () {
+                var url = ("/Warehouse/Ventana/Create");
+
+                $.get(url, function (data) {
+                    $('#createAssetContainer').html(data);
+
+                    $('#createAssetModal').modal('show');
+                });
+            });
 
             $("#btn-Editar").on("click", function ()
             {

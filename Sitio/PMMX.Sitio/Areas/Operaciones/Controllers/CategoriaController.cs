@@ -22,6 +22,20 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(categoria.ToList());
         }
 
+        public ActionResult GetCategorias()
+        {
+            if (ModelState.IsValid)
+            {
+                var lista = db.Categoria.Select(w => new { Id = w.Id, Nombre = w.Nombre }).OrderBy(w => w.Id).ToList();
+                return Json(new { lista }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
         // GET: Eventos/Categoria/Details/5
         public ActionResult Details(int? id)
         {

@@ -15,6 +15,7 @@ using PMMX.Modelo.RespuestaGenerica;
 using PMMX.Modelo.Entidades;
 using Microsoft.AspNet.Identity;
 using PMMX.Modelo.Entidades.GembaWalks;
+using PMMX.Operaciones.Servicios;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -35,6 +36,45 @@ namespace Sitio.Areas.Operaciones.Controllers
             if (ModelState.IsValid)
             {
                 var events = db.Evento.ToList();
+                return Json(new { events }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult GetEventsByCategoria(int IdCategoria)
+        {
+            if (ModelState.IsValid)
+            {
+                var events = db.Evento.Where(e => e.IdCategoria == IdCategoria).ToList();
+                return Json(new { events }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult GetEventsBySubCategoria(int IdSubCategoria)
+        {
+            if (ModelState.IsValid)
+            {
+                var events = db.Ventana.Where(v => (v.IdSubCategoria == IdSubCategoria))
+                    .Select( e => new EventoView
+                    {
+                        Id = e.Evento.Id,
+                        Descripcion = e.Evento.Descripcion,
+                        IdAsignador = e.Evento.IdAsignador,
+                        IdCategoria = e.Evento.IdCategoria,
+                        FechaInicio = e.Evento.FechaInicio,
+                        FechaFin = e.Evento.FechaFin,
+                        Nota = e.Evento.Nota,
+                        EsRecurrente = e.Evento.EsRecurrente,
+                        Activo = e.Evento.Activo
+                    }).ToList();
+                    
                 return Json(new { events }, JsonRequestBehavior.AllowGet);
             }
             else
@@ -246,14 +286,8 @@ namespace Sitio.Areas.Operaciones.Controllers
                     EmailService emailService = new EmailService();
                     emailService.SendMail(senders, evento);
                 }
-                
-                switch (evento.IdCategoria)
-                {
-                    case 10:
-                        return RedirectToAction("Create", "Ventana", new { IdEvento = evento.Id, Area = "Warehouse" });
-                    default:
-                        return RedirectToAction("Index");
-                }
+
+                return RedirectToAction("Index");
             }
 
             return View(evento);

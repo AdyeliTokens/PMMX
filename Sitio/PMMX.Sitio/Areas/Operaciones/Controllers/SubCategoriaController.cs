@@ -23,6 +23,19 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(subCategoria.ToList());
         }
 
+        public ActionResult GetSubCategoriasByCategoria(int IdCategoria)
+        {
+            if (ModelState.IsValid)
+            {
+                var lista = db.SubCategoria.Where(w => (w.IdCategoria == IdCategoria)).Select(w => new { Id = w.Id, Nombre = w.Nombre }).OrderBy(w => w.Id).ToList();
+                return Json(new { lista }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         // GET: Eventos/SubCategoria/Details/5
         public ActionResult Details(int? id)
         {
