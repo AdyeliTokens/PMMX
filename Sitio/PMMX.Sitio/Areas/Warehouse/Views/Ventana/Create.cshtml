@@ -2,12 +2,10 @@
 
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
-@section Styles {
-    @Styles.Render("~/Style/Select2")
-}
+@Styles.Render("~/Style/Select2")
 
 <h2>Create</h2>
 
@@ -216,20 +214,26 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/JS/Select2")
-    <script>
-        $(function () {
-            var IdEvento = parseInt(getUrlVar("IdEvento"), 10);
 
-            $('.select2').select2();
+@Scripts.Render("~/JS/Select2")
+<script>
+    $(function ()
+    {
+        $('.collapse').collapse()
+        $('.select2').select2();
+        start()
+
+        function start()
+        {
+            var IdEvento = $('#IdEventoModal').val();
+            alert(IdEvento);
+
             $("#Activo").val(true);
             $("#IdEvento").val(IdEvento);
-            
-            $('.collapse').collapse()
-        });
+        }
 
         function getUrlVar(key) {
+            //var IdEvento = parseInt(getUrlVar("IdEvento"), 10);
             var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search);
             return result && unescape(result[1]) || "";
         }
@@ -251,6 +255,7 @@
                 }
             });
         }
+            
+    });
+</script>
 
-    </script>
-}

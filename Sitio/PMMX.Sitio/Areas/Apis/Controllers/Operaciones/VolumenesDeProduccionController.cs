@@ -35,7 +35,7 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
             List<PlanAttainmentView> volumenes = new List<PlanAttainmentView>();
             for (int i = delta; i <= (6 + delta); i++)
             {
-                double volumenTotal = volumenesDeProduccion.Where(x => x.Fecha.Date == diaSeleccionado.AddDays(i).Date).Sum(o => o.Cantidad);
+                double volumenTotal = volumenesDeProduccion.Where(x => x.Fecha.Date == diaSeleccionado.AddDays(i).Date).Sum(o => o.New_Qty);
                 double objetivo = objetivos.Where(x => x.FechaInicial <= diaSeleccionado.AddDays(i).Date).OrderByDescending(x => x.FechaInicial).Select(x => x.Objetivo).FirstOrDefault();
 
                 volumenes.Add(new PlanAttainmentView { Fecha = diaSeleccionado.AddDays(i), Plan_Attainment_Total = volumenTotal, Objetivo = objetivo });
@@ -62,7 +62,7 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
             List<PlanAttainmentView> volumenes = new List<PlanAttainmentView>();
             for (int i = delta; i <= (6 + delta); i++)
             {
-                double volumenTotal = volumenesDeProduccion.Where(x => x.Fecha.Date == diaSeleccionado.AddDays(i).Date).Sum(o => o.Cantidad);
+                double volumenTotal = volumenesDeProduccion.Where(x => x.Fecha.Date == diaSeleccionado.AddDays(i).Date).Sum(o => o.New_Qty);
                 double objetivo = objetivos.Where(x => x.FechaInicial <= diaSeleccionado.AddDays(i).Date).OrderByDescending(x => x.FechaInicial).Select(x => x.Objetivo).FirstOrDefault();
 
                 volumenes.Add(new PlanAttainmentView { Fecha = diaSeleccionado.AddDays(i), Plan_Attainment_Total = volumenTotal, Objetivo = objetivo });

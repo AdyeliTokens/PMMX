@@ -39,9 +39,13 @@ namespace Sitio.Areas.Operaciones.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            
             int IdGembaWalk = (int)id;
             GembaWalkServicio servicio = new GembaWalkServicio();
             RespuestaServicio<GembaWalkView> GembaWalk = servicio.GetGembaWalk(IdGembaWalk);
+
+            ViewBag.Estatus = db.BitacoraGembaWalks.Where(x => x.IdGembaWalk == GembaWalk.Respuesta.Id).OrderByDescending(x => x.Fecha).Select(x => x.Estatus.Nombre).FirstOrDefault().ToString();
+            
             if (GembaWalk == null)
             {
                 return HttpNotFound();
@@ -65,9 +69,8 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View();
         }
 
-        /*[HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateComentario(Comentario comentario)
+        [HttpPost]
+        public ActionResult ChangeStatus(PMMX.Modelo.Entidades.Operaciones.BitacoraGembaWalk bitacora)
         {
             if (ModelState.IsValid)
             {
@@ -75,38 +78,15 @@ namespace Sitio.Areas.Operaciones.Controllers
                 IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
                 if (persona.EjecucionCorrecta)
                 {
-                    comentario.IdComentador = persona.Respuesta.Id;
-                    ComentarioServicio servicio = new ComentarioServicio();
-                    RespuestaServicio<ComentarioView> respuesta = servicio.PostComentario(comentario);
-
-                }
-                else
-                {
-
-                }
-
-            }
-
-            return RedirectToAction("Details/", new RouteValueDictionary(new { controller = "GembaWalk", action = "Details", Id = comentario.IdGembaWalk }));
-        }*/
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditNotificacionSAP(int id, string NotificacionSAP)
-        {
-
-            if (ModelState.IsValid)
-            {
-                GembaWalkServicio servicio = new GembaWalkServicio();
-                RespuestaServicio<GembaWalkView> _GembaWalk = servicio.PutGembaWalk(id, NotificacionSAP);
-
-                if (_GembaWalk == null)
-                {
-                    return HttpNotFound();
+                    bitacora.IdResponsable = persona.Respuesta.Id;
+                    bitacora.Fecha = DateTime.Now;
+                    bitacora.Comentario = " ";
+                    db.BitacoraGembaWalks.Add(bitacora);
+                    db.SaveChanges();
+                    return Json(new { status = 200 });
                 }
             }
-
-            return RedirectToAction("Details/", new RouteValueDictionary(new { controller = "GembaWalk", action = "Details", Id = id }));
+            return Json(new { status = 400 });
         }
 
         // GET: Maquinaria/GembaWalk/Edit/5

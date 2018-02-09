@@ -29,7 +29,6 @@ namespace PMMX.Modelo.Entidades.Operaciones
             this.HasMany(c => c.WorkFlowInicial).WithOptional(x => x.EstatusInicial).HasForeignKey(c => c.Inicial);
             this.HasMany(c => c.WorkFlowAnterior).WithOptional(x => x.EstatusAnterior).HasForeignKey(c => c.Anterior);
             this.HasMany(c => c.WorkFlowSiguiente).WithOptional(x => x.EstatusSiguiente).HasForeignKey(c => c.Siguiente);
-            this.HasMany(c => c.WorkFlowCancelado).WithOptional(x => x.EstatusCancelado).HasForeignKey(c => c.Cancelado);
             #endregion
 
             #region HasOptional

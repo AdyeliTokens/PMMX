@@ -17,7 +17,7 @@ namespace PMMX.Modelo.Map
             ToTable("WorkFlow");
             HasKey(c => c.Id);
             Property(c => c.Id).HasColumnName("Id");
-            Property(c => c.IdCategoria).HasColumnName("IdCategoria");
+            Property(c => c.IdSubCategoria).HasColumnName("IdSubcategoria");
             Property(c => c.Inicial).HasColumnName("Inicial");
             Property(c => c.Anterior).HasColumnName("Anterior");
             Property(c => c.Siguiente).HasColumnName("Siguiente");
@@ -32,11 +32,10 @@ namespace PMMX.Modelo.Map
             this.HasOptional(x => x.EstatusInicial).WithMany(c => c.WorkFlowInicial);
             this.HasOptional(x => x.EstatusAnterior).WithMany(c => c.WorkFlowAnterior);
             this.HasOptional(x => x.EstatusSiguiente).WithMany(c => c.WorkFlowSiguiente);
-            this.HasOptional(x => x.EstatusCancelado).WithMany(c => c.WorkFlowCancelado);
             #endregion
 
             #region HasRequired
-            this.HasRequired(x => x.Categoria).WithMany(c => c.WorkFlows);
+            this.HasRequired(x => x.SubCategoria).WithMany(c => c.WorkFlows);
             #endregion
         }
     }

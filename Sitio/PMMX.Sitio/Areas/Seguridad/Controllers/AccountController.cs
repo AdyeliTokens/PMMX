@@ -9,6 +9,7 @@ using PMMX.Modelo.Account;
 using Sitio.Models;
 using Sitio.Helpers;
 using System.ComponentModel.DataAnnotations;
+using PMMX.Modelo.RespuestaGenerica;
 
 namespace Sitio.Areas.Seguridad.Controllers
 {
@@ -88,6 +89,18 @@ namespace Sitio.Areas.Seguridad.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
+        }
+
+        
+        [ValidateAntiForgeryToken]
+        public async Task<RespuestaServicio<SignInStatus>> LoginExternal(LoginModel model)
+        {
+            
+            AccountService servicio = new AccountService(UserManager, SignInManager);
+            var respuesta = await servicio.Login(model);
+
+            return respuesta;
+            
         }
 
         //

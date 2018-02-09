@@ -18,8 +18,29 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         public ActionResult Index()
         {
-            var workCenter = db.WorkCenters.Include(w => w.BussinesUnit).Include(w => w.Responsable);
+            var workCenter = db.WorkCenters
+                .Include(w => w.BussinesUnit)
+                .Include(w => w.Responsable)
+                .Include(w => w.Origenes)
+            .Include(w => w.Operadores);
+
             return View(workCenter.ToList());
+        }
+
+        public ActionResult Modulos(int idWorkCenter)
+        {
+            var modulos  = db.Origens
+                .Include(w => w.Modulo).Where(w=> w.IdWorkCenter == idWorkCenter);
+
+            return View(modulos.ToList());
+        }
+
+        public ActionResult Operadores(int idWorkCenter)
+        {
+            var operadores = db.Operadores
+                .Include(w => w.Operador).Where(w => w.IdWorkCenter == idWorkCenter);
+
+            return View(operadores.ToList());
         }
 
         public ActionResult Details(int? id)
@@ -46,7 +67,7 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( WorkCenter workCenter)
+        public ActionResult Create(WorkCenter workCenter)
         {
             if (ModelState.IsValid)
             {
@@ -118,6 +139,8 @@ namespace Sitio.Areas.Operaciones.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+
 
         protected override void Dispose(bool disposing)
         {

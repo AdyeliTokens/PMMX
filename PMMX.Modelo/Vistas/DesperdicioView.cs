@@ -17,7 +17,7 @@ namespace PMMX.Modelo.Vistas
         public int IdPersona { get; set; }
         public int IdWorkCenter { get; set; }
         public int IdSeccion { get; set; }
-        public int IdMarca { get; set; }
+        public string Code_FA { get; set; }
 
 
 

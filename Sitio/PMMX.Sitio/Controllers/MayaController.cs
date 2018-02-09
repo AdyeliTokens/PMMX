@@ -25,20 +25,40 @@ namespace Sitio.Controllers
 
         }
 
+        public FileResult Upload()
+        {
+            byte[] fileBytes = System.IO.File.ReadAllBytes(@"c:\PMMX\Aplicaciones\Maya\app-release.apk");
+            string fileName = "Maya.apk";
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+
+        }
+
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase file)
+        {
+            if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+            {
+                string fileName = file.FileName;
+                string fileContentType = file.ContentType;
+                byte[] fileBytes = new byte[file.ContentLength];
+                var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+                //var aliasWorkCenter = db.Alias.Include(w => w.WorkCenters).ToList();
+                
+            }
+
+            return View("Index");
+        }
+
+
         public ActionResult Info()
         {
-            byte[] fileBytes = System.IO.File.ReadAllBytes(@"c:\PMMX\Aplicaciones\Maya\info.json");
-
-            UpdateMaya update = new UpdateMaya
+            using (StreamReader r = new StreamReader(@"c:\PMMX\Aplicaciones\Maya\output.json"))
             {
-                NewVersion = 1.02,
-                Fecha = DateTime.Now,
-                url = "",
-                releaseNotes = ""
-            };
+                string json = r.ReadToEnd();
+                UpdateMaya update = JsonConvert.DeserializeObject<UpdateMaya>(json);
 
-            
-            return Json(update, JsonRequestBehavior.AllowGet);
+                return Json(update, JsonRequestBehavior.AllowGet);
+            }
 
         }
 

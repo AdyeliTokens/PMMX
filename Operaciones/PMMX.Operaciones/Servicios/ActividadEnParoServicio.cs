@@ -55,11 +55,7 @@ namespace PMMX.Operaciones.Servicios
 
             return respuesta;
         }
-
-        public bool ActividadEnParoExists(int id)
-        {
-            return _context.ActividadEnParos.Count(e => e.Id == id) > 0;
-        }
+        
 
         #endregion
 
@@ -80,12 +76,9 @@ namespace PMMX.Operaciones.Servicios
                 _context.SaveChanges();
                 respuesta.Respuesta = actividadEnParo;
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException e)
             {
-                if (!ActividadEnParoExists(id))
-                {
-                    respuesta.Mensaje = "La Actividad en el paro no Existe";
-                }
+                    respuesta.Mensaje = e.Message;
             }
 
             return respuesta;

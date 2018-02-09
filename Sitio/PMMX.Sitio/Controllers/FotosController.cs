@@ -190,7 +190,7 @@ namespace Sitio.Controllers
             return base.File(folderName, "image/png");
         }
 
-        public ActionResult Marca(string idMarca)
+        public ActionResult Marca(string Code_FA)
         {
 
             string folderName = Server.MapPath("~/img/default.png");

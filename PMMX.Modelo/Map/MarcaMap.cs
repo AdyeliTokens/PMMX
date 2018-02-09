@@ -1,10 +1,6 @@
 ﻿using PMMX.Modelo.Entidades;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace PMMX.Modelo.Map
 {
@@ -15,16 +11,19 @@ namespace PMMX.Modelo.Map
         {
             #region Propiedades
             ToTable("Marcas");
-            HasKey(c => c.Id);
-            Property(c => c.Id).HasColumnName("Id");
-            Property(c => c.Nombre).HasColumnName("Nombre");
-            Property(c => c.Codigo).HasColumnName("Codigo");
-            Property(c => c.PesoPorCigarrillo).HasColumnName("Peso");
+            HasKey(c => c.Code_FA);
+            Property(c => c.Code_FA).HasColumnName("Codigo_FA");
+            Property(c => c.Descripcion).HasColumnName("Descripcion");
+            Property(c => c.Codigo_Cigarrillo).HasColumnName("Codigo_Cigarrillo");
+            Property(c => c.PesoPorCigarrillo).HasColumnName("PesoPorCigarrillo");
+            Property(c => c.PesoTabacco).HasColumnName("PesoTabacco");
+            Property(c => c.FechaDeAlta).HasColumnName("FechaDeAlta");
+            Property(c => c.IdPersonaQueDioDeAlta).HasColumnName("IdPersonaQueDioDeAlta");
             Property(c => c.Activo).HasColumnName("Activo");
             #endregion
 
             #region HasMany
-            HasMany(c => c.Desperdicios).WithRequired(x => x.MarcaDelCigarrillo).HasForeignKey(c => c.IdMarca);
+            HasMany(c => c.Desperdicios).WithRequired(x => x.MarcaDelCigarrillo).HasForeignKey(c => c.Code_FA);
             #endregion
 
             #region HasOptional
@@ -32,6 +31,8 @@ namespace PMMX.Modelo.Map
 
             #region HasRequired
 
+            HasRequired(x => x.PersonaQueDioDeAlta).WithMany(y => y.MarcasDadasDeAlta).HasForeignKey(x => x.IdPersonaQueDioDeAlta);
+            
             #endregion
 
 

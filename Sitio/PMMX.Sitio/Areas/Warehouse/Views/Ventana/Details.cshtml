@@ -10,8 +10,16 @@
     <div class="progress progress-xs progress-striped active">
         <div class="progress-bar progress-bar-success" style="width: 100%"></div>
     </div>
-
+    <div>
+        @Html.Hidden("IdVentana", Model.Id)
+    </div>
     <table class="table">
+        <tr class="bg-primary">
+            <td><i class="fa fa-star"></i></td>
+            <td>Status</td>
+            <td><div id="NombreStatus"></div></td>
+            <td></td>
+        </tr>
         <tr class="bg-info">
             <td class="bg-primary"><i class="fa fa-calendar"></i></td>
             <td class="bg-primary"><b>PO</b></td>
@@ -76,3 +84,42 @@
     </table>
 
 </div>
+
+@Scripts.Render("~/JS/Select2")
+<script>
+        $(function () {
+            var IdVentana = $("#IdVentana").val();
+            getStatusActualVentana(IdVentana);
+            GetRechazoActualVentana(IdVentana);            
+        });
+    
+        function getStatusActualVentana(IdVentana) {
+            $.ajax({
+                dataType: "json",
+                contentType: "application/json",
+                url: "/Warehouse/Ventana/GetStatusActualVentana?idVentana=" + IdVentana,
+                success: function (data) {
+                    $('#NombreStatus').html(data.status);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('There was an error while fetching data!');
+                }
+            });
+        }
+
+        function GetRechazoActualVentana(IdVentana) {
+            $.ajax({
+                dataType: "json",
+                contentType: "application/json",
+                url: "/Warehouse/Ventana/GetRechazoActualVentana?idVentana=" + IdVentana,
+                success: function (data) {
+                    estatus = $('#NombreStatus').val() + "/" + data.rechazo;
+                    $('#NombreStatus').html(estatus);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('There was an error while fetching data!');
+                }
+            });
+        }
+
+</script>

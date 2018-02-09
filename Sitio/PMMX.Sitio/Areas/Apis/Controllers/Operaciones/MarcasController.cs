@@ -11,6 +11,7 @@ using System.Web.Http.Description;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades;
 using PMMX.Operaciones.Servicios;
+using PMMX.Modelo.RespuestaGenerica;
 
 namespace Sitio.Areas.Apis.Controllers.Operarios
 {
@@ -24,28 +25,28 @@ namespace Sitio.Areas.Apis.Controllers.Operarios
             return db.Marcas;
         }
 
-        [ResponseType(typeof(Marca))]
-        public IHttpActionResult GetMarca(int id)
+        [ResponseType(typeof(RespuestaServicio<Marca>))]
+        public IHttpActionResult GetMarca(string Code_FA)
         {
-            PesadorServicio servicio = new PesadorServicio();
-            var workcenters = servicio.GetWorkCentersByPesador(id);
-            return Ok(workcenters.Respuesta);
+            MarcaServicio servicio = new MarcaServicio(db);
+            var respuesta = servicio.GetMarca(Code_FA);
+            return Ok(respuesta);
         }
 
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutPesador(int id, Marca marcas)
+        public IHttpActionResult PutMarca(string code_FA, Marca marca)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != marcas.Id)
+            if (code_FA != marca.Code_FA)
             {
                 return BadRequest();
             }
 
-            db.Entry(marcas).State = EntityState.Modified;
+            db.Entry(marca).State = EntityState.Modified;
 
             try
             {
@@ -53,7 +54,7 @@ namespace Sitio.Areas.Apis.Controllers.Operarios
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MarcaExists(id))
+                if (!MarcaExists(code_FA))
                 {
                     return NotFound();
                 }
@@ -77,7 +78,7 @@ namespace Sitio.Areas.Apis.Controllers.Operarios
             db.Marcas.Add(marca);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = marca.Id }, marca);
+            return CreatedAtRoute("DefaultApi", new { id = marca.Code_FA }, marca);
         }
 
         [ResponseType(typeof(Marca))]
@@ -104,9 +105,9 @@ namespace Sitio.Areas.Apis.Controllers.Operarios
             base.Dispose(disposing);
         }
 
-        private bool MarcaExists(int id)
+        private bool MarcaExists(string code_FA)
         {
-            return db.Marcas.Count(e => e.Id == id) > 0;
+            return db.Marcas.Count(e => e.Code_FA == code_FA) > 0;
         }
     }
 }
