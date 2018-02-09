@@ -8,6 +8,13 @@ using System.Web;
 using System.Web.Mvc;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.Warehouse;
+using PMMX.Modelo.Entidades.Operaciones;
+using PMMX.Seguridad.Servicios;
+using PMMX.Modelo.RespuestaGenerica;
+using PMMX.Modelo.Entidades;
+using Microsoft.AspNet.Identity;
+using PMMX.Operaciones.Servicios;
+using PMMX.Modelo.Vistas;
 
 namespace Sitio.Areas.Warehouse.Controllers
 {
@@ -121,10 +128,43 @@ namespace Sitio.Areas.Warehouse.Controllers
             {
                 db.Ventana.Add(ventana);
                 db.SaveChanges();
+                changeEstatus(ventana);
                 return RedirectToAction("Index");
             }
 
             return View(ventana);
+        }
+
+        public Boolean changeEstatus(Ventana ventana)
+        {
+            if (ModelState.IsValid)
+            {
+                var estatus = db.StatusVentana
+                    .Where(s => (s.IdVentana == ventana.Id))
+                    .OrderByDescending(s => s.Fecha)
+                    .Select(s => s.IdStatus)
+                    .FirstOrDefault();
+                
+                WorkFlowServicio workflowServicio = new WorkFlowServicio();
+                IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, estatus, false);
+
+                if (workFlow.EjecucionCorrecta)
+                {
+                    PersonaServicio personaServicio = new PersonaServicio();
+                    IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
+
+                    StatusVentana statusVentana = new StatusVentana();
+                    statusVentana.IdVentana = ventana.Id;
+                    statusVentana.IdResponsable = persona.Respuesta.Id;
+                    statusVentana.IdStatus = workFlow.Respuesta.EstatusInicial.Id;
+                    statusVentana.Fecha = DateTime.Now;
+                    db.StatusVentana.Add(statusVentana);
+                    db.SaveChanges();
+                }
+                
+                return true;
+            }
+            return false;
         }
 
         // GET: Warehouse/Ventana/Edit/5
