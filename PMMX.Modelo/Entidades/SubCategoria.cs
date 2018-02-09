@@ -11,6 +11,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
 {
     public class SubCategoria
     {
+        #region Propiedades
         public int Id { get; set; }
         public int IdCategoria { get; set; }
 
@@ -20,14 +21,17 @@ namespace PMMX.Modelo.Entidades.Operaciones
         [StringLength(250)]
         public string NombreCorto { get; set; }
 
-
         public int IdResponsable { get; set; }
         public bool Activo { get; set; }
+        #endregion
 
+        #region Navegacion
         public Persona Responsable { get; set; }
         public Categoria Categoria { get; set; }
 
         public ICollection<Ventana> Ventanas { get; set; }
         public ICollection<GembaWalk> GembaWalk { get; set; }
+        public ICollection<WorkFlow> WorkFlows { get; set; }
+        #endregion
     }
 }

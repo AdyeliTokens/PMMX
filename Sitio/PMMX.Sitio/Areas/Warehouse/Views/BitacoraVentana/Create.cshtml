@@ -17,18 +17,10 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         
         <div class="form-group">
-            @Html.LabelFor(model => model.IdVentana, "PO: ", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IdRechazo,"Rechazo en Ventana: ", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("IdVentana", null, htmlAttributes: new { @class = "form-control select2", @style = "width: 100%;" })
-                @Html.ValidationMessageFor(model => model.IdVentana, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdActividadVentana,"Actividad en Ventana: ", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdActividadVentana", null, htmlAttributes: new { @class = "form-control select2", @style = "width: 100%;" })
-                @Html.ValidationMessageFor(model => model.IdActividadVentana, "", new { @class = "text-danger" })
+                @Html.DropDownList("IdRechazo", null, htmlAttributes: new { @class = "form-control select2", @style = "width: 100%;" })
+                @Html.ValidationMessageFor(model => model.IdRechazo, "", new { @class = "text-danger" })
             </div>
         </div>
         
@@ -59,15 +51,19 @@
 @Scripts.Render("~/JS/Select2")
 
 <script>
-        $(document).ready(function ()
-        {
-            $('.select2').select2();
-           start();
+    $(document).ready(function ()
+    {
+        $('.select2').select2();
+        start();
 
-            function start()
-            {   
-                $("#Activo").val(true);     
-           }
-        });
+        function start()
+        {               
+            var IdEvento = $('#IdEvento').val();
+            var IdVentana = $('#IdVentanaEvento').val();
+
+            $("#Activo").val(true);
+            $("#IdVentana").val(IdVentana);
+        }  
+    });
 </script>
 

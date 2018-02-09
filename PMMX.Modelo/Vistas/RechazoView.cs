@@ -17,7 +17,6 @@ namespace PMMX.Modelo.Vistas
 
         #region Navegacion
         public EstatusView Estatus { get; set; }
-        public ICollection<BitacoraVentanaView> BitacoraVentana { get; set; }
         public ICollection<BitacoraGembaWalk> BitacoraGembaWalk { get; set; }
         #endregion
     }

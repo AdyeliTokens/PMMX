@@ -55,43 +55,6 @@ namespace PMMX.Operaciones.Servicios.Tests
 
             Assert.IsNotNull(respuesta);
         }
-
-        [TestMethod()]
-        public void GetWorkCentersByBussinesUnitTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void ActualizarWorkCenterTest()
-        {
-            //var respuesta = _servicio.ActualizarWorkCenter();
-
-
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void PostWorkCenterTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void DeleteWorkCenterTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void GetWorkCenterByOperadorTest()
-        {
-
-            PMMXContext _context = new PMMXContext();
-            var respuesta = new WorkCenterServicio(_context).GetWorkCenterByOperador(66);
-            Assert.Fail();
-        }
-
-
+        
     }
 }

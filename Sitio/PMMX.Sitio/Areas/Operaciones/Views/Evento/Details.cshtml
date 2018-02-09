@@ -10,8 +10,9 @@
 
 <div>
     <p align="right">
-        <button id="btn-Editar" class="btn btn-default" alt="Editar"><i class="fa fa-pencil text-info"></i></button>
+        <button id="btn-CreateVentana" class="btn btn-default" alt="Crear Ventana"><i class="fa fa-paperclip text-info"></i></button>
         <button id="btn-Info" class="btn btn-default" alt="Mas Informacion"><i class="fa fa-info-circle text-info"></i></button>
+        <button id="btn-Editar" class="btn btn-default" alt="Editar"><i class="fa fa-pencil text-info"></i></button>
         <button id="btn-Delete" class="btn btn-default" alt="Eliminar"><i class="fa fa-trash text-danger"></i></button>
     </p>
     <hr />
@@ -95,10 +96,19 @@
             {
                 var idCategoria = $("#IdCategoria").val();
                 $("#opciones-ventana").hide();
-
-                if (idCategoria == 10)
-                    $("#opciones-ventana").show();
+                $('#subVista').hide();
+                
             }
+
+            $("#btn-CreateVentana").on("click", function () {
+                var url = ("/Warehouse/Ventana/Create");
+
+                $.get(url, function (data) {
+                    $('#createAssetContainer').html(data);
+
+                    $('#createAssetModal').modal('show');
+                });
+            });
 
             $("#btn-Editar").on("click", function ()
             {
@@ -119,8 +129,12 @@
                     success: function (data) {
                         $.each(data, function (i, k) {
                             var url = ("/Warehouse/Ventana/Details/" + k.Id);
+                            $("#IdVentanaEvento").val(k.Id);
+
+                            $("#opciones-ventana").show();
 
                             $.get(url, function (data) {
+                                $('#subVista').show();
                                 $('#subVista').html(data);
                             });
                         });
@@ -143,7 +157,7 @@
             });
 
             $("#btn-Continuar").on("click", function () {
-                var url = ("/Operaciones/StatusVentana/Create?IdVentana=" + id);
+                var url = ("/Operaciones/StatusVentana/Create");
 
                 $.get(url, function (data) {
                     $('#createAssetContainer').html(data);
@@ -153,7 +167,7 @@
             });
 
             $("#btn-Rechazo").on("click", function (e) {
-                var url = ("/Warehouse/BitacoraVentana/Create?IdVentana=" + id);
+                var url = ("/Warehouse/BitacoraVentana/Create");
                 
                 $.get(url, function (data) {
                     $('#createAssetContainer').html(data);

@@ -17,13 +17,13 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
     {
         private PMMXContext db = new PMMXContext();
 
-        // GET: api/ActividadEnDefectos
+        
         public IQueryable<ActividadEnDefecto> GetActividadEnDefecto()
         {
             return db.ActividadEnDefectos;
         }
 
-        // GET: api/ActividadEnDefectos/5
+        
         [ResponseType(typeof(ActividadEnDefecto))]
         public IHttpActionResult GetActividadEnDefecto(int id)
         {
@@ -36,7 +36,7 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
             return Ok(actividadEnDefecto);
         }
 
-        // PUT: api/ActividadEnDefectos/5
+        
         [ResponseType(typeof(void))]
         public IHttpActionResult PutActividadEnDefecto(int id, ActividadEnDefecto actividadEnDefecto)
         {
@@ -71,7 +71,7 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/ActividadEnDefectos
+        
         [ResponseType(typeof(ActividadEnDefecto))]
         public IHttpActionResult PostActividadEnDefecto(ActividadEnDefecto actividadEnDefecto)
         {
@@ -86,7 +86,7 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
             return CreatedAtRoute("DefaultApi", new { id = actividadEnDefecto.Id }, actividadEnDefecto);
         }
 
-        // DELETE: api/ActividadEnDefectos/5
+        
         [ResponseType(typeof(ActividadEnDefecto))]
         public IHttpActionResult DeleteActividadEnDefecto(int id)
         {

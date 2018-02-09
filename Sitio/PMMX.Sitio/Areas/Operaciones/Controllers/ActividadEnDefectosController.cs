@@ -17,14 +17,14 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         private PMMXContext db = new PMMXContext();
 
-        // GET: Maquinaria/ActividadEnDefectos
+        
         public ActionResult Index()
         {
             var actividadEnDefecto = db.ActividadEnDefectos.Include(a => a.Ejecutante);
             return View(actividadEnDefecto.ToList());
         }
 
-        // GET: Maquinaria/ActividadEnDefectos/Details/5
+        
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -39,7 +39,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(actividadEnDefecto);
         }
 
-        // GET: Maquinaria/ActividadEnDefectos/Create
+        
         public ActionResult Create()
         {
             //ViewBag.IdEjecutante = new SelectList(db.Personas, "Id", "Nombre");
@@ -47,9 +47,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View();
         }
 
-        // POST: Maquinaria/ActividadEnDefectos/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,IdDefecto,IdEjecutante,Descripcion,Fecha")] ActividadEnDefecto actividadEnDefecto)

@@ -13,6 +13,8 @@ using PMMX.Modelo.RespuestaGenerica;
 using PMMX.Modelo.Entidades;
 using Microsoft.AspNet.Identity;
 using PMMX.Modelo.Vistas;
+using PMMX.Operaciones.Servicios;
+using PMMX.Modelo.Entidades.Warehouse;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -60,7 +62,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                         Apellido2 = s.Responsable.Apellido2
                     }
                 }).FirstOrDefault();
-            
+
             if (statusVentana == null)
             {
                 return HttpNotFound();
@@ -69,11 +71,20 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(statusVentana);
         }
 
+        public int getEstatusActual(int IdVentana)
+        {
+            var idEstatus = db.StatusVentana
+                .Where(s => s.IdVentana == IdVentana)
+                .OrderByDescending(s => s.Fecha)
+                .Select(s => s.IdStatus)
+                .FirstOrDefault();
+
+            return idEstatus;
+        }
+        
         // GET: Operaciones/StatusVentana/Create
         public ActionResult Create()
         {
-            ViewBag.IdStatus = new SelectList(db.Estatus.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
-            ViewBag.IdVentana = new SelectList(db.Ventana.Select(x => new { Id = x.Id, PO = x.PO }).OrderBy(x => x.PO), "Id", "PO");
             return View();
         }
 
@@ -93,19 +104,22 @@ namespace Sitio.Areas.Operaciones.Controllers
                 {
                     statusVentana.IdResponsable = persona.Respuesta.Id;
                 }
+                
+                Ventana ventana = db.Ventana.Find(statusVentana.IdVentana);
+                WorkFlowServicio workflowServicio = new WorkFlowServicio();
+                IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, statusVentana.IdStatus, false);
 
+                statusVentana.IdStatus = workFlow.Respuesta.EstatusSiguiente.Id;
                 statusVentana.Fecha = DateTime.Now;
-
                 db.StatusVentana.Add(statusVentana);
                 db.SaveChanges();
+                
                 return RedirectToAction("Index");
             }
-
-            ViewBag.IdStatus = new SelectList(db.Estatus.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", statusVentana.IdStatus);
-            ViewBag.IdVentana = new SelectList(db.Ventana.Select(x => new { Id = x.Id, PO = x.PO }).OrderBy(x => x.PO), "Id", "PO", statusVentana.IdVentana);
+            
             return View(statusVentana);
-        }
-
+        } 
+        
         // GET: Operaciones/StatusVentana/Edit/5
         public ActionResult Edit(int? id)
         {

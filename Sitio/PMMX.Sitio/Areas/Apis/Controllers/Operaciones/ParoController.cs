@@ -15,6 +15,8 @@ using PMMX.Modelo;
 using PMMX.Modelo.Entidades;
 using Sitio.Helpers;
 using PMMX.Seguridad.Servicios;
+using PMMX.Operaciones.Servicios;
+using PMMX.Modelo.RespuestaGenerica;
 
 namespace Sitio.Areas.Apis.Controllers.Operaciones
 {
@@ -22,623 +24,59 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
     {
         private PMMXContext db = new PMMXContext();
 
-        // GET: api/Paro
         public IQueryable<Paro> GetParo()
         {
 
             return db.Paros;
         }
-
-        // GET: api/Paro/5
-        [ResponseType(typeof(Paro))]
+        
+        [ResponseType(typeof(RespuestaServicio<Paro>))]
         public IHttpActionResult GetParo(int id)
         {
-            var paro = db.Paros.Where(x => x.Id == id).Select(x => new ParoView
-            {
-                Id = x.Id,
-                Descripcion = x.Descripcion,
-                Activo = x.Activo,
-                FechaReporte = x.FechaReporte,
-                IdMecanico = x.IdMecanico,
-                IdOrigen = x.IdOrigen,
-                IdReportador = x.IdReportador,
-                Motivo = x.Motivo,
-                TiempoDeParos = x.TiemposDeParo.Where(t => t.IdParo == id).Select(t => new TiempoDeParoView
-                {
-                    Id = t.Id,
-                    IdParo = id,
-                    Inicio = t.Inicio,
-                    Fin = t.Fin
-                }).ToList(),
-                Reportador = new PersonaView
-                {
-                    Id = x.Reportador.Id,
-                    Nombre = x.Reportador.Nombre,
-                    Apellido1 = x.Reportador.Apellido1,
-                    Apellido2 = x.Reportador.Apellido2,
-                    Puesto = new PuestoView
-                    {
-                        Id = x.Reportador.Puesto.Id,
-                        Nombre = x.Reportador.Puesto.Nombre
-                    }
-                },
-                Origen = new OrigenView
-                {
-                    Id = x.IdOrigen,
-                    Modulo = new ModuloView
-                    {
-                        Id = x.Origen.Modulo.Id,
-                        Nombre = x.Origen.Modulo.Nombre,
-                        NombreCorto = x.Origen.Modulo.NombreCorto,
-                        Activo = x.Origen.Modulo.Activo
 
-                    },
-                    WorkCenter = new WorkCenterView
-                    {
-                        Id = x.Origen.WorkCenter.Id,
-                        Nombre = x.Origen.WorkCenter.Nombre,
-                        NombreCorto = x.Origen.WorkCenter.NombreCorto,
-                        Activo = x.Origen.WorkCenter.Activo
+            ParoServicio servicio = new ParoServicio(db);
+            var respuesta = servicio.GetParo(id);
 
-                    }
-
-                }
-
-            }).FirstOrDefault();
-
-            if (paro == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(paro);
+            return Ok(respuesta);
         }
 
-        // GET: api/Defectos/5
-        [ResponseType(typeof(IList<ParoView>))]
-        public IHttpActionResult getParosByOrigen(int idOrigen, Boolean activo, int cantidad)
+        [ResponseType(typeof(RespuestaServicio<List<Paro>>))]
+        public IHttpActionResult getParosByOrigen(int idOrigen)
         {
-            var paros = db.Paros
-                .Where(x => (x.Activo == activo && x.Origen.Id == idOrigen))
-                .OrderByDescending(x => x.FechaReporte)
-                .Take(cantidad)
-                .Select(x => new ParoView
-                {
-                    Id = x.Id,
-                    Descripcion = x.Descripcion,
-                    FechaReporte = x.FechaReporte,
-                    Activo = x.Activo,
-                    IdReportador = x.IdReportador,
-                    Reportador = new PersonaView
-                    {
-                        Id = x.Reportador.Id,
-                        Nombre = x.Reportador.Nombre,
-                        Apellido1 = x.Reportador.Apellido1,
-                        Apellido2 = x.Reportador.Apellido2,
-                        Activo = x.Reportador.Activo,
+            ParoServicio servicio = new ParoServicio(db);
+            var respuesta = servicio.GetParosByOrigen(idOrigen);
 
-                    },
-                    IdMecanico = x.IdMecanico,
-                    IdOrigen = x.IdOrigen,
-                    Origen = new OrigenView
-                    {
-                        Id = x.Origen.Id,
-                        IdModulo = x.Origen.IdModulo,
-                        IdWorkCenter = x.Origen.IdWorkCenter,
-                        Modulo = new ModuloView
-                        {
-                            Id = x.Origen.Modulo.Id,
-                            Nombre = x.Origen.Modulo.Nombre,
-                            NombreCorto = x.Origen.Modulo.NombreCorto,
-                            Activo = x.Origen.Modulo.Activo
-                        },
-                        WorkCenter = new WorkCenterView
-                        {
-                            Id = x.Origen.WorkCenter.Id,
-                            Nombre = x.Origen.WorkCenter.Nombre,
-                            NombreCorto = x.Origen.WorkCenter.NombreCorto,
-                            Activo = x.Origen.WorkCenter.Activo
-                        }
-                    }
-
-                }).ToList();
-
-
-
-
-            if (paros == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(paros);
+            return Ok(respuesta);
         }
-
-        // GET: api/Defectos/5
+        
         [ResponseType(typeof(IList<ParoView>))]
-        public IHttpActionResult getParosByBussinesUnit(int idBussinesUnit, Boolean activo, int cantidad)
+        public IHttpActionResult getParosByBussinesUnit(int idBussinesUnit)
         {
-            var paros = db.Paros
-                .Where(x => (x.Activo == activo && x.Origen.WorkCenter.IdBussinesUnit == idBussinesUnit))
-                .OrderByDescending(x => x.FechaReporte)
-                .Take(cantidad)
-                .Select(x => new ParoView
-                {
-                    Id = x.Id,
-                    Descripcion = x.Descripcion,
-                    FechaReporte = x.FechaReporte,
-                    Activo = x.Activo,
-                    IdReportador = x.IdReportador,
-                    Reportador = new PersonaView
-                    {
-                        Id = x.Reportador.Id,
-                        Nombre = x.Reportador.Nombre,
-                        Apellido1 = x.Reportador.Apellido1,
-                        Apellido2 = x.Reportador.Apellido2,
-                        Activo = x.Reportador.Activo,
+            ParoServicio servicio = new ParoServicio(db);
+            var respuesta = servicio.GetParosByBusinessUnit(idBussinesUnit);
 
-                    },
-                    IdMecanico = x.IdMecanico,
-                    IdOrigen = x.IdOrigen,
-                    Origen = new OrigenView
-                    {
-                        Id = x.Origen.Id,
-                        IdModulo = x.Origen.IdModulo,
-                        IdWorkCenter = x.Origen.IdWorkCenter,
-                        Modulo = new ModuloView
-                        {
-                            Id = x.Origen.Modulo.Id,
-                            Nombre = x.Origen.Modulo.Nombre,
-                            NombreCorto = x.Origen.Modulo.NombreCorto,
-                            Activo = x.Origen.Modulo.Activo
-                        },
-                        WorkCenter = new WorkCenterView
-                        {
-                            Id = x.Origen.WorkCenter.Id,
-                            Nombre = x.Origen.WorkCenter.Nombre,
-                            NombreCorto = x.Origen.WorkCenter.NombreCorto,
-                            Activo = x.Origen.WorkCenter.Activo
-                        }
-                    }
-
-                }).ToList();
-
-
-
-
-            if (paros == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(paros);
+            return Ok(respuesta);
         }
 
         [ResponseType(typeof(IList<ParoView>))]
-        public IHttpActionResult getParosByWorkCenter(int idWorkCenter, Boolean activo, int cantidad)
+        public IHttpActionResult getParosByWorkCenter(int idWorkCenter)
         {
-            var paros = db.Paros
-                .Where(x => (x.Activo == activo && x.Origen.IdWorkCenter == idWorkCenter))
-                .OrderByDescending(x => x.FechaReporte)
-                .Take(cantidad)
-                .Select(x => new ParoView
-                {
-                    Id = x.Id,
-                    Descripcion = x.Descripcion,
-                    FechaReporte = x.FechaReporte,
-                    Activo = x.Activo,
-                    IdReportador = x.IdReportador,
-                    Reportador = new PersonaView
-                    {
-                        Id = x.Reportador.Id,
-                        Nombre = x.Reportador.Nombre,
-                        Apellido1 = x.Reportador.Apellido1,
-                        Apellido2 = x.Reportador.Apellido2,
-                        Activo = x.Reportador.Activo,
+            ParoServicio servicio = new ParoServicio(db);
+            var respuesta = servicio.getParosByWorkCenter(idWorkCenter);
 
-                    },
-                    IdMecanico = x.IdMecanico,
-                    IdOrigen = x.IdOrigen,
-                    Origen = new OrigenView
-                    {
-                        Id = x.Origen.Id,
-                        IdModulo = x.Origen.IdModulo,
-                        IdWorkCenter = x.Origen.IdWorkCenter,
-                        Modulo = new ModuloView
-                        {
-                            Id = x.Origen.Modulo.Id,
-                            Nombre = x.Origen.Modulo.Nombre,
-                            NombreCorto = x.Origen.Modulo.NombreCorto,
-                            Activo = x.Origen.Modulo.Activo
-                        },
-                        WorkCenter = new WorkCenterView
-                        {
-                            Id = x.Origen.WorkCenter.Id,
-                            Nombre = x.Origen.WorkCenter.Nombre,
-                            NombreCorto = x.Origen.WorkCenter.NombreCorto,
-                            Activo = x.Origen.WorkCenter.Activo
-                        }
-                    }
-
-                }).ToList();
-
-
-
-
-            if (paros == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(paros);
+            return Ok(respuesta);
         }
-
-        // PUT: api/Paro/5
+        
         [ResponseType(typeof(Paro))]
         [HttpPut]
         public IHttpActionResult PutParo(int id, Paro paro)
         {
+            ParoServicio servicio = new ParoServicio(db);
+            var respuesta = servicio.PutParo(id,paro);
 
-
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != paro.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(paro).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ParoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(respuesta);
+            
         }
-
-        // PUT: api/Paro/5
-        [ResponseType(typeof(ParoView))]
-        public IHttpActionResult PutParoByAsignacion(int id, int idMecanico)
-        {
-            Paro paro = db.Paros.Find(id);
-            if (paro == null)
-            {
-                return NotFound();
-            }
-
-            paro.IdMecanico = idMecanico;
-            ActividadEnParo actividad = new ActividadEnParo() { IdParo = id, Fecha = DateTime.Now, IdPersona = idMecanico, Descripcion = "Nueva Asignacion dentro de una Falla!!" };
-            if (paro.ActividadesEnParo == null)
-            {
-                paro.ActividadesEnParo = new List<ActividadEnParo>() { actividad };
-            }
-            else
-            {
-                paro.ActividadesEnParo.Add(actividad);
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Entry(paro).State = EntityState.Modified;
-
-
-            db.SaveChanges();
-
-            var paroreturn = db.Paros.Where(x => x.Id == paro.Id).Select(x => new ParoView
-            {
-                Id = x.Id,
-                Descripcion = x.Descripcion,
-                Activo = x.Activo,
-                FechaReporte = x.FechaReporte,
-                IdMecanico = x.IdMecanico,
-                IdOrigen = x.IdOrigen,
-                IdReportador = x.IdReportador,
-                Motivo = x.Motivo,
-                TiempoDeParos = x.TiemposDeParo.Where(t => t.IdParo == id).Select(t => new TiempoDeParoView
-                {
-                    Id = t.Id,
-                    IdParo = id,
-                    Inicio = t.Inicio,
-                    Fin = t.Fin
-                }).ToList(),
-                Reportador = new PersonaView
-                {
-                    Id = x.Reportador.Id,
-                    Nombre = x.Reportador.Nombre,
-                    Apellido1 = x.Reportador.Apellido1,
-                    Apellido2 = x.Reportador.Apellido2,
-                    Puesto = new PuestoView
-                    {
-                        Id = x.Reportador.Puesto.Id,
-                        Nombre = x.Reportador.Puesto.Nombre
-                    }
-                },
-                Origen = new OrigenView
-                {
-                    Id = x.IdOrigen,
-                    Modulo = new ModuloView
-                    {
-                        Id = x.Origen.Modulo.Id,
-                        Nombre = x.Origen.Modulo.Nombre,
-                        NombreCorto = x.Origen.Modulo.NombreCorto,
-                        Activo = x.Origen.Modulo.Activo
-
-                    },
-                    WorkCenter = new WorkCenterView
-                    {
-                        Id = x.Origen.WorkCenter.Id,
-                        Nombre = x.Origen.WorkCenter.Nombre,
-                        NombreCorto = x.Origen.WorkCenter.NombreCorto,
-                        Activo = x.Origen.WorkCenter.Activo
-
-                    }
-
-                }
-
-            }).FirstOrDefault();
-
-            if (paroreturn == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(paroreturn);
-        }
-
-        [ResponseType(typeof(Paro))]
-        public IHttpActionResult PutMotivoParo(int id, int idMecanico, string motivo)
-        {
-            Paro paro = db.Paros.Find(id);
-            if (paro == null)
-            {
-                return NotFound();
-            }
-
-            paro.Motivo = motivo;
-
-            ActividadEnParo actividad = new ActividadEnParo() { IdParo = id, Fecha = DateTime.Now, IdPersona = idMecanico, Descripcion = "Se cambio el motivo del la Falla!!"};
-            if (paro.ActividadesEnParo == null)
-            {
-                paro.ActividadesEnParo = new List<ActividadEnParo>() { actividad };
-            }
-            else
-            {
-                paro.ActividadesEnParo.Add(actividad);
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Entry(paro).State = EntityState.Modified;
-
-
-            db.SaveChanges();
-
-            var paroreturn = db.Paros.Where(x => x.Id == paro.Id).Select(x => new ParoView
-            {
-                Id = x.Id,
-                Descripcion = x.Descripcion,
-                Activo = x.Activo,
-                FechaReporte = x.FechaReporte,
-                IdMecanico = x.IdMecanico,
-                IdOrigen = x.IdOrigen,
-                IdReportador = x.IdReportador,
-                Motivo = x.Motivo,
-                TiempoDeParos = x.TiemposDeParo.Where(t => t.IdParo == id).Select(t => new TiempoDeParoView
-                {
-                    Id = t.Id,
-                    IdParo = id,
-                    Inicio = t.Inicio,
-                    Fin = t.Fin
-                }).ToList(),
-                Reportador = new PersonaView
-                {
-                    Id = x.Reportador.Id,
-                    Nombre = x.Reportador.Nombre,
-                    Apellido1 = x.Reportador.Apellido1,
-                    Apellido2 = x.Reportador.Apellido2,
-                    Puesto = new PuestoView
-                    {
-                        Id = x.Reportador.Puesto.Id,
-                        Nombre = x.Reportador.Puesto.Nombre
-                    }
-                },
-                Origen = new OrigenView
-                {
-                    Id = x.IdOrigen,
-                    Modulo = new ModuloView
-                    {
-                        Id = x.Origen.Modulo.Id,
-                        Nombre = x.Origen.Modulo.Nombre,
-                        NombreCorto = x.Origen.Modulo.NombreCorto,
-                        Activo = x.Origen.Modulo.Activo
-
-                    },
-                    WorkCenter = new WorkCenterView
-                    {
-                        Id = x.Origen.WorkCenter.Id,
-                        Nombre = x.Origen.WorkCenter.Nombre,
-                        NombreCorto = x.Origen.WorkCenter.NombreCorto,
-                        Activo = x.Origen.WorkCenter.Activo
-
-                    }
-
-                }
-
-            }).FirstOrDefault();
-
-            if (paroreturn == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(paroreturn);
-        }
-
-        // PUT: api/Paro/5
-        [ResponseType(typeof(Paro))]
-        public IHttpActionResult PutParoCambiarActivo(int id, int idPersona, bool activo)
-        {
-            Paro paro = db.Paros.Where(x => x.Id == id).FirstOrDefault();
-
-            if (paro == null)
-            {
-                return NotFound();
-            }
-            TiempoDeParo tiempo;
-            if (activo)
-            {
-
-                tiempo = new TiempoDeParo { Inicio = DateTime.Now };
-                if (paro.TiemposDeParo == null)
-                {
-                    List<TiempoDeParo> tiempos = new List<TiempoDeParo>() { tiempo };
-                    paro.TiemposDeParo = tiempos;
-                }
-                else
-                {
-                    paro.TiemposDeParo.Add(tiempo);
-                }
-
-            }
-            else
-            {
-                tiempo = db.TiemposDeParo.Where(x => x.IdParo == id).OrderByDescending(x => x.Id).FirstOrDefault();
-                if (tiempo == null)
-                {
-                    tiempo = new TiempoDeParo();
-                    tiempo.Inicio = paro.FechaReporte;
-                }
-                tiempo.Fin = DateTime.Now;
-                List<TiempoDeParo> tiempos = new List<TiempoDeParo>() { tiempo };
-                paro.TiemposDeParo = tiempos;
-            }
-
-            paro.Activo = activo;
-            string descripcion = "";
-            if (activo)
-            {
-                descripcion = "Se Abrio nuevamente una Falla reportada!!";
-            }
-            else {
-                descripcion = "Falla cerrada!!";
-            }
-            ActividadEnParo actividad = new ActividadEnParo() { IdParo = id, Fecha = DateTime.Now, IdPersona = idPersona, Descripcion = descripcion };
-            if (paro.ActividadesEnParo == null)
-            {
-                paro.ActividadesEnParo = new List<ActividadEnParo>() { actividad };
-            }
-            else
-            {
-                paro.ActividadesEnParo.Add(actividad);
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Entry(paro).State = EntityState.Modified;
-
-
-            db.SaveChanges();
-
-
-            var paroreturn = db.Paros.Where(x => x.Id == paro.Id).Select(x => new ParoView
-            {
-                Id = x.Id,
-                Descripcion = x.Descripcion,
-                Activo = x.Activo,
-                FechaReporte = x.FechaReporte,
-                IdMecanico = x.IdMecanico,
-                IdOrigen = x.IdOrigen,
-                IdReportador = x.IdReportador,
-                Motivo = x.Motivo,
-                TiempoDeParos = x.TiemposDeParo.Where(t => t.IdParo == id).Select(t => new TiempoDeParoView
-                {
-                    Id = t.Id,
-                    IdParo = id,
-                    Inicio = t.Inicio,
-                    Fin = t.Fin
-                }).ToList(),
-                Reportador = new PersonaView
-                {
-                    Id = x.Reportador.Id,
-                    Nombre = x.Reportador.Nombre,
-                    Apellido1 = x.Reportador.Apellido1,
-                    Apellido2 = x.Reportador.Apellido2,
-                    Puesto = new PuestoView
-                    {
-                        Id = x.Reportador.Puesto.Id,
-                        Nombre = x.Reportador.Puesto.Nombre
-                    }
-                },
-                Origen = new OrigenView
-                {
-                    Id = x.IdOrigen,
-                    Modulo = new ModuloView
-                    {
-                        Id = x.Origen.Modulo.Id,
-                        Nombre = x.Origen.Modulo.Nombre,
-                        NombreCorto = x.Origen.Modulo.NombreCorto,
-                        Activo = x.Origen.Modulo.Activo
-
-                    },
-                    WorkCenter = new WorkCenterView
-                    {
-                        Id = x.Origen.WorkCenter.Id,
-                        Nombre = x.Origen.WorkCenter.Nombre,
-                        NombreCorto = x.Origen.WorkCenter.NombreCorto,
-                        Activo = x.Origen.WorkCenter.Activo,
-                         IdBussinesUnit= x.Origen.WorkCenter.IdBussinesUnit
-
-                    }
-
-                }
-
-            }).FirstOrDefault();
-            if (activo) {
-                NotificationService notify = new NotificationService();
-                UsuarioServicio usuarioServicio = new UsuarioServicio();
-                List<DispositivoView> dispositivos = usuarioServicio.GetDispositivosDeMecanicosByBussinesUnit(paroreturn.Origen.WorkCenter.IdBussinesUnit);
-                List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
-
-                foreach (string notificacion in llaves)
-                {
-                    notify.SendPushNotification(notificacion, "Necesitan de tu ayuda en " + paroreturn.Origen.WorkCenter.NombreCorto, "Falla reabierta reportada");
-                }
-            }
-
-            if (paroreturn == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(paroreturn);
-        }
-
-        // POST: api/Paro
         
         [ResponseType(typeof(ParoView))]
         [HttpPost]
@@ -646,136 +84,39 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
         {
             paro.FechaReporte = DateTime.Now;
             paro.Activo = true;
-            paro.Descripcion = "";
-            paro.Motivo = "";
+            paro.ActividadesEnParo = new List<ActividadEnParo> { new ActividadEnParo { Fecha = DateTime.Now, Descripcion = "Nueva Falla reportada!!", IdPersona = paro.IdReportador } };
+            paro.TiemposDeParo = new List<TiempoDeParo> { new TiempoDeParo { Inicio = DateTime.Now } };
+
+            ParoServicio servicio = new ParoServicio(db);
+            var respuesta = servicio.PostParo(paro);
+
             
-            List<ActividadEnParo> actividades = new List<ActividadEnParo>();
-            actividades.Add(new ActividadEnParo { Fecha = DateTime.Now, Descripcion = "Nueva Falla reportada!!", IdPersona = paro.IdReportador });
-            List<TiempoDeParo> tiempoDeParo = new List<TiempoDeParo>();
-            tiempoDeParo.Add(new TiempoDeParo { Inicio = DateTime.Now });
-            paro.ActividadesEnParo = actividades;
-            paro.TiemposDeParo = tiempoDeParo;
-
-
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Paros.Add(paro);
-            db.SaveChanges();
-
-
-
-            var paroAdded = db.Paros.Where(x => x.Id == paro.Id).Select(x => new ParoView
-            {
-                Id = x.Id,
-                Descripcion = x.Descripcion,
-                Activo = x.Activo,
-                FechaReporte = x.FechaReporte,
-                IdMecanico = x.IdMecanico,
-                IdOrigen = x.IdOrigen,
-                IdReportador = x.IdReportador,
-                TiempoDeParos = x.TiemposDeParo.Where(t => t.IdParo == paro.Id).Select(t => new TiempoDeParoView
-                {
-                    Id = t.Id,
-                    IdParo = paro.Id,
-                    Inicio = t.Inicio,
-                    Fin = t.Fin
-                }).ToList(),
-                Reportador = new PersonaView
-                {
-                    Id = x.Reportador.Id,
-                    Nombre = x.Reportador.Nombre,
-                    Apellido1 = x.Reportador.Apellido1,
-                    Apellido2 = x.Reportador.Apellido2,
-                    Puesto = new PuestoView
-                    {
-                        Id = x.Reportador.Puesto.Id,
-                        Nombre = x.Reportador.Puesto.Nombre
-                    }
-                },
-                Origen = new OrigenView
-                {
-                    Id = x.IdOrigen,
-                    Modulo = new ModuloView
-                    {
-                        Id = x.Origen.Modulo.Id,
-                        Nombre = x.Origen.Modulo.Nombre,
-                        NombreCorto = x.Origen.Modulo.NombreCorto,
-                        Activo = x.Origen.Modulo.Activo
-
-                    },
-                    WorkCenter = new WorkCenterView
-                    {
-                        Id = x.Origen.WorkCenter.Id,
-                        Nombre = x.Origen.WorkCenter.Nombre,
-                        NombreCorto = x.Origen.WorkCenter.NombreCorto,
-                        Activo = x.Origen.WorkCenter.Activo,
-                         IdBussinesUnit = x.Origen.WorkCenter.IdBussinesUnit
-
-                    }
-
-                }
-
-            }).FirstOrDefault();
-
 
             NotificationService notify = new NotificationService();
             UsuarioServicio usuarioServicio = new UsuarioServicio();
 
-            List<DispositivoView> dispositivos = usuarioServicio.GetMecanicosPorOrigen(paroAdded.IdOrigen);
+            List<DispositivoView> dispositivos = usuarioServicio.GetMecanicosPorOrigen(paro.IdOrigen);
             List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
 
             foreach (string notificacion in llaves)
             {
-                notify.SendPushNotification(notificacion, "El modulo " + paroAdded.Origen.Modulo.NombreCorto + " necesita de tu ayuda urgentemente.", "Nueva Falla reportada en " + paroAdded.Origen.WorkCenter.NombreCorto + " por favor ve lo mas pronto posible a ayudarlos.");
+                //notify.SendPushNotification(notificacion, "El modulo " + paroAdded.Origen.Modulo.NombreCorto + " necesita de tu ayuda urgentemente.", "Nueva Falla reportada en " + paroAdded.Origen.WorkCenter.NombreCorto + " por favor ve lo mas pronto posible a ayudarlos.");
             }
 
-            return Ok(paroAdded);
+            return Ok(respuesta);
         }
+        
 
-        // POST: api/Paro
-        [ResponseType(typeof(Paro))]
-        public IHttpActionResult PostParoSerialize(int idOrigen, int idReporteador)
-        {
-            Paro paro = new Paro();
-
-
-            paro.Descripcion = "pero que pex  u.u";
-            paro.FechaReporte = DateTime.Now;
-            paro.IdOrigen = idOrigen;
-            paro.IdReportador = idReporteador;
-            paro.Activo = true;
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Paros.Add(paro);
-            db.SaveChanges();
-            return CreatedAtRoute("DefaultApi", new { id = paro.Id }, paro);
-
-            //return paro.Id;
-
-        }
-
-        // DELETE: api/Paro/5
         [ResponseType(typeof(Paro))]
         public IHttpActionResult DeleteParo(int id)
         {
-            Paro paro = db.Paros.Find(id);
-            if (paro == null)
-            {
-                return NotFound();
-            }
+            ParoServicio servicio = new ParoServicio(db);
+            var respuesta = servicio.DeleteParo(id);
 
-            db.Paros.Remove(paro);
-            db.SaveChanges();
+            return Ok(respuesta);
 
-            return Ok(paro);
+
+            
         }
 
         protected override void Dispose(bool disposing)
@@ -787,9 +128,6 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
             base.Dispose(disposing);
         }
 
-        private bool ParoExists(int id)
-        {
-            return db.Paros.Count(e => e.Id == id) > 0;
-        }
+        
     }
 }

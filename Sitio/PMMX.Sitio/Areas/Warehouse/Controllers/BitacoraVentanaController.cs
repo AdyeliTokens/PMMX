@@ -12,6 +12,9 @@ using PMMX.Seguridad.Servicios;
 using PMMX.Modelo.RespuestaGenerica;
 using PMMX.Modelo.Entidades;
 using Microsoft.AspNet.Identity;
+using PMMX.Operaciones.Servicios;
+using PMMX.Modelo.Vistas;
+using PMMX.Modelo.Entidades.Operaciones;
 
 namespace Sitio.Areas.Warehouse.Controllers
 {
@@ -22,7 +25,7 @@ namespace Sitio.Areas.Warehouse.Controllers
         // GET: Warehouse/BitacoraVentana
         public ActionResult Index()
         {
-            return View(db.BitacoraVentana.ToList());
+            return View(db.BitacoraVentana.Include(b => b.Rechazo).Include(b => b.Ventana).Include(b => b.Estatus).Include(b => b.Responsable).ToList());
         }
 
         // GET: Warehouse/BitacoraVentana/Details/5
@@ -43,8 +46,7 @@ namespace Sitio.Areas.Warehouse.Controllers
         // GET: Warehouse/BitacoraVentana/Create
         public ActionResult Create()
         {
-            ViewBag.IdVentana = new SelectList(db.Ventana.Select(x => new { Id = x.Id, PO = x.PO }).OrderBy(x => x.PO), "Id", "PO");
-            ViewBag.IdActividadVentana = new SelectList(db.Rechazo.Select(x => new { Id = x.Id, Nombre = x.Nombre}).OrderBy(x => x.Nombre), "Id", "Nombre");
+            ViewBag.IdRechazo = new SelectList(db.Rechazo.Select(x => new { Id = x.Id, Nombre = x.Nombre}).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View();
         }
 
@@ -55,24 +57,53 @@ namespace Sitio.Areas.Warehouse.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(BitacoraVentana bitacoraVentana)
         {
-            ViewBag.IdVentana = new SelectList(db.Ventana.Select(x => new { Id = x.Id, PO = x.PO }).OrderBy(x => x.PO), "Id", "PO", bitacoraVentana.IdVentana);
             ViewBag.IdRechazo = new SelectList(db.Rechazo.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", bitacoraVentana.IdRechazo);
-            
-            PersonaServicio personaServicio = new PersonaServicio();
-            IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
 
-            if (persona.EjecucionCorrecta)
+            if (ModelState.IsValid)
             {
-                bitacoraVentana.IdResponsable = persona.Respuesta.Id;                    
-            }
+                PersonaServicio personaServicio = new PersonaServicio();
+                IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
+
+                if (persona.EjecucionCorrecta)
+                {
+                    bitacoraVentana.IdResponsable = persona.Respuesta.Id;
+                }
                 
-            bitacoraVentana.Fecha = DateTime.Now;
-               
-            db.BitacoraVentana.Add(bitacoraVentana);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+                Ventana ventana = db.Ventana
+                    .Include(v => v.StatusVentana)
+                    .Where( v => (v.Id == bitacoraVentana.IdVentana))
+                    .FirstOrDefault();
+
+                WorkFlowServicio workflowServicio = new WorkFlowServicio();
+                IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, ventana.StatusVentana.Where(s => s.IdVentana == bitacoraVentana.IdVentana).OrderByDescending(s=> s.Fecha).FirstOrDefault().IdStatus, true);
+
+                bitacoraVentana.IdStatus = workFlow.Respuesta.EstatusSiguiente.Id;
+                bitacoraVentana.Fecha = DateTime.Now;
+
+                db.BitacoraVentana.Add(bitacoraVentana);
+                db.SaveChanges();
+
+                saveStatusVentana(bitacoraVentana);
+
+                return RedirectToAction("Index");
+            }
+            else
+                return View(bitacoraVentana);
         }
 
+        public bool saveStatusVentana(BitacoraVentana bitacoraVentana)
+        {
+            StatusVentana statusVentana = new StatusVentana();
+            statusVentana.IdResponsable = bitacoraVentana.IdResponsable;
+            statusVentana.IdStatus = bitacoraVentana.IdStatus;
+            statusVentana.IdVentana = bitacoraVentana.IdVentana;
+            statusVentana.Fecha = bitacoraVentana.Fecha;
+            db.StatusVentana.Add(statusVentana);
+            db.SaveChanges();
+
+            return true;
+        }
+        
         // GET: Warehouse/BitacoraVentana/Edit/5
         public ActionResult Edit(int? id)
         {

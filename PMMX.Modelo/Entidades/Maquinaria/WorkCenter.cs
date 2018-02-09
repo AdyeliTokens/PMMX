@@ -20,9 +20,39 @@ namespace PMMX.Modelo.Entidades.Maquinaria
         [StringLength(250)]
         public string NombreCorto { get; set; }
 
-       
+
         public int IdResponsable { get; set; }
         public bool Activo { get; set; }
+        
+        public int NumeroDeModulos {
+            get
+            {
+                if (Origenes != null)
+                {
+                    return Origenes.Count;
+                }
+                else {
+                    return 0;
+                }
+                
+            }
+        }
+
+        public int NumeroDeOperadores
+        {
+            get
+            {
+                if (Operadores != null)
+                {
+                    return Operadores.Count;
+                }
+                else
+                {
+                    return 0;
+                }
+
+            }
+        }
 
         #endregion
 

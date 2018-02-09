@@ -18,7 +18,7 @@ namespace Sitio.Areas.Operaciones
         // GET: Operaciones/BitacoraGembaWalk
         public ActionResult Index()
         {
-            var BitacoraGembaWalks = db.BitacoraGembaWalks.Include(b => b.Estatus).Include(b => b.GembaWalk).Include(b => b.Rechazo).Include(b => b.Responsable);
+            var BitacoraGembaWalks = db.BitacoraGembaWalks.Include(b => b.Estatus).Include(b => b.GembaWalk).Include(b => b.Responsable);
             return View(BitacoraGembaWalks.ToList());
         }
 
@@ -42,7 +42,6 @@ namespace Sitio.Areas.Operaciones
         {
             ViewBag.IdStatus = new SelectList(db.Estatus, "Id", "Nombre");
             ViewBag.IdGembaWalk = new SelectList(db.GembaWalk, "Id", "Descripcion");
-            ViewBag.IdRechazo = new SelectList(db.Rechazo, "Id", "Nombre");
             ViewBag.IdResponsable = new SelectList(db.Personas, "Id", "Nombre");
             return View();
         }
@@ -63,7 +62,6 @@ namespace Sitio.Areas.Operaciones
 
             ViewBag.IdStatus = new SelectList(db.Estatus, "Id", "Nombre", BitacoraGembaWalk.IdStatus);
             ViewBag.IdGembaWalk = new SelectList(db.GembaWalk, "Id", "Descripcion", BitacoraGembaWalk.IdGembaWalk);
-            ViewBag.IdRechazo = new SelectList(db.Rechazo, "Id", "Nombre", BitacoraGembaWalk.IdRechazo);
             ViewBag.IdResponsable = new SelectList(db.Personas, "Id", "Nombre", BitacoraGembaWalk.IdResponsable);
             return View(BitacoraGembaWalk);
         }
@@ -82,7 +80,6 @@ namespace Sitio.Areas.Operaciones
             }
             ViewBag.IdStatus = new SelectList(db.Estatus, "Id", "Nombre", BitacoraGembaWalk.IdStatus);
             ViewBag.IdGembaWalk = new SelectList(db.GembaWalk, "Id", "Descripcion", BitacoraGembaWalk.IdGembaWalk);
-            ViewBag.IdRechazo = new SelectList(db.Rechazo, "Id", "Nombre", BitacoraGembaWalk.IdRechazo);
             ViewBag.IdResponsable = new SelectList(db.Personas, "Id", "Nombre", BitacoraGembaWalk.IdResponsable);
             return View(BitacoraGembaWalk);
         }
@@ -102,7 +99,6 @@ namespace Sitio.Areas.Operaciones
             }
             ViewBag.IdStatus = new SelectList(db.Estatus, "Id", "Nombre", BitacoraGembaWalk.IdStatus);
             ViewBag.IdGembaWalk = new SelectList(db.GembaWalk, "Id", "Descripcion", BitacoraGembaWalk.IdGembaWalk);
-            ViewBag.IdRechazo = new SelectList(db.Rechazo, "Id", "Nombre", BitacoraGembaWalk.IdRechazo);
             ViewBag.IdResponsable = new SelectList(db.Personas, "Id", "Nombre", BitacoraGembaWalk.IdResponsable);
             return View(BitacoraGembaWalk);
         }

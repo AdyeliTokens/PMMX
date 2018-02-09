@@ -8,6 +8,13 @@ using System.Web;
 using System.Web.Mvc;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.Warehouse;
+using PMMX.Modelo.Entidades.Operaciones;
+using PMMX.Seguridad.Servicios;
+using PMMX.Modelo.RespuestaGenerica;
+using PMMX.Modelo.Entidades;
+using Microsoft.AspNet.Identity;
+using PMMX.Operaciones.Servicios;
+using PMMX.Modelo.Vistas;
 
 namespace Sitio.Areas.Warehouse.Controllers
 {
@@ -29,7 +36,7 @@ namespace Sitio.Areas.Warehouse.Controllers
 
             return View(ventana);
         }
-
+        
         // GET: Warehouse/Ventana/Details/5
         public ActionResult Details(int? id)
         {
@@ -53,12 +60,25 @@ namespace Sitio.Areas.Warehouse.Controllers
             return View(ventana);
         }
         
-        public ActionResult GetSubCategorias(int idCategoria)
+        public ActionResult GetStatusActualVentana(int idVentana)
         {
             if (ModelState.IsValid)
             {
-                var subcategorias = db.SubCategoria.Where(o => (o.IdCategoria == idCategoria)).Select(o => new { Id = o.Id, NombreCorto = o.NombreCorto }).ToList();
-                return Json(new { subcategorias }, JsonRequestBehavior.AllowGet);
+                var status = db.StatusVentana.Where(s => (s.IdVentana == idVentana)).OrderByDescending(s => s.Fecha).Select(s => s.Status.Nombre).FirstOrDefault();
+                return Json(new { status }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult GetRechazoActualVentana(int idVentana)
+        {
+            if (ModelState.IsValid)
+            {
+                var rechazo = db.BitacoraVentana.Where(s => (s.IdVentana == idVentana)).OrderByDescending(s => s.Fecha).Select(s => s.Rechazo.Nombre).FirstOrDefault();
+                return Json(new { rechazo }, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -108,10 +128,43 @@ namespace Sitio.Areas.Warehouse.Controllers
             {
                 db.Ventana.Add(ventana);
                 db.SaveChanges();
+                changeEstatus(ventana);
                 return RedirectToAction("Index");
             }
 
             return View(ventana);
+        }
+
+        public Boolean changeEstatus(Ventana ventana)
+        {
+            if (ModelState.IsValid)
+            {
+                var estatus = db.StatusVentana
+                    .Where(s => (s.IdVentana == ventana.Id))
+                    .OrderByDescending(s => s.Fecha)
+                    .Select(s => s.IdStatus)
+                    .FirstOrDefault();
+                
+                WorkFlowServicio workflowServicio = new WorkFlowServicio();
+                IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, estatus, false);
+
+                if (workFlow.EjecucionCorrecta)
+                {
+                    PersonaServicio personaServicio = new PersonaServicio();
+                    IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
+
+                    StatusVentana statusVentana = new StatusVentana();
+                    statusVentana.IdVentana = ventana.Id;
+                    statusVentana.IdResponsable = persona.Respuesta.Id;
+                    statusVentana.IdStatus = workFlow.Respuesta.EstatusInicial.Id;
+                    statusVentana.Fecha = DateTime.Now;
+                    db.StatusVentana.Add(statusVentana);
+                    db.SaveChanges();
+                }
+                
+                return true;
+            }
+            return false;
         }
 
         // GET: Warehouse/Ventana/Edit/5

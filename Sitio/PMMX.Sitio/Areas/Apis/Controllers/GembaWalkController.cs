@@ -97,192 +97,66 @@ namespace Sitio.Areas.Apis.Controllers
             return Ok(GembaWalk);
         }
 
-        [ResponseType(typeof(IList<GembaWalkView>))]
-        public IHttpActionResult getGembaWalkByResponsable(int idResponsable, Boolean activo, int diasDesde, int diasHasta)
+        // GET: api/GembaWalk/5
+        [ResponseType(typeof(GembaWalkView))]
+        public IHttpActionResult GetGembaWalkbyTipo(int Tipo, int IdResponsable)
         {
-            DateTime fechaInicial = DateTime.Now.AddDays(-diasDesde);
-            DateTime fechaFinal = DateTime.Now.AddDays(diasHasta);
-            
-            IList<GembaWalkView> GembaWalk = db.GembaWalk
-                .Where(d => (d.Activo == activo) && (d.FechaReporte >= fechaInicial && d.FechaReporte <= fechaFinal) && (d.IdResponsable == idResponsable))
-                .Select(d => new GembaWalkView
-                {
-                    Id = d.Id,
-                    IdOrigen = d.IdOrigen,
-                    IdReportador = d.IdReportador,
-                    IdResponsable = d.IdResponsable,
-                    IdEvento = d.IdEvento,
-                    IdSubCategoria = d.IdSubCategoria,
-                    Descripcion = d.Descripcion,
-                    Activo = d.Activo,
-                    FechaReporte = d.FechaReporte,
-                    FechaEstimada = d.FechaEstimada,
-                    Prioridad = d.Prioridad,
-                    Tipo = d.Tipo,
-                    Reportador = new PersonaView
-                    {
-                        Id = d.Reportador.Id,
-                        Nombre = d.Reportador.Nombre,
-                        Apellido1 = d.Reportador.Apellido1,
-                        Apellido2 = d.Reportador.Apellido2,
-                        Activo = d.Reportador.Activo
-                    },
-                    Origen = new OrigenView
-                    {
-                        Id = d.Origen.Id,
-                        IdModulo = d.Origen.IdModulo,
-                        IdWorkCenter = d.Origen.IdWorkCenter,
-                        Modulo = new ModuloView
-                        {
-                            Id = d.Origen.Modulo.Id,
-                            Nombre = d.Origen.Modulo.Nombre,
-                            NombreCorto = d.Origen.Modulo.NombreCorto,
-                            Activo = d.Origen.Modulo.Activo
-                        },
-                        WorkCenter = new WorkCenterView
-                        {
-                            Id = d.Origen.WorkCenter.Id,
-                            Nombre = d.Origen.WorkCenter.Nombre,
-                            NombreCorto = d.Origen.WorkCenter.NombreCorto,
-                            Activo = d.Origen.WorkCenter.Activo
-                        }
+            var GembaWalk = db.GembaWalk
+               .Where(d => (d.Tipo == Tipo) && (d.IdResponsable == IdResponsable))
+               .Select(d => new GembaWalkView
+               {
+                   Id = d.Id,
+                   IdOrigen = d.IdOrigen,
+                   IdReportador = d.IdReportador,
+                   IdResponsable = d.IdResponsable,
+                   IdSubCategoria = d.IdSubCategoria,
+                   IdEvento = d.IdEvento,
+                   Descripcion = d.Descripcion,
+                   Activo = d.Activo,
+                   FechaReporte = d.FechaReporte,
+                   FechaEstimada = d.FechaEstimada,
+                   Prioridad = d.Prioridad,
+                   Tipo = d.Tipo
+               }).ToList();
 
-                    },
-                    Fotos = d.Fotos.Select(f => new FotoView
-                    {
-                        Id = f.Id,
-                        Nombre = f.Nombre,
-                        Path = f.Path
-                    }).ToList()
-                }).ToList();
+            if (GembaWalk == null)
+            {
+                return NotFound();
+            }
 
             return Ok(GembaWalk);
         }
 
-        [ResponseType(typeof(IList<GembaWalkView>))]
-        public IHttpActionResult GetGembaWalkByReportador(int idReportador, Boolean activo, int diasDesde, int diasHasta)
+        // GET: api/GembaWalk/5
+        [ResponseType(typeof(GembaWalkView))]
+        public IHttpActionResult GetGembaWalkporStatus(int IdStatus, int IdResponsable)
         {
-            DateTime fechaInicial = DateTime.Now.AddDays(-diasDesde);
-            DateTime fechaFinal = DateTime.Now.AddDays(diasHasta);
+            var GembaWalk = db.BitacoraGembaWalks
+               .Where(b => (b.IdStatus == IdStatus) && (b.GembaWalk.IdResponsable == IdResponsable))
+               .Select(d => new GembaWalkView
+               {
+                   Id = d.GembaWalk.Id,
+                   IdOrigen = d.GembaWalk.IdOrigen,
+                   IdReportador = d.GembaWalk.IdReportador,
+                   IdResponsable = d.GembaWalk.IdResponsable,
+                   IdSubCategoria = d.GembaWalk.IdSubCategoria,
+                   IdEvento = d.GembaWalk.IdEvento,
+                   Descripcion = d.GembaWalk.Descripcion,
+                   Activo = d.GembaWalk.Activo,
+                   FechaReporte = d.GembaWalk.FechaReporte,
+                   FechaEstimada = d.GembaWalk.FechaEstimada,
+                   Prioridad = d.GembaWalk.Prioridad,
+                   Tipo = d.GembaWalk.Tipo,
+               }).ToList();
 
-            IList<GembaWalkView> GembaWalk = db.GembaWalk
-                .Where(d => (d.Activo == activo) && (d.FechaReporte >= fechaInicial && d.FechaReporte <= fechaFinal) && (d.IdResponsable == idReportador))
-                .Select(d => new GembaWalkView
-                {
-                    Id = d.Id,
-                    IdOrigen = d.IdOrigen,
-                    IdReportador = d.IdReportador,
-                    IdResponsable = d.IdResponsable,
-                    IdEvento = d.IdEvento,
-                    IdSubCategoria = d.IdSubCategoria,
-                    Descripcion = d.Descripcion,
-                    Activo = d.Activo,
-                    FechaReporte = d.FechaReporte,
-                    FechaEstimada = d.FechaEstimada,
-                    Prioridad = d.Prioridad,
-                    Tipo = d.Tipo,
-                    Reportador = new PersonaView
-                    {
-                        Id = d.Reportador.Id,
-                        Nombre = d.Reportador.Nombre,
-                        Apellido1 = d.Reportador.Apellido1,
-                        Apellido2 = d.Reportador.Apellido2,
-                        Activo = d.Reportador.Activo
-                    },
-                    Origen = new OrigenView
-                    {
-                        Id = d.Origen.Id,
-                        IdModulo = d.Origen.IdModulo,
-                        IdWorkCenter = d.Origen.IdWorkCenter,
-                        Modulo = new ModuloView
-                        {
-                            Id = d.Origen.Modulo.Id,
-                            Nombre = d.Origen.Modulo.Nombre,
-                            NombreCorto = d.Origen.Modulo.NombreCorto,
-                            Activo = d.Origen.Modulo.Activo
-                        },
-                        WorkCenter = new WorkCenterView
-                        {
-                            Id = d.Origen.WorkCenter.Id,
-                            Nombre = d.Origen.WorkCenter.Nombre,
-                            NombreCorto = d.Origen.WorkCenter.NombreCorto,
-                            Activo = d.Origen.WorkCenter.Activo
-                        }
-
-                    },
-                    Fotos = d.Fotos.Select(f => new FotoView
-                    {
-                        Id = f.Id,
-                        Nombre = f.Nombre,
-                        Path = f.Path
-                    }).ToList()
-                }).ToList();
+            if (GembaWalk == null)
+            {
+                return NotFound();
+            }
 
             return Ok(GembaWalk);
         }
 
-        [ResponseType(typeof(IList<GembaWalkView>))]
-        public IHttpActionResult GetGembaWalkByArea(int idArea, Boolean activo, int diasDesde, int diasHasta)
-        {
-            DateTime fechaInicial = DateTime.Now.AddDays(-diasDesde);
-            DateTime fechaFinal = DateTime.Now.AddDays(diasHasta);
-
-            IList<GembaWalkView> GembaWalk = db.GembaWalk
-                .Where(d => (d.Activo == activo) && (d.FechaReporte >= fechaInicial && d.FechaReporte <= fechaFinal) && (d.Origen.WorkCenter.BussinesUnit.IdArea == idArea))
-                .Select(d => new GembaWalkView
-                {
-                    Id = d.Id,
-                    IdOrigen = d.IdOrigen,
-                    IdReportador = d.IdReportador,
-                    IdResponsable = d.IdResponsable,
-                    IdEvento = d.IdEvento,
-                    IdSubCategoria = d.IdSubCategoria,
-                    Descripcion = d.Descripcion,
-                    Activo = d.Activo,
-                    FechaReporte = d.FechaReporte,
-                    FechaEstimada = d.FechaEstimada,
-                    Prioridad = d.Prioridad,
-                    Tipo = d.Tipo,
-                    Reportador = new PersonaView
-                    {
-                        Id = d.Reportador.Id,
-                        Nombre = d.Reportador.Nombre,
-                        Apellido1 = d.Reportador.Apellido1,
-                        Apellido2 = d.Reportador.Apellido2,
-                        Activo = d.Reportador.Activo
-                    },
-                    Origen = new OrigenView
-                    {
-                        Id = d.Origen.Id,
-                        IdModulo = d.Origen.IdModulo,
-                        IdWorkCenter = d.Origen.IdWorkCenter,
-                        Modulo = new ModuloView
-                        {
-                            Id = d.Origen.Modulo.Id,
-                            Nombre = d.Origen.Modulo.Nombre,
-                            NombreCorto = d.Origen.Modulo.NombreCorto,
-                            Activo = d.Origen.Modulo.Activo
-                        },
-                        WorkCenter = new WorkCenterView
-                        {
-                            Id = d.Origen.WorkCenter.Id,
-                            Nombre = d.Origen.WorkCenter.Nombre,
-                            NombreCorto = d.Origen.WorkCenter.NombreCorto,
-                            Activo = d.Origen.WorkCenter.Activo
-                        }
-
-                    },
-                    Fotos = d.Fotos.Select(f => new FotoView
-                    {
-                        Id = f.Id,
-                        Nombre = f.Nombre,
-                        Path = f.Path
-                    }).ToList()
-                }).ToList();
-
-            return Ok(GembaWalk);
-        }
-        
         // PUT: api/GembaWalk/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutGembaWalk(int id, GembaWalk GembaWalk)
@@ -348,47 +222,7 @@ namespace Sitio.Areas.Apis.Controllers
                     FechaReporte = d.FechaReporte,
                     FechaEstimada = d.FechaEstimada,
                     Prioridad = d.Prioridad,
-                    Tipo = d.Tipo,
-                    Reportador = new PersonaView
-                    {
-                        Id = d.Reportador.Id,
-                        Apellido1 = d.Reportador.Apellido1,
-                        Apellido2 = d.Reportador.Apellido2,
-                        Nombre = d.Reportador.Nombre,
-
-                        Puesto = new PuestoView
-                        {
-                            Id = d.Reportador.Puesto.Id,
-                            Nombre = d.Reportador.Puesto.Nombre
-                        }
-                    },
-                    Origen = new OrigenView
-                    {
-                        Id = d.Origen.Id,
-                        IdModulo = d.Origen.IdModulo,
-                        IdWorkCenter = d.Origen.IdWorkCenter,
-                        Modulo = new ModuloView
-                        {
-                            Id = d.Origen.Modulo.Id,
-                            Nombre = d.Origen.Modulo.Nombre,
-                            NombreCorto = d.Origen.Modulo.NombreCorto,
-                            Activo = d.Origen.Modulo.Activo
-                        },
-                        WorkCenter = new WorkCenterView
-                        {
-                            Id = d.Origen.WorkCenter.Id,
-                            Nombre = d.Origen.WorkCenter.Nombre,
-                            NombreCorto = d.Origen.WorkCenter.NombreCorto,
-                            Activo = d.Origen.WorkCenter.Activo
-                        }
-
-                    },
-                    Fotos = d.Fotos.Select(f => new FotoView
-                    {
-                        Id = f.Id,
-                        Nombre = f.Nombre,
-                        Path = f.Path
-                    }).ToList()
+                    Tipo = d.Tipo
                 }).FirstOrDefault();
 
             if (GembaWalkView == null)
@@ -430,47 +264,7 @@ namespace Sitio.Areas.Apis.Controllers
                     FechaReporte = d.FechaReporte,
                     FechaEstimada = d.FechaEstimada,
                     Prioridad = d.Prioridad,
-                    Tipo = d.Tipo,
-                    Reportador = new PersonaView
-                    {
-                        Id = d.Reportador.Id,
-                        Apellido1 = d.Reportador.Apellido1,
-                        Apellido2 = d.Reportador.Apellido2,
-                        Nombre = d.Reportador.Nombre,
-
-                        Puesto = new PuestoView
-                        {
-                            Id = d.Reportador.Puesto.Id,
-                            Nombre = d.Reportador.Puesto.Nombre
-                        }
-                    },
-                    Origen = new OrigenView
-                    {
-                        Id = d.Origen.Id,
-                        IdModulo = d.Origen.IdModulo,
-                        IdWorkCenter = d.Origen.IdWorkCenter,
-                        Modulo = new ModuloView
-                        {
-                            Id = d.Origen.Modulo.Id,
-                            Nombre = d.Origen.Modulo.Nombre,
-                            NombreCorto = d.Origen.Modulo.NombreCorto,
-                            Activo = d.Origen.Modulo.Activo
-                        },
-                        WorkCenter = new WorkCenterView
-                        {
-                            Id = d.Origen.WorkCenter.Id,
-                            Nombre = d.Origen.WorkCenter.Nombre,
-                            NombreCorto = d.Origen.WorkCenter.NombreCorto,
-                            Activo = d.Origen.WorkCenter.Activo
-                        }
-
-                    },
-                    Fotos = d.Fotos.Select(f => new FotoView
-                    {
-                        Id = f.Id,
-                        Nombre = f.Nombre,
-                        Path = f.Path
-                    }).ToList()
+                    Tipo = d.Tipo
                 }).FirstOrDefault();
 
             if (GembaWalkView == null)
@@ -510,50 +304,9 @@ namespace Sitio.Areas.Apis.Controllers
                     FechaReporte = d.FechaReporte,
                     FechaEstimada = d.FechaEstimada,
                     Prioridad = d.Prioridad,
-                    Tipo = d.Tipo,
-                    Reportador = new PersonaView
-                    {
-                        Id = d.Reportador.Id,
-                        Apellido1 = d.Reportador.Apellido1,
-                        Apellido2 = d.Reportador.Apellido2,
-                        Nombre = d.Reportador.Nombre,
-
-                        Puesto = new PuestoView
-                        {
-                            Id = d.Reportador.Puesto.Id,
-                            Nombre = d.Reportador.Puesto.Nombre
-                        }
-                    },
-                    Origen = new OrigenView
-                    {
-                        Id = d.Origen.Id,
-                        IdModulo = d.Origen.IdModulo,
-                        IdWorkCenter = d.Origen.IdWorkCenter,
-                        Modulo = new ModuloView
-                        {
-                            Id = d.Origen.Modulo.Id,
-                            Nombre = d.Origen.Modulo.Nombre,
-                            NombreCorto = d.Origen.Modulo.NombreCorto,
-                            Activo = d.Origen.Modulo.Activo
-                        },
-                        WorkCenter = new WorkCenterView
-                        {
-                            Id = d.Origen.WorkCenter.Id,
-                            Nombre = d.Origen.WorkCenter.Nombre,
-                            NombreCorto = d.Origen.WorkCenter.NombreCorto,
-                            Activo = d.Origen.WorkCenter.Activo
-                        }
-
-                    },
-                    Fotos = d.Fotos.Select(f => new FotoView
-                    {
-                        Id = f.Id,
-                        Nombre = f.Nombre,
-                        Path = f.Path
-                    }).ToList()
+                    Tipo = d.Tipo
                 }).FirstOrDefault();
-
-
+            
             return Ok(GembaWalkView);
         }
 
@@ -610,7 +363,7 @@ namespace Sitio.Areas.Apis.Controllers
 
             foreach (string notificacion in llaves)
             {
-                notify.SendPushNotification(notificacion, "Se le ha asignado el GembaWalk " + GembaWalkView.Descripcion + ".", "Nuevo Just Do It reportado en " + GembaWalkView.Origen.WorkCenter.BussinesUnit.Area.Nombre + ".");
+                notify.SendPushNotification(notificacion, "Se le ha asignado el GembaWalk " + GembaWalkView.Descripcion + ".", "Nuevo GembaWalk reportado en " + GembaWalkView.Origen.WorkCenter.BussinesUnit.Area.Nombre + ".");
             }
 
             return Ok(GembaWalkView);

@@ -64,6 +64,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -74,6 +75,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Areas\Apis\Controllers\LoginControllerTests.cs" />
     <Compile Include="Areas\Apis\Controllers\ParoControllerTests.cs" />
     <Compile Include="Areas\Maquinaria\Controllers\ParosControllerTests.cs" />
     <Compile Include="Controllers\FotosControllerTests.cs" />
@@ -86,6 +88,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\PMMX.Infraestructura\PMMX.Infraestructura.csproj">
+      <Project>{837934E3-EAC8-49B8-896C-A6CF1264210C}</Project>
+      <Name>PMMX.Infraestructura</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PMMX.Modelo\PMMX.Modelo.csproj">
+      <Project>{4DED49B0-609A-4BE0-BC3D-DC0D16A0CA8A}</Project>
+      <Name>PMMX.Modelo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PMMX.Sitio\Sitio.csproj">
       <Project>{82FC7B78-5EF8-48C1-8327-9B59D8CFA5EC}</Project>
       <Name>Sitio</Name>

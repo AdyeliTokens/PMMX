@@ -14,7 +14,6 @@ namespace PMMX.Modelo.Vistas
         public int IdGembaWalk { get; set; }
         public int IdStatus { get; set; }
         public int IdResponsable { get; set; }
-        public int? IdRechazo { get; set; }
         public DateTime Fecha { get; set; }
 
         [StringLength(250)]
@@ -25,7 +24,6 @@ namespace PMMX.Modelo.Vistas
         public GembaWalkView GembaWalk { get; set; }
         public EstatusView Estatus { get; set; }
         public PersonaView Responsable { get; set; }
-        public RechazoView Rechazo { get; set; }
         #endregion
     }
 }

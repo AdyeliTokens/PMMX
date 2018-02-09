@@ -43,6 +43,19 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View();
         }
 
+        public ActionResult GetEstatusbyCategoria(int IdCategoria)
+        {
+            if (ModelState.IsValid)
+            {
+                var estatus = db.Estatus.Where(w => (w.IdCategoria == IdCategoria)).Select(w => new { Id = w.Id, Nombre = w.Nombre }).OrderBy(w => w.Id).ToList();
+                return Json(new { estatus }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         // POST: Operaciones/Estatus/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.

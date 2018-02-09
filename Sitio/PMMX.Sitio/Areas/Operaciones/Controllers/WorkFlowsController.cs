@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades;
+using PMMX.Modelo.Entidades.Operaciones;
 
 namespace Sitio.Areas.Operaciones
 {
@@ -18,10 +19,14 @@ namespace Sitio.Areas.Operaciones
         // GET: Operaciones/WorkFlows
         public ActionResult Index()
         {
-            var workFlows = db.WorkFlows.Include(w => w.Categoria).Include(w => w.EstatusAnterior).Include(w => w.EstatusCancelado).Include(w => w.EstatusInicial).Include(w => w.EstatusSiguiente);
+            var workFlows = db.WorkFlows
+                .Include(w => w.SubCategoria)
+                .Include(w => w.EstatusAnterior)
+                .Include(w => w.EstatusInicial)
+                .Include(w => w.EstatusSiguiente);
             return View(workFlows.ToList());
         }
-
+        
         // GET: Operaciones/WorkFlows/Details/5
         public ActionResult Details(int? id)
         {
@@ -40,9 +45,8 @@ namespace Sitio.Areas.Operaciones
         // GET: Operaciones/WorkFlows/Create
         public ActionResult Create()
         {
-            ViewBag.IdCategoria = new SelectList(db.Categoria, "Id", "Nombre");
+            ViewBag.IdSubCategoria = new SelectList(db.SubCategoria, "Id", "Nombre");
             ViewBag.Anterior = new SelectList(db.Estatus, "Id", "Nombre");
-            ViewBag.Cancelado = new SelectList(db.Estatus, "Id", "Nombre");
             ViewBag.Inicial = new SelectList(db.Estatus, "Id", "Nombre");
             ViewBag.Siguiente = new SelectList(db.Estatus, "Id", "Nombre");
             return View();
@@ -53,7 +57,7 @@ namespace Sitio.Areas.Operaciones
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,IdCategoria,Inicial,Anterior,Siguiente,Cancelado,Activo")] WorkFlow workFlow)
+        public ActionResult Create(WorkFlow workFlow)
         {
             if (ModelState.IsValid)
             {
@@ -62,9 +66,8 @@ namespace Sitio.Areas.Operaciones
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdCategoria = new SelectList(db.Categoria, "Id", "Nombre", workFlow.IdCategoria);
+            ViewBag.IdSubCategoria = new SelectList(db.SubCategoria, "Id", "Nombre", workFlow.IdSubCategoria);
             ViewBag.Anterior = new SelectList(db.Estatus, "Id", "Nombre", workFlow.Anterior);
-            ViewBag.Cancelado = new SelectList(db.Estatus, "Id", "Nombre", workFlow.Cancelado);
             ViewBag.Inicial = new SelectList(db.Estatus, "Id", "Nombre", workFlow.Inicial);
             ViewBag.Siguiente = new SelectList(db.Estatus, "Id", "Nombre", workFlow.Siguiente);
             return View(workFlow);
@@ -82,9 +85,8 @@ namespace Sitio.Areas.Operaciones
             {
                 return HttpNotFound();
             }
-            ViewBag.IdCategoria = new SelectList(db.Categoria, "Id", "Nombre", workFlow.IdCategoria);
+            ViewBag.IdSubCategoria = new SelectList(db.Categoria, "Id", "Nombre", workFlow.IdSubCategoria);
             ViewBag.Anterior = new SelectList(db.Estatus, "Id", "Nombre", workFlow.Anterior);
-            ViewBag.Cancelado = new SelectList(db.Estatus, "Id", "Nombre", workFlow.Cancelado);
             ViewBag.Inicial = new SelectList(db.Estatus, "Id", "Nombre", workFlow.Inicial);
             ViewBag.Siguiente = new SelectList(db.Estatus, "Id", "Nombre", workFlow.Siguiente);
             return View(workFlow);
@@ -103,9 +105,8 @@ namespace Sitio.Areas.Operaciones
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdCategoria = new SelectList(db.Categoria, "Id", "Nombre", workFlow.IdCategoria);
+            ViewBag.IdSubCategoria = new SelectList(db.Categoria, "Id", "Nombre", workFlow.IdSubCategoria);
             ViewBag.Anterior = new SelectList(db.Estatus, "Id", "Nombre", workFlow.Anterior);
-            ViewBag.Cancelado = new SelectList(db.Estatus, "Id", "Nombre", workFlow.Cancelado);
             ViewBag.Inicial = new SelectList(db.Estatus, "Id", "Nombre", workFlow.Inicial);
             ViewBag.Siguiente = new SelectList(db.Estatus, "Id", "Nombre", workFlow.Siguiente);
             return View(workFlow);
