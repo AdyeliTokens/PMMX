@@ -21,7 +21,9 @@ namespace PMMX.Modelo.Entidades.Warehouse
         [StringLength(250)]
         public string Recurso { get; set; }
         public double Cantidad { get; set; }
-        public int IdCarrier { get; set; }
+        public int? IdCarrier { get; set; }
+        [StringLength(250)]
+        public string NombreCarrier { get; set; }
         public int IdProcedencia { get; set; }
         public int IdDestino { get; set; }
         public int IdProveedor { get; set; }

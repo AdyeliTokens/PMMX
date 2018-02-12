@@ -16,6 +16,7 @@ namespace PMMX.Modelo.Vistas
         public string Recurso { get; set; }
         public double Cantidad { get; set; }
         public int IdCarrier { get; set; }
+        public string NombreCarrier { get; set; }
         public int IdProcedencia { get; set; }
         public int IdDestino { get; set; }
         public int IdProveedor { get; set; }

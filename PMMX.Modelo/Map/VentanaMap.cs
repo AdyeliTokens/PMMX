@@ -20,6 +20,7 @@ namespace PMMX.Modelo.Map
             Property(c => c.IdOperacion).HasColumnName("IdOperacion");
             Property(c => c.IdSubCategoria).HasColumnName("IdSubCategoria");
             Property(c => c.IdCarrier).HasColumnName("IdCarrier");
+            Property(c => c.NombreCarrier).HasColumnName("NombreCarrier");
             Property(c => c.IdDestino).HasColumnName("IdDestino");
             Property(c => c.IdEvento).HasColumnName("IdEvento");
             Property(c => c.IdProcedencia).HasColumnName("IdProcedencia");
@@ -47,6 +48,7 @@ namespace PMMX.Modelo.Map
             #endregion
 
             #region HasOptional
+
             #endregion
 
             #region HasRequired
