@@ -129,7 +129,12 @@ namespace Sitio.Areas.Warehouse.Controllers
             {
                 db.Ventana.Add(ventana);
                 db.SaveChanges();
-                changeEstatus(ventana);
+
+                for (int i = 0; i < 3; i++)
+                {
+                    changeEstatus(ventana);
+                }
+
                 return RedirectToAction("Index");
             }
 
@@ -309,7 +314,10 @@ namespace Sitio.Areas.Warehouse.Controllers
 
                             db.Ventana.Add(ventana);
                             db.SaveChanges();
-                            changeEstatus(ventana);
+                            for(int i=0; i<3; i++)
+                            {
+                                changeEstatus(ventana);
+                            }
                         }
                     }
                     return RedirectToAction("Index", "Evento", new {  Area = "Operaciones" });
