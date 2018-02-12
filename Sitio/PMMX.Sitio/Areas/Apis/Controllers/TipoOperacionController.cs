@@ -18,16 +18,16 @@ namespace Sitio.Areas.Apis.Controllers
         private PMMXContext db = new PMMXContext();
 
         // GET: api/TipoOperacion
-        public IQueryable<TipoOperacion> GetTipoOperacions()
+        public IQueryable<TipoOperacion> GetTipoOperacion()
         {
-            return db.TipoOperacions;
+            return db.TipoOperacion;
         }
 
         // GET: api/TipoOperacion/5
         [ResponseType(typeof(TipoOperacion))]
         public IHttpActionResult GetTipoOperacion(int id)
         {
-            TipoOperacion tipoOperacion = db.TipoOperacions.Find(id);
+            TipoOperacion tipoOperacion = db.TipoOperacion.Find(id);
             if (tipoOperacion == null)
             {
                 return NotFound();
@@ -80,7 +80,7 @@ namespace Sitio.Areas.Apis.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.TipoOperacions.Add(tipoOperacion);
+            db.TipoOperacion.Add(tipoOperacion);
             db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = tipoOperacion.Id }, tipoOperacion);
@@ -90,13 +90,13 @@ namespace Sitio.Areas.Apis.Controllers
         [ResponseType(typeof(TipoOperacion))]
         public IHttpActionResult DeleteTipoOperacion(int id)
         {
-            TipoOperacion tipoOperacion = db.TipoOperacions.Find(id);
+            TipoOperacion tipoOperacion = db.TipoOperacion.Find(id);
             if (tipoOperacion == null)
             {
                 return NotFound();
             }
 
-            db.TipoOperacions.Remove(tipoOperacion);
+            db.TipoOperacion.Remove(tipoOperacion);
             db.SaveChanges();
 
             return Ok(tipoOperacion);
@@ -113,7 +113,7 @@ namespace Sitio.Areas.Apis.Controllers
 
         private bool TipoOperacionExists(int id)
         {
-            return db.TipoOperacions.Count(e => e.Id == id) > 0;
+            return db.TipoOperacion.Count(e => e.Id == id) > 0;
         }
     }
 }

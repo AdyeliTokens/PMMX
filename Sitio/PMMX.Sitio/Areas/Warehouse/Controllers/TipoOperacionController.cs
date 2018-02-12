@@ -18,7 +18,7 @@ namespace Sitio.Areas.Warehouse.Controllers
         // GET: Warehouse/TipoOperacion
         public ActionResult Index()
         {
-            return View(db.TipoOperacions.ToList());
+            return View(db.TipoOperacion.ToList());
         }
 
         // GET: Warehouse/TipoOperacion/Details/5
@@ -28,7 +28,7 @@ namespace Sitio.Areas.Warehouse.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TipoOperacion tipoOperacion = db.TipoOperacions.Find(id);
+            TipoOperacion tipoOperacion = db.TipoOperacion.Find(id);
             if (tipoOperacion == null)
             {
                 return HttpNotFound();
@@ -51,7 +51,7 @@ namespace Sitio.Areas.Warehouse.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.TipoOperacions.Add(tipoOperacion);
+                db.TipoOperacion.Add(tipoOperacion);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -66,7 +66,7 @@ namespace Sitio.Areas.Warehouse.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TipoOperacion tipoOperacion = db.TipoOperacions.Find(id);
+            TipoOperacion tipoOperacion = db.TipoOperacion.Find(id);
             if (tipoOperacion == null)
             {
                 return HttpNotFound();
@@ -97,7 +97,7 @@ namespace Sitio.Areas.Warehouse.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TipoOperacion tipoOperacion = db.TipoOperacions.Find(id);
+            TipoOperacion tipoOperacion = db.TipoOperacion.Find(id);
             if (tipoOperacion == null)
             {
                 return HttpNotFound();
@@ -110,8 +110,8 @@ namespace Sitio.Areas.Warehouse.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            TipoOperacion tipoOperacion = db.TipoOperacions.Find(id);
-            db.TipoOperacions.Remove(tipoOperacion);
+            TipoOperacion tipoOperacion = db.TipoOperacion.Find(id);
+            db.TipoOperacion.Remove(tipoOperacion);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
