@@ -54,9 +54,8 @@ namespace Sitio.Areas.Operaciones
         // GET: Operaciones/ListaDistribucion/Create
         public ActionResult Create()
         {
-            ViewBag.IdArea = new SelectList(db.Area, "Id", "Nombre");
-            ViewBag.IdSubarea = new SelectList(db.SubArea, "Id", "Nombre");
-            ViewBag.IdPersona = new SelectList(db.Personas, "Id", "Nombre");
+            ViewBag.IdSubarea = new SelectList(db.SubArea.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
+            ViewBag.IdPersona = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre +" "+x.Apellido1+" "+x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View();
         }
 
@@ -73,9 +72,9 @@ namespace Sitio.Areas.Operaciones
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            
-            ViewBag.IdSubarea = new SelectList(db.SubArea, "Id", "Nombre", listaDistribucion.IdSubarea);
-            ViewBag.IdPersona = new SelectList(db.Personas, "Id", "Nombre", listaDistribucion.IdPersona);
+
+            ViewBag.IdSubarea = new SelectList(db.SubArea.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
+            ViewBag.IdPersona = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View(listaDistribucion);
         }
 

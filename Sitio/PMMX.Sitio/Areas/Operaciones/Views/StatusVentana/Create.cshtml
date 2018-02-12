@@ -22,40 +22,11 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.Hidden("IdVentana")
             @Html.Hidden("IdStatus")
-            
 
-            <div class="form-group">
-                <ul class="timeline">
-                    <!-- timeline time label -->
-                    <li class="time-label">
-                        <span class="bg-red">
-                            10 Feb. 2014
-                        </span>
-                    </li>
-                    <!-- /.timeline-label -->
-                    <!-- timeline item -->
-                    <li>
-                        <!-- timeline icon -->
-                        <i class="fa fa-envelope bg-blue"></i>
-                        <div class="timeline-item">
-                            <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+            <div id="timeline" class="form-group">
 
-                            <h3 class="timeline-header"><a href="#">Support Team</a> ...</h3>
-
-                            <div class="timeline-body">
-                                ...
-                                Content goes here
-                            </div>
-
-                            <div class="timeline-footer">
-                                <a class="btn btn-primary btn-xs">...</a>
-                            </div>
-                        </div>
-                    </li>
-                    <!-- END timeline item -->
             </div>
-
-
+            
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Siguiente" class="btn btn-default" />
@@ -79,6 +50,8 @@
             var IdVentana = $('#IdVentanaEvento').val();
             
             $("#IdVentana").val(IdVentana);
+            
+            getTimeLine();
             getEstatus();
         }  
 
@@ -96,5 +69,13 @@
             });
         }
 
+        function getTimeLine() {
+            var url = "/Operaciones/StatusVentana/getTimeline?IdVentana=" + $("#IdVentana").val();
+
+            $.get(url, function (data) {
+                $('#timeline').html(data);
+            });
+        }
+        
      });
 </script>

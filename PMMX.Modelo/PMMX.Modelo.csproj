@@ -149,6 +149,7 @@
     <Compile Include="Entidades\Warehouse\Locacion.cs" />
     <Compile Include="Entidades\Warehouse\Proveedores.cs" />
     <Compile Include="Entidades\Warehouse\Recursos.cs" />
+    <Compile Include="Entidades\Warehouse\TipoOperacion.cs" />
     <Compile Include="Entidades\Warehouse\Ventana.cs" />
     <Compile Include="Entidades\InsiteLAC\KPI.cs" />
     <Compile Include="Entidades\WorkFlow.cs" />
@@ -194,6 +195,7 @@
     <Compile Include="Map\StatusVentanaMap.cs" />
     <Compile Include="Map\SubAreaMap.cs" />
     <Compile Include="Map\SubCategoriaMap.cs" />
+    <Compile Include="Map\TipoOperacionMap.cs" />
     <Compile Include="Map\UsuariosPorPersonaMap.cs" />
     <Compile Include="Map\VentanaMap.cs" />
     <Compile Include="Entidades\PesadorMap.cs" />

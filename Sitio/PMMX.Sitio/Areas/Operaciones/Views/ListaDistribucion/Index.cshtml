@@ -31,9 +31,6 @@
                                 ID
                             </th>
                             <th style="width:20%">
-                                Area
-                            </th>
-                            <th style="width:20%">
                                 SubArea
                             </th>
                             <th style="width:20%">
@@ -53,9 +50,6 @@
                                 <td>
                                     @Html.ActionLink("" + item.Id, "Details", new { id = item.Id })
 
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.SubArea.Area.Nombre)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.SubArea.Nombre)
