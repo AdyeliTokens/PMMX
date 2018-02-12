@@ -239,6 +239,8 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<StatusVentana> StatusVentana { get; set; }
         public DbSet<WorkFlow> WorkFlows { get; set; }
         public DbSet<BitacoraGembaWalk> BitacoraGembaWalks { get; set; }
+
+        public System.Data.Entity.DbSet<PMMX.Modelo.Entidades.Warehouse.TipoOperacion> TipoOperacions { get; set; }
     }
 }
 

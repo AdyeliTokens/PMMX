@@ -16,17 +16,23 @@ namespace PMMX.Modelo.Map
             ToTable("Ventana");
             HasKey(c => c.Id);
             Property(c => c.Id).HasColumnName("Id");
-            Property(c => c.IdCarrier).HasColumnName("IdSubCategoria");
+            Property(c => c.PO).HasColumnName("PO");
+            Property(c => c.IdOperacion).HasColumnName("IdOperacion");
+            Property(c => c.IdSubCategoria).HasColumnName("IdSubCategoria");
             Property(c => c.IdCarrier).HasColumnName("IdCarrier");
             Property(c => c.IdDestino).HasColumnName("IdDestino");
             Property(c => c.IdEvento).HasColumnName("IdEvento");
             Property(c => c.IdProcedencia).HasColumnName("IdProcedencia");
             Property(c => c.IdProveedor).HasColumnName("IdProveedor");
-            Property(c => c.Recurso).HasColumnName("Recurso");
-            Property(c => c.PO).HasColumnName("PO");
+            Property(c => c.Recurso).HasColumnName("Recurso");            
             Property(c => c.Cantidad).HasColumnName("Cantidad");
             Property(c => c.NumeroEconomico).HasColumnName("NumeroEconomico");
             Property(c => c.NumeroPlaca).HasColumnName("NumeroPlaca");
+            Property(c => c.EconomicoRemolque).HasColumnName("EconomicoRemolque");
+            Property(c => c.PlacaRemolque).HasColumnName("PlacaRemolque");
+            Property(c => c.ModeloContenedor).HasColumnName("ModeloContenedor");
+            Property(c => c.ColorContenedor).HasColumnName("ColorContenedor");
+            Property(c => c.Sellos).HasColumnName("Sellos");
             Property(c => c.TipoUnidad).HasColumnName("TipoUnidad");
             Property(c => c.Dimension).HasColumnName("Dimension");
             Property(c => c.Temperatura).HasColumnName("Temperatura");
@@ -47,6 +53,7 @@ namespace PMMX.Modelo.Map
             this.HasRequired(c => c.Evento).WithMany(x => x.Ventanas);
             this.HasRequired(c => c.Carrier).WithMany(x => x.Ventanas);
             this.HasRequired(c => c.SubCategoria).WithMany(x => x.Ventanas);
+            this.HasRequired(c => c.TipoOperacion).WithMany(x => x.Ventanas);
             #endregion
         }
     }
