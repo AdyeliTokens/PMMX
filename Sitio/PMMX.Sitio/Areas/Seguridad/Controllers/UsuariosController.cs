@@ -16,7 +16,7 @@ namespace Sitio.Areas.Seguridad.Controllers
     public class UsuariosController : Controller
     {
         private PMMXContext db = new PMMXContext();
-        
+
         // GET: Seguridad/Usuarios
         public ActionResult Index()
         {
