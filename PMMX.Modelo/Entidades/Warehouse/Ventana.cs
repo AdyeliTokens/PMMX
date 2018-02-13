@@ -15,35 +15,43 @@ namespace PMMX.Modelo.Entidades.Warehouse
 
         [StringLength(250)]
         public string PO { get; set; }
+        public int IdOperacion { get; set; }
         public int IdSubCategoria { get; set; }
         public int IdEvento { get; set; }
-
         [StringLength(250)]
         public string Recurso { get; set; }
         public double Cantidad { get; set; }
-        public int IdCarrier { get; set; }
+        public int? IdCarrier { get; set; }
+        [StringLength(250)]
+        public string NombreCarrier { get; set; }
         public int IdProcedencia { get; set; }
         public int IdDestino { get; set; }
         public int IdProveedor { get; set; }
+        
         // Vehículo
-
         [StringLength(250)]
         public string NumeroEconomico { get; set; }
-
         [StringLength(250)]
         public string NumeroPlaca { get; set; }
-
+        [StringLength(250)]
+        public string EconomicoRemolque { get; set; }
+        [StringLength(250)]
+        public string PlacaRemolque { get; set; }
+        [StringLength(250)]
+        public string ModeloContenedor { get; set; }
+        [StringLength(250)]
+        public string ColorContenedor { get; set; }
+        [StringLength(250)]
+        public string Sellos { get; set; }
         [StringLength(250)]
         public string TipoUnidad { get; set; }
-
         [StringLength(250)]
         public string Dimension { get; set; }
         public float Temperatura { get; set; }
+        
         // Conductor
-
         [StringLength(250)]
         public string Conductor { get; set; }
-
         [StringLength(250)]
         public string MovilConductor { get; set; }
         //
@@ -51,6 +59,7 @@ namespace PMMX.Modelo.Entidades.Warehouse
         #endregion
 
         #region Navegacion
+        public TipoOperacion TipoOperacion { get; set; }
         public Evento Evento { get; set; }
         public Carrier Carrier { get; set; }
         public Locacion Procedencia { get; set; }

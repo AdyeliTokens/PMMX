@@ -9,6 +9,7 @@
     @Styles.Render("~/Style/Font-Awesome")
     @Styles.Render("~/Style/FullCalendar")
     @Styles.Render("~/Style/AdminLTE")
+    @Styles.Render("~/Style/Select2")
 
 <link rel="stylesheet" href="~/bower_components/fullcalendar/dist/fullcalendar.print.min.css" media="print">
 
@@ -19,8 +20,9 @@
 </p>
 <p align="center">
     <div class="form-group">
-        <select id="slt-Categorias" class="form-control select2"></select>
-        <select id="slt-SubCategorias" class="form-control select2"></select>
+        <div class="col-md-6"><select id="slt-Categorias" class="form-control select2"></select></div>
+        <div class="col-md-6"><select id="slt-SubCategorias" class="form-control select2"></select></div>
+        </br></br>
     </div>
 </p>
 
@@ -47,9 +49,12 @@
         @Scripts.Render("~/JS/Moment")
         @Scripts.Render("~/JS/jquery")
         @Scripts.Render("~/JS/FullCalendar")
+        @Scripts.Render("~/JS/Select2")
 
         <script>
-            $(document).ready(function () {
+            $(document).ready(function ()
+            {
+                $('.select2').select2();
                 GetEvents();
                 getCategorias();
 
@@ -59,7 +64,7 @@
                         contentType: "application/json",
                         url: "/Operaciones/Categoria/GetCategorias",
                         success: function (data) {
-                            items = '<option></option>';
+                            items = '<option>Categoria</option>';
                             $.each(data.lista, function (i, k) {
                                 items += "<option value='" + k.Id + "'>" + k.Nombre + "</option>";
                             });
@@ -77,7 +82,7 @@
                         contentType: "application/json",
                         url: "/Operaciones/SubCategoria/GetSubCategoriasByCategoria?IdCategoria=" + $("#slt-Categorias").val(),
                         success: function (data) {
-                            items = '<option></option>';
+                            items = '<option>SubCategoria</option>';
                             $.each(data.lista, function (i, k) {
                                 items += "<option value='" + k.Id + "'>" + k.Nombre + "</option>";
                             });

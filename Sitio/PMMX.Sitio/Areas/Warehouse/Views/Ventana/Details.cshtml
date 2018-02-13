@@ -4,7 +4,12 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Detalle</h2>
+<h3>
+    Detalle
+    <p align="right">
+        <button id="btn-EditarVentana" class="btn btn-default" alt="Editar"><i class="fa fa-pencil text-info"></i></button>
+    </p>
+</h3>
 
 <div>
     <div class="progress progress-xs progress-striped active">
@@ -52,13 +57,15 @@
             <td class="bg-primary"><i class="fa fa-truck"></i></td>
             <td class="bg-primary"><b>Transporte</b></td>
             <td>
-                Linea transportista: @Html.DisplayFor(model => model.Carrier.NombreCorto)
+                Linea transportista: @Html.DisplayFor(model => model.Carrier.NombreCorto) </br>
+                                     @Html.DisplayFor(model => model.NombreCarrier)
             </td>
             <td>
-                #Economico: @Html.DisplayFor(model => model.NumeroEconomico) </br>
-                #Placa: @Html.DisplayFor(model => model.NumeroPlaca)
+                Color contenedor: @Html.DisplayFor(model => model.ColorContenedor) </br>
+                Sellos:@Html.DisplayFor(model => model.Sellos)
             </td>
          </tr>
+
         <tr class="bg-success">
             <td class="bg-primary"></td>
             <td class="bg-primary"></td>
@@ -66,10 +73,34 @@
                 Tipo Unidad: @Html.DisplayFor(model => model.TipoUnidad)
             </td>
             <td>
+                #Economico Tractor: @Html.DisplayFor(model => model.NumeroEconomico) </br>
+                #Placa Tractor: @Html.DisplayFor(model => model.NumeroPlaca)
+            </td>
+        </tr>
+
+        <tr class="bg-success">
+            <td class="bg-primary"></td>
+            <td class="bg-primary"></td>
+            <td>
+                Modelo Contenedor: @Html.DisplayFor(model => model.ModeloContenedor)
+            </td>
+            <td>
+                #Economico remolque: @Html.DisplayFor(model => model.EconomicoRemolque) </br>
+                #Placa remolque:@Html.DisplayFor(model => model.PlacaRemolque)
+            </td>
+        </tr>
+
+        <tr class="bg-success">
+            <td class="bg-primary"></td>
+            <td class="bg-primary"></td>
+            <td></td>
+            <td>
                 Dimension: @Html.DisplayFor(model => model.Dimension) </br>
                 Temperatura:@Html.DisplayFor(model => model.Temperatura)
             </td>
         </tr>
+
+
         <tr class="bg-info">
             <td class="bg-primary"><i class="fa fa-user"></i></td>
             <td class="bg-primary"><b>Conductor</b></td>
@@ -88,38 +119,49 @@
 @Scripts.Render("~/JS/Select2")
 <script>
         $(function () {
-            var IdVentana = $("#IdVentana").val();
+            var IdVentana = $("#IdVentanaEvento").val();
             getStatusActualVentana(IdVentana);
-            GetRechazoActualVentana(IdVentana);            
-        });
+            GetRechazoActualVentana(IdVentana);
     
-        function getStatusActualVentana(IdVentana) {
-            $.ajax({
-                dataType: "json",
-                contentType: "application/json",
-                url: "/Warehouse/Ventana/GetStatusActualVentana?idVentana=" + IdVentana,
-                success: function (data) {
-                    $('#NombreStatus').html(data.status);
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert('There was an error while fetching data!');
-                }
-            });
-        }
 
-        function GetRechazoActualVentana(IdVentana) {
-            $.ajax({
-                dataType: "json",
-                contentType: "application/json",
-                url: "/Warehouse/Ventana/GetRechazoActualVentana?idVentana=" + IdVentana,
-                success: function (data) {
-                    estatus = $('#NombreStatus').val() + "/" + data.rechazo;
-                    $('#NombreStatus').html(estatus);
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert('There was an error while fetching data!');
-                }
-            });
-        }
+            function getStatusActualVentana(IdVentana) {
+                $.ajax({
+                    dataType: "json",
+                    contentType: "application/json",
+                    url: "/Warehouse/Ventana/GetStatusActualVentana?idVentana=" + IdVentana,
+                    success: function (data) {
+                        $('#NombreStatus').html(data.status);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert('There was an error while fetching data!');
+                    }
+                });
+            }
 
+            function GetRechazoActualVentana(IdVentana) {
+                $.ajax({
+                    dataType: "json",
+                    contentType: "application/json",
+                    url: "/Warehouse/Ventana/GetRechazoActualVentana?idVentana=" + IdVentana,
+                    success: function (data) {
+                        estatus = $('#NombreStatus').val() + "/" + data.rechazo;
+                        $('#NombreStatus').html(estatus);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert('There was an error while fetching data!');
+                    }
+                });
+            }
+
+            $("#btn-EditarVentana").on("click", function () {
+                    var url = ("/Warehouse/Ventana/Edit/" + IdVentana);
+                    $('#subVista').hide();
+
+                    $.get(url, function (data) {
+                        $('#createAssetContainer').html(data);
+                        $('#createAssetModal').modal('show');
+                    });
+             });
+    
+        });
 </script>
