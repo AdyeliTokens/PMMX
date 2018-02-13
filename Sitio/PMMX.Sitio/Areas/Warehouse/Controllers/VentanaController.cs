@@ -45,7 +45,7 @@ namespace Sitio.Areas.Warehouse.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //Ventana ventana = db.Ventana.Find(id);
+            
             var ventana = db.Ventana.Where(v=> (v.Id == id))
                  .Include(e => e.Evento)
                  .Include(e => e.Proveedor)
@@ -54,6 +54,7 @@ namespace Sitio.Areas.Warehouse.Controllers
                  .Include(e => e.Procedencia)
                  .Include(e => e.SubCategoria)
                  .FirstOrDefault();
+
             if (ventana == null)
             {
                 return HttpNotFound();
