@@ -262,6 +262,7 @@
     <Compile Include="Areas\Apis\Controllers\ShiftLeadersController.cs" />
     <Compile Include="Areas\Apis\Controllers\SubAreaController.cs" />
     <Compile Include="Areas\Apis\Controllers\SubCategoriaController.cs" />
+    <Compile Include="Areas\Apis\Controllers\TipoOperacionController.cs" />
     <Compile Include="Areas\Apis\Controllers\VentanaController.cs" />
     <Compile Include="Areas\Apis\Controllers\VQIController.cs" />
     <Compile Include="Areas\Apis\Controllers\Operaciones\NoConformidadesController.cs" />
@@ -376,6 +377,7 @@
     <Compile Include="Areas\Warehouse\Controllers\LocacionController.cs" />
     <Compile Include="Areas\Warehouse\Controllers\ProveedoresController.cs" />
     <Compile Include="Areas\Warehouse\Controllers\RecursosController.cs" />
+    <Compile Include="Areas\Warehouse\Controllers\TipoOperacionController.cs" />
     <Compile Include="Areas\Warehouse\Controllers\VentanaController.cs" />
     <Compile Include="Areas\Warehouse\WarehouseAreaRegistration.cs" />
     <Compile Include="Areas\Seguridad\Controllers\AccountController.cs" />
@@ -8035,6 +8037,13 @@
     <Content Include="Areas\Operaciones\Views\VolumenesDeProduccion\Upload.cshtml" />
     <Content Include="Areas\Operaciones\Views\WorkCenters\Modulos.cshtml" />
     <Content Include="Areas\Operaciones\Views\WorkCenters\Operadores.cshtml" />
+    <Content Include="Areas\Operaciones\Views\StatusVentana\Timeline.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Ventana\Upload.cshtml" />
+    <Content Include="Areas\Warehouse\Views\TipoOperacion\Create.cshtml" />
+    <Content Include="Areas\Warehouse\Views\TipoOperacion\Delete.cshtml" />
+    <Content Include="Areas\Warehouse\Views\TipoOperacion\Details.cshtml" />
+    <Content Include="Areas\Warehouse\Views\TipoOperacion\Edit.cshtml" />
+    <Content Include="Areas\Warehouse\Views\TipoOperacion\Index.cshtml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

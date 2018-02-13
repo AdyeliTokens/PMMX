@@ -1,0 +1,33 @@
+﻿@model IList<PMMX.Modelo.Vistas.StatusVentanaView>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="pre-scrollable">
+                
+                @foreach (var item in Model)
+                {
+                    <ul class="timeline">
+                        <li class="time-label">
+                            <span class="bg-green">
+                                @Html.DisplayFor(modelItem => item.Status.Nombre)
+                            </span>
+                        </li>
+                        <li>
+                            <i class="fa fa-user-circle bg-blue"></i>
+                            <div class="timeline-item">
+                                <span class="time"><i class="fa fa-clock-o"></i> @Html.DisplayFor(modelItem => item.Fecha)</span>
+                                <h3 class="timeline-header"><a href="#">@Html.DisplayFor(modelItem => item.Responsable.Nombre) @Html.DisplayFor(modelItem => item.Responsable.Apellido1) @Html.DisplayFor(modelItem => item.Responsable.Apellido2)</a> </h3>
+                            </div>
+                        </li>
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+</div>

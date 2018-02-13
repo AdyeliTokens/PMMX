@@ -70,10 +70,11 @@ namespace Sitio.Areas.Operaciones.Controllers
                 {
                     return RedirectToAction("Index");
                 }
-                else {
+                else
+                {
                     ModelState.AddModelError("error", "Serial is invalid");
                 }
-                
+
             }
 
             ViewBag.IdPersona = new SelectList(db.Personas, "Id", "Nombre", noConformidad.IdPersona);
@@ -125,7 +126,8 @@ namespace Sitio.Areas.Operaciones.Controllers
 
                                 noconformidad.IdPersona = persona.Respuesta.Id;
                                 String fechaCadena = workSheet.Cells[rowIterator, 2].Value.ToString().Trim();
-                                noconformidad.Fecha = Convert.ToDateTime(fechaCadena);
+                                noconformidad.Fecha = DateTime.ParseExact(fechaCadena, "dd/MM/yyyy", null);
+
                                 if (workSheet.Cells[rowIterator, 5].Value.ToString().Trim() == "Cigarettes") { idseccion = 2; }
                                 else if (workSheet.Cells[rowIterator, 5].Value.ToString().Trim() == "Packs") { idseccion = 1; }
                                 noconformidad.IdSeccion = idseccion;

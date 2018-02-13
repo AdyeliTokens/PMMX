@@ -101,7 +101,7 @@
             }
 
             $("#btn-CreateVentana").on("click", function () {
-                var url = ("/Warehouse/Ventana/Create");
+                var url = ("/Warehouse/Ventana/Upload");
 
                 $.get(url, function (data) {
                     $('#createAssetContainer').html(data);
