@@ -15,6 +15,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace Sitio.Areas.Apis.Controllers.Seguridad
 {
@@ -76,6 +77,8 @@ namespace Sitio.Areas.Apis.Controllers.Seguridad
         // POST api/Account/Login
         [AllowAnonymous]
         [Route("ExternalLogin")]
+        [HttpPost]
+        [ResponseType(typeof(RespuestaServicio<UserView>))]
         public async Task<IHttpActionResult> ExternalLogin(LoginModel model)
         {
             RespuestaServicio<UserView> respuestaUser = new RespuestaServicio<UserView>();
