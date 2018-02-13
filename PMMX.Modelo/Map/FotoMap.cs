@@ -20,8 +20,6 @@ namespace PMMX.Modelo.Map
             HasKey(c => c.Id);
             Property(c => c.Id).HasColumnName("Id");
             Property(c => c.IdContribuidor).HasColumnName("IdPersona");
-            Property(c => c.IdJustDoIt).HasColumnName("IdJustDoIt");
-            Property(c => c.IdMantenimiento).HasColumnName("IdMantenimiento");
             Property(c => c.Nombre).HasColumnName("Name");
             Property(c => c.Path).HasColumnName("Path");
             Property(c => c.Fecha).HasColumnName("Fecha");
@@ -29,10 +27,6 @@ namespace PMMX.Modelo.Map
             #endregion
 
             #region HasOptional
-
-
-            HasOptional(c => c.JustDoIt).WithMany(d => d.Fotos).HasForeignKey(c => c.IdJustDoIt);
-            HasOptional(c => c.Mantenimiento).WithMany(d => d.Fotos).HasForeignKey(c => c.IdMantenimiento);
             HasOptional(c => c.Contribuidor).WithMany(d => d.FotosSubidas).HasForeignKey(c => c.IdContribuidor);
 
             #endregion
@@ -56,6 +50,12 @@ namespace PMMX.Modelo.Map
                 cs.MapLeftKey("IdFoto");
                 cs.MapRightKey("IdPersona");
                 cs.ToTable("PersonasFotos");
+            });
+            HasMany(c => c.GembaWalks).WithMany(x => x.Fotos).Map(cs =>
+            {
+                cs.MapLeftKey("IdFoto");
+                cs.MapRightKey("IdGembaWalk");
+                cs.ToTable("GembaWalkFotos");
             });
 
             #endregion

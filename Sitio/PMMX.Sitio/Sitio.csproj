@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -93,9 +92,6 @@
     </Reference>
     <Reference Include="Microsoft.AspNet.TelemetryCorrelation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.0\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.Edm, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -231,66 +227,90 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Areas\Apis\Controllers\ActividadEnVentanaController.cs" />
+    <Compile Include="Areas\Apis\Controllers\BitacoraGembaWalkController.cs" />
+    <Compile Include="Areas\Apis\Controllers\RechazoController.cs" />
     <Compile Include="Areas\Apis\Controllers\AreaController.cs" />
     <Compile Include="Areas\Apis\Controllers\BitacoraVentanaController.cs" />
     <Compile Include="Areas\Apis\Controllers\CarrierController.cs" />
     <Compile Include="Areas\Apis\Controllers\CategoriaController.cs" />
-    <Compile Include="Areas\Apis\Controllers\ComentariosController.cs" />
+    <Compile Include="Areas\Apis\Controllers\FeedController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operaciones\ComentariosController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operaciones\CRRController.cs" />
     <Compile Include="Areas\Apis\Controllers\EventoController.cs" />
-    <Compile Include="Areas\Apis\Controllers\FotosController.cs" />
-    <Compile Include="Areas\Apis\Controllers\IndicadoresController.cs" />
-    <Compile Include="Areas\Apis\Controllers\JustDoItController.cs" />
+    <Compile Include="Areas\Apis\Controllers\EventoOrigenController.cs" />
+    <Compile Include="Areas\Apis\Controllers\EventoResponsableController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Multimedia\FotosController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operaciones\IndicadoresController.cs" />
+    <Compile Include="Areas\Apis\Controllers\GembaWalkController.cs" />
+    <Compile Include="Areas\Apis\Controllers\InSiteLAC\KPIsController.cs" />
+    <Compile Include="Areas\Apis\Controllers\ListaDistribucionController.cs" />
     <Compile Include="Areas\Apis\Controllers\LocacionController.cs" />
     <Compile Include="Areas\Apis\Controllers\LoginController.cs" />
     <Compile Include="Areas\Apis\Controllers\MantenimientoController.cs" />
-    <Compile Include="Areas\Apis\Controllers\MecanicoController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operarios\MecanicoController.cs" />
     <Compile Include="Areas\Apis\Controllers\MecanicoPorBusinessUnitsController.cs" />
     <Compile Include="Areas\Apis\Controllers\Multimedia\DefaultController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operaciones\DesperdiciosController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operaciones\MarcasController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operaciones\ModuloSeccionesController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operaciones\VolumenesDeProduccionController.cs" />
     <Compile Include="Areas\Apis\Controllers\OperadoresPorWorkCentersController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operarios\PesadoresController.cs" />
     <Compile Include="Areas\Apis\Controllers\ProveedoresController.cs" />
     <Compile Include="Areas\Apis\Controllers\RecursosController.cs" />
     <Compile Include="Areas\Apis\Controllers\RemitenteController.cs" />
     <Compile Include="Areas\Apis\Controllers\ShiftLeadersController.cs" />
+    <Compile Include="Areas\Apis\Controllers\SubAreaController.cs" />
     <Compile Include="Areas\Apis\Controllers\SubCategoriaController.cs" />
+    <Compile Include="Areas\Apis\Controllers\TipoOperacionController.cs" />
     <Compile Include="Areas\Apis\Controllers\VentanaController.cs" />
     <Compile Include="Areas\Apis\Controllers\VQIController.cs" />
-    <Compile Include="Areas\Apis\Controllers\NoConformidadesController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operaciones\NoConformidadesController.cs" />
+    <Compile Include="Areas\Apis\Controllers\EstatusController.cs" />
+    <Compile Include="Areas\Apis\Controllers\StatusVentanaController.cs" />
+    <Compile Include="Areas\Apis\Controllers\WorkFlowsController.cs" />
+    <Compile Include="Areas\Apis\Controllers\WorkCenterController.cs" />
     <Compile Include="Areas\Cuestionario\Controllers\WebApiConfig.cs" />
     <Compile Include="Areas\Apis\Controllers\OrigenRespuestaController.cs" />
     <Compile Include="Areas\Apis\Controllers\PreguntaTurnoController.cs" />
     <Compile Include="Areas\Cuestionario\Controllers\ModuloWorkCenterRespuestaController.cs" />
     <Compile Include="Areas\Cuestionario\Controllers\PreguntaTurnoController.cs" />
     <Compile Include="Areas\Apis\ApisAreaRegistration.cs" />
-    <Compile Include="Areas\Apis\Controllers\ActividadEnDefectoController.cs" />
-    <Compile Include="Areas\Apis\Controllers\ActividadEnParoController.cs" />
-    <Compile Include="Areas\Apis\Controllers\BussinesUnitController.cs" />
-    <Compile Include="Areas\Apis\Controllers\DefectoController.cs" />
-    <Compile Include="Areas\Apis\Controllers\EntornoController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operaciones\ActividadEnDefectoController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operaciones\ActividadEnParoController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operaciones\BussinesUnitController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operaciones\DefectoController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Seguridad\EntornoController.cs" />
     <Compile Include="Areas\Apis\Controllers\GrupoPreguntasController.cs" />
-    <Compile Include="Areas\Apis\Controllers\ModuloController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operaciones\ModuloController.cs" />
     <Compile Include="Areas\Apis\Controllers\OrigenController.cs" />
-    <Compile Include="Areas\Apis\Controllers\ParoController.cs" />
+    <Compile Include="Areas\Apis\Controllers\Operaciones\ParoController.cs" />
     <Compile Include="Areas\Apis\Controllers\PersonaController.cs" />
     <Compile Include="Areas\Apis\Controllers\PreguntaController.cs" />
     <Compile Include="Areas\Apis\Controllers\PuestoController.cs" />
     <Compile Include="Areas\Apis\Controllers\RespuestaController.cs" />
     <Compile Include="Areas\Apis\Controllers\UserController.cs" />
-    <Compile Include="Areas\Apis\Controllers\WorkCenterController.cs" />
     <Compile Include="Areas\Cuestionario\Controllers\PreguntasController.cs" />
     <Compile Include="Areas\Cuestionario\Controllers\GrupoPreguntasController.cs" />
     <Compile Include="Areas\Cuestionario\Controllers\RespuestasController.cs" />
     <Compile Include="Areas\Cuestionario\CuestionarioAreaRegistration.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\BitacoraGembaWalkController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\AreaController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\CategoriaController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\DesperdiciosController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\ElectricosController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\EventoController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\EventoOrigenController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\EventoResponsableController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\HorariosController.cs" />
-    <Compile Include="Areas\Operaciones\Controllers\JustDoItController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\GembaWalkController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\MantenimientoController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\MarcasController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\ObjetivosCRRController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\ObjetivosPlanAttainmentController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\ObjetivosVQIController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\EstatusController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\StatusVentanaController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\SubCategoriaController.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
@@ -331,8 +351,13 @@
     <Compile Include="Areas\Operaciones\Controllers\NoConformidadesController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\OrigenesController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\ParosController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\VolumenesDeProduccionController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\WorkCentersController.cs" />
-    <Compile Include="Areas\Operaciones\OperacionesAreaRegistration.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\ListaDistribucionController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\LineLeadersController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\OperacionesAreaRegistration.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\SubAreaController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\WorkFlowsController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\DispositivosController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\ElectricosController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\EntornosController.cs" />
@@ -346,24 +371,28 @@
     <Compile Include="Areas\Seguridad\Controllers\UsuariosController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\UsuariosPorPersonasController.cs" />
     <Compile Include="Areas\Seguridad\SeguridadAreaRegistration.cs" />
-    <Compile Include="Areas\Warehouse\Controllers\ActividadEnVentanaController.cs" />
+    <Compile Include="Areas\Warehouse\Controllers\RechazoController.cs" />
     <Compile Include="Areas\Warehouse\Controllers\BitacoraVentanaController.cs" />
     <Compile Include="Areas\Warehouse\Controllers\CarrierController.cs" />
     <Compile Include="Areas\Warehouse\Controllers\LocacionController.cs" />
     <Compile Include="Areas\Warehouse\Controllers\ProveedoresController.cs" />
     <Compile Include="Areas\Warehouse\Controllers\RecursosController.cs" />
+    <Compile Include="Areas\Warehouse\Controllers\TipoOperacionController.cs" />
     <Compile Include="Areas\Warehouse\Controllers\VentanaController.cs" />
     <Compile Include="Areas\Warehouse\WarehouseAreaRegistration.cs" />
     <Compile Include="Areas\Seguridad\Controllers\AccountController.cs" />
     <Compile Include="Controllers\AugmentedRealityController.cs" />
     <Compile Include="Controllers\FotosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InSiteLACController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\ManageController.cs" />
     <Compile Include="Controllers\MayaController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RequisicionDeDescargasController.cs" />
     <Compile Include="Controllers\ThumbnailController.cs" />
     <Compile Include="Helpers\AccountService.cs" />
+    <Compile Include="Helpers\MenuLinkHelper.cs" />
     <Compile Include="Hubs\ExempleHhub.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -372,9 +401,11 @@
     <Compile Include="Helpers\NotificationService.cs" />
     <Compile Include="Helpers\VideoResult.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\FechaModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RequisicionDeDescarga.cs" />
+    <Compile Include="Models\UpdateMaya.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -7743,13 +7774,16 @@
     <Content Include="img\bg-cta.jpg" />
     <Content Include="img\bg-pattern.png" />
     <Content Include="img\default.png" />
+    <Content Include="img\logo-mini.png" />
+    <Content Include="img\maya\logo.jpg" />
     <Content Include="img\maya\screen-1.png" />
     <Content Include="img\augmented-reality\screen-1.png" />
     <Content Include="img\maya\screen-2.png" />
     <Content Include="img\maya\screen-3.png" />
     <Content Include="img\maya\screen-4.png" />
+    <Content Include="img\pmm-mini.png" />
+    <Content Include="img\pmm.png" />
     <Content Include="img\user-default.png" />
-    <Content Include="js\index.js" />
     <Content Include="js\new-age.js" />
     <Content Include="js\new-age.min.js" />
     <Content Include="plugins\input-mask\phone-codes\phone-be.json" />
@@ -7833,11 +7867,11 @@
     <Content Include="Areas\Operaciones\Views\Evento\Details.cshtml" />
     <Content Include="Areas\Operaciones\Views\Evento\Edit.cshtml" />
     <Content Include="Areas\Operaciones\Views\Evento\Index.cshtml" />
-    <Content Include="Areas\Operaciones\Views\JustDoIt\Index.cshtml" />
-    <Content Include="Areas\Operaciones\Views\JustDoIt\Details.cshtml" />
-    <Content Include="Areas\Operaciones\Views\JustDoIt\Create.cshtml" />
-    <Content Include="Areas\Operaciones\Views\JustDoIt\Edit.cshtml" />
-    <Content Include="Areas\Operaciones\Views\JustDoIt\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\GembaWalk\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\GembaWalk\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\GembaWalk\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\GembaWalk\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\GembaWalk\Delete.cshtml" />
     <Content Include="Areas\Operaciones\Views\Mantenimiento\Index.cshtml" />
     <Content Include="Areas\Operaciones\Views\Mantenimiento\Details.cshtml" />
     <Content Include="Areas\Operaciones\Views\Mantenimiento\Create.cshtml" />
@@ -7870,11 +7904,11 @@
     <Content Include="Areas\Operaciones\Views\NoConformidades\Index.cshtml" />
     <Content Include="Areas\Operaciones\Views\Area\Index.cshtml" />
     <Content Include="Areas\Warehouse\Views\web.config" />
-    <Content Include="Areas\Warehouse\Views\ActividadEnVentana\Create.cshtml" />
-    <Content Include="Areas\Warehouse\Views\ActividadEnVentana\Delete.cshtml" />
-    <Content Include="Areas\Warehouse\Views\ActividadEnVentana\Details.cshtml" />
-    <Content Include="Areas\Warehouse\Views\ActividadEnVentana\Edit.cshtml" />
-    <Content Include="Areas\Warehouse\Views\ActividadEnVentana\Index.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Rechazo\Create.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Rechazo\Delete.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Rechazo\Details.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Rechazo\Edit.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Rechazo\Index.cshtml" />
     <Content Include="Areas\Warehouse\Views\BitacoraVentana\Create.cshtml" />
     <Content Include="Areas\Warehouse\Views\BitacoraVentana\Delete.cshtml" />
     <Content Include="Areas\Warehouse\Views\BitacoraVentana\Details.cshtml" />
@@ -7916,11 +7950,6 @@
     <Content Include="Areas\Operaciones\Views\Marcas\Details.cshtml" />
     <Content Include="Areas\Operaciones\Views\Marcas\Edit.cshtml" />
     <Content Include="Areas\Operaciones\Views\Marcas\Index.cshtml" />
-    <Content Include="Areas\Operaciones\Views\Desperdicios\Create.cshtml" />
-    <Content Include="Areas\Operaciones\Views\Desperdicios\Delete.cshtml" />
-    <Content Include="Areas\Operaciones\Views\Desperdicios\Details.cshtml" />
-    <Content Include="Areas\Operaciones\Views\Desperdicios\Edit.cshtml" />
-    <Content Include="Areas\Operaciones\Views\Desperdicios\Index.cshtml" />
     <Content Include="Areas\Operaciones\Views\Electricos\Create.cshtml" />
     <Content Include="Areas\Operaciones\Views\Electricos\Delete.cshtml" />
     <Content Include="Areas\Operaciones\Views\Electricos\Details.cshtml" />
@@ -7941,7 +7970,80 @@
     <Content Include="Areas\Seguridad\Views\Pesadores\Details.cshtml" />
     <Content Include="Areas\Seguridad\Views\Pesadores\Edit.cshtml" />
     <Content Include="Areas\Seguridad\Views\Pesadores\Index.cshtml" />
-    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Areas\Operaciones\Views\SubArea\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\SubArea\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\SubArea\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\SubArea\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\SubArea\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ListaDistribucion\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ListaDistribucion\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ListaDistribucion\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ListaDistribucion\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ListaDistribucion\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\EventoResponsable\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\EventoResponsable\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\EventoResponsable\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\EventoResponsable\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\EventoResponsable\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\EventoOrigen\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\EventoOrigen\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\EventoOrigen\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\EventoOrigen\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\EventoOrigen\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Evento\_Origen.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Evento\_Responsables.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Desperdicios\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Desperdicios\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Desperdicios\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Desperdicios\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Desperdicios\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Estatus\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Estatus\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Estatus\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Estatus\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Estatus\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\StatusVentana\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\StatusVentana\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\StatusVentana\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\StatusVentana\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\StatusVentana\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Evento\_ListaDistribucion.cshtml" />
+    <Content Include="Areas\Operaciones\Views\VolumenesDeProduccion\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\VolumenesDeProduccion\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\VolumenesDeProduccion\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\VolumenesDeProduccion\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\VolumenesDeProduccion\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ObjetivosCRR\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ObjetivosCRR\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ObjetivosCRR\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ObjetivosCRR\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ObjetivosCRR\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ObjetivosPlanAttainment\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ObjetivosPlanAttainment\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ObjetivosPlanAttainment\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ObjetivosPlanAttainment\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ObjetivosPlanAttainment\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\WorkFlows\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\WorkFlows\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\WorkFlows\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\WorkFlows\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\WorkFlows\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\BitacoraJustDoIt\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\BitacoraJustDoIt\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\BitacoraJustDoIt\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\BitacoraJustDoIt\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\BitacoraJustDoIt\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Marcas\Upload.cshtml" />
+    <Content Include="Areas\Operaciones\Views\VolumenesDeProduccion\Upload.cshtml" />
+    <Content Include="Areas\Operaciones\Views\WorkCenters\Modulos.cshtml" />
+    <Content Include="Areas\Operaciones\Views\WorkCenters\Operadores.cshtml" />
+    <Content Include="Areas\Operaciones\Views\StatusVentana\Timeline.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Ventana\Upload.cshtml" />
+    <Content Include="Areas\Warehouse\Views\TipoOperacion\Create.cshtml" />
+    <Content Include="Areas\Warehouse\Views\TipoOperacion\Delete.cshtml" />
+    <Content Include="Areas\Warehouse\Views\TipoOperacion\Details.cshtml" />
+    <Content Include="Areas\Warehouse\Views\TipoOperacion\Edit.cshtml" />
+    <Content Include="Areas\Warehouse\Views\TipoOperacion\Index.cshtml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -8277,13 +8379,20 @@
     <Content Include="Views\RequisicionDeDescargas\Index.cshtml" />
     <Content Include="Views\AugmentedReality\SolicitudEnviada.cshtml" />
     <Content Include="Views\Shared\_LayoutTable.cshtml" />
+    <Content Include="Views\Profile\Details.cshtml" />
+    <Content Include="Views\InSiteLAC\Create.cshtml" />
+    <Content Include="Views\InSiteLAC\Delete.cshtml" />
+    <Content Include="Views\InSiteLAC\Details.cshtml" />
+    <Content Include="Views\InSiteLAC\Edit.cshtml" />
+    <Content Include="Views\InSiteLAC\Index.cshtml" />
+    <Content Include="Views\InSiteLAC\Listado.cshtml" />
+    <Content Include="Views\InSiteLAC\UploadFile.cshtml" />
+    <Content Include="Views\Maya\Upload.cshtml" />
     <None Include="Views\Shared\_LayoutVideo.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Apis\Views\Accounts\" />
-    <Folder Include="Areas\Apis\Views\BaseApi\" />
     <Folder Include="Areas\Warehouse\Models\" />
     <Folder Include="Areas\Warehouse\Views\Shared\" />
   </ItemGroup>
@@ -8295,6 +8404,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Multimedia\PMMX.Multimedia\PMMX.Multimedia.csproj">
+      <Project>{e6523638-c794-4570-bc8f-87309ecaaa3b}</Project>
+      <Name>PMMX.Multimedia</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\PMMX.Modelo\PMMX.Modelo.csproj">
       <Project>{4ded49b0-609a-4be0-bc3d-dc0d16a0ca8a}</Project>
       <Name>PMMX.Modelo</Name>
@@ -8310,6 +8423,10 @@
     <ProjectReference Include="..\..\Seguridad\PMMX.Seguridad\PMMX.Seguridad.csproj">
       <Project>{05723739-BD43-448B-A60E-188A23A82DF3}</Project>
       <Name>PMMX.Seguridad</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\WareHouse\PMMX.WareHouse\PMMX.WareHouse.csproj">
+      <Project>{b089cad5-4515-475e-862e-f3a9641f66a4}</Project>
+      <Name>PMMX.WareHouse</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -8355,7 +8472,6 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props'))" />
-    <Error Condition="!Exists('..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

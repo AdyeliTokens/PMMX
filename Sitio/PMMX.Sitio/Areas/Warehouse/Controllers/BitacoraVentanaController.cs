@@ -8,6 +8,13 @@ using System.Web;
 using System.Web.Mvc;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.Warehouse;
+using PMMX.Seguridad.Servicios;
+using PMMX.Modelo.RespuestaGenerica;
+using PMMX.Modelo.Entidades;
+using Microsoft.AspNet.Identity;
+using PMMX.Operaciones.Servicios;
+using PMMX.Modelo.Vistas;
+using PMMX.Modelo.Entidades.Operaciones;
 
 namespace Sitio.Areas.Warehouse.Controllers
 {
@@ -18,7 +25,7 @@ namespace Sitio.Areas.Warehouse.Controllers
         // GET: Warehouse/BitacoraVentana
         public ActionResult Index()
         {
-            return View(db.BitacoraVentana.ToList());
+            return View(db.BitacoraVentana.Include(b => b.Rechazo).Include(b => b.Ventana).Include(b => b.Estatus).Include(b => b.Responsable).ToList());
         }
 
         // GET: Warehouse/BitacoraVentana/Details/5
@@ -39,6 +46,7 @@ namespace Sitio.Areas.Warehouse.Controllers
         // GET: Warehouse/BitacoraVentana/Create
         public ActionResult Create()
         {
+            ViewBag.IdRechazo = new SelectList(db.Rechazo.Select(x => new { Id = x.Id, Nombre = x.Nombre}).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View();
         }
 
@@ -47,18 +55,55 @@ namespace Sitio.Areas.Warehouse.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id, IdVentana, IdActividadVentana, FechaInicio, FechaFin, IdResponsable, Comentarios, Activo")] BitacoraVentana bitacoraVentana)
+        public ActionResult Create(BitacoraVentana bitacoraVentana)
         {
+            ViewBag.IdRechazo = new SelectList(db.Rechazo.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", bitacoraVentana.IdRechazo);
+
             if (ModelState.IsValid)
             {
+                PersonaServicio personaServicio = new PersonaServicio();
+                IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
+
+                if (persona.EjecucionCorrecta)
+                {
+                    bitacoraVentana.IdResponsable = persona.Respuesta.Id;
+                }
+                
+                Ventana ventana = db.Ventana
+                    .Include(v => v.StatusVentana)
+                    .Where( v => (v.Id == bitacoraVentana.IdVentana))
+                    .FirstOrDefault();
+
+                WorkFlowServicio workflowServicio = new WorkFlowServicio();
+                IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, ventana.StatusVentana.Where(s => s.IdVentana == bitacoraVentana.IdVentana).OrderByDescending(s=> s.Fecha).FirstOrDefault().IdStatus, true);
+
+                bitacoraVentana.IdStatus = workFlow.Respuesta.EstatusSiguiente.Id;
+                bitacoraVentana.Fecha = DateTime.Now;
+
                 db.BitacoraVentana.Add(bitacoraVentana);
                 db.SaveChanges();
+
+                saveStatusVentana(bitacoraVentana);
+
                 return RedirectToAction("Index");
             }
-
-            return View(bitacoraVentana);
+            else
+                return View(bitacoraVentana);
         }
 
+        public bool saveStatusVentana(BitacoraVentana bitacoraVentana)
+        {
+            StatusVentana statusVentana = new StatusVentana();
+            statusVentana.IdResponsable = bitacoraVentana.IdResponsable;
+            statusVentana.IdStatus = bitacoraVentana.IdStatus;
+            statusVentana.IdVentana = bitacoraVentana.IdVentana;
+            statusVentana.Fecha = bitacoraVentana.Fecha;
+            db.StatusVentana.Add(statusVentana);
+            db.SaveChanges();
+
+            return true;
+        }
+        
         // GET: Warehouse/BitacoraVentana/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -79,7 +124,7 @@ namespace Sitio.Areas.Warehouse.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id, IdVentana, IdActividadVentana, FechaInicio, FechaFin, IdResponsable, Comentarios, Activo")] BitacoraVentana bitacoraVentana)
+        public ActionResult Edit(BitacoraVentana bitacoraVentana)
         {
             if (ModelState.IsValid)
             {

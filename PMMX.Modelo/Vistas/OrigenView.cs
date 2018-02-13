@@ -13,7 +13,8 @@ namespace PMMX.Modelo.Vistas
         public int? Orden { get; set; }
         public int ParosActivos { get; set; }
         public int DefectosActivos { get; set; }
-        
+        public string NombreOrigen { get; set; }
+
         public ModuloView Modulo { get; set; }
         public WorkCenterView WorkCenter { get; set; }
         public ICollection<PreguntaTurnoView> PreguntaTurno { get; set; }

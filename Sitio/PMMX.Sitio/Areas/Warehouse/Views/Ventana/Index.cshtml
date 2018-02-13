@@ -2,13 +2,12 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
-@section Styles {
+
     @Styles.Render("~/Style/DataTables")
 
-}
 <div class="row">
     <div class="col-md-12">
         <div class="box box-primary">
@@ -140,8 +139,8 @@
     </div>
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/JS/DataTables")
+
+@Scripts.Render("~/JS/DataTables")
     <script>
         $(function () {
             $('#example1').DataTable();
@@ -150,11 +149,11 @@
             $(".btn-action").on("click", function ()
             {
                 var url = $(this).data("url");
-
+                
                 $.get(url, function (data) {
                     $('#createAssetContainer').html(data);
-
                     $('#createAssetModal').modal('show');
+
                  });
             });
 
@@ -166,4 +165,4 @@
             radioClass: 'iradio_flat-blue'
         });
     </script>
-}
+

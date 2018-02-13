@@ -1,6 +1,7 @@
 ﻿using PMMX.Modelo.Entidades.Maquinaria;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -12,8 +13,12 @@ namespace PMMX.Modelo.Entidades.Paros
         public int IdOrigen { get; set; }
         public int IdReportador { get; set; }
         public int? IdMecanico { get; set; }
+
+        [StringLength(250)]
         public string Descripcion { get; set; }
         public DateTime FechaReporte { get; set; }
+
+        [StringLength(250)]
         public string Motivo { get; set; }
         public Boolean Activo { get; set; }
 
@@ -25,8 +30,7 @@ namespace PMMX.Modelo.Entidades.Paros
         public Origen Origen { get; set; }
 
 
-
-        public ICollection<OrigenRespuesta> OrigenRespuesta { get; set; }
+        
         public ICollection<ActividadEnParo> ActividadesEnParo { get; set; }
         public ICollection<TiempoDeParo> TiemposDeParo { get; set; }
         public ICollection<Asignacion> Asignaciones { get; set; }

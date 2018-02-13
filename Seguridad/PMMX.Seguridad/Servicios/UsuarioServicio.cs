@@ -32,7 +32,7 @@ namespace PMMX.Seguridad.Servicios
 
         public List<DispositivoView> GetDispositivosByOrigenAndGrupoPreguntas(int idOrigen, int idGrupo)
         {
-            /*var dispositivos = db.Remitentes.Where(x => (x.IdHealthCheck == idGrupo))
+            /*var dispositivos = db.Remitentes.Where(x => (x.IdGrupo == idGrupo))
                 .Select(d => d.Puesto.Personas.SelectMany(p => p.Dispositivos.Select(r => new DispositivoView { Llave = r.Llave })).ToList()).FirstOrDefault();
             return dispositivos;*/
             var dispositivos = db.Origens.Where(o => (o.Id == idOrigen))
@@ -71,24 +71,24 @@ namespace PMMX.Seguridad.Servicios
         {
             List<DispositivoView> dispositivos = new List<DispositivoView>();
 
-            dispositivos = db.Evento
-                .Where(e => e.Id == idEvento)
-                .Select( e => e.Responsable.Dispositivos.Where( d => d.Activo == true).Select( v => new DispositivoView
+            dispositivos = db.EventoResponsable
+                .Where(e => e.IdEvento == idEvento)
+                .Select(e => e.Responsable.Dispositivos.Where(d => d.Activo == true).Select(v => new DispositivoView
                 {
                     Id = v.Id,
                     Llave = v.Llave
                 }).ToList()
                 ).FirstOrDefault();
-
+            
             return dispositivos;
         }
 
-        public List<DispositivoView> GetDispositivoByJDI(int idJustDoIt)
+        public List<DispositivoView> GetDispositivoByJDI(int IdGembaWalk)
         {
             List<DispositivoView> dispositivos = new List<DispositivoView>();
 
-            dispositivos = db.JustDoIt
-                .Where(e => e.Id == idJustDoIt)
+            dispositivos = db.GembaWalk
+                .Where(e => e.Id == IdGembaWalk)
                 .Select(e => e.Responsable.Dispositivos.Where(d => d.Activo == true).Select(v => new DispositivoView
                 {
                     Id = v.Id,
@@ -115,5 +115,27 @@ namespace PMMX.Seguridad.Servicios
             return dispositivos;
         }
 
+
+        public string GetEmailByEvento(int idEvento)
+        {
+            var emailList = db.EventoResponsable
+                .Where(e => e.IdEvento == idEvento)
+                .Select(e => e.Responsable.Usuarios.Where(d => d.Activo == true).Select(v => new UserView
+                {
+                    Id = v.Id,
+                    Email = v.Email
+                }).ToList()
+                ).FirstOrDefault();
+
+            List<string> emails = emailList.Select(x => x.Email).ToList();
+            string stringEmails = "";
+             
+            foreach (string email in emails)
+            {
+                stringEmails += (email + ",");
+            }
+            
+            return stringEmails;
+        }
     }
 }

@@ -14,6 +14,7 @@ using PMMX.Seguridad.Servicios;
 using PMMX.Modelo.RespuestaGenerica;
 using Microsoft.AspNet.Identity;
 using System.Text.RegularExpressions;
+using PMMX.Operaciones.Servicios;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -23,8 +24,9 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         public ActionResult Index()
         {
-            var noConformidades = db.NoConformidades.Include(n => n.Persona).Include(n => n.Seccion).Include(n => n.WorkCenter);
-            return View(noConformidades.ToList());
+            NoConformidadServicio servicio = new NoConformidadServicio(db);
+            var respuesta = servicio.GetNoConformidades();
+            return View(respuesta.Respuesta.ToList());
         }
 
 
@@ -34,12 +36,14 @@ namespace Sitio.Areas.Operaciones.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            NoConformidad noConformidad = db.NoConformidades.Find(id);
-            if (noConformidad == null)
+            NoConformidadServicio servicio = new NoConformidadServicio(db);
+            var respuesta = servicio.GetNoConformidad((int)id);
+
+            if (respuesta.Respuesta == null)
             {
                 return HttpNotFound();
             }
-            return View(noConformidad);
+            return View(respuesta.Respuesta);
         }
 
         public ActionResult Create()
@@ -52,16 +56,25 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Descripcion,Calificacion_Low,Calificacion_High,Calificacion_VQI,Calificacion_CSVQI,Fecha,IdPersona,IdWorkCenter,IdSeccion")] NoConformidad noConformidad)
+        public ActionResult Create(NoConformidad noConformidad)
         {
             if (ModelState.IsValid)
             {
                 PersonaServicio personaServicio = new PersonaServicio();
                 IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
                 noConformidad.IdPersona = persona.Respuesta.Id;
-                db.NoConformidades.Add(noConformidad);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                NoConformidadServicio servicio = new NoConformidadServicio(db);
+                var respuesta = servicio.PutNoConformidad(noConformidad);
+
+                if (respuesta.EjecucionCorrecta)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("error", "Serial is invalid");
+                }
+
             }
 
             ViewBag.IdPersona = new SelectList(db.Personas, "Id", "Nombre", noConformidad.IdPersona);
@@ -73,13 +86,12 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         public ActionResult Upload()
         {
-            ViewBag.IdSeccion = new SelectList(db.ModuloSeccion, "Id", "Nombre");
-            ViewBag.IdWorkCenter = new SelectList(db.WorkCenters, "Id", "Nombre");
+
             return View();
         }
 
         [HttpPost]
-        public ActionResult Upload(NoConformidad noConformidadParametro, HttpPostedFileBase file)
+        public ActionResult Upload(HttpPostedFileBase file)
         {
             if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
             {
@@ -87,6 +99,9 @@ namespace Sitio.Areas.Operaciones.Controllers
                 string fileContentType = file.ContentType;
                 byte[] fileBytes = new byte[file.ContentLength];
                 var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+                //var aliasWorkCenter = db.Alias.Include(w => w.WorkCenters).ToList();
+                var wcs = db.WorkCenters.ToList();
+
                 var noConformidades = new List<NoConformidad>();
                 using (var package = new ExcelPackage(file.InputStream))
                 {
@@ -95,53 +110,56 @@ namespace Sitio.Areas.Operaciones.Controllers
 
 
                     var currentSheet = package.Workbook.Worksheets;
-                    foreach (var workSheet in currentSheet) {
+
+                    foreach (var workSheet in currentSheet)
+                    {
                         var noOfCol = workSheet.Dimension.End.Column;
                         var noOfRow = workSheet.Dimension.End.Row;
                         int idseccion = 0;
-                        for (int rowIterator = 6; rowIterator <= noOfRow; rowIterator++)
+
+                        for (int rowIterator = 3; rowIterator <= noOfRow; rowIterator++)
                         {
-
-                            if (workSheet.Cells[rowIterator, 1].Value.ToString().Trim() == "Cajetilla Non - Conformities  - CES")
-                            {
-                                idseccion = 1;
-                            }
-                            else if (workSheet.Cells[rowIterator, 1].Value.ToString().Trim() == "Total Cajetilla Non - Conformities")
-                            {
-
-                            }
-                            else if (workSheet.Cells[rowIterator, 1].Value.ToString().Trim() == "Cigarrillo Non - Conformities  - CES")
-                            {
-                                idseccion = 2;
-                            }
-                            else if (workSheet.Cells[rowIterator, 1].Value.ToString().Trim() == "Total Cigarrillo Non - Conformities")
-                            {
-                            }
-                            else if (workSheet.Cells[rowIterator, 1].Value.ToString().Trim() == "Total  Non-Conformities") { }
-                            else
+                            if (workSheet.Cells[rowIterator, 6].Value != null)
                             {
                                 var noconformidad = new NoConformidad();
+
+
                                 noconformidad.IdPersona = persona.Respuesta.Id;
-                                
-                                noconformidad.Fecha = DateTime.Now.Date;
-                                noconformidad.Descripcion = workSheet.Cells[rowIterator, 1].Value.ToString().Trim();
-                                noconformidad.Calificacion_Low = Convert.ToInt32(Convert.ToDouble(workSheet.Cells[rowIterator, 4].Value.ToString().Trim()));
-                                noconformidad.Calificacion_High = Convert.ToInt32(Convert.ToDouble(workSheet.Cells[rowIterator, 5].Value.ToString().Trim()));
-                                noconformidad.Calificacion_VQI = Convert.ToInt32(Convert.ToDouble(workSheet.Cells[rowIterator, 7].Value.ToString().Trim()));
-                                noconformidad.Calificacion_CSVQI = Convert.ToInt32(Convert.ToDouble(workSheet.Cells[rowIterator, 8].Value.ToString().Trim()));
-                                noconformidad.IdWorkCenter = noConformidadParametro.IdWorkCenter;
-                                //noconformidad.IdSeccion = noConformidadParametro.IdSeccion;
+                                String fechaCadena = workSheet.Cells[rowIterator, 2].Value.ToString().Trim();
+                                noconformidad.Fecha = DateTime.ParseExact(fechaCadena, "dd/MM/yyyy", null);
+
+                                if (workSheet.Cells[rowIterator, 5].Value.ToString().Trim() == "Cigarettes") { idseccion = 2; }
+                                else if (workSheet.Cells[rowIterator, 5].Value.ToString().Trim() == "Packs") { idseccion = 1; }
                                 noconformidad.IdSeccion = idseccion;
-                                noconformidad.IdAuditoria = Convert.ToInt32(workSheet.Cells[1, 2].Value.ToString().Trim());
+
+
+                                noconformidad.Code = workSheet.Cells[rowIterator, 6].Value.ToString().Trim();
+                                noconformidad.CodeDescription = workSheet.Cells[rowIterator, 7].Value.ToString().Trim();
+                                noconformidad.Calificacion_VQI = Convert.ToInt32(Convert.ToDouble(workSheet.Cells[rowIterator, 8].Value.ToString().Trim()));
+
+
+
+                                var str = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
+                                var palabra = str.Substring(0, str.IndexOf(" "));
+                                var wc = palabra.Substring(palabra.Length - 2, 2);
+
+                                //var idWC = aliasWorkCenter.Where(w => w.Nombre == str.Substring(0, str.IndexOf(" "))).Select(a => a.WorkCenters.Select(f=> f.Id).FirstOrDefault()).FirstOrDefault();
+                                var idWorkCenter = wcs.Where(w => w.NombreCorto == wc).Select(w => w.Id).FirstOrDefault();
+                                noconformidad.IdWorkCenter = idWorkCenter;
+
+
+
                                 noConformidades.Add(noconformidad);
                             }
-                            
+
+
+
                         }
 
                     }
 
-                    
-                    
+
+
 
                     db.NoConformidades.AddRange(noConformidades);
                     db.SaveChanges();
@@ -174,7 +192,7 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Descripcion,Calificacion_Low,Calificacion_High,Calificacion_VQI,Calificacion_CSVQI,Fecha,IdPersona,IdWorkCenter,IdSeccion")] NoConformidad noConformidad)
+        public ActionResult Edit(NoConformidad noConformidad)
         {
             if (ModelState.IsValid)
             {

@@ -8,138 +8,73 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Ventana</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.PO)
-        </dt>
+    <div class="progress progress-xs progress-striped active">
+        <div class="progress-bar progress-bar-danger" style="width: 100%"></div>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.PO)
-        </dd>
+    <table class="table">
+        <tr class="bg-info">
+            <td class="bg-primary"><i class="fa fa-calendar"></i></td>
+            <td class="bg-primary"><b>PO</b></td>
+            <td>
+                @Html.DisplayFor(model => model.PO)
+            </td>
+            <td>@Html.DisplayFor(model => model.SubCategoria.NombreCorto) (@Html.DisplayFor(model => model.SubCategoria.Nombre))</td>
+        </tr>
+        <tr class="bg-success">
+            <td class="bg-primary"><i class="fa fa-dropbox"></i></td>
+            <td class="bg-primary"><b>Material</b></td>
+            <td>
+                @Html.DisplayFor(model => model.Recurso) @Html.DisplayFor(model => model.Cantidad) pallets
+            </td>
+            <td>
+                Proveedor: @Html.DisplayFor(model => model.Proveedor.Nombre)
+            </td>
+        </tr>
+        <tr class="bg-info">
+            <td class="bg-primary"><i class="fa fa-globe"></i></td>
+            <td class="bg-primary"><b>Ubicacion</b></td>
+            <td>
+                Origen : @Html.DisplayFor(model => model.Procedencia.Nombre)
+            </td>
+            <td>
+                Destino : @Html.DisplayFor(model => model.Destino.Nombre)
+            </td>
+        </tr>
+        <tr class="bg-success">
+            <td class="bg-primary"><i class="fa fa-truck"></i></td>
+            <td class="bg-primary"><b>Transporte</b></td>
+            <td>
+                Linea transportista: @Html.DisplayFor(model => model.Carrier.NombreCorto)
+            </td>
+            <td>
+                #Economico: @Html.DisplayFor(model => model.NumeroEconomico) </br>
+                #Placa: @Html.DisplayFor(model => model.NumeroPlaca)
+            </td>
+        </tr>
+        <tr class="bg-success">
+            <td class="bg-primary"></td>
+            <td class="bg-primary"></td>
+            <td>
+                Tipo Unidad: @Html.DisplayFor(model => model.TipoUnidad)
+            </td>
+            <td>
+                Dimension: @Html.DisplayFor(model => model.Dimension) </br>
+                Temperatura:@Html.DisplayFor(model => model.Temperatura)
+            </td>
+        </tr>
+        <tr class="bg-info">
+            <td class="bg-primary"><i class="fa fa-user"></i></td>
+            <td class="bg-primary"><b>Conductor</b></td>
+            <td>
+                @Html.DisplayFor(model => model.Conductor)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.MovilConductor)
+            </td>
+        </tr>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IdEvento)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IdEvento)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Recurso)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Recurso)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Cantidad)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Cantidad)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IdCarrier)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IdCarrier)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IdProcedencia)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IdProcedencia)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IdDestino)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IdDestino)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IdProveedor)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IdProveedor)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NumeroEconomico)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NumeroEconomico)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NumeroPlaca)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NumeroPlaca)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TipoUnidad)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TipoUnidad)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Dimension)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Dimension)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Temperatura)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Temperatura)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Conductor)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Conductor)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MovilConductor)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MovilConductor)
-        </dd>
-        
-        <dt>
-            @Html.DisplayNameFor(model => model.Activo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Activo)
-        </dd>
-
-    </dl>
+    </table>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()

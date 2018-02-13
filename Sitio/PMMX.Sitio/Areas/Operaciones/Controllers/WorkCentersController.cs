@@ -16,14 +16,33 @@ namespace Sitio.Areas.Operaciones.Controllers
     {
         private PMMXContext db = new PMMXContext();
 
-        // GET: Maquinaria/WorkCenters
         public ActionResult Index()
         {
-            var workCenter = db.WorkCenters.Include(w => w.BussinesUnit);
+            var workCenter = db.WorkCenters
+                .Include(w => w.BussinesUnit)
+                .Include(w => w.Responsable)
+                .Include(w => w.Origenes)
+            .Include(w => w.Operadores);
+
             return View(workCenter.ToList());
         }
 
-        // GET: Maquinaria/WorkCenters/Details/5
+        public ActionResult Modulos(int idWorkCenter)
+        {
+            var modulos  = db.Origens
+                .Include(w => w.Modulo).Where(w=> w.IdWorkCenter == idWorkCenter);
+
+            return View(modulos.ToList());
+        }
+
+        public ActionResult Operadores(int idWorkCenter)
+        {
+            var operadores = db.Operadores
+                .Include(w => w.Operador).Where(w => w.IdWorkCenter == idWorkCenter);
+
+            return View(operadores.ToList());
+        }
+
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -38,19 +57,17 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(workCenter);
         }
 
-        // GET: Maquinaria/WorkCenters/Create
         public ActionResult Create()
         {
             ViewBag.IdBussinesUnit = new SelectList(db.BussinesUnits, "Id", "Nombre");
+            ViewBag.IdResponsable = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
+
             return View();
         }
 
-        // POST: Maquinaria/WorkCenters/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,IdBussinesUnit,Nombre,NombreCorto,Activo")] WorkCenter workCenter)
+        public ActionResult Create(WorkCenter workCenter)
         {
             if (ModelState.IsValid)
             {
@@ -60,10 +77,11 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
 
             ViewBag.IdBussinesUnit = new SelectList(db.BussinesUnits, "Id", "Nombre", workCenter.IdBussinesUnit);
+            ViewBag.IdResponsable = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre", workCenter.IdResponsable);
+
             return View(workCenter);
         }
 
-        // GET: Maquinaria/WorkCenters/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -76,15 +94,15 @@ namespace Sitio.Areas.Operaciones.Controllers
                 return HttpNotFound();
             }
             ViewBag.IdBussinesUnit = new SelectList(db.BussinesUnits, "Id", "Nombre", workCenter.IdBussinesUnit);
+            ViewBag.IdResponsable = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre", workCenter.IdResponsable);
+
             return View(workCenter);
         }
 
-        // POST: Maquinaria/WorkCenters/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,IdBussinesUnit,Nombre,NombreCorto,Activo")] WorkCenter workCenter)
+        public ActionResult Edit(WorkCenter workCenter)
         {
             if (ModelState.IsValid)
             {
@@ -93,10 +111,11 @@ namespace Sitio.Areas.Operaciones.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.IdBussinesUnit = new SelectList(db.BussinesUnits, "Id", "Nombre", workCenter.IdBussinesUnit);
+            ViewBag.IdResponsable = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre", workCenter.IdResponsable);
+
             return View(workCenter);
         }
 
-        // GET: Maquinaria/WorkCenters/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -111,7 +130,6 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(workCenter);
         }
 
-        // POST: Maquinaria/WorkCenters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -121,6 +139,8 @@ namespace Sitio.Areas.Operaciones.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+
 
         protected override void Dispose(bool disposing)
         {

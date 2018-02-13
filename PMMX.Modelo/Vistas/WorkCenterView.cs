@@ -16,11 +16,11 @@ namespace PMMX.Modelo.Vistas
         public int DefectosActivos { get; set; }
         public int IdResponsable { get; set; }
         
-        public List<OrigenView> Modulos { get; set; }
+        public ICollection<OrigenView> Modulos { get; set; }
         public BussinesUnitView BussinesUnit { get; set; }
         public PersonaView Responsable { get; set; }
-        public List<GrupoPreguntasView> Formatos { get; set; }
-        public List<PersonaView> Operadores { get; set; }
+        public ICollection<GrupoPreguntasView> Formatos { get; set; }
+        public ICollection<PersonaView> Operadores { get; set; }
 
     }
 }

@@ -17,6 +17,8 @@ namespace PMMX.Modelo.Entidades
         public int IdOrigenRespuesta { get; set; }
         public bool Solucion { get; set; }
         public DateTime Fecha { get; set; }
+
+        [StringLength(250)]
         public string Comentario { get; set; }
         public bool Activo { get; set; }
 

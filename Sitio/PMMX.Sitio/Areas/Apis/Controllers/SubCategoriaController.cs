@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.Operaciones;
+using PMMX.Modelo.Vistas;
 
 namespace Sitio.Areas.Apis.Controllers
 {
@@ -28,6 +29,29 @@ namespace Sitio.Areas.Apis.Controllers
         public IHttpActionResult GetSubCategoria(int id)
         {
             SubCategoria subCategoria = db.SubCategoria.Find(id);
+            if (subCategoria == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(subCategoria);
+        }
+
+        [ResponseType(typeof(SubCategoriaView))]
+        public IHttpActionResult GetSubCategoriaByCategoria(int idCategoria)
+        {
+            var subCategoria = db.SubCategoria.Where(s => (s.IdCategoria == idCategoria))
+            .Select(s => new SubCategoriaView
+            {
+                Id = s.Id,
+                Nombre = s.Nombre,
+                NombreCorto = s.NombreCorto,
+                IdCategoria = s.IdCategoria,
+                IdResponsable = s.IdResponsable,
+                IdGrupo = s.Categoria.GrupoPreguntas.Where(g => (g.IdCategoria == idCategoria) && (s.NombreCorto.Equals(g.Nombre))).Select(g => g.Id).FirstOrDefault(),
+                Activo = s.Activo                
+            }).ToList();
+
             if (subCategoria == null)
             {
                 return NotFound();

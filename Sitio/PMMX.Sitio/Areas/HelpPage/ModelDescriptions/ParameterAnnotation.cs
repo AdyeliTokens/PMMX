@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Sitio.Areas.HelpPage.ModelDescriptions
 {

@@ -5,9 +5,6 @@
 
 .skin-blue .main-header .navbar {
     background-color: #3c8dbc;
-    -webkit-box-shadow: 1px 5px 5px -1px #777;
-    -moz-box-shadow: 1px 5px 5px -1px #777;
-    box-shadow: 1px 5px 5px -1px #777;
 }
 .skin-blue .main-header .navbar .nav > li > a {
   color: #ffffff;
@@ -149,7 +146,7 @@
  * ----------
  */
 .skin-blue-light .main-header .navbar {
-  background-color: #3c8dbc;
+    background-color: #3c8dbc;
 }
 .skin-blue-light .main-header .navbar .nav > li > a {
   color: #ffffff;

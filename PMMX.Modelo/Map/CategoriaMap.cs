@@ -11,6 +11,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
     {
         public CategoriaMap()
         {
+            #region Propiedades
             this.ToTable("Categorias");
             this.HasKey(c => c.Id);
             this.Property(c => c.Id).HasColumnName("Id");
@@ -19,10 +20,18 @@ namespace PMMX.Modelo.Entidades.Operaciones
             this.Property(c => c.IdResponsable).HasColumnName("IdResponsable");
             this.Property(c => c.Color).HasColumnName("Color");
             this.Property(c => c.Activo).HasColumnName("Activo");
+            #endregion
 
+            #region HasRequired
             this.HasRequired(c => c.Responsable).WithMany(x => x.Categorias).HasForeignKey(c => c.IdResponsable);
-            this.HasMany(c => c.Eventos).WithRequired(x => x.Categoria).HasForeignKey(c => c.IdCategoria);
+            #endregion
+
+            #region HasMany
+            this.HasMany(c => c.SubCategorias).WithRequired(x => x.Categoria).HasForeignKey(c => c.IdCategoria);
             this.HasMany(c => c.GrupoPreguntas).WithRequired(x => x.Categoria).HasForeignKey(c => c.IdCategoria);
+            this.HasMany(c => c.Eventos).WithRequired(x => x.Categoria).HasForeignKey(c => c.IdCategoria);
+            this.HasMany(c => c.Estatus).WithRequired(x => x.Categoria).HasForeignKey(c => c.IdCategoria);
+            #endregion
         }
     }
 }

@@ -29,6 +29,8 @@ namespace PMMX.Modelo.Entidades.Operaciones
                 cs.MapRightKey("IdIndicador");
                 cs.ToTable("areasindicadores");
             });
+
+            HasMany(c => c.SubAreas).WithRequired(x => x.Area).HasForeignKey(c => c.IdArea);
             #endregion
 
             #region HasOptional

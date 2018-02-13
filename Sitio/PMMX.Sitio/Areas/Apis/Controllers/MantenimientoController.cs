@@ -11,7 +11,7 @@ using System.Web.Http.Description;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo.Vistas;
-using Maya.Helpers;
+using Sitio.Helpers;
 using PMMX.Seguridad.Servicios;
 
 namespace Sitio.Areas.Apis.Controllers
@@ -75,13 +75,7 @@ namespace Sitio.Areas.Apis.Controllers
                            NombreCorto = d.Origen.WorkCenter.NombreCorto,
                            Activo = d.Origen.WorkCenter.Activo
                        }
-                   },
-                   Fotos = d.Fotos.Select(f => new FotoView
-                   {
-                       Id = f.Id,
-                       Nombre = f.Nombre,
-                       Path = f.Path
-                   }).ToList()
+                   }
                }).FirstOrDefault();
 
             if (mantenimiento == null)
@@ -139,19 +133,13 @@ namespace Sitio.Areas.Apis.Controllers
                             Activo = d.Origen.WorkCenter.Activo
                         }
 
-                    },
-                    Fotos = d.Fotos.Select(f => new FotoView
-                    {
-                        Id = f.Id,
-                        Nombre = f.Nombre,
-                        Path = f.Path
-                    }).ToList()
+                    }
                 }).ToList();
 
             return Ok(mantenimiento);
         }
 
-        [ResponseType(typeof(IList<JustDoItView>))]
+        [ResponseType(typeof(IList<GembaWalkView>))]
         public IHttpActionResult GetMantenimientoByReportador(int idReportador, Boolean activo, int diasDesde, int diasHasta)
         {
             DateTime fechaInicial = DateTime.Now.AddDays(-diasDesde);
@@ -198,19 +186,13 @@ namespace Sitio.Areas.Apis.Controllers
                             Activo = d.Origen.WorkCenter.Activo
                         }
 
-                    },
-                    Fotos = d.Fotos.Select(f => new FotoView
-                    {
-                        Id = f.Id,
-                        Nombre = f.Nombre,
-                        Path = f.Path
-                    }).ToList()
+                    }
                 }).ToList();
 
             return Ok(mantenimiento);
         }
 
-        [ResponseType(typeof(IList<JustDoItView>))]
+        [ResponseType(typeof(IList<GembaWalkView>))]
         public IHttpActionResult GetMantenimientotByArea(int idArea, Boolean activo, int diasDesde, int diasHasta)
         {
             DateTime fechaInicial = DateTime.Now.AddDays(-diasDesde);
@@ -257,13 +239,7 @@ namespace Sitio.Areas.Apis.Controllers
                             Activo = d.Origen.WorkCenter.Activo
                         }
 
-                    },
-                    Fotos = d.Fotos.Select(f => new FotoView
-                    {
-                        Id = f.Id,
-                        Nombre = f.Nombre,
-                        Path = f.Path
-                    }).ToList()
+                    }
                 }).ToList();
 
             return Ok(mantenimiento);
@@ -364,13 +340,7 @@ namespace Sitio.Areas.Apis.Controllers
                             Activo = d.Origen.WorkCenter.Activo
                         }
 
-                    },
-                    Fotos = d.Fotos.Select(f => new FotoView
-                    {
-                        Id = f.Id,
-                        Nombre = f.Nombre,
-                        Path = f.Path
-                    }).ToList()
+                    }
                 }).FirstOrDefault();
 
             if (mantenimientoView == null)
@@ -442,13 +412,7 @@ namespace Sitio.Areas.Apis.Controllers
                             Activo = d.Origen.WorkCenter.Activo
                         }
 
-                    },
-                    Fotos = d.Fotos.Select(f => new FotoView
-                    {
-                        Id = f.Id,
-                        Nombre = f.Nombre,
-                        Path = f.Path
-                    }).ToList()
+                    }
                 }).FirstOrDefault();
 
             if (mantenimientoView == null)
@@ -518,13 +482,7 @@ namespace Sitio.Areas.Apis.Controllers
                             Activo = d.Origen.WorkCenter.Activo
                         }
 
-                    },
-                    Fotos = d.Fotos.Select(f => new FotoView
-                    {
-                        Id = f.Id,
-                        Nombre = f.Nombre,
-                        Path = f.Path
-                    }).ToList()
+                    }
                 }).FirstOrDefault();
 
             return Ok(mantenimientoView);
@@ -536,8 +494,7 @@ namespace Sitio.Areas.Apis.Controllers
         {
             mantenimiento.Activo = true;
             mantenimiento.FechaReporte = DateTime.Now;
-            mantenimiento.Fotos = null;
-
+            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

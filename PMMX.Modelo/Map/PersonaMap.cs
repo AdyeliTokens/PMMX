@@ -23,7 +23,6 @@ namespace PMMX.Modelo.Map
             Property(c => c.Apellido2).HasColumnName("Apellido2");
             Property(c => c.IdPuesto).HasColumnName("IdPuesto");
             Property(c => c.Activo).HasColumnName("Activo");
-
             #endregion
 
             #region HasMany
@@ -41,7 +40,6 @@ namespace PMMX.Modelo.Map
             HasMany(c => c.CelulasPorVigilar).WithRequired(b => b.ShiftLeader).HasForeignKey(c => c.IdShiftLeader);
             HasMany(c => c.Encuestado).WithRequired(b => b.Entrevistado).HasForeignKey(c => c.IdEntrevistado);
             HasMany(c => c.Supervisor).WithRequired(b => b.Supervisor).HasForeignKey(c => c.IdSupervisor);
-            HasMany(c => c.Dispositivos).WithRequired(x => x.Propietario).HasForeignKey(c => c.IdPersona);
             HasMany(c => c.Comentarios).WithRequired(x => x.Comentador).HasForeignKey(c => c.IdComentador);
             HasMany(c => c.MantenimientosAsignados).WithRequired(x => x.Responsable).HasForeignKey(c => c.IdResponsable);
             HasMany(c => c.MantenimientosReportados).WithRequired(x => x.Reportador).HasForeignKey(c => c.IdReportador);
@@ -55,7 +53,17 @@ namespace PMMX.Modelo.Map
                 cs.MapRightKey("IdFoto");
                 cs.ToTable("PersonasFotos");
             });
-            
+
+            HasMany(c => c.ListaDistribucion).WithRequired(x => x.Remitente).HasForeignKey(c => c.IdPersona);
+            HasMany(c => c.Areas).WithRequired(b => b.Responsable).HasForeignKey(c => c.IdResponsable);
+            HasMany(c => c.SubArea).WithRequired(b => b.Responsable).HasForeignKey(c => c.IdResponsable);
+            HasMany(c => c.EventoResponsable).WithRequired(b => b.Responsable).HasForeignKey(c => c.IdResponsable);
+            HasMany(c => c.EventosReportados).WithRequired(b => b.Asignador).HasForeignKey(c => c.IdAsignador);
+            HasMany(c => c.StatusVentana).WithRequired(b => b.Responsable).HasForeignKey(c => c.IdResponsable);
+            HasMany(c => c.BitacoraVentana).WithRequired(b => b.Responsable).HasForeignKey(c => c.IdResponsable);
+            HasMany(c => c.BitacoraGembaWalk).WithRequired(b => b.Responsable).HasForeignKey(c => c.IdResponsable);
+            HasMany(c => c.MarcasDadasDeAlta).WithRequired(b => b.PersonaQueDioDeAlta).HasForeignKey(c => c.IdPersonaQueDioDeAlta);
+
             #endregion
 
             #region HasRequired

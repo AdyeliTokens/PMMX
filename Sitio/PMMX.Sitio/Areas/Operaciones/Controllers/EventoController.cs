@@ -9,11 +9,13 @@ using System.Web.Mvc;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo.Vistas;
-using Maya.Helpers;
+using Sitio.Helpers;
 using PMMX.Seguridad.Servicios;
 using PMMX.Modelo.RespuestaGenerica;
 using PMMX.Modelo.Entidades;
 using Microsoft.AspNet.Identity;
+using PMMX.Modelo.Entidades.GembaWalks;
+using PMMX.Operaciones.Servicios;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -24,17 +26,56 @@ namespace Sitio.Areas.Operaciones.Controllers
         // GET: Eventos/Evento
         public ActionResult Index()
         {
-            var evento = db.Evento.Include(e => e.Asignador).Include(e => e.Responsable).ToList();
+            var evento = db.Evento.Include(e => e.Asignador).Include(e => e.Categoria);
             return View(evento);
         }
 
-        
+
         public ActionResult GetEvents()
         {
             if (ModelState.IsValid)
             {
                 var events = db.Evento.ToList();
-                return Json(new {events}, JsonRequestBehavior.AllowGet);
+                return Json(new { events }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult GetEventsByCategoria(int IdCategoria)
+        {
+            if (ModelState.IsValid)
+            {
+                var events = db.Evento.Where(e => e.IdCategoria == IdCategoria).ToList();
+                return Json(new { events }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult GetEventsBySubCategoria(int IdSubCategoria)
+        {
+            if (ModelState.IsValid)
+            {
+                var events = db.Ventana.Where(v => (v.IdSubCategoria == IdSubCategoria))
+                    .Select( e => new EventoView
+                    {
+                        Id = e.Evento.Id,
+                        Descripcion = e.Evento.Descripcion,
+                        IdAsignador = e.Evento.IdAsignador,
+                        IdCategoria = e.Evento.IdCategoria,
+                        FechaInicio = e.Evento.FechaInicio,
+                        FechaFin = e.Evento.FechaFin,
+                        Nota = e.Evento.Nota,
+                        EsRecurrente = e.Evento.EsRecurrente,
+                        Activo = e.Evento.Activo
+                    }).ToList();
+                    
+                return Json(new { events }, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -49,16 +90,35 @@ namespace Sitio.Areas.Operaciones.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Evento evento = db.Evento.Find(id);
+
+            var evento = db.Evento
+                .Where(e => e.Id == id)
+                .Select(e => new EventoView
+                {
+                    Id = e.Id,
+                    Descripcion = e.Descripcion,
+                    IdAsignador = e.IdAsignador,
+                    IdCategoria = e.IdCategoria,
+                    FechaInicio = e.FechaInicio,
+                    FechaFin = e.FechaFin,
+                    Nota = e.Nota,
+                    EsRecurrente = e.EsRecurrente,
+                    Activo = e.Activo,
+                    GembaWalk = e.GembaWalk.Where(j => j.IdEvento == e.Id)
+                    .Select(j => new GembaWalkView
+                    {
+                        Id = j.Id,
+                        IdSubCategoria = j.IdSubCategoria
+                    }).ToList(),
+                }).FirstOrDefault();
+
             if (evento == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.NombreAsignador = db.Personas.Where(x => x.Id == evento.IdAsignador).Select(x =>  x.Nombre + " " + x.Apellido1 + " " + x.Apellido2).FirstOrDefault().ToString();
-            ViewBag.NombreResponsable = db.Personas.Where(x => x.Id == evento.IdResponsable).Select(x => x.Nombre + " " + x.Apellido1 + " " + x.Apellido2).FirstOrDefault().ToString();
-            ViewBag.NombreCategoria = db.Categoria.Where(x => x.Id == evento.IdCategoria).Select(x => x.Nombre ).FirstOrDefault().ToString();
-            ViewBag.Ubicacion = db.Origens.Where(x => x.Id == evento.IdOrigen).Select(x => x.WorkCenter.BussinesUnit.Area.Nombre + " " + x.WorkCenter.Nombre + " " + x.Modulo.Nombre).FirstOrDefault().ToString();
+            ViewBag.NombreAsignador = db.Personas.Where(x => x.Id == evento.IdAsignador).Select(x => x.Nombre + " " + x.Apellido1 + " " + x.Apellido2).FirstOrDefault().ToString();
+            ViewBag.IdCategoria = db.Categoria.Where(x => x.Id == evento.IdCategoria).Select(x => x.Nombre).FirstOrDefault().ToString();
 
             return View(evento);
         }
@@ -80,7 +140,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         {
             if (ModelState.IsValid)
             {
-                var wlist = db.WorkCenters.Where(w => w.BussinesUnit.IdArea == idArea).Select( w=> new { Id = w.Id, NombreCorto = w.NombreCorto}).OrderBy( w => w.Id ).ToList();
+                var wlist = db.WorkCenters.Where(w => w.BussinesUnit.IdArea == idArea).Select(w => new { Id = w.Id, NombreCorto = w.NombreCorto }).OrderBy(w => w.Id).ToList();
                 return Json(new { wlist }, JsonRequestBehavior.AllowGet);
             }
             else
@@ -114,14 +174,53 @@ namespace Sitio.Areas.Operaciones.Controllers
                 return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
             }
         }
+        public ActionResult GetResponsables()
+        {
+            if (ModelState.IsValid)
+            {
+                var responsables = db.Personas.Select(w => new { Id = w.Id, Nombre = w.Nombre + " " + w.Apellido1 + " " + w.Apellido2 }).OrderBy(w => w.Id).ToList();
+                return Json(new { responsables }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult GetListaDistribucion()
+        {
+            if (ModelState.IsValid)
+            {
+                var lista = db.SubArea.Select(w => new { Id = w.Id, Nombre = w.Nombre }).OrderBy(w => w.Id).ToList();
+                return Json(new { lista }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public PartialViewResult Responsables()
+        {
+            return PartialView("_Responsables");
+        }
+
+        public PartialViewResult Ubicaciones()
+        {
+            var areas = db.Area.Select(w => new { Id = w.Id, NombreCorto = w.NombreCorto }).OrderBy(w => w.Id).ToList();
+            return PartialView("_Origen", new { areas = areas });
+        }
+
+        public PartialViewResult ListaDistribucion()
+        {
+            return PartialView("_ListaDistribucion");
+        }
 
         // GET: Eventos/Evento/Create
         public ActionResult Create()
         {
-             ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, NombreCorto = x.NombreCorto }).OrderBy(x => x.NombreCorto), "Id", "NombreCorto");
-             ViewBag.IdAsignador = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
-             ViewBag.IdResponsable = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
-            
+            ViewBag.IdAsignador = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
+            ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View();
         }
 
@@ -130,8 +229,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Descripcion,IdOrigen,IdCategoria,IdAsignador,IdResponsable,FechaInicio,FechaFin,Nota,EsRecurrente,Activo")] Evento evento)
-       // public ActionResult Create(Evento evento)
+        public ActionResult Create(Evento evento, int IdOrigen, string IdResponsables)
         {
             if (ModelState.IsValid)
             {
@@ -143,59 +241,55 @@ namespace Sitio.Areas.Operaciones.Controllers
 
                 if (persona.EjecucionCorrecta)
                 {
-                   evento.IdAsignador = persona.Respuesta.Id;
+                    evento.IdAsignador = persona.Respuesta.Id;
+                    db.Evento.Add(evento);
+                    db.SaveChanges();
                 }
-                
-                db.Evento.Add(evento);
-                db.SaveChanges();
 
-                NotificationService notify = new NotificationService();
-                UsuarioServicio usuarioServicio = new UsuarioServicio();
-
-                List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(evento.Id);
-                List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
-
-                foreach (string notificacion in llaves)
+                if (IdOrigen > 0)
                 {
-                    var _evento = db.Evento.Where(e => e.Id == evento.Id)
-                        .Select(s => new EventoView
+                    EventoOrigen eOrigen = new EventoOrigen();
+                    eOrigen.IdEvento = evento.Id;
+                    eOrigen.IdOrigen = IdOrigen;
+                    db.EventoOrigen.Add(eOrigen);
+                    db.SaveChanges();
+                }
+
+                if (IdResponsables != null && IdResponsables != "")
+                {
+                    Char delimiter = ',';
+                    String[] substrings = IdResponsables.Split(delimiter);
+                    foreach (var substring in substrings)
+                    {
+                        if (substring != "")
                         {
-                            Id = s.Id,
-                            Descripcion = s.Descripcion,
-                            Categoria = new CategoriaView
-                            {
-                                Id = s.Categoria.Id,
-                                Nombre = s.Categoria.Nombre,
-                                NombreCorto = s.Categoria.NombreCorto
-                            },
-                            Origen = new OrigenView
-                            {
-                                Id = s.Origen.Id,
-                                WorkCenter = new WorkCenterView
-                                {
-                                    Id = s.Origen.WorkCenter.Id,
-                                    BussinesUnit = new BussinesUnitView
-                                    {
-                                        Id = s.Origen.WorkCenter.BussinesUnit.Id,
-                                        Area = new AreaView
-                                        {
-                                            Id = s.Origen.WorkCenter.BussinesUnit.Area.Id,
-                                            Nombre = s.Origen.WorkCenter.BussinesUnit.Area.Nombre,
-                                            NombreCorto = s.Origen.WorkCenter.BussinesUnit.Area.NombreCorto
-                                        }
-                                    }
-                                }
+                            EventoResponsable eResponsable = new EventoResponsable();
+                            eResponsable.IdEvento = evento.Id;
+                            eResponsable.IdResponsable = int.Parse(substring);
+                            db.EventoResponsable.Add(eResponsable);
+                            db.SaveChanges();
+                        }
+                    }
 
-                            }
-                        }).FirstOrDefault();
+                    NotificationService notify = new NotificationService();
+                    UsuarioServicio usuarioServicio = new UsuarioServicio();
 
+                    List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(evento.Id);
+                    List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
 
-                    notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + _evento.Descripcion + ". ", _evento.Categoria.Nombre + " : originado en " + _evento.Origen.WorkCenter.BussinesUnit.Area.Nombre);
+                    foreach (string notificacion in llaves)
+                    {
+                        notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + evento.Descripcion + ". ", "");
+                    }
+
+                    string senders = usuarioServicio.GetEmailByEvento(evento.Id);
+                    EmailService emailService = new EmailService();
+                    emailService.SendMail(senders, evento);
                 }
 
                 return RedirectToAction("Index");
             }
-            
+
             return View(evento);
         }
 
@@ -213,9 +307,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
 
             ViewBag.IdAsignador = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre", evento.IdAsignador);
-            ViewBag.IdResponsable = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre", evento.IdResponsable);
-            ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre}).OrderBy(x => x.Nombre), "Id", "Nombre", evento.IdCategoria);
-            ViewBag.IdOrigen = new SelectList(db.Origens.Select(x => new { Id = x.Id, Nombre = x.WorkCenter.BussinesUnit.Area.Nombre + " " + x.WorkCenter.Nombre + " " + x.Modulo.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", evento.IdOrigen);
+            ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", evento.IdCategoria);
             return View(evento);
         }
 
@@ -224,7 +316,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Descripcion,IdOrigen,IdCategoria,IdAsignador,IdResponsable,FechaInicio,FechaFin,Nota,EsRecurrente,Activo")] Evento evento)
+        public ActionResult Edit(Evento evento)
         {
             if (ModelState.IsValid)
             {
@@ -232,9 +324,9 @@ namespace Sitio.Areas.Operaciones.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            
+
             ViewBag.IdAsignador = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
-            ViewBag.IdResponsable = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
+            ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", evento.IdCategoria);
             return View(evento);
         }
 
@@ -252,10 +344,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
 
             ViewBag.NombreAsignador = db.Personas.Where(x => x.Id == evento.IdAsignador).Select(x => x.Nombre + " " + x.Apellido1 + " " + x.Apellido2).FirstOrDefault().ToString();
-            ViewBag.NombreResponsable = db.Personas.Where(x => x.Id == evento.IdResponsable).Select(x => x.Nombre + " " + x.Apellido1 + " " + x.Apellido2).FirstOrDefault().ToString();
-            ViewBag.NombreCategoria = db.Categoria.Where(x => x.Id == evento.IdCategoria).Select(x => x.Nombre).FirstOrDefault().ToString();
-            ViewBag.Ubicacion = db.Origens.Where(x => x.Id == evento.IdOrigen).Select(x => x.WorkCenter.BussinesUnit.Area.Nombre + " " + x.WorkCenter.Nombre + " " + x.Modulo.Nombre).FirstOrDefault().ToString();
-
+            ViewBag.IdCategoria = db.Categoria.Where(x => x.Id == evento.IdCategoria).Select(x => x.Nombre).FirstOrDefault().ToString();
             return View(evento);
         }
 

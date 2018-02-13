@@ -8,6 +8,8 @@ using Microsoft.Owin.Security;
 using PMMX.Modelo.Account;
 using Sitio.Models;
 using Sitio.Helpers;
+using System.ComponentModel.DataAnnotations;
+using PMMX.Modelo.RespuestaGenerica;
 
 namespace Sitio.Areas.Seguridad.Controllers
 {
@@ -87,6 +89,18 @@ namespace Sitio.Areas.Seguridad.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
+        }
+
+        
+        [ValidateAntiForgeryToken]
+        public async Task<RespuestaServicio<SignInStatus>> LoginExternal(LoginModel model)
+        {
+            
+            AccountService servicio = new AccountService(UserManager, SignInManager);
+            var respuesta = await servicio.Login(model);
+
+            return respuesta;
+            
         }
 
         //
@@ -463,9 +477,11 @@ namespace Sitio.Areas.Seguridad.Controllers
                 RedirectUri = redirectUri;
                 UserId = userId;
             }
-
+            [StringLength(250)]
             public string LoginProvider { get; set; }
+            [StringLength(250)]
             public string RedirectUri { get; set; }
+            [StringLength(250)]
             public string UserId { get; set; }
 
             public override void ExecuteResult(ControllerContext context)

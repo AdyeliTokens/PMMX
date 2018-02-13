@@ -1,15 +1,23 @@
-﻿@model PMMX.Modelo.Entidades.Operaciones.Evento
+﻿@model PMMX.Modelo.Vistas.EventoView
 
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
+@Styles.Render("~/Style/Bootstrap")
 
-<h2>Details</h2>
+<h2>@Html.DisplayFor(model => model.Descripcion)</h2>
 
 <div>
-    <h4>Evento</h4>
+    <p align="right">
+        <button id="btn-CreateVentana" class="btn btn-default" alt="Crear Ventana"><i class="fa fa-paperclip text-info"></i></button>
+        <button id="btn-Info" class="btn btn-default" alt="Mas Informacion"><i class="fa fa-info-circle text-info"></i></button>
+        <button id="btn-Editar" class="btn btn-default" alt="Editar"><i class="fa fa-pencil text-info"></i></button>
+        <button id="btn-Delete" class="btn btn-default" alt="Eliminar"><i class="fa fa-trash text-danger"></i></button>
+    </p>
     <hr />
+    @Html.Hidden("Id", Model.Id)
+    @Html.Hidden("IdCategoria", Model.IdCategoria)
     <dl class="dl-horizontal">
         <dt>
             @Html.LabelFor(model => model.Asignador.Nombre, "Autor: ")
@@ -18,37 +26,12 @@
         <dd>
             @Html.Raw(@ViewBag.NombreAsignador)
         </dd>
-
         <dt>
-            @Html.LabelFor(model => model.Responsable.Nombre, "Responsable: ")
+            @Html.LabelFor(model => model.IdCategoria, "Tipo De Evento: ")
         </dt>
 
         <dd>
-            @Html.Raw(@ViewBag.NombreResponsable)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
-
-        <dt>
-            @Html.LabelFor(model => model.IdOrigen, "Ubicacion: ")
-        </dt>
-
-        <dd>
-            @Html.Raw(@ViewBag.Ubicacion)
-        </dd>
-
-        <dt>
-            @Html.LabelFor(model => model.IdCategoria, "Categoria: ")
-        </dt>
-
-        <dd>
-            @Html.Raw(@ViewBag.NombreCategoria)
+            @Html.Raw(@ViewBag.IdCategoria)
         </dd>
 
         <dt>
@@ -93,8 +76,105 @@
 
     </dl>
 </div>
-<p>
-    <i class="fa fa-pencil text-green"></i> @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    <i class="fa fa-trash text-red"></i> @Html.ActionLink("Delete", "Delete", new { id = Model.Id }) |
-    <i class="fa fa-backward text-blue"></i> @Html.ActionLink("Back to List", "Index")
-</p>
+
+    <div id="opciones-ventana" class="form-group" align="center">
+         <button id="btn-Continuar" class="btn btn-success" >Continuar</button>
+         <button id="btn-Rechazo" class="btn btn-danger">Rechazar</button>
+    </div>
+
+    @Scripts.Render("~/JS/jquery")
+    @Scripts.Render("~/JS/Bootstrap")
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+
+    <script>
+        $(document).ready(function ()
+        {
+            var id = $("#Id").val();
+            start();
+
+            function start()
+            {
+                var idCategoria = $("#IdCategoria").val();
+                $("#opciones-ventana").hide();
+                $('#subVista').hide();
+                
+            }
+
+            $("#btn-CreateVentana").on("click", function () {
+                var url = ("/Warehouse/Ventana/Upload");
+
+                $.get(url, function (data) {
+                    $('#createAssetContainer').html(data);
+
+                    $('#createAssetModal').modal('show');
+                });
+            });
+
+            $("#btn-Editar").on("click", function ()
+            {
+                var url = ("/Operaciones/Evento/Edit/"+id);
+
+                $.get(url, function (data) {
+                    $('#createAssetContainer').html(data);
+
+                    $('#createAssetModal').modal('show');
+                });
+            });
+
+            $("#btn-Info").on("click", function () {
+                $.ajax({
+                    dataType: "json",
+                    contentType: "application/json",
+                    url: "/Warehouse/Ventana/GetVentanabyEvento?idEvento=" + id,
+                    success: function (data) {
+                        $.each(data, function (i, k) {
+                            var url = ("/Warehouse/Ventana/Details/" + k.Id);
+                            $("#IdVentanaEvento").val(k.Id);
+
+                            $("#opciones-ventana").show();
+
+                            $.get(url, function (data) {
+                                $('#subVista').show();
+                                $('#subVista').html(data);
+                            });
+                        });
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert('There was an error while fetching data!');
+                    }
+                });
+            });
+
+
+            $("#btn-Delete").on("click", function () {
+                var url = ("/Operaciones/Evento/Delete/" + id);
+
+                $.get(url, function (data) {
+                    $('#createAssetContainer').html(data);
+
+                    $('#createAssetModal').modal('show');
+                });
+            });
+
+            $("#btn-Continuar").on("click", function () {
+                var url = ("/Operaciones/StatusVentana/Create");
+
+                $.get(url, function (data) {
+                    $('#createAssetContainer').html(data);
+
+                    $('#createAssetModal').modal('show');
+                });
+            });
+
+            $("#btn-Rechazo").on("click", function (e) {
+                var url = ("/Warehouse/BitacoraVentana/Create");
+                
+                $.get(url, function (data) {
+                    $('#createAssetContainer').html(data);
+                    $('#createAssetModal').modal('show');
+                });
+            });
+
+        });
+    </script>
+

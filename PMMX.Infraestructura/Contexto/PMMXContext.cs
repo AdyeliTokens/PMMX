@@ -1,12 +1,17 @@
-﻿using PMMX.Modelo.Map;
+﻿using PMMX.Modelo;
 using PMMX.Modelo.Entidades;
 using PMMX.Modelo.Entidades.Defectos;
 using PMMX.Modelo.Entidades.Maquinaria;
 using PMMX.Modelo.Entidades.Paros;
-using System.Data.Entity;
 using PMMX.Modelo.Entidades.Operaciones;
-using PMMX.Modelo;
 using PMMX.Modelo.Entidades.Warehouse;
+using PMMX.Modelo.Entidades.GembaWalks;
+using PMMX.Modelo.Entidades.InsiteLAC;
+using PMMX.Modelo.Map;
+using PMMX.Modelo.Map.InsiteLAC;
+
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace PMMX.Infraestructura.Contexto
 {
@@ -20,7 +25,7 @@ namespace PMMX.Infraestructura.Contexto
         /// <summary>
         /// Contructor del contexto PMMXContext tomando como base PMMXcontext de los settings
         /// </summary>
-        public PMMXContext() : base("name=PMMXContext")
+        public PMMXContext() : base("PMMXContext")
         {
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
@@ -28,6 +33,7 @@ namespace PMMX.Infraestructura.Contexto
             Database.SetInitializer<PMMXContext>(new CreateDatabaseIfNotExists<PMMXContext>());
 
         }
+        
 
         /// <summary>
         /// Contructor "Estatico" que retorna la entidad creada sin necesidad de intanciar previamente
@@ -46,6 +52,12 @@ namespace PMMX.Infraestructura.Contexto
         {
             base.OnModelCreating(modelBuilder);
 
+            #region InSiteLAC
+
+            modelBuilder.Configurations.Add(new KPIMap());
+
+            #endregion
+            
             #region Multimedia
 
             modelBuilder.Configurations.Add(new FotoMap());
@@ -64,11 +76,14 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new BussinesUnitMap());
             modelBuilder.Configurations.Add(new TiempoDeParoMap());
             modelBuilder.Configurations.Add(new ObjetivoVQIMap());
+            modelBuilder.Configurations.Add(new ObjetivoCRRMap());
+            modelBuilder.Configurations.Add(new ObjetivoPlanAttainmentMap());
             modelBuilder.Configurations.Add(new DesperdicioMap());
             modelBuilder.Configurations.Add(new MarcaMap());
             modelBuilder.Configurations.Add(new ModuloSeccionMap());
             modelBuilder.Configurations.Add(new NoConformidadMap());
-
+            modelBuilder.Configurations.Add(new VolumenDeProduccionMap());
+            modelBuilder.Configurations.Add(new AliasMap());
 
             #endregion
 
@@ -111,9 +126,9 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new SubCategoriaMap());
             modelBuilder.Configurations.Add(new EventoMap());
             modelBuilder.Configurations.Add(new MantenimientoMap());
-            modelBuilder.Configurations.Add(new JustDoItMap());
+            modelBuilder.Configurations.Add(new GembaWalkMap());
             modelBuilder.Configurations.Add(new RequisicionDeDescargaMap());
-            modelBuilder.Configurations.Add(new ActividadEnVentanaMap());
+            modelBuilder.Configurations.Add(new RechazoMap());
             modelBuilder.Configurations.Add(new BitacoraVentanaMap());
             modelBuilder.Configurations.Add(new CarrierMap());
             modelBuilder.Configurations.Add(new LocacionMap());
@@ -121,12 +136,27 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new RecursosMap());
             modelBuilder.Configurations.Add(new VentanaMap());
             modelBuilder.Configurations.Add(new AsignacionMap());
-            
-            
-            
-            
+            modelBuilder.Configurations.Add(new SubAreaMap());
+            modelBuilder.Configurations.Add(new ListaDistribucionMap());
+            modelBuilder.Configurations.Add(new EventoOrigenMap());
+            modelBuilder.Configurations.Add(new EventoResponsableMap());
+            modelBuilder.Configurations.Add(new EstatusMap());
+            modelBuilder.Configurations.Add(new StatusVentanaMap());
+            modelBuilder.Configurations.Add(new BitacoraGembaWalkMap());
+            modelBuilder.Configurations.Add(new WorkFlowMap());
+            modelBuilder.Configurations.Add(new TipoOperacionMap());
+
+
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+
         }
 
+        #region InSiteLAC
+
+        public DbSet<KPI> KPIs { get; set; }
+
+        #endregion
+        
         #region Multimedia
 
         public DbSet<Foto> Fotos { get; set; }
@@ -148,10 +178,14 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<TiempoDeParo> TiemposDeParo { get; set; }
         public DbSet<ModuloSeccion> ModuloSeccion { get; set; }
         public DbSet<ObjetivoVQI> ObjetivosVQI { get; set; }
+        public DbSet<ObjetivoCRR> ObjetivosCRR { get; set; }
+        public DbSet<ObjetivoPlanAttainment> ObjetivosPlanAttainment { get; set; }
         public DbSet<Desperdicio> Desperdicios { get; set; }
         public DbSet<Marca> Marcas { get; set; }
         public DbSet<Horario> Horarios { get; set; }
         public DbSet<Indicador> Indicadores { get; set; }
+        public DbSet<VolumenDeProduccion> VolumenesDeProduccion { get; set; }
+        public DbSet<Alias> Alias{ get; set; }
         #endregion
 
         #region Seguridad
@@ -188,9 +222,9 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<SubCategoria> SubCategoria { get; set; }
         public DbSet<Evento> Evento { get; set; }
         public DbSet<Mantenimiento> Mantenimiento { get; set; }
-        public DbSet<JustDoIt> JustDoIt { get; set; }
+        public DbSet<GembaWalk> GembaWalk { get; set; }
         public DbSet<RequisicionDeDescarga> RequisicionDeDescargas { get; set; }
-        public DbSet<ActividadEnVentana> ActividadEnVentana { get; set; }
+        public DbSet<Rechazo> Rechazo { get; set; }
         public DbSet<BitacoraVentana> BitacoraVentana { get; set; }
         public DbSet<Carrier> Carrier { get; set; }
         public DbSet<Locacion> Locacion { get; set; }
@@ -198,8 +232,15 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<Recursos> Recursos { get; set; }
         public DbSet<Ventana> Ventana { get; set; }
         public DbSet<Asignacion> Asignaciones { get; set; }
-        
-
+        public DbSet<SubArea> SubArea { get; set; }
+        public DbSet<ListaDistribucion> ListaDistribucion { get; set; }
+        public DbSet<EventoOrigen> EventoOrigen { get; set; }
+        public DbSet<EventoResponsable> EventoResponsable { get; set; }
+        public DbSet<Estatus> Estatus { get; set; }
+        public DbSet<StatusVentana> StatusVentana { get; set; }
+        public DbSet<WorkFlow> WorkFlows { get; set; }
+        public DbSet<BitacoraGembaWalk> BitacoraGembaWalks { get; set; }
+        public DbSet<TipoOperacion> TipoOperacion { get; set; }
     }
 }
 

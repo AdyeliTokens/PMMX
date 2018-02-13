@@ -11,12 +11,12 @@ namespace PMMX.Modelo.Entidades
     public class Desperdicio
     {
         public int Id { get; set; }
-        public int Cantidad { get; set; }
+        public Double Cantidad { get; set; }
         public DateTime Fecha { get; set; }
         public int IdPersona { get; set; }
         public int IdWorkCenter { get; set; }
         public int IdSeccion { get; set; }
-        public int IdMarca { get; set; }
+        public string Code_FA { get; set; }
 
 
 

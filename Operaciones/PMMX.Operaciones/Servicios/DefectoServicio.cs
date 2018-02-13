@@ -4,28 +4,35 @@ using PMMX.Modelo.RespuestaGenerica;
 using PMMX.Modelo.Vistas;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PMMX.Infraestructura.Helpers;
+using System.Collections.Generic;
+using PMMX.Modelo.Entidades;
+using PMMX.Modelo.Entidades.Maquinaria;
+using System;
 
 namespace PMMX.Operaciones.Servicios
 {
     public class DefectoServicio
     {
-        #region Contexto
+        private PMMXContext _context;
 
-        private PMMXContext db = new PMMXContext();
+        public DefectoServicio(PMMXContext context)
+        {
+            _context = context;
+        }
 
-        #endregion
+        public DefectoServicio()
+        {
+            _context = new PMMXContext();
+        }
 
         #region Gets
 
-        public RespuestaServicio<IQueryable<DefectoView>> GetDefectos()
+        public RespuestaServicio<IList<DefectoView>> GetDefectos()
         {
-            RespuestaServicio<IQueryable<DefectoView>> respuesta = new RespuestaServicio<IQueryable<DefectoView>>();
-            respuesta.Respuesta = db.Defectos.Select(d => new DefectoView
+            RespuestaServicio<IList<DefectoView>> respuesta = new RespuestaServicio<IList<DefectoView>>();
+            respuesta.Respuesta = _context.Defectos.Select(d => new DefectoView
             {
                 Id = d.Id,
                 IdOrigen = d.IdOrigen,
@@ -78,7 +85,24 @@ namespace PMMX.Operaciones.Servicios
                     }
                 }
 
-            });
+            }).ToList();
+            if (respuesta.EjecucionCorrecta == true)
+            {
+                foreach (DefectoView df in respuesta.Respuesta)
+                {
+                    if (df.IdResponsable > 0)
+                    {
+                        df.Responsable = _context.Personas.Where(d => d.Id == df.IdResponsable).Select(d => new PersonaView
+                        {
+                            Id = d.Id,
+                            Nombre = d.Nombre,
+                            Apellido1 = d.Apellido1,
+                            Apellido2 = d.Apellido2
+
+                        }).FirstOrDefault();
+                    }
+                }
+            }
             return respuesta;
         }
 
@@ -86,7 +110,7 @@ namespace PMMX.Operaciones.Servicios
         {
             RespuestaServicio<DefectoView> respuesta = new RespuestaServicio<DefectoView>();
 
-            DefectoView defecto = db.Defectos
+            DefectoView defecto = _context.Defectos
                 .Where(d => (d.Id == id))
                 .Select(d => new DefectoView
                 {
@@ -136,19 +160,11 @@ namespace PMMX.Operaciones.Servicios
                                 Nombre = d.Origen.WorkCenter.BussinesUnit.Nombre,
                                 NombreCorto = d.Origen.WorkCenter.BussinesUnit.NombreCorto,
                                 Activo = d.Origen.WorkCenter.BussinesUnit.Activo
-
                             }
                         }
-                    },
-                    Comentarios = d.Comentarios.Select(f => new ComentarioView
-                    {
-                        Id = f.Id,
-                        Fecha = f.Fecha,
-                        IdComentador = f.IdComentador,
-                        Opinion = f.Opinion,
-                        IdDefecto = f.IdDefecto
-                    }).ToList()
+                    }
                 }).FirstOrDefault();
+
             if (defecto != null)
             {
                 respuesta.Respuesta = defecto;
@@ -169,20 +185,28 @@ namespace PMMX.Operaciones.Servicios
         {
             RespuestaServicio<DefectoView> respuesta = new RespuestaServicio<DefectoView>();
 
-            Defecto defecto = db.Defectos.Find(id);
+            Defecto defecto = _context.Defectos.Find(id);
 
             if (defecto == null)
             {
-               return respuesta;
+                return respuesta;
             }
 
+            ActividadEnDefecto actividad = new ActividadEnDefecto();
+            actividad.Descripcion = "#SAP Actualizado!!";
+            actividad.IdEjecutante = defecto.IdReportador;
+            actividad.Fecha = DateTime.Now;
+            defecto.Actividades = new List<ActividadEnDefecto>();
+            defecto.Actividades.Add(actividad);
+
+
             defecto.NotificacionSAP = NotificacionSAP;
-            db.Entry(defecto).State = EntityState.Modified;
+            _context.Entry(defecto).State = EntityState.Modified;
 
             try
             {
-                
-                db.SaveChanges();
+
+                _context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException ex)
             {
@@ -199,6 +223,49 @@ namespace PMMX.Operaciones.Servicios
         #endregion
 
         #region Posts
+        public RespuestaServicio<DefectoView> PostDefecto(Defecto defecto)
+        {
+            RespuestaServicio<DefectoView> respuesta = new RespuestaServicio<DefectoView>();
+            if (defecto == null)
+            {
+                respuesta.Mensaje = "El defecto no puede ser null al momento de guardar";
+                return respuesta;
+            }
+            ActividadEnDefecto actividad = new ActividadEnDefecto();
+            actividad.Descripcion = "Nuevo defecto Reportado!!";
+            actividad.IdEjecutante = defecto.IdReportador;
+            actividad.Fecha = DateTime.Now;
+            defecto.Actividades = new List<ActividadEnDefecto>();
+            defecto.Actividades.Add(actividad);
+            try
+            {
+                
+
+                _context.Defectos.Add(defecto);
+                _context.SaveChanges();
+
+                var respuesta_defecto = GetDefecto(defecto.Id);
+                if (respuesta_defecto.EjecucionCorrecta)
+                {
+                    respuesta.Respuesta = respuesta_defecto.Respuesta;
+                }
+                else {
+                    respuesta.Mensaje = respuesta_defecto.Mensaje;
+                    return respuesta;
+                }
+                
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                respuesta.Mensaje = ex.ToString();
+                return respuesta;
+
+            }
+            return respuesta;
+        }
+
+
+
         #endregion
 
         #region Deletes
@@ -228,12 +295,12 @@ namespace PMMX.Operaciones.Servicios
 
         public void Dispose()
         {
-            db.Dispose();
+            _context.Dispose();
         }
 
         private bool DefectoExists(int id)
         {
-            return db.Defectos.Count(e => e.Id == id) > 0;
+            return _context.Defectos.Count(e => e.Id == id) > 0;
         }
 
         #endregion

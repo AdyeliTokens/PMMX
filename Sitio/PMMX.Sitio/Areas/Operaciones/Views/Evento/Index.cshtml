@@ -2,37 +2,99 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
-@section Styles {
     @Styles.Render("~/Style/Bootstrap")
     @Styles.Render("~/Style/Font-Awesome")
     @Styles.Render("~/Style/FullCalendar")
     @Styles.Render("~/Style/AdminLTE")
-}
+    @Styles.Render("~/Style/Select2")
+
 <link rel="stylesheet" href="~/bower_components/fullcalendar/dist/fullcalendar.print.min.css" media="print">
 
-<h2>Index</h2>
+<h2>Calendario de Eventos</h2>
 <p>
     <i class="fa fa-plus-circle text-green"></i>
     @Html.ActionLink("Create New", "Create")
 </p>
+<p align="center">
+    <div class="form-group">
+        <div class="col-md-6"><select id="slt-Categorias" class="form-control select2"></select></div>
+        <div class="col-md-6"><select id="slt-SubCategorias" class="form-control select2"></select></div>
+        </br></br>
+    </div>
+</p>
+
 
 <div id='calendar' style="width: 70%; height: 70%; max-width: 900px; margin: 0 auto;"></div>
 
+ <!-- Modal-->
+<div class="modal fade" id="createAssetModal" role="dialog" aria-labelledby="CreateAssetModal" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header alert-info">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div id="createAssetContainer" class="modal-body"></div>
+            <div id="subVista" class="modal-body"></div>
+            <input id="IdEventoModal" type="hidden" />
+            <input id="IdVentanaEvento" type="hidden" />
+        </div>
+    </div>
+</div>
 
-@section Scripts {
+
         @Scripts.Render("~/JS/Moment")
         @Scripts.Render("~/JS/jquery")
         @Scripts.Render("~/JS/FullCalendar")
+        @Scripts.Render("~/JS/Select2")
+
         <script>
             $(document).ready(function ()
             {
+                $('.select2').select2();
                 GetEvents();
+                getCategorias();
 
-                function GetEvents()
-                {
+                function getCategorias() {
+                    $.ajax({
+                        dataType: "json",
+                        contentType: "application/json",
+                        url: "/Operaciones/Categoria/GetCategorias",
+                        success: function (data) {
+                            items = '<option>Categoria</option>';
+                            $.each(data.lista, function (i, k) {
+                                items += "<option value='" + k.Id + "'>" + k.Nombre + "</option>";
+                            });
+                            $('#slt-Categorias').html(items);
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert('There was an error while fetching data!');
+                        }
+                    });
+                }
+
+                function getSubCategorias() {
+                    $.ajax({
+                        dataType: "json",
+                        contentType: "application/json",
+                        url: "/Operaciones/SubCategoria/GetSubCategoriasByCategoria?IdCategoria=" + $("#slt-Categorias").val(),
+                        success: function (data) {
+                            items = '<option>SubCategoria</option>';
+                            $.each(data.lista, function (i, k) {
+                                items += "<option value='" + k.Id + "'>" + k.Nombre + "</option>";
+                            });
+                            $('#slt-SubCategorias').html(items);
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert('There was an error while fetching data!');
+                        }
+                    });
+                }
+
+                function GetEvents() {
                     $.ajax({
                         dataType: "json",
                         contentType: "application/json",
@@ -60,9 +122,17 @@
                                     event.title = item.Descripcion;
                                     event.brief = item.Nota;
                                     event.id = item.Id;
-                                    event.url = "/Operaciones/Evento/Details/" + item.Id;
                                     return event;
                                 }),
+                                eventClick: function (calEvent, jsEvent, view) {
+                                    var url = "/Operaciones/Evento/Details/" + calEvent.id;
+
+                                    $.get(url, function (data) {
+                                        $('#createAssetContainer').html(data);
+                                        $('#createAssetModal').modal('show');
+                                        $('#IdEventoModal').val(calEvent.id);
+                                    });
+                                }
 
                             });
 
@@ -73,6 +143,117 @@
                     });
                 }
 
+                $('#slt-Categorias').on("change", function () {
+                    getSubCategorias();
+
+                    $.ajax({
+                        dataType: "json",
+                        contentType: "application/json",
+                        data: "{}",
+                        url: "/Evento/GetEventsByCategoria?IdCategoria="+$('#slt-Categorias').val(),
+                        dataType: "json",
+                        success: function (data) {
+                            $('#calendar').fullCalendar('destroy');
+                            $('#calendar').fullCalendar('render');
+
+                            $('#calendar').fullCalendar({
+                                theme: false,
+                                header: {
+                                    left: 'prev,next today',
+                                    center: 'title',
+                                    right: 'month,basicWeek,basicDay'
+                                },
+                                defaultView: 'month',
+                                editable: false,
+                                lang: 'es',
+                                eventLimit: 4,
+                                eventLimitText: 'More',
+                                weekMode: 'liquid',
+                                events: $.map(data.events, function (item, i) {
+                                    var event = new Object();
+                                    event.start = moment(item.FechaInicio).utc();
+                                    event.end = moment(item.FechaFin).utc();
+                                    event.title = item.Descripcion;
+                                    event.brief = item.Nota;
+                                    event.id = item.Id;
+
+                                    return event;
+                                }),
+                                eventClick: function (calEvent, jsEvent, view) {
+                                    var url = "/Operaciones/Evento/Details/" + calEvent.id;
+
+                                    $.get(url, function (data) {
+                                        $('#createAssetContainer').html(data);
+                                        $('#createAssetModal').modal('show');
+                                        $('#IdEventoModal').val(calEvent.id);
+                                    });
+                                }
+
+                            });
+
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert('There was an error while fetching events!');
+                        }
+                    });
+                    
+                });
+
+                $('#slt-SubCategorias').on("change", function () {
+                    var IdSubCategoria = $('#slt-SubCategorias').val();
+
+                    $.ajax({
+                        dataType: "json",
+                        contentType: "application/json",
+                        data: "{}",
+                        url: "/Evento/GetEventsBySubCategoria?IdSubCategoria=" + IdSubCategoria,
+                        dataType: "json",
+                        success: function (data) {
+                            $('#calendar').fullCalendar('destroy');
+                            $('#calendar').fullCalendar('render');
+
+                            $('#calendar').fullCalendar({
+                                theme: false,
+                                header: {
+                                    left: 'prev,next today',
+                                    center: 'title',
+                                    right: 'month,basicWeek,basicDay'
+                                },
+                                defaultView: 'month',
+                                editable: false,
+                                lang: 'es',
+                                eventLimit: 4,
+                                eventLimitText: 'More',
+                                weekMode: 'liquid',
+                                events: $.map(data.events, function (item, i) {
+                                    var event = new Object();
+                                    event.start = moment(item.FechaInicio).utc();
+                                    event.end = moment(item.FechaFin).utc();
+                                    event.title = item.Descripcion;
+                                    event.brief = item.Nota;
+                                    event.id = item.Id;
+
+                                    return event;
+                                }),
+                                eventClick: function (calEvent, jsEvent, view) {
+                                    var url = "/Operaciones/Evento/Details/" + calEvent.id;
+
+                                    $.get(url, function (data) {
+                                        $('#createAssetContainer').html(data);
+                                        $('#createAssetModal').modal('show');
+                                        $('#IdEventoModal').val(calEvent.id);
+                                    });
+                                }
+
+                            });
+
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert('There was an error while fetching events!');
+                        }
+                    });
+                });
             });
+
         </script>
-    }
+    

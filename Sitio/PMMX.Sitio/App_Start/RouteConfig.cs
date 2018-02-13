@@ -33,14 +33,26 @@ namespace Sitio
 
             routes.MapRoute(
             name: "FotosDeJustDoIt",
-            url: "Fotos/JustDoIt/{idJustDoIt}",
-            defaults: new { controller = "Fotos", action = "JustDoIt", idJustDoIt = UrlParameter.Optional }
+            url: "Fotos/GembaWalk/{IdGembaWalk}",
+            defaults: new { controller = "Fotos", action = "GembaWalk", IdGembaWalk = UrlParameter.Optional }
             );
 
             routes.MapRoute(
             name: "FotosDeMantenimiento",
             url: "Fotos/Mantenimiento/{idMantenimiento}",
             defaults: new { controller = "Fotos", action = "Mantenimiento", idMantenimiento = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+            name: "FotosDeEntornos",
+            url: "Fotos/Entornos/{idEntorno}",
+            defaults: new { controller = "Fotos", action = "Entorno", idEntorno = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+            name: "FotosDeMarcas",
+            url: "Fotos/Marcas/{Code_FA}",
+            defaults: new { controller = "Fotos", action = "Marca", Code_FA = UrlParameter.Optional }
             );
 
             routes.MapRoute(

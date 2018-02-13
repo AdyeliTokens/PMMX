@@ -1,13 +1,14 @@
 ﻿using PMMX.Modelo.Entidades.Defectos;
 using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo.Entidades.Maquinaria;
-using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo.Entidades.Paros;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using PMMX.Modelo.Entidades.GembaWalks;
+using PMMX.Modelo.Entidades.Warehouse;
 
 namespace PMMX.Modelo.Entidades
 {
@@ -18,8 +19,14 @@ namespace PMMX.Modelo.Entidades
         #region Propiedades
         public int Id { get; set; }
         public int IdPuesto { get; set; }
+
+        [StringLength(250)]
         public string Nombre { get; set; }
+
+        [StringLength(250)]
         public string Apellido1 { get; set; }
+
+        [StringLength(250)]
         public string Apellido2 { get; set; }
         public bool Activo { get; set; }
 
@@ -48,12 +55,12 @@ namespace PMMX.Modelo.Entidades
         public ICollection<OrigenRespuesta> Encuestado { get; set; }
         public ICollection<OrigenRespuesta> Supervisor { get; set; }
         public ICollection<Area> Areas { get; set; }
+        public ICollection<SubArea> SubArea { get; set; }
         public ICollection<Categoria> Categorias { get; set; }
         public ICollection<SubCategoria> SubCategorias { get; set; }
-        public ICollection<Evento> EventosAsignados { get; set; }
         public ICollection<Evento> EventosReportados { get; set; }
-        public ICollection<JustDoIt> JustDoItReportados { get; set; }
-        public ICollection<JustDoIt> JustDoItAsignados { get; set; }
+        public ICollection<GembaWalk> JustDoItReportados { get; set; }
+        public ICollection<GembaWalk> JustDoItAsignados { get; set; }
         public ICollection<Mantenimiento> MantenimientosReportados { get; set; }
         public ICollection<Mantenimiento> MantenimientosAsignados { get; set; }
         public ICollection<Foto> FotosPersonales { get; set; }
@@ -63,8 +70,14 @@ namespace PMMX.Modelo.Entidades
         public ICollection<Asignacion> Asignaciones { get; set; }
         public ICollection<Alias> AliasDadosDeAlta { get; set; }
         public ICollection<Pesador> Pesadores { get; set; }
+        public ICollection<ListaDistribucion> ListaDistribucion { get; set; }
+        public ICollection<EventoResponsable> EventoResponsable { get; set; }
+        public ICollection<VolumenDeProduccion> VolumenReportado { get; set; }
+        public ICollection<Marca> MarcasDadasDeAlta { get; set; }
 
-
+        public ICollection<StatusVentana> StatusVentana { get; set; }
+        public ICollection<BitacoraVentana> BitacoraVentana { get; set; }
+        public ICollection<BitacoraGembaWalk> BitacoraGembaWalk { get; set; }
         #endregion
 
     }

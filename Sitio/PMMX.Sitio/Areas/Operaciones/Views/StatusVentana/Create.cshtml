@@ -1,0 +1,81 @@
+﻿@model PMMX.Modelo.Entidades.Operaciones.StatusVentana
+
+@{
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+    @using (Html.BeginForm()) 
+    {
+        @Html.AntiForgeryToken()
+        
+        <div class="form-horizontal">
+            <h4>StatusVentana</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.Hidden("IdVentana")
+            @Html.Hidden("IdStatus")
+
+            <div id="timeline" class="form-group">
+
+            </div>
+            
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Siguiente" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>
+
+@Scripts.Render("~/JS/jquery")
+@Scripts.Render("~/JS/Bootstrap")
+@Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+<script>
+    $(function ()
+    {
+        start();
+        
+        function start() {
+            var IdEvento = $('#IdEventoModal').val();
+            var IdVentana = $('#IdVentanaEvento').val();
+            
+            $("#IdVentana").val(IdVentana);
+            
+            getTimeLine();
+            getEstatus();
+        }  
+
+        function getEstatus() {
+            $.ajax({
+                dataType: "json",
+                contentType: "application/json",
+                url: "/Operaciones/StatusVentana/getEstatusActual?IdVentana=" + $("#IdVentana").val(),
+                success: function (data) {
+                    $("#IdStatus").val(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('There was an error while fetching data!');
+                }
+            });
+        }
+
+        function getTimeLine() {
+            var url = "/Operaciones/StatusVentana/getTimeline?IdVentana=" + $("#IdVentana").val();
+
+            $.get(url, function (data) {
+                $('#timeline').html(data);
+            });
+        }
+        
+     });
+</script>

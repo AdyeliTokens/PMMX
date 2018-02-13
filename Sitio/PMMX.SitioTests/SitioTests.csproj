@@ -39,6 +39,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.2.0-beta1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.2.0-beta1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="EPPlus, Version=4.1.1.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EPPlus.4.1.1\lib\net40\EPPlus.dll</HintPath>
     </Reference>
@@ -48,7 +54,17 @@
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MSTest.TestFramework.1.1.11\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="MySql.Data, Version=6.9.10.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MySql.Data.6.9.10\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.10.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MySql.Data.Entity.6.9.10\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -59,6 +75,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Areas\Apis\Controllers\LoginControllerTests.cs" />
     <Compile Include="Areas\Apis\Controllers\ParoControllerTests.cs" />
     <Compile Include="Areas\Maquinaria\Controllers\ParosControllerTests.cs" />
     <Compile Include="Controllers\FotosControllerTests.cs" />
@@ -71,6 +88,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\PMMX.Infraestructura\PMMX.Infraestructura.csproj">
+      <Project>{837934E3-EAC8-49B8-896C-A6CF1264210C}</Project>
+      <Name>PMMX.Infraestructura</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PMMX.Modelo\PMMX.Modelo.csproj">
+      <Project>{4DED49B0-609A-4BE0-BC3D-DC0D16A0CA8A}</Project>
+      <Name>PMMX.Modelo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PMMX.Sitio\Sitio.csproj">
       <Project>{82FC7B78-5EF8-48C1-8327-9B59D8CFA5EC}</Project>
       <Name>Sitio</Name>

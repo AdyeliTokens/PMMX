@@ -1,0 +1,81 @@
+﻿@Styles.Render("~/Style/Bootstrap")
+@Styles.Render("~/Style/Select2")
+
+
+<h2>Seleccionar Area</h2>
+<div id="personas">
+    <div class="form-group">
+        <select id="slt-listadistribucion" class="form-control select2" multiple="multiple"></select>
+    </div>
+    <div class="form-group">
+        <button id="btn-finish">Listo</button>
+    </div>
+</div>
+
+@Scripts.Render("~/JS/jquery")
+@Scripts.Render("~/JS/Select2")
+@Scripts.Render("~/JS/Bootstrap")
+@Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+
+<script>
+    $(document).ready(function ()
+    {
+        $('.select2').select2();
+        getListaDistribucion();
+
+        function getListaDistribucion() {
+            $.ajax({
+                dataType: "json",
+                contentType: "application/json",
+                url: "/Operaciones/Evento/GetListaDistribucion",
+                success: function (data) {
+                    items = '<option></option>';
+                    $.each(data.lista, function (i, k) {
+                        items += "<option value='" + k.Id + "'>" + k.Nombre+ "</option>";
+                    });
+                    $('#slt-listadistribucion').html(items);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('There was an error while fetching data!');
+                }
+            });
+        }
+
+        $("#btn-finish").on("click", function () 
+        {      
+            var subarea = $('#slt-listadistribucion').find(":selected").text();
+            var id = $('#slt-listadistribucion').val() + '';
+            items = "";
+            var numbersArray = id.split(',').map(x => { return parseInt(x) });
+            
+            $.each(numbersArray, function (index, value) {
+                $.ajax({
+                    dataType: "json",
+                    contentType: "application/json",
+                    url: "/Operaciones/ListaDistribucion/GetListaDistribucionbySubArea?idSubArea=" + value,
+                    success: function (data) {
+                        $.each(data.lista, function (i, k) {
+                            items += k.IdPersona + ",";
+                        });
+                        
+                        $("#IdResponsables").val(items);
+                        $("#Distribucion").val(subarea);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        $('#createAssetModal').modal('hide');
+                        alert('There was an error while fetching data!');
+                    }
+                });
+                
+                if (index == (numbersArray.length -1))
+                {
+                    $('#createAssetModal').modal('hide');
+                    
+                }
+            });
+        });
+
+    });
+</script>
+
+

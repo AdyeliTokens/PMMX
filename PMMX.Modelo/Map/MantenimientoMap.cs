@@ -28,7 +28,7 @@ namespace PMMX.Modelo.Map
             this.HasRequired(c => c.Responsable).WithMany(p => p.MantenimientosAsignados);
             this.HasRequired(c => c.Origen).WithMany(p => p.Mantenimientos);
 
-            this.HasMany(c => c.Fotos).WithOptional(f => f.Mantenimiento).HasForeignKey(c => c.IdMantenimiento);
+            
         }
     }
 }

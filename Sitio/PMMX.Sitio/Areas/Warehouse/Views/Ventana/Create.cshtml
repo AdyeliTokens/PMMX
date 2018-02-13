@@ -2,12 +2,10 @@
 
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
-@section Styles {
-    @Styles.Render("~/Style/Select2")
-}
+@Styles.Render("~/Style/Select2")
 
 <h2>Create</h2>
 
@@ -21,6 +19,17 @@
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IdSubCategoria, "Tipo de Ventana:", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("IdSubCategoria", null, htmlAttributes: new { @class = "form-control select2", @style = "width: 100%;" })
+                        @Html.ValidationMessageFor(model => model.IdSubCategoria, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -39,29 +48,27 @@
                 </div>
             </div>
             <div class="col-md-6">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.IdProcedencia, "From:", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownList("IdProcedencia", null, htmlAttributes: new { @class = "form-control select2", @style = "width: 100%;" })
-                            @Html.ValidationMessageFor(model => model.IdProcedencia, "", new { @class = "text-danger" })
-                        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IdProcedencia, "From:", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("IdProcedencia", null, htmlAttributes: new { @class = "form-control select2", @style = "width: 100%;" })
+                        @Html.ValidationMessageFor(model => model.IdProcedencia, "", new { @class = "text-danger" })
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.IdDestino, "To:", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownList("IdDestino", null, htmlAttributes: new { @class = "form-control select2", @style = "width: 100%;" })
-                            @Html.ValidationMessageFor(model => model.IdDestino, "", new { @class = "text-danger" })
-                        </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IdDestino, "To:", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("IdDestino", null, htmlAttributes: new { @class = "form-control select2", @style = "width: 100%;" })
+                        @Html.ValidationMessageFor(model => model.IdDestino, "", new { @class = "text-danger" })
                     </div>
+                </div>
             </div>
             <div class="form-group">
                 @Html.Hidden("IdEvento")
-            </div>
-            <div class="form-group">
                 @Html.Hidden("Activo")
             </div>
         </div>
-                    
+
         <div class="row">
             <div class="col-md-4">
                 <div class="box box-danger box-solid">
@@ -109,21 +116,21 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.IdCarrier,"Linea", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.IdCarrier, "Linea", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-12">
                                         @Html.DropDownList("IdCarrier", null, htmlAttributes: new { @class = "form-control select2", @style = "width: 100%;" })
                                         @Html.ValidationMessageFor(model => model.IdCarrier, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.NumeroEconomico,"#Economico", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.NumeroEconomico, "#Economico", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-12">
                                         @Html.EditorFor(model => model.NumeroEconomico, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.NumeroEconomico, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.NumeroPlaca,"#Placa", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.NumeroPlaca, "#Placa", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-12">
                                         @Html.EditorFor(model => model.NumeroPlaca, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.NumeroPlaca, "", new { @class = "text-danger" })
@@ -181,7 +188,7 @@
                                         @Html.ValidationMessageFor(model => model.Conductor, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.MovilConductor, "Celular:", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-12">
@@ -196,9 +203,9 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-block btn-primary btn-sm" />
+            <input type="submit" value="Create" class="btn btn-block btn-primary btn-sm" />
         </div>
     </div>
 }
@@ -207,14 +214,47 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/JS/Select2")
-    <script>
-        $(function () {
-            $('.select2').select2();
+
+@Scripts.Render("~/JS/Select2")
+<script>
+    $(function ()
+    {
+        $('.collapse').collapse()
+        $('.select2').select2();
+        start()
+
+        function start()
+        {
+            var IdEvento = $('#IdEventoModal').val();
+            
             $("#Activo").val(true);
-            $("#IdEvento").val(50);
-            $('.collapse').collapse()
-        });
-    </script>
-}
+            $("#IdEvento").val(IdEvento);
+        }
+
+        function getUrlVar(key) {
+            //var IdEvento = parseInt(getUrlVar("IdEvento"), 10);
+            var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search);
+            return result && unescape(result[1]) || "";
+        }
+
+        function getSubCategorias() {
+            $.ajax({
+                dataType: "json",
+                contentType: "application/json",
+                url: "/Warehouse/Ventana/GetSubCategorias?idCategoria=10",
+                success: function (data) {
+                    items = '<option></option>';
+                    $.each(data.subcategorias, function (i, k) {
+                        items += "<option value='" + k.Id + "'>" + k.NombreCorto + "</option>";
+                    });
+                    $('#IdSubCategoria').html(items);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('There was an error while fetching Work Centers!');
+                }
+            });
+        }
+            
+    });
+</script>
+

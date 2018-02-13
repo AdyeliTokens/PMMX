@@ -11,6 +11,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Sitio.Models;
+using System.Net.Mail;
+using System.Configuration;
+using PMMX.Modelo.Entidades.Operaciones;
 
 namespace Sitio
     {
@@ -26,7 +29,50 @@ namespace Sitio
             {
                 throw new NotImplementedException();
             }
-        }
+
+            public bool SendMail(string To_Mail,Evento evento)
+            {
+                try
+                {
+                    MailMessage smail = new MailMessage();
+                    smail.IsBodyHtml = true;
+                    smail.BodyEncoding = System.Text.Encoding.GetEncoding("iso-8859-1");
+                    smail.From = new MailAddress("pmm.isoperation@gmail.com", "maya@pmi.com");
+                
+                    string[] emails = To_Mail.Split(',');
+                    foreach (string email in emails)
+                    {
+                        if (email != "") smail.To.Add(email);
+                    }
+                    
+                    smail.Subject = "[PMMX Notification] Info: " + evento.Descripcion;
+                    smail.Body = string.Format("<html><head><meta charset='UTF-8'></head><body>  ");
+                    smail.Body = smail.Body + string.Format("  <img src = '~/img/maya/logo.jpg' /><br /><br /> ");
+                    smail.Body = smail.Body + string.Format("<div style = 'border - top:3px solid #22BCE5'>&nbsp;</div> ");
+                    smail.Body = smail.Body + string.Format("<span style = 'font - family:Arial; font - size:10pt'> ");
+                    smail.Body = smail.Body + string.Format(" Hello <b></b>,<br /><br /> ");
+                    smail.Body = smail.Body + string.Format("   A new event has been asigned to you <h3>" + evento.Descripcion + "</h3> to " + evento.FechaInicio);
+                    smail.Body = smail.Body + string.Format(" <br /><br /> ");
+                    smail.Body = smail.Body + string.Format("  Thanks<br /> ");
+                    smail.Body = smail.Body + string.Format(" </span></body></html> ");
+
+                    SmtpClient smtp = new SmtpClient();
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.Port = 587;
+                    smtp.EnableSsl = true;
+                    smtp.UseDefaultCredentials = false;
+                    smtp.Credentials = new System.Net.NetworkCredential("pmm.isoperation@gmail.com", "82000100");
+                    smtp.Send(smail);
+                }
+                catch (SmtpException ex)
+                {
+                    Console.WriteLine(ex.StatusCode);
+                    Console.WriteLine(ex.Message);
+                    return false;
+                }
+                return true;
+            }
+    }
 
         public class SmsService : IIdentityMessageService
         {
@@ -37,7 +83,6 @@ namespace Sitio
             }
         }
 
-        // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
         public class ApplicationUserManager : UserManager<ApplicationUser>
         {
             public ApplicationUserManager(IUserStore<ApplicationUser> store)
@@ -93,7 +138,6 @@ namespace Sitio
             }
         }
 
-        // Configure the application sign-in manager which is used in this application.
         public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
         {
             public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)

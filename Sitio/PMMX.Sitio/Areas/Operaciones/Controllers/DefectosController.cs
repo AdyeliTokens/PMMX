@@ -21,25 +21,28 @@ namespace Sitio.Areas.Operaciones.Controllers
     [Authorize]
     public class DefectosController : Controller
     {
-        
-
-        // GET: Maquinaria/Defectos
+    
         public ActionResult Index()
         {
+
             DefectoServicio servicio = new DefectoServicio();
             var defecto = servicio.GetDefectos();
 
-            return View(defecto.Respuesta.ToList());
+            if (Request.IsAjaxRequest())
+                return PartialView(defecto.Respuesta.ToList());
+            else
+                return View(defecto.Respuesta.ToList());
+
         }
 
-        // GET: Maquinaria/Defectos/Details/5
+        
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            int idDefecto = (int) id;
+            int idDefecto = (int)id;
             DefectoServicio servicio = new DefectoServicio();
             RespuestaServicio<DefectoView> defecto = servicio.GetDefecto(idDefecto);
             if (defecto == null)
@@ -57,12 +60,10 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View();
         }
 
-        // POST: Maquinaria/Defectos/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,IdReportador,IdOrigen,Descripcion,Activo,FechaReporte,FechaEstimada")] Defecto defecto)
+        public ActionResult Create(Defecto defecto)
         {
             //if (ModelState.IsValid)
             //{
@@ -75,7 +76,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             //ViewBag.IdReportador = new SelectList(db.Personas, "Id", "Nombre", defecto.IdReportador);
             return View(/*defecto*/);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateComentario(Comentario comentario)
@@ -89,12 +90,13 @@ namespace Sitio.Areas.Operaciones.Controllers
                     comentario.IdComentador = persona.Respuesta.Id;
                     ComentarioServicio servicio = new ComentarioServicio();
                     RespuestaServicio<ComentarioView> respuesta = servicio.PostComentario(comentario);
-                    
-                }
-                else {
 
                 }
-                
+                else
+                {
+
+                }
+
             }
 
             return RedirectToAction("Details/", new RouteValueDictionary(new { controller = "Defectos", action = "Details", Id = comentario.IdDefecto }));
@@ -115,7 +117,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                     return HttpNotFound();
                 }
             }
-            
+
             return RedirectToAction("Details/", new RouteValueDictionary(new { controller = "Defectos", action = "Details", Id = id }));
         }
 
@@ -143,7 +145,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,IdReportador,IdOrigen,Descripcion,Activo,FechaReporte,FechaEstimada")] Defecto defecto)
+        public ActionResult Edit(Defecto defecto)
         {
             //if (ModelState.IsValid)
             //{

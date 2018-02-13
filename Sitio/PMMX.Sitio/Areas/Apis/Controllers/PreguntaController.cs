@@ -56,9 +56,9 @@ namespace Sitio.Areas
                           Id = y.Pregunta.Id,
                           IdGrupo = y.Pregunta.IdGrupo,
                           Interrogante = y.Pregunta.Interrogante,
-                          EnParo = y.Pregunta.EnParo,
-                          EPP = y.Pregunta.EPP,
-                          Herramientas = y.Pregunta.Herramientas,
+                          Anexo1 = y.Pregunta.Anexo1,
+                          Anexo2 = y.Pregunta.Anexo2,
+                          Tipo = y.Pregunta.Tipo,
                           GrupoPreguntas = new GrupoPreguntasView
                           {
                               Id = y.Pregunta.GrupoPreguntas.Id,
@@ -69,7 +69,6 @@ namespace Sitio.Areas
                           Activo = y.Pregunta.Activo,
                           Dias = y.Pregunta.Dias,
                           Turnos = y.Pregunta.Turnos,
-                          TiempoEstimado = y.Pregunta.TiempoEstimado
                       },
                       Origen = new OrigenView
                       {
@@ -111,9 +110,9 @@ namespace Sitio.Areas
                         Id = y.Pregunta.Id,
                         IdGrupo = y.Pregunta.IdGrupo,
                         Interrogante = y.Pregunta.Interrogante,
-                        EnParo = y.Pregunta.EnParo,
-                        EPP = y.Pregunta.EPP,
-                        Herramientas = y.Pregunta.Herramientas,
+                        Anexo1 = y.Pregunta.Anexo1,
+                        Anexo2 = y.Pregunta.Anexo2,
+                        Tipo = y.Pregunta.Tipo,
                         GrupoPreguntas = new GrupoPreguntasView
                         {
                             Id = y.Pregunta.GrupoPreguntas.Id,
@@ -122,7 +121,6 @@ namespace Sitio.Areas
                         },
                         //Dias = y.Pregunta.Dias,
                         //Turnos = y.Pregunta.Turnos,
-                        TiempoEstimado = y.Pregunta.TiempoEstimado
                     },
                     Origen = new OrigenView
                     {
@@ -156,10 +154,9 @@ namespace Sitio.Areas
                    Id = y.Id,
                    IdGrupo = y.IdGrupo,
                    Interrogante = y.Interrogante,
-                   EnParo = y.EnParo,
-                   EPP = y.EPP,
-                   Herramientas = y.Herramientas,
-                   TiempoEstimado = y.TiempoEstimado
+                   Anexo1 = y.Anexo1,
+                   Anexo2 = y.Anexo2,
+                   Tipo = y.Tipo
                 }
                 ).ToList();
 

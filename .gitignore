@@ -10,6 +10,9 @@ Sitio/PMMX.SitioTests/SitioTests.csproj.user
 Multimedia/PMMX.Multimedia/PMMX.Multimedia.csproj.user
 Multimedia/PMMX.Multimedia/bin/
 Multimedia/PMMX.Multimedia/obj/
+Multimedia/PMMX.MultimediaTests/PMMX.MultimediaTests.csproj.user
+Multimedia/PMMX.MultimediaTests/bin/
+Multimedia/PMMX.MultimediaTests/obj/
 Operaciones/PMMX.Operaciones/obj/
 Operaciones/PMMX.Operaciones/bin/
 Operaciones/PMMX.Operaciones/PMMX.Operaciones.csproj.user
@@ -25,9 +28,14 @@ Seguridad/PMMX.SeguridadTests/PMMX.SeguridadTests.csproj.user
 WareHouse/PMMX.WareHouse/bin/
 WareHouse/PMMX.WareHouse/obj/
 WareHouse/PMMX.WareHouse/PMMX.WareHouse.csproj.user
+WareHouse/PMMX.WareHouseTests/bin/
+WareHouse/PMMX.WareHouseTests/obj/
+WareHouse/PMMX.WareHouseTests/PMMX.WareHouse.csproj.user
 
 
 PMMX.Modelo/bin/
 PMMX.Modelo/obj/
+PMMX.Modelo/PMMX.Modelo.csproj.user
 PMMX.Infraestructura/obj/
 PMMX.Infraestructura/bin/
+PMMX.Infraestructura/PMMX.Infraestructura.csproj.user

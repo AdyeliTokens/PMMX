@@ -1,5 +1,4 @@
-﻿using Maya.Helpers;
-using PMMX.Helpers;
+﻿using Sitio.Helpers;
 using PMMX.Modelo.Vistas;
 using PMMX.Seguridad.Servicios;
 using System;
@@ -50,7 +49,6 @@ namespace Sitio.Controllers
             ViewBag.Message = "Your contact page.";
             string folderName = @"c:\FotosPersonales";
             string pathString = System.IO.Path.Combine(folderName, "SubFolder");
-            string pathString2 = @"c:\FotosPersonales\SubFolder2";
             System.IO.Directory.CreateDirectory(pathString);
             string fileName = System.IO.Path.GetRandomFileName();
             pathString = System.IO.Path.Combine(pathString, fileName);

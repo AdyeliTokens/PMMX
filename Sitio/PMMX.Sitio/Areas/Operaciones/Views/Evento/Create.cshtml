@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
 @section Styles {
@@ -25,41 +25,6 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdOrigen, "Ubicacion: ", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <select id="Area" name="Area" , class = "form-control"></select>
-                <select id="WorkCenters" name="WorkCenters" , class = "form-control"></select>
-                <select id="Modulos" name="Modulos" , class = "form-control"></select>
-                @Html.Hidden("IdOrigen")
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdCategoria, "Categoria: ", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdCategoria", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IdCategoria, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.IdAsignador, "Autor: ", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdAsignador", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IdAsignador, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdResponsable, "Asignado a: ", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdResponsable", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IdResponsable, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -98,24 +63,73 @@
         </div>
 
         <div class="form-group">
-            @Html.Hidden("Activo")            
+            @Html.LabelFor(model => model.IdCategoria, "Tipo de Evento: ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.DropDownList("IdCategoria", null, htmlAttributes: new { @class = "form-control select2", @style = "width: 100%;" })
+                    @Html.ValidationMessageFor(model => model.IdCategoria, "", new { @class = "text-danger" })
+                </div>
+            </div>
         </div>
 
+        <div id="div-ubicacion" class="form-group">
+            @Html.Label("Agregar ubicacion: ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("Ubicacion", "")
+            </div>
+        </div>
+
+        <div id="div-personas" class="form-group">
+            @Html.Label("Invitar a más personas: ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("Responsables","")
+            </div>
+        </div>
+
+        <div id="div-lista" class="form-group">
+            @Html.Label("Notificar a: ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("Distribucion", "")
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Hidden("IdOrigen",0)
+            @Html.Hidden("IdResponsables",null)
+            @Html.Hidden("Activo")            
+        </div>
+        
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
+    
 }
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+<!-- Modal-->
+<div class="modal fade" id="createAssetModal" role="dialog" aria-labelledby="CreateAssetModal" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header alert-info">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div id="createAssetContainer" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section Scripts{
     @Scripts.Render("~/JS/jquery")
+    @Scripts.Render("~/JS/Bootstrap")
     @Scripts.Render("~/JS/Moment")
     @Scripts.Render("~/JS/DataRangePicker")
 
@@ -123,7 +137,9 @@
         $(document).ready(function ()
         {
             var today = new Date();
-            getAreas();
+            $("#div-personas").hide();
+            $("#div-ubicacion").hide();
+            $("#div-lista").hide();
             $("#Activo").val(true);
 
             $('#FechaInicio').daterangepicker({
@@ -160,80 +176,55 @@
                 "maxDate": "YYYY-MM-DD  h:mm A"
             });
 
-            function getAreas() {
-                $.ajax({
-                    dataType: "json",
-                    contentType: "application/json",
-                    url: "/Evento/GetArea",
-                    success: function (data) {
-                        items = '<option>Select Area</option>';
-                        $.each(data.areas, function (i, k) {
-                            items += "<option value='" + k.Id + "'>" + k.NombreCorto + "</option>";
-                        });
-                        $('#Area').html(items);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert('There was an error while fetching Work Centers!');
-                    }
-                });
-            }
+            $("#IdCategoria").on("change", function () {
+                var idCategoria = $('#IdCategoria').val();
+                
+               switch (idCategoria)
+               {
+                   case "10": // ventana
+                       $("#div-personas").hide();
+                       $("#div-ubicacion").hide();
+                       $("#div-lista").show();
+                   break;
+                   default:
+                       $("#div-personas").show();
+                       $("#div-ubicacion").show();
+                       $("#div-lista").hide();
+                   break;
+               }
 
+            });
+            
+            $("#Ubicacion").click(function () {
+                var url = ("/Operaciones/Evento/Ubicaciones");
 
-            $('#Area').change(function ()
-            {
-                $.ajax({
-                    dataType: "json",
-                    contentType: "application/json",
-                    url: "/Evento/GetWorkCenterbyArea?IdArea=" + $('#Area').val(),
-                    success: function (data) {
-                        items = '<option>Select WorkCenter</option>';
-                        $.each(data.wlist, function (i, k) {
-                            items += "<option value='" + k.Id + "'>" + k.NombreCorto + "</option>";
-                        });
-                        $('#WorkCenters').html(items);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert('There was an error while fetching Work Centers!');
-                    }
+                $.get(url, function (data) {
+                    $('#createAssetContainer').html(data);
+
+                    $('#createAssetModal').modal('show');
                 });
             });
 
-            $('#WorkCenters').change(function ()
-            {
-                $.ajax({
-                    dataType: "json",
-                    contentType: "application/json",
-                    url: "/Evento/GetModulobyWorkCenter?IdWorkCenter=" + $('#WorkCenters').val(),
-                    success: function (data)
-                    {
-                        items = '<option>Select Modulo</option>';
-                        $.each(data.modulo, function (i, k) {
-                            items += "<option value='" + k.Id + "'>" + k.NombreCorto + "</option>";
-                        });
-                        $('#Modulos').html(items);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert('There was an error while fetching Work Centers!');
-                    }
+            $("#Responsables").click(function () {
+                var url = ("/Operaciones/Evento/Responsables");
+
+                $.get(url, function (data) {
+                    $('#createAssetContainer').html(data);
+
+                    $('#createAssetModal').modal('show');
                 });
             });
 
-            $('#Modulos').change(function ()
-            {
-                $.ajax({
-                    dataType: "json",
-                    contentType: "application/json",
-                    url: "/Evento/GetIdOrigen?IdWorkCenter=" + $('#WorkCenters').val() + "&IdModulo=" + $('#Modulos').val(),
-                    success: function (data) {
-                        $('#IdOrigen').val(data.origen.Id);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert('There was an error while fetching Work Centers!');
-                    }
+            $("#Distribucion").click(function () {
+                var url = ("/Operaciones/Evento/ListaDistribucion");
+
+                $.get(url, function (data) {
+                    
+                    $('#createAssetContainer').html(data);
+
+                    $('#createAssetModal').modal('show');
                 });
             });
-
-
         });
     </script>
 }

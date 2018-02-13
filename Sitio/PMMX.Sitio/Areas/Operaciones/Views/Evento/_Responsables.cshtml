@@ -1,0 +1,56 @@
+﻿@Styles.Render("~/Style/Bootstrap")
+@Styles.Render("~/Style/Select2")
+
+
+<h2>Invitar mas Personas</h2>
+<div id="personas">
+    <div class="form-group">
+        <select id="slt-responsables" class="form-control select2" multiple="multiple"></select>
+    </div>
+    <div class="form-group">
+        <button id="btn-finish">Listo</button>
+    </div>
+</div>
+
+@Scripts.Render("~/JS/jquery")
+@Scripts.Render("~/JS/Select2")
+@Scripts.Render("~/JS/Bootstrap")
+@Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+
+<script>
+    $(document).ready(function ()
+    {
+        $('.select2').select2();
+        getResponsables();
+
+        function getResponsables() {
+            $.ajax({
+                dataType: "json",
+                contentType: "application/json",
+                url: "/Operaciones/Evento/GetResponsables",
+                success: function (data) {
+                    items = '<option></option>';
+                    $.each(data.responsables, function (i, k) {
+                        items += "<option value='" + k.Id + "'>" + k.Nombre+ "</option>";
+                    });
+                    $('#slt-responsables').html(items);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('There was an error while fetching Work Centers!');
+                }
+            });
+        }
+
+        $("#btn-finish").on("click", function () {
+            var nombres = $('#slt-responsables').find(":selected").text();
+            var idNombres = $('#slt-responsables').val();
+            //var ids = idNombres.split(',').map(x => { return parseInt(x) });
+                        
+            $("#Responsables").val(nombres);
+            $("#IdResponsables").val(idNombres);
+            $('#createAssetModal').modal('hide');
+        });
+        
+    });
+</script>
+

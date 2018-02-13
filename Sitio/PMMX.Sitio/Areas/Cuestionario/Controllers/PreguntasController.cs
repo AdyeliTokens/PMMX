@@ -49,7 +49,7 @@ namespace Sitio.Areas.Cuestionario.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nombre,Activo")] Pregunta Preguntas)
+        public ActionResult Create(Pregunta Preguntas)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace Sitio.Areas.Cuestionario.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nombre,Activo")] Pregunta Preguntas)
+        public ActionResult Edit(Pregunta Preguntas)
         {
             if (ModelState.IsValid)
             {

@@ -11,6 +11,8 @@ namespace PMMX.Modelo.Vistas
         public int Id { get; set; }
         public int IdReportador { get; set; }
         public int IdOrigen { get; set; }
+
+        [StringLength(250)]
         public string Descripcion { get; set; }
         public Boolean Activo { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]
@@ -18,6 +20,8 @@ namespace PMMX.Modelo.Vistas
         [DisplayFormat(ApplyFormatInEditMode = true , DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]
         public DateTime FechaEstimada { get; set; }
         public int Prioridad { get; set; }
+
+        [StringLength(250)]
         public string NotificacionSAP{ get; set; }
         public int IdResponsable { get; set; }
 

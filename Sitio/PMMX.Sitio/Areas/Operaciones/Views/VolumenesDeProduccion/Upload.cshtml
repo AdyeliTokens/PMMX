@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Upload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Cargar Volumenes de produccion.</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+    </div>
+    @using (Html.BeginForm("Upload", "VolumenesDeProduccion", FormMethod.Post, new { area = "Operaciones", enctype = "multipart/form-data", @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="box-body">
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Excel</label>
+                <div class="col-md-10">
+                    <input type="file" name="file" id="file" />
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div class="box-footer clearfix">
+            <input class="btn btn-primary pull-right" type="submit" value="Upload" />
+        </div>
+    }
+</div>
+
+

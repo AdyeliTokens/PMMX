@@ -11,16 +11,16 @@ namespace PMMX.Modelo.Vistas
         public int Id { get; set; }
         public int IdPuesto { get; set; }
         public int IdOrigen { get; set; }
-        public int IdHealthCheck { get; set; }
+        public int IdGrupo { get; set; }
         public bool Activo { get; set; }
 
         public string Email { get; set; }
         public string NombreWorkCenter { get; set; }
-        public string NombreHealthcheck { get; set; }
+        public string NombreGrupoPregunta { get; set; }
 
         public PuestoView Puesto { get; set; }
         public OrigenView Origen { get; set; }
-        public GrupoPreguntasView HealthCheck { get; set; }
+        public GrupoPreguntasView GrupoPregunta { get; set; }
 
         public ICollection<PersonaView> Destinatarios { get; set; }
     }

@@ -10,8 +10,9 @@ using System.Web;
 using System.Data.Entity;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Vistas;
+using System.Configuration;
 
-namespace Maya.Helpers
+namespace Sitio.Helpers
 {
     public class EmailService
     {
@@ -54,7 +55,7 @@ namespace Maya.Helpers
 
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         [System.Web.Http.HttpGet]
-        public string PostSendGmailParameters(int idOrigen, int idHealthCheck, List<PMMX.Modelo.Vistas.RespuestaView> lista)
+        public string PostSendGmailParameters(int idOrigen, int IdGrupo, List<PMMX.Modelo.Vistas.RespuestaView> lista)
         {
             SmtpClient client = new SmtpClient();
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
@@ -71,10 +72,10 @@ namespace Maya.Helpers
             msg.From = new MailAddress("pmm.isoperation@gmail.com", "maya@pmi.com");
 
             var elements = db.Remitentes
-                .Where(q => (q.IdHealthCheck.Equals(idHealthCheck)) && (q.Origen.Id.Equals(idOrigen)))
+                .Where(q => (q.IdGrupo.Equals(IdGrupo)) && (q.Origen.Id.Equals(idOrigen)))
                 .Select(x => new RemitentesView
                 {
-                    NombreHealthcheck = x.HealthCheck.Nombre,
+                    NombreGrupoPregunta = x.GrupoPregunta.Nombre,
                     NombreWorkCenter = x.Origen.WorkCenter.Nombre
                 }).FirstOrDefault();
             
@@ -83,7 +84,7 @@ namespace Maya.Helpers
                r => r.IdPuesto,
                p => p.Persona.Puesto.Id,
                (r, p) => new { Remitentes = r, User = p })
-               .Where(q => (q.Remitentes.IdHealthCheck.Equals(idHealthCheck)) && (q.Remitentes.Origen.Id.Equals(idOrigen)))
+               .Where(q => (q.Remitentes.IdGrupo.Equals(IdGrupo)) && (q.Remitentes.Origen.Id.Equals(idOrigen)))
                .Select( x => new UserView {
                    Email = x.User.Email
                })
@@ -97,7 +98,7 @@ namespace Maya.Helpers
             msg.To.Add(new MailAddress("adriana.flores@contracted.pmi.com"));
 
             
-            msg.Subject = "[Health Checks] Info: "+elements.NombreWorkCenter+" " +elements.NombreHealthcheck;
+            msg.Subject = "[Health Checks] Info: "+elements.NombreWorkCenter+" " +elements.NombreGrupoPregunta;
             msg.IsBodyHtml = true;
             msg.Body = string.Format("<html><head><meta charset='UTF-8'></head><body>  ");
             msg.Body = msg.Body + string.Format(" <table border='0' cellpadding='0' cellspacing='0' height='100%' width='100%' bgcolor='#f3f2f2' id='bodyTable'> ");
@@ -106,7 +107,7 @@ namespace Maya.Helpers
             msg.Body = msg.Body + string.Format(" <tr><td align='center' valign='top'> ");
             msg.Body = msg.Body + string.Format("  <table border='0' cellpadding='20' cellspacing='0' width='100%' id='emailHeader'> ");
             msg.Body = msg.Body + string.Format(" <tr><td align='left' valign='top' > ");
-            msg.Body = msg.Body + string.Format("  <h3> Se ha realizado el Health Check "+elements.NombreHealthcheck+" en el modulo "+elements.NombreWorkCenter+"</h3>");
+            msg.Body = msg.Body + string.Format("  <h3> Se ha realizado el Health Check "+elements.NombreGrupoPregunta+" en el modulo "+elements.NombreWorkCenter+"</h3>");
             msg.Body = msg.Body + string.Format(" </td></tr></table> ");
             msg.Body = msg.Body + string.Format("  </td></tr> ");
             msg.Body = msg.Body + string.Format(" <tr><td align='center' valign='top'> ");
@@ -157,5 +158,39 @@ namespace Maya.Helpers
             }
         }
 
+        public bool SendMail(string To_Mail)
+        {
+            try
+            {
+                MailMessage smail = new MailMessage();
+                smail.IsBodyHtml = true;
+                smail.BodyEncoding = System.Text.Encoding.GetEncoding("iso-8859-1");
+                smail.From = new MailAddress("pmmx.applications@pmi.com", "Philip Morris");
+
+                string[] emails = To_Mail.Split(',');
+                foreach (string email in emails)
+                {
+                    if (email != "") smail.To.Add(email);
+                }
+
+                smail.Subject = "Test PMMX";
+                smail.Body = "";
+
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+                smtp.EnableSsl = true;
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new System.Net.NetworkCredential("pmm.isoperation@gmail.com", "82000100");
+                smtp.Send(smail);
+            }
+            catch (SmtpException ex)
+            {
+                Console.WriteLine(ex.StatusCode);
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+            return true;
+        }
     }
 }

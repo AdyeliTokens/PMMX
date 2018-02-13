@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
 @section Styles {
@@ -9,59 +10,51 @@
 
 }
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Defectos</h3>
                 <div class="box-tools">
-                    @*<div class="input-group input-group-sm" style="width: 150px;">
-                            <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-                            <div class="input-group-btn">
-                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                            </div>
-                        </div>*@
+                    <div class="box-tools">
+
+
+                    </div>
                 </div>
             </div>
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover table-striped" id="example1">
                     <thead>
-                        <tr style="width:100%" class="info">
-                            <th style="width:3%"></th>
-                            <th style="width:2%"></th>
-                            <th style="width:5%">
+                        <tr class="info">
+                            <th></th>
+                            <th>
                                 BU
                             </th>
-                            <th style="width:5%">
+                            <th>
                                 LU
                             </th>
-                            <th style="width:3%">
+                            <th>
                                 Modulo
                             </th>
-                            <th style="width:15%">
+                            <th>
                                 Reportante
                             </th>
-                            <th style="width:15%">
+                            <th>
                                 Responsable
                             </th>
-                            <th style="width:20%">
+                            <th>
                                 @Html.DisplayNameFor(model => model.Descripcion)
                             </th>
-                            <th style="width:10%">
+                            <th>
                                 @Html.DisplayNameFor(model => model.NotificacionSAP)
                             </th>
-                            <th style="width:10%">
+                            <th>
                                 @Html.DisplayNameFor(model => model.FechaReporte)
                             </th>
-                            <th style="width:10%">
+                            <th>
                                 @Html.DisplayNameFor(model => model.FechaEstimada)
                             </th>
-                            <th style="width:2%"></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -70,13 +63,7 @@
 
                             <tr class=@(item.Activo ? "danger" : "success")>
                                 <td>
-                                    @Html.ActionLink("" + item.Id, "Details", new { id = item.Id  })
-
-                                </td>
-                                <td>
-                                    <a href="#">
-                                        @*<img src="@Url.Action("Defectos", "Fotos", new { idDefecto = item.Fotos.FirstOrDefault().IdDefecto + 0, area = "" })" alt="Image" class="img-responsive img-circle" style="width:30px;height:30px;" />*@
-                                    </a>
+                                    @Html.ActionLink("" + item.Id, "Details", new { id = item.Id })
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Origen.WorkCenter.BussinesUnit.NombreCorto)
@@ -88,12 +75,32 @@
                                     @Html.DisplayFor(modelItem => item.Origen.Modulo.NombreCorto)
                                 </td>
                                 <td>
-
-                                    @Html.DisplayFor(modelItem => item.Reportador.Nombre) @Html.DisplayFor(modelItem => item.Reportador.Apellido1) @Html.DisplayFor(modelItem => item.Reportador.Apellido2).
+                                    <div class="user-block">
+                                        <img class="img-circle img-responsive img-bordered-sm" src="@Url.Action("Usuario", "Fotos", new { idPersona = item.IdReportador, area = "" })" alt="User Image" >
+                                        <span class="username">
+                                            <a href="#">
+                                            @Html.DisplayFor(modelItem => item.Reportador.Nombre) @Html.DisplayFor(modelItem => item.Reportador.Apellido1) @Html.DisplayFor(modelItem => item.Reportador.Apellido2).
+                                            </a>
+                                        </span>
+                                        <span class="description">Reporto el - @Html.DisplayFor(modelItem => item.FechaReporte)</span>
+                                    </div>
+                                                                       
                                 </td>
                                 <td>
-
-                                    @Html.DisplayFor(modelItem => item.Reportador.Nombre) @Html.DisplayFor(modelItem => item.Reportador.Apellido1) @Html.DisplayFor(modelItem => item.Reportador.Apellido2).
+                                    @if (item.Responsable != null)
+                                    {
+                                        <div class="user-block">
+                                            <img class="img-circle img-responsive img-bordered-sm" src="@Url.Action("Usuario", "Fotos", new { idPersona = item.IdResponsable, area = "" })" alt="User Image">
+                                            <span class="username">
+                                                <a href="#">
+                                                    @Html.DisplayFor(modelItem => item.Responsable.Nombre) @Html.DisplayFor(modelItem => item.Responsable.Apellido1) @Html.DisplayFor(modelItem => item.Responsable.Apellido2).
+                                                </a>
+                                            </span>
+                                            <span class="description">Asignado el - @Html.DisplayFor(modelItem => item.FechaReporte)</span>
+                                        </div>
+                                    }
+                                    
+                                    
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Descripcion)

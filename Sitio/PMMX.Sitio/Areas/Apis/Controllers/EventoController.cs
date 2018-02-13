@@ -10,7 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.Operaciones;
-using Maya.Helpers;
+using Sitio.Helpers;
 using PMMX.Seguridad.Servicios;
 using PMMX.Modelo.Vistas;
 
@@ -26,60 +26,27 @@ namespace Sitio.Areas.Apis.Controllers
             return db.Evento;
         }
 
-        // GET: api/JustDoIt/5
+        // GET: api/GembaWalk/5
         [ResponseType(typeof(EventoView))]
-        
-        public IHttpActionResult GetEventobyResponsableandFecha(int idResponsable, int dias, bool activo)
+        public IHttpActionResult GetEventobyResponsableporDias(int idResponsable, int dias, bool activo)
         {
             var today = DateTime.Now.Date;
             DateTime dateInit = today.AddDays(dias);
 
-            var evento = db.Evento
-               .Where(d => (d.IdResponsable == idResponsable) && (d.FechaInicio >= dateInit) && (d.Activo == activo))
-               .Select(d => new EventoView
-               {
-                   Id = d.Id,
-                   IdOrigen = d.IdOrigen,
-                   IdResponsable = d.IdResponsable,
-                   IdCategoria = d.IdCategoria,
-                   Descripcion = d.Descripcion,
-                   FechaInicio = d.FechaInicio,
-                   FechaFin = d.FechaFin,
-                   Activo = d.Activo,
-                   Responsable = new PersonaView
-                   {
-                       Id = d.Responsable.Id,
-                       Apellido1 = d.Responsable.Apellido1,
-                       Apellido2 = d.Responsable.Apellido2,
-                       Nombre = d.Responsable.Nombre,
-
-                       Puesto = new PuestoView
-                       {
-                           Id = d.Responsable.Puesto.Id,
-                           Nombre = d.Responsable.Puesto.Nombre
-                       }
-                   },
-                   Origen = new OrigenView
-                   {
-                       Id = d.Origen.Id,
-                       IdModulo = d.Origen.IdModulo,
-                       IdWorkCenter = d.Origen.IdWorkCenter,
-                       Modulo = new ModuloView
-                       {
-                           Id = d.Origen.Modulo.Id,
-                           Nombre = d.Origen.Modulo.Nombre,
-                           NombreCorto = d.Origen.Modulo.NombreCorto
-                       },
-                       WorkCenter = new WorkCenterView
-                       {
-                           Id = d.Origen.WorkCenter.Id,
-                           Nombre = d.Origen.WorkCenter.Nombre,
-                           NombreCorto = d.Origen.WorkCenter.NombreCorto,
-                           Activo = d.Origen.WorkCenter.Activo
-                       }
-                   }
-               }).ToList();
-
+            var evento = db.EventoResponsable
+                 .Where(e => (e.IdResponsable == idResponsable) && (e.Evento.FechaInicio >= dateInit) && (e.Evento.Activo == activo))
+                 .Select(s => new EventoView
+                 {
+                     Id = s.Evento.Id,
+                     Descripcion = s.Evento.Descripcion,
+                     IdAsignador = s.Evento.IdAsignador,
+                     FechaInicio = s.Evento.FechaInicio,
+                     FechaFin = s.Evento.FechaFin,
+                     Nota = s.Evento.Nota,
+                     IdCategoria = s.Evento.IdCategoria,
+                     Activo = s.Evento.Activo
+                 }).ToList();
+            
             if (evento == null)
             {
                 return NotFound();
@@ -88,58 +55,26 @@ namespace Sitio.Areas.Apis.Controllers
             return Ok(evento);
         }
 
-        [ResponseType(typeof(ModuloSeccionView))]
-        public IHttpActionResult GetEventobyResponsableandFecha(int idResponsable, DateTime fecha, bool activo)
+        [ResponseType(typeof(EventoView))]
+        public IHttpActionResult GetEventobyResponsableporFecha(int idResponsable, DateTime fecha, bool activo)
         {
             DateTime hoy = fecha.Date;
             DateTime mañana = hoy.AddDays(1);
-
-            var evento = db.Evento
-               .Where(d => (d.IdResponsable == idResponsable) && (d.FechaInicio >= hoy && d.FechaInicio <= mañana) && (d.Activo == activo))
-               .Select(d => new EventoView
-               {
-                   Id = d.Id,
-                   IdOrigen = d.IdOrigen,
-                   IdResponsable = d.IdResponsable,
-                   IdCategoria = d.IdCategoria,
-                   Descripcion = d.Descripcion,
-                   FechaInicio = d.FechaInicio,
-                   FechaFin = d.FechaFin,
-                   Activo = d.Activo,
-                   Responsable = new PersonaView
-                   {
-                       Id = d.Responsable.Id,
-                       Apellido1 = d.Responsable.Apellido1,
-                       Apellido2 = d.Responsable.Apellido2,
-                       Nombre = d.Responsable.Nombre,
-
-                       Puesto = new PuestoView
-                       {
-                           Id = d.Responsable.Puesto.Id,
-                           Nombre = d.Responsable.Puesto.Nombre
-                       }
-                   },
-                   Origen = new OrigenView
-                   {
-                       Id = d.Origen.Id,
-                       IdModulo = d.Origen.IdModulo,
-                       IdWorkCenter = d.Origen.IdWorkCenter,
-                       Modulo = new ModuloView
-                       {
-                           Id = d.Origen.Modulo.Id,
-                           Nombre = d.Origen.Modulo.Nombre,
-                           NombreCorto = d.Origen.Modulo.NombreCorto
-                       },
-                       WorkCenter = new WorkCenterView
-                       {
-                           Id = d.Origen.WorkCenter.Id,
-                           Nombre = d.Origen.WorkCenter.Nombre,
-                           NombreCorto = d.Origen.WorkCenter.NombreCorto,
-                           Activo = d.Origen.WorkCenter.Activo
-                       }
-                   }
-               }).ToList();
             
+               var evento = db.EventoResponsable
+                 .Where(d => (d.IdResponsable == idResponsable) && (d.Evento.FechaInicio >= hoy && d.Evento.FechaInicio <= mañana) && (d.Evento.Activo == activo))
+                 .Select(s => new EventoView
+                 {
+                     Id = s.Evento.Id,
+                     Descripcion = s.Evento.Descripcion,
+                     IdAsignador = s.Evento.IdAsignador,
+                     FechaInicio = s.Evento.FechaInicio,
+                     FechaFin = s.Evento.FechaFin,
+                     Nota = s.Evento.Nota,
+                     IdCategoria = s.Evento.IdCategoria,
+                     Activo = s.Evento.Activo
+                 }).ToList();
+
             return Ok(evento);
         }
         
@@ -151,28 +86,13 @@ namespace Sitio.Areas.Apis.Controllers
                 .Select(d => new EventoView
                 {
                     Id = d.Id,
-                    IdOrigen = d.IdOrigen,
-                    IdResponsable = d.IdResponsable,
-                    IdCategoria = d.IdCategoria,
                     Descripcion = d.Descripcion,
                     FechaInicio = d.FechaInicio,
                     FechaFin = d.FechaFin,
                     Nota = d.Nota,
+                    IdCategoria = d.IdCategoria,
                     Activo = d.Activo,
-                    Responsable = new PersonaView
-                    {
-                        Id = d.Responsable.Id,
-                        Apellido1 = d.Responsable.Apellido1,
-                        Apellido2 = d.Responsable.Apellido2,
-                        Nombre = d.Responsable.Nombre,
-
-                        Puesto = new PuestoView
-                        {
-                            Id = d.Responsable.Puesto.Id,
-                            Nombre = d.Responsable.Puesto.Nombre
-                        }
-                    },
-                    JustDoIt = d.JustDoIt.Select(j => new JustDoItView
+                    GembaWalk = d.GembaWalk.Select(j => new GembaWalkView
                     {
                         Id = j.Id,
                         IdEvento = j.IdEvento,
@@ -247,42 +167,9 @@ namespace Sitio.Areas.Apis.Controllers
 
             foreach (string notificacion in llaves)
             {
-                var _evento = db.Evento.Where(e => e.Id == evento.Id)
-                    .Select(s => new EventoView
-                    {
-                        Id = s.Id,
-                        Descripcion = s.Descripcion,
-                        Categoria = new CategoriaView
-                        {
-                            Id = s.Categoria.Id,
-                            Nombre = s.Categoria.Nombre,
-                            NombreCorto = s.Categoria.NombreCorto
-                        },
-                        Origen = new OrigenView
-                        {
-                            Id = s.Origen.Id,
-                            WorkCenter = new WorkCenterView
-                            {
-                                Id = s.Origen.WorkCenter.Id,
-                                BussinesUnit = new BussinesUnitView
-                                {
-                                    Id = s.Origen.WorkCenter.BussinesUnit.Id,
-                                    Area = new AreaView
-                                    {
-                                        Id = s.Origen.WorkCenter.BussinesUnit.Area.Id,
-                                        Nombre = s.Origen.WorkCenter.BussinesUnit.Area.Nombre,
-                                        NombreCorto = s.Origen.WorkCenter.BussinesUnit.Area.NombreCorto
-                                    }
-                                }
-                            }
-                            
-                        }
-                    }).FirstOrDefault();
-
-
-                notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + _evento.Descripcion + ". ", _evento.Categoria.Nombre + " : originado en " + _evento.Origen.WorkCenter.BussinesUnit.Area.Nombre);
+               notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + evento.Descripcion + ". ", "");
             }
-            
+
             return CreatedAtRoute("DefaultApi", new { id = evento.Id }, evento);
         }
 
