@@ -128,10 +128,11 @@
                     url: "/Warehouse/Ventana/GetVentanabyEvento?idEvento=" + id,
                     success: function (data) {
                         $.each(data, function (i, k) {
+                            
+                            $("#opciones-ventana").show();
+
                             var url = ("/Warehouse/Ventana/Details/" + k.Id);
                             $("#IdVentanaEvento").val(k.Id);
-
-                            $("#opciones-ventana").show();
 
                             $.get(url, function (data) {
                                 $('#subVista').show();
