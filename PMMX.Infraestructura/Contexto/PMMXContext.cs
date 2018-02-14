@@ -144,7 +144,8 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new StatusVentanaMap());
             modelBuilder.Configurations.Add(new BitacoraGembaWalkMap());
             modelBuilder.Configurations.Add(new WorkFlowMap());
-            
+            modelBuilder.Configurations.Add(new TipoOperacionMap());
+
 
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
@@ -239,6 +240,7 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<StatusVentana> StatusVentana { get; set; }
         public DbSet<WorkFlow> WorkFlows { get; set; }
         public DbSet<BitacoraGembaWalk> BitacoraGembaWalks { get; set; }
+        public DbSet<TipoOperacion> TipoOperacion { get; set; }
     }
 }
 
