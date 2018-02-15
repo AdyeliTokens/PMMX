@@ -78,6 +78,7 @@ namespace PMMX.Modelo.Entidades
         public ICollection<StatusVentana> StatusVentana { get; set; }
         public ICollection<BitacoraVentana> BitacoraVentana { get; set; }
         public ICollection<BitacoraGembaWalk> BitacoraGembaWalk { get; set; }
+        public ICollection<PlanDeProduccion> PlanesDeProduccionReportados { get; set; }
         #endregion
 
     }
