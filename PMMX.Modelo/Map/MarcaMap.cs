@@ -24,6 +24,7 @@ namespace PMMX.Modelo.Map
 
             #region HasMany
             HasMany(c => c.Desperdicios).WithRequired(x => x.MarcaDelCigarrillo).HasForeignKey(c => c.Code_FA);
+            HasMany(c => c.PlanesDeProduccion).WithRequired(x => x.Marca_FA).HasForeignKey(c => c.Code_FA);
             #endregion
 
             #region HasOptional
