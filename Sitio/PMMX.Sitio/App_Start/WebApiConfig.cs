@@ -21,8 +21,8 @@ namespace Sitio
             );
 
 
-            //var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
-            //jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
+            config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
 
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/json"));
             var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
