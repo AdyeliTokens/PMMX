@@ -345,6 +345,7 @@
     <Compile Include="Areas\Operaciones\Controllers\ObjetivosPlanAttainmentController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\ObjetivosVQIController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\EstatusController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\PlanesDeProduccionController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\StatusVentanaController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\SubCategoriaController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\ActividadEnDefectosController.cs" />
@@ -8055,6 +8056,12 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Areas\Operaciones\Views\PlanesDeProduccion\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\PlanesDeProduccion\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\PlanesDeProduccion\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\PlanesDeProduccion\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\PlanesDeProduccion\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\PlanesDeProduccion\Upload.cshtml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
