@@ -9,11 +9,8 @@
     <div class="box-header with-border">
         <h3 class="box-title">Agregar Información Ventana</h3>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                <i class="fa fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-        </div>
+            <button id="btn-CreateVentana" class="btn btn-default" alt="Crear Ventana"><i class="fa fa-edit text-info"></i></button>
+         </div>
     </div>
     @using (Html.BeginForm("Upload", "Ventana", FormMethod.Post, new { area = "Warehouse", enctype = "multipart/form-data", @class = "form-horizontal" }))
     {
@@ -87,6 +84,15 @@
 
         $("#SelectOperacion").on("change", function () {
             $("#IdOperacion").val($("#SelectOperacion").val())
+        });
+
+        $("#btn-CreateVentana").on("click", function () {
+            var url = ("/Warehouse/Ventana/Create");
+
+            $.get(url, function (data) {
+                $('#createAssetContainer').html(data);
+                $('#createAssetModal').modal('show');
+            });
         });
 
     });
