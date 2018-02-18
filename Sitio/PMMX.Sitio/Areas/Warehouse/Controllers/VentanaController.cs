@@ -169,6 +169,7 @@ namespace Sitio.Areas.Warehouse.Controllers
                     statusVentana.IdResponsable = persona.Respuesta.Id;
                     statusVentana.IdStatus = workFlow.Respuesta.EstatusInicial.Id;
                     statusVentana.Fecha = DateTime.Now;
+                    statusVentana.Comentarios = " ";
                     db.StatusVentana.Add(statusVentana);
                     db.SaveChanges();
                 }
