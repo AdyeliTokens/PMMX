@@ -102,6 +102,9 @@
                         url: "/Evento/GetEvents",
                         dataType: "json",
                         success: function (data) {
+                            $('#calendar').fullCalendar('destroy');
+                            $('#calendar').fullCalendar('render');
+
                             $('#calendar').fullCalendar({
                                 theme: false,
                                 header: {
@@ -143,60 +146,65 @@
                     });
                 }
 
-                $('#slt-Categorias').on("change", function () {
-                    getSubCategorias();
+                $('#slt-Categorias').on("change", function ()
+                {    
+                    if ($('#slt-Categorias').val() == "Categoria" )
+                        GetEvents();
+                    else
+                    {
+                        getSubCategorias();
 
-                    $.ajax({
-                        dataType: "json",
-                        contentType: "application/json",
-                        data: "{}",
-                        url: "/Evento/GetEventsByCategoria?IdCategoria="+$('#slt-Categorias').val(),
-                        dataType: "json",
-                        success: function (data) {
-                            $('#calendar').fullCalendar('destroy');
-                            $('#calendar').fullCalendar('render');
+                        $.ajax({
+                            dataType: "json",
+                            contentType: "application/json",
+                            data: "{}",
+                            url: "/Evento/GetEventsByCategoria?IdCategoria=" + $('#slt-Categorias').val(),
+                            dataType: "json",
+                            success: function (data) {
+                                $('#calendar').fullCalendar('destroy');
+                                $('#calendar').fullCalendar('render');
 
-                            $('#calendar').fullCalendar({
-                                theme: false,
-                                header: {
-                                    left: 'prev,next today',
-                                    center: 'title',
-                                    right: 'month,basicWeek,basicDay'
-                                },
-                                defaultView: 'month',
-                                editable: false,
-                                lang: 'es',
-                                eventLimit: 4,
-                                eventLimitText: 'More',
-                                weekMode: 'liquid',
-                                events: $.map(data.events, function (item, i) {
-                                    var event = new Object();
-                                    event.start = moment(item.FechaInicio).utc();
-                                    event.end = moment(item.FechaFin).utc();
-                                    event.title = item.Descripcion;
-                                    event.brief = item.Nota;
-                                    event.id = item.Id;
+                                $('#calendar').fullCalendar({
+                                    theme: false,
+                                    header: {
+                                        left: 'prev,next today',
+                                        center: 'title',
+                                        right: 'month,basicWeek,basicDay'
+                                    },
+                                    defaultView: 'month',
+                                    editable: false,
+                                    lang: 'es',
+                                    eventLimit: 4,
+                                    eventLimitText: 'More',
+                                    weekMode: 'liquid',
+                                    events: $.map(data.events, function (item, i) {
+                                        var event = new Object();
+                                        event.start = moment(item.FechaInicio).utc();
+                                        event.end = moment(item.FechaFin).utc();
+                                        event.title = item.Descripcion;
+                                        event.brief = item.Nota;
+                                        event.id = item.Id;
 
-                                    return event;
-                                }),
-                                eventClick: function (calEvent, jsEvent, view) {
-                                    var url = "/Operaciones/Evento/Details/" + calEvent.id;
+                                        return event;
+                                    }),
+                                    eventClick: function (calEvent, jsEvent, view) {
+                                        var url = "/Operaciones/Evento/Details/" + calEvent.id;
 
-                                    $.get(url, function (data) {
-                                        $('#createAssetContainer').html(data);
-                                        $('#createAssetModal').modal('show');
-                                        $('#IdEventoModal').val(calEvent.id);
-                                    });
-                                }
+                                        $.get(url, function (data) {
+                                            $('#createAssetContainer').html(data);
+                                            $('#createAssetModal').modal('show');
+                                            $('#IdEventoModal').val(calEvent.id);
+                                        });
+                                    }
 
-                            });
+                                });
 
-                        },
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            alert('There was an error while fetching events!');
-                        }
-                    });
-                    
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                alert('There was an error while fetching events!');
+                            }
+                        });
+                    }
                 });
 
                 $('#slt-SubCategorias').on("change", function () {
