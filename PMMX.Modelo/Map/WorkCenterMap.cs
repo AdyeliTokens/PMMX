@@ -28,6 +28,7 @@ namespace PMMX.Modelo.Map
 
             HasMany(c => c.Operadores).WithRequired(x => x.WorkCenter).HasForeignKey(c => c.IdWorkCenter);
             HasMany(c => c.Origenes).WithRequired(x => x.WorkCenter).HasForeignKey(c => c.IdWorkCenter);
+            HasMany(c => c.PlanesDeProduccion).WithRequired(x => x.WorkCenterEfectivo).HasForeignKey(c => c.IdWorkCenter);
             HasMany(c => c.Alias).WithMany(x => x.WorkCenters).Map(cs =>
             {
                 cs.MapLeftKey("IdWorkCenter");

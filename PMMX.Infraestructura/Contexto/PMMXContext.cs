@@ -84,6 +84,7 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new NoConformidadMap());
             modelBuilder.Configurations.Add(new VolumenDeProduccionMap());
             modelBuilder.Configurations.Add(new AliasMap());
+            modelBuilder.Configurations.Add(new PlanDeProduccionMap());
 
             #endregion
 
@@ -145,6 +146,7 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new BitacoraGembaWalkMap());
             modelBuilder.Configurations.Add(new WorkFlowMap());
             modelBuilder.Configurations.Add(new TipoOperacionMap());
+            
 
 
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
@@ -186,6 +188,7 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<Indicador> Indicadores { get; set; }
         public DbSet<VolumenDeProduccion> VolumenesDeProduccion { get; set; }
         public DbSet<Alias> Alias{ get; set; }
+        public DbSet<PlanDeProduccion> PlanDeProduccion { get; set; }
         #endregion
 
         #region Seguridad

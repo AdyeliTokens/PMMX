@@ -28,5 +28,6 @@ namespace PMMX.Modelo.Entidades
         public Persona PersonaQueDioDeAlta { get; set; }
         public ICollection<Desperdicio> Desperdicios { get; set; }
         public ICollection<VolumenDeProduccion> VolumenesProducidos { get; set; }
+        public ICollection<PlanDeProduccion> PlanesDeProduccion { get; set; }
     }
 }
