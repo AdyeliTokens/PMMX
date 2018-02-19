@@ -27,7 +27,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         public ActionResult Index()
         {
             var evento = db.Evento.Include(e => e.Asignador).Include(e => e.Categoria);
-            return View(evento);
+            return View(evento.ToList());
         }
 
 

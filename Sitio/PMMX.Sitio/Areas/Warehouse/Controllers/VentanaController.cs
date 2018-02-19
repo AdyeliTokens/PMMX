@@ -130,6 +130,21 @@ namespace Sitio.Areas.Warehouse.Controllers
             ViewBag.IdSubCategoria = new SelectList(db.SubCategoria.Where(x => (x.IdCategoria == 10)).Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
             ViewBag.IdOperacion = new SelectList(db.TipoOperacion.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
 
+            if (ventana.PO == null) ventana.PO = " ";
+            if (ventana.Recurso == null) ventana.Recurso = " ";
+            if (ventana.TipoUnidad == null) ventana.TipoUnidad = " ";
+            if (ventana.NombreCarrier == null) ventana.NombreCarrier = " ";
+            if (ventana.Dimension == null) ventana.Dimension = " ";
+            if (ventana.NumeroEconomico == null) ventana.NumeroEconomico = " ";
+            if (ventana.NumeroPlaca == null) ventana.NumeroPlaca = " ";
+            if (ventana.EconomicoRemolque == null) ventana.EconomicoRemolque = " ";
+            if (ventana.ColorContenedor == null) ventana.ColorContenedor = " ";
+            if (ventana.PlacaRemolque == null) ventana.PlacaRemolque = " ";
+            if (ventana.Sellos == null) ventana.Sellos = " ";
+            if (ventana.ModeloContenedor == null) ventana.ModeloContenedor = " ";
+            if (ventana.Conductor == null) ventana.Conductor = " ";
+            if (ventana.MovilConductor == null) ventana.MovilConductor = " ";
+            
             if (ModelState.IsValid)
             {
                 db.Ventana.Add(ventana);
@@ -167,7 +182,16 @@ namespace Sitio.Areas.Warehouse.Controllers
                     StatusVentana statusVentana = new StatusVentana();
                     statusVentana.IdVentana = ventana.Id;
                     statusVentana.IdResponsable = persona.Respuesta.Id;
-                    statusVentana.IdStatus = workFlow.Respuesta.EstatusInicial.Id;
+
+                    if(estatus == 0)
+                    {
+                        statusVentana.IdStatus = workFlow.Respuesta.EstatusInicial.Id;
+                    }
+                    else
+                    {
+                        statusVentana.IdStatus = workFlow.Respuesta.EstatusSiguiente.Id;
+                    }
+                    
                     statusVentana.Fecha = DateTime.Now;
                     statusVentana.Comentarios = " ";
                     db.StatusVentana.Add(statusVentana);
@@ -323,6 +347,7 @@ namespace Sitio.Areas.Warehouse.Controllers
 
                             db.Ventana.Add(ventana);
                             db.SaveChanges();
+
                             for(int i=0; i<3; i++)
                             {
                                 changeEstatus(ventana);
