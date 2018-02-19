@@ -20,6 +20,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
             Property(c => c.IdStatus).HasColumnName("IdStatus");
             Property(c => c.IdResponsable).HasColumnName("IdResponsable");
             Property(c => c.Fecha).HasColumnName("Fecha");
+            Property(c => c.Comentarios).HasColumnName("Comentarios");
             #endregion
 
             #region HasMany

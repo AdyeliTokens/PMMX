@@ -112,6 +112,7 @@
     <Compile Include="Entidades\GembaWalks\GembaWalk.cs" />
     <Compile Include="Entidades\Mantenimiento.cs" />
     <Compile Include="Entidades\Pesador.cs" />
+    <Compile Include="Entidades\PlanDeProduccion.cs" />
     <Compile Include="Entidades\SubArea.cs" />
     <Compile Include="Entidades\SubCategoria.cs" />
     <Compile Include="Entidades\Foto.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="Interfaces\Seguridad\IUsuarioServicio.cs" />
     <Compile Include="Map\AliasMap.cs" />
     <Compile Include="Map\BitacoraGembaWalkMap.cs" />
+    <Compile Include="Map\PlanDeProduccionMap.cs" />
     <Compile Include="Map\RechazoMap.cs" />
     <Compile Include="Map\AreaMap.cs" />
     <Compile Include="Map\AsignacionMap.cs" />
