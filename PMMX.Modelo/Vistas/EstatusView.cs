@@ -1,12 +1,5 @@
-﻿using PMMX.Modelo.Entidades.GembaWalks;
-using PMMX.Modelo.Entidades.Operaciones;
-using PMMX.Modelo.Entidades.Warehouse;
-using PMMX.Modelo.Vistas;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace PMMX.Modelo.Vistas
 {
@@ -27,7 +20,7 @@ namespace PMMX.Modelo.Vistas
         public ICollection<StatusVentanaView> StatusVentana { get; set; }
         public ICollection<RechazoView> Rechazo { get; set; }
         public ICollection<BitacoraVentanaView> BitacoraVentana { get; set; }
-        public ICollection<BitacoraGembaWalk> BitacoraGembaWalk { get; set; }
+        public ICollection<BitacoraGembaWalkView> BitacoraGembaWalk { get; set; }
         public ICollection<WorkFlowView> WorkFlowInicial { get; set; }
         public ICollection<WorkFlowView> WorkFlowAnterior { get; set; }
         public ICollection<WorkFlowView> WorkFlowSiguiente { get; set; }

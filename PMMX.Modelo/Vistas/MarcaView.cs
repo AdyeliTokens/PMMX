@@ -1,22 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PMMX.Modelo.Entidades
+namespace PMMX.Modelo.Vistas
 {
-    public class Marca
+    public class MarcaView
     {
-        [StringLength(250)]
-        [Key]
+        
         public string Code_FA { get; set; }
 
-        [StringLength(250)]
         public string Descripcion { get; set; }
-        
-        [StringLength(250)]
+
         public string Codigo_Cigarrillo { get; set; }
         public Double? PesoPorCigarrillo { get; set; }
         public Double? PesoTabacco { get; set; }
@@ -43,12 +36,11 @@ namespace PMMX.Modelo.Entidades
                 }
 
             }
-            
         }
 
-        public Persona PersonaQueDioDeAlta { get; set; }
-        public ICollection<Desperdicio> Desperdicios { get; set; }
-        public ICollection<VolumenDeProduccion> VolumenesProducidos { get; set; }
-        public ICollection<PlanDeProduccion> PlanesDeProduccion { get; set; }
+        public PersonaView PersonaQueDioDeAlta { get; set; }
+        public ICollection<DesperdicioView> Desperdicios { get; set; }
+        public ICollection<VolumenDeProduccionView> VolumenesProducidos { get; set; }
+        public ICollection<PlanDeProduccionView> PlanesDeProduccion { get; set; }
     }
 }

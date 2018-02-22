@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.Operaciones;
-
+using PMMX.Modelo.Entidades;
 
 namespace Sitio.Areas.Operaciones
 {

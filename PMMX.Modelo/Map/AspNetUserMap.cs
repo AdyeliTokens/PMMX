@@ -14,25 +14,30 @@ namespace PMMX.Modelo.Map
         {
             #region Propiedades
 
-            this.ToTable("AspNetUsers");
-            this.HasKey(c => c.Id);
-            this.Property(c => c.Id).HasColumnName("Id");
-            this.Property(c => c.Email).HasColumnName("Email");
-            this.Property(c => c.EmailConfirmed).HasColumnName("EmailConfirmed");
-            this.Property(c => c.PasswordHash).HasColumnName("PasswordHash");
-            this.Property(c => c.SecurityStamp).HasColumnName("SecurityStamp");
-            this.Property(c => c.PhoneNumber).HasColumnName("PhoneNumber");
-            this.Property(c => c.PhoneNumberConfirmed).HasColumnName("PhoneNumberConfirmed");
-            this.Property(c => c.TwoFactorEnabled).HasColumnName("TwoFactorEnabled");
-            this.Property(c => c.LockOutEndDateUTC).HasColumnName("LockOutEndDateUTC");
-            this.Property(c => c.LockOutEnabled).HasColumnName("LockOutEnabled");
-            this.Property(c => c.AccessFailedCount).HasColumnName("AccessFailedCount");
-            this.Property(c => c.UserName).HasColumnName("UserName");
+            ToTable("AspNetUsers");
+            HasKey(c => c.Id);
+            Property(c => c.Id).HasColumnName("Id");
+            Property(c => c.Email).HasColumnName("Email");
+            Property(c => c.EmailConfirmed).HasColumnName("EmailConfirmed");
+            Property(c => c.PasswordHash).HasColumnName("PasswordHash");
+            Property(c => c.SecurityStamp).HasColumnName("SecurityStamp");
+            Property(c => c.PhoneNumber).HasColumnName("PhoneNumber");
+            Property(c => c.PhoneNumberConfirmed).HasColumnName("PhoneNumberConfirmed");
+            Property(c => c.TwoFactorEnabled).HasColumnName("TwoFactorEnabled");
+            Property(c => c.LockOutEndDateUTC).HasColumnName("LockOutEndDateUTC");
+            Property(c => c.LockOutEnabled).HasColumnName("LockOutEnabled");
+            Property(c => c.AccessFailedCount).HasColumnName("AccessFailedCount");
+            Property(c => c.UserName).HasColumnName("UserName");
 
             #endregion
 
             #region HasMany
-            
+            HasMany(c => c.Roles).WithMany(x => x.Users).Map(cs =>
+            {
+                cs.MapLeftKey("UserId");
+                cs.MapRightKey("RoleId");
+                cs.ToTable("aspnetuserroles");
+            });
             #endregion
 
         }

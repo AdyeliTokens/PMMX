@@ -251,7 +251,6 @@
     <Compile Include="Areas\Apis\Controllers\InSiteLAC\KPIsController.cs" />
     <Compile Include="Areas\Apis\Controllers\ListaDistribucionController.cs" />
     <Compile Include="Areas\Apis\Controllers\LocacionController.cs" />
-    <Compile Include="Areas\Apis\Controllers\LoginController.cs" />
     <Compile Include="Areas\Apis\Controllers\MantenimientoController.cs" />
     <Compile Include="Areas\Apis\Controllers\Operarios\MecanicoController.cs" />
     <Compile Include="Areas\Apis\Controllers\MecanicoPorBusinessUnitsController.cs" />
@@ -287,7 +286,6 @@
     <Compile Include="Areas\Apis\Controllers\Operaciones\ActividadEnParoController.cs" />
     <Compile Include="Areas\Apis\Controllers\Operaciones\BussinesUnitController.cs" />
     <Compile Include="Areas\Apis\Controllers\Operaciones\DefectoController.cs" />
-    <Compile Include="Areas\Apis\Controllers\Seguridad\EntornoController.cs" />
     <Compile Include="Areas\Apis\Controllers\GrupoPreguntasController.cs" />
     <Compile Include="Areas\Apis\Controllers\Operaciones\ModuloController.cs" />
     <Compile Include="Areas\Apis\Controllers\OrigenController.cs" />
@@ -296,7 +294,6 @@
     <Compile Include="Areas\Apis\Controllers\PreguntaController.cs" />
     <Compile Include="Areas\Apis\Controllers\PuestoController.cs" />
     <Compile Include="Areas\Apis\Controllers\RespuestaController.cs" />
-    <Compile Include="Areas\Apis\Controllers\UserController.cs" />
     <Compile Include="Areas\Cuestionario\Controllers\PreguntasController.cs" />
     <Compile Include="Areas\Cuestionario\Controllers\GrupoPreguntasController.cs" />
     <Compile Include="Areas\Cuestionario\Controllers\RespuestasController.cs" />
@@ -368,14 +365,12 @@
     <Compile Include="Areas\Operaciones\Controllers\WorkFlowsController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\DispositivosController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\ElectricosController.cs" />
-    <Compile Include="Areas\Seguridad\Controllers\EntornosController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\MecanicosController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\OperadoresController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\PersonasController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\PesadoresController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\PuestosController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\ShiftLeadersController.cs" />
-    <Compile Include="Areas\Seguridad\Controllers\UsersController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\UsuariosController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\UsuariosPorPersonasController.cs" />
     <Compile Include="Areas\Seguridad\SeguridadAreaRegistration.cs" />
@@ -7783,11 +7778,6 @@
     <Content Include="Areas\Seguridad\Views\web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Areas\Seguridad\Views\Entornos\Create.cshtml" />
-    <Content Include="Areas\Seguridad\Views\Entornos\Delete.cshtml" />
-    <Content Include="Areas\Seguridad\Views\Entornos\Details.cshtml" />
-    <Content Include="Areas\Seguridad\Views\Entornos\Edit.cshtml" />
-    <Content Include="Areas\Seguridad\Views\Entornos\Index.cshtml" />
     <Content Include="Areas\Seguridad\Views\Personas\Create.cshtml" />
     <Content Include="Areas\Seguridad\Views\Personas\Delete.cshtml" />
     <Content Include="Areas\Seguridad\Views\Personas\Details.cshtml" />
@@ -7879,11 +7869,6 @@
     <Content Include="Areas\Operaciones\Views\ModulosSecciones\Details.cshtml" />
     <Content Include="Areas\Operaciones\Views\ModulosSecciones\Edit.cshtml" />
     <Content Include="Areas\Operaciones\Views\ModulosSecciones\Index.cshtml" />
-    <Content Include="Areas\Seguridad\Views\Users\Create.cshtml" />
-    <Content Include="Areas\Seguridad\Views\Users\Delete.cshtml" />
-    <Content Include="Areas\Seguridad\Views\Users\Details.cshtml" />
-    <Content Include="Areas\Seguridad\Views\Users\Edit.cshtml" />
-    <Content Include="Areas\Seguridad\Views\Users\Index.cshtml" />
     <Content Include="Areas\Operaciones\Views\Modulos\Create.cshtml" />
     <Content Include="Areas\Operaciones\Views\Modulos\Delete.cshtml" />
     <Content Include="Areas\Operaciones\Views\Modulos\Details.cshtml" />
@@ -8062,6 +8047,7 @@
     <Content Include="Areas\Operaciones\Views\PlanesDeProduccion\Edit.cshtml" />
     <Content Include="Areas\Operaciones\Views\PlanesDeProduccion\Index.cshtml" />
     <Content Include="Areas\Operaciones\Views\PlanesDeProduccion\Upload.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Desperdicios\Reporte.cshtml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
