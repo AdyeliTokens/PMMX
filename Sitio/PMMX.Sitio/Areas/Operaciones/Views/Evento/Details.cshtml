@@ -126,18 +126,33 @@
                     dataType: "json",
                     contentType: "application/json",
                     url: "/Warehouse/Ventana/GetVentanabyEvento?idEvento=" + id,
-                    success: function (data) {
-                        $.each(data, function (i, k) {
-                            
-                            $("#opciones-ventana").show();
+                    success: function (data)
+                    {
+                        $.each(data, function (i, k)
+                        {
+                            if (k != null)
+                            {
+                                var url = ("/Warehouse/Ventana/Details/" + k.Id);
 
-                            var url = ("/Warehouse/Ventana/Details/" + k.Id);
-                            $("#IdVentanaEvento").val(k.Id);
+                                $("#IdVentanaEvento").val(k.Id);
+                                
+                                $("#opciones-ventana").show();
+                                $("#btn-Rechazo").hide();
 
-                            $.get(url, function (data) {
-                                $('#subVista').show();
-                                $('#subVista').html(data);
-                            });
+                                if (k.Cancelado[0] != 0)
+                                {
+                                    $("#btn-Rechazo").show();
+                                }
+
+                                $.get(url, function (data) {
+                                    $('#subVista').show();
+                                    $('#subVista').html(data);
+                                });
+                            }
+                            else
+                            {
+                                alert("Sin datos en ventana");
+                            }
                         });
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {

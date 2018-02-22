@@ -94,7 +94,14 @@ namespace Sitio.Areas.Warehouse.Controllers
         {
             if (ModelState.IsValid)
             {
-                var ventana = db.Ventana.Where(o => (o.IdEvento == idEvento)).Select(o => new { Id = o.Id, PO = o.PO }).FirstOrDefault();
+                var ventana = db.Ventana.Where(o => (o.IdEvento == idEvento))
+                    .Select(o => new
+                    {
+                        Id = o.Id,
+                        PO = o.PO,
+                        Cancelado = o.StatusVentana.OrderByDescending(s => s.Fecha).Select(s => s.Status.WorkFlowInicial.Select( w => w.Inicial)).FirstOrDefault()
+                    }).FirstOrDefault();
+                
                 return Json(new { ventana }, JsonRequestBehavior.AllowGet);
             }
             else

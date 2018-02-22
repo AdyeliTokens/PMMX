@@ -231,21 +231,35 @@ namespace Sitio.Areas.Operaciones.Controllers
                 {
                     statusVentana.IdResponsable = persona.Respuesta.Id;
                 }
-                
-                Ventana ventana = db.Ventana.Find(statusVentana.IdVentana);
+
+                var IdSubCategoria = db.Ventana.Where(x => x.Id == statusVentana.IdVentana).Select(x => x.IdSubCategoria).FirstOrDefault();
+
                 WorkFlowServicio workflowServicio = new WorkFlowServicio();
-                IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, statusVentana.IdStatus, false);
+                IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(IdSubCategoria, statusVentana.IdStatus, false);
 
                 statusVentana.IdStatus = workFlow.Respuesta.EstatusSiguiente.Id;
                 statusVentana.Fecha = DateTime.Now;
                 db.StatusVentana.Add(statusVentana);
                 db.SaveChanges();
-                
+
+                Ventana ventana = db.Ventana
+                                 .Include(v => v.TipoOperacion)
+                                 .Include(v => v.StatusVentana)
+                                 .Include(v => v.StatusVentana.Select(s => s.Status))
+                                 .Include(v => v.BitacoraVentana)
+                                 .SingleOrDefault(x => x.Id == statusVentana.IdVentana);
+
+
+                UsuarioServicio usuarioServicio = new UsuarioServicio();
+                string senders = usuarioServicio.GetEmailByEvento(statusVentana.Ventana.IdEvento);
+                EmailService emailService = new EmailService();
+                emailService.SendMail(senders, ventana);
+
                 return RedirectToAction("Index");
             }
             
             return View(statusVentana);
-        } 
+        }
         
         // GET: Operaciones/StatusVentana/Edit/5
         public ActionResult Edit(int? id)
