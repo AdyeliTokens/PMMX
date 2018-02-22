@@ -1,6 +1,5 @@
 ﻿using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades;
-using PMMX.Modelo.Interfaces.Seguridad;
 using PMMX.Modelo.RespuestaGenerica;
 using PMMX.Modelo.Vistas;
 using System;

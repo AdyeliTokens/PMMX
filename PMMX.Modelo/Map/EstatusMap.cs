@@ -1,11 +1,9 @@
-﻿using PMMX.Modelo.Entidades.Operaciones;
-using System;
-using System.Collections.Generic;
+﻿
+using PMMX.Modelo.Entidades.Operaciones;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Web;
 
-namespace PMMX.Modelo.Entidades.Operaciones
+
+namespace PMMX.Modelo.Map
 {
     public class EstatusMap : EntityTypeConfiguration<Estatus>
     {

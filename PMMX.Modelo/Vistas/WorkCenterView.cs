@@ -21,6 +21,8 @@ namespace PMMX.Modelo.Vistas
         public PersonaView Responsable { get; set; }
         public ICollection<GrupoPreguntasView> Formatos { get; set; }
         public ICollection<PersonaView> Operadores { get; set; }
+        public ICollection<DesperdicioView> Desperdicios { get; set; }
+        public ICollection<CRRView> CRR { get; set; }
 
     }
 }

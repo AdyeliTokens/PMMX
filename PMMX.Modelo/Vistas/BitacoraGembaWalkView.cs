@@ -7,7 +7,7 @@ using System.Web;
 
 namespace PMMX.Modelo.Vistas
 {
-    public class BitacoraGembaWalk
+    public class BitacoraGembaWalkView
     {
         #region Propiedades
         public int Id { get; set; }

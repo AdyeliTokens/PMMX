@@ -27,7 +27,7 @@ namespace PMMX.Modelo.Map
 
             #region HasMany
 
-            HasMany(c => c.Usuarios).WithRequired(p => p.Persona).HasForeignKey(c => c.IdPersona);
+            
             HasMany(c => c.ParosReportados).WithRequired(p => p.Reportador).HasForeignKey(c => c.IdReportador);
             HasMany(c => c.DefectosReportados).WithRequired(p => p.Reportador).HasForeignKey(c => c.IdReportador);
             HasMany(c => c.DefectosAsignados).WithRequired(p => p.Responsable).HasForeignKey(c => c.IdResponsable);

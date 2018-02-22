@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PMMX.Modelo.Entidades.Desperdicio>
+﻿@model IEnumerable<PMMX.Modelo.Vistas.ReporteView>
 
 @{
     ViewBag.Title = "Index";
@@ -7,7 +7,7 @@
 
 
 @section Styles {
-    @Styles.Render("~/Style/DataTables")
+
 
 }
 
@@ -21,6 +21,9 @@
                     <a href="@Url.Action("Create", "Desperdicios")" class="btn btn-primary btn-sm">
                         <span class="fa fa-plus" aria-hidden="true"></span>
                     </a>
+                    <a href="@Url.Action("Reporte", "Desperdicios")" class="btn btn-primary btn-sm">
+                        <span class="fa fa-list-alt" aria-hidden="true"></span>
+                    </a>
 
                 </div>
             </div>
@@ -29,22 +32,16 @@
                     <thead>
                         <tr class="info">
                             <th>
-                                @Html.DisplayNameFor(model => model.MarcaDelCigarrillo.Descripcion)
+                                @Html.DisplayNameFor(model => model.Nombre)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Reportante.Nombre)
+                                @Html.DisplayNameFor(model => model.NombreCorto)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Seccion.Nombre)
+
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.WorkCenter.Nombre)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Cantidad)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Fecha)
+                                Total
                             </th>
                             <th></th>
                         </tr>
@@ -54,27 +51,77 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.MarcaDelCigarrillo.Descripcion)
+                                    @Html.DisplayFor(modelItem => item.Nombre)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Reportante.Nombre)
+                                    @Html.DisplayFor(modelItem => item.NombreCorto)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Seccion.Nombre)
+                                    @if (item.Codes_FA.Count() > 0)
+                                    {
+                                        <table class="table table-hover table-striped">
+                                            <thead>
+                                                <tr class="info">
+                                                    <th>
+                                                        CODE FA
+                                                    </th>
+                                                    <th>
+                                                        DESCRIPCION
+                                                    </th>
+                                                    <th>
+                                                        TOTAL
+                                                    </th>
+
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var code_fa in item.Codes_FA.Distinct())
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => code_fa.Code_FA)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => code_fa.Cantidad)
+                                                        </td>
+                                                        <td></td>
+                                                        <td>
+                                                            @Html.ActionLink("Edit", "Edit", new { id = code_fa.Code_FA }) |
+                                                            @Html.ActionLink("Details", "Details", new { id = code_fa.Code_FA }) |
+                                                            @Html.ActionLink("Delete", "Delete", new { id = code_fa.Code_FA })
+                                                        </td>
+                                                    </tr>
+                                                }
+
+                                            </tbody>
+                                            <tfoot>
+                                                <tr class="info">
+                                                    <th>
+                                                        CODE FA
+                                                    </th>
+                                                    <th>
+                                                        DESCRIPCION
+                                                    </th>
+                                                    <th>
+                                                        TOTAL
+                                                    </th>
+
+                                                    <th></th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+
+                                    }
+
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.WorkCenter.Nombre)
+                                    @Html.DisplayFor(modelItem => item.DesperdiciosTotal)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Cantidad)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Fecha)
-                                </td>
-                                <td>
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                    @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
                                 </td>
                             </tr>
                         }
@@ -82,22 +129,16 @@
                     <tfoot>
                         <tr class="info">
                             <th>
-                                @Html.DisplayNameFor(model => model.MarcaDelCigarrillo.Descripcion)
+                                @Html.DisplayNameFor(model => model.Nombre)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Reportante.Nombre)
+                                @Html.DisplayNameFor(model => model.NombreCorto)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Seccion.Nombre)
+                                @*@Html.DisplayNameFor(model => model.Desperdicios)*@
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.WorkCenter.Nombre)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Cantidad)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Fecha)
+                                Total
                             </th>
                             <th></th>
                         </tr>
@@ -113,14 +154,5 @@
 
 
 @section Scripts {
-    @Scripts.Render("~/JS/DataTables")
-    <script>
-        $(function () {
-            $('#example1').DataTable();
-        });
-        $('#example1 input[type="checkbox"]').iCheck({
-            checkboxClass: 'icheckbox_flat-blue',
-            radioClass: 'iradio_flat-blue'
-        });
-    </script>
+
 }
