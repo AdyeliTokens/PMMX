@@ -38,6 +38,27 @@ namespace PMMX.Modelo.Entidades.Maquinaria
             }
         }
 
+        public Double DesperdicioTotal
+        {
+            get
+            {
+                if (Desperdicios != null)
+                {
+                    Double desperdicioTotal = 0;
+                    foreach (var item in Desperdicios)
+                    {
+                        desperdicioTotal = desperdicioTotal + item.Cantidad;
+                    }
+                    return desperdicioTotal;
+                }
+                else
+                {
+                    return 0;
+                }
+
+            }
+        }
+
         public int NumeroDeOperadores
         {
             get

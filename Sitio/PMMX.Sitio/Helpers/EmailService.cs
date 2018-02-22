@@ -80,9 +80,9 @@ namespace Sitio.Helpers
                 }).FirstOrDefault();
             
             var remitentes = db.Remitentes
-               .Join(db.Users,
+               .Join(db.AspNetUser,
                r => r.IdPuesto,
-               p => p.Persona.Puesto.Id,
+               p => p.PersonasConEsteUsuario.FirstOrDefault().Persona.Puesto.Id,
                (r, p) => new { Remitentes = r, User = p })
                .Where(q => (q.Remitentes.IdGrupo.Equals(IdGrupo)) && (q.Remitentes.Origen.Id.Equals(idOrigen)))
                .Select( x => new UserView {

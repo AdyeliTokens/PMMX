@@ -1,13 +1,7 @@
-﻿using PMMX.Modelo.Entidades.Operaciones;
-using PMMX.Modelo.Entidades.Maquinaria;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Web;
-using PMMX.Modelo.Entidades.GembaWalks;
+﻿using PMMX.Modelo.Entidades;
+using PMMX.Modelo.Entidades.Operaciones;
 
-namespace PMMX.Modelo.Entidades.Operaciones
+namespace PMMX.Modelo.Entidades
 {
     public class ListaDistribucion
     {

@@ -56,7 +56,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         }
 
         [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase file)
+        public ActionResult Upload(PlanDeProduccion model ,HttpPostedFileBase file)
         {
             if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
             {
@@ -108,7 +108,9 @@ namespace Sitio.Areas.Operaciones.Controllers
                                         planDeProduccion.Cantidad = Convert.ToDouble(workSheet.Cells[rowIterator, 8].Value.ToString().Trim());
                                         planDeProduccion.Activo = true;
                                         planDeProduccion.ClaseDeOrden = workSheet.Cells[rowIterator, 16].Value.ToString().Trim();
-
+                                        planDeProduccion.Inicio = model.Inicio;
+                                        planDeProduccion.Fin = model.Fin;
+                                        planDeProduccion.FechaSubida = DateTime.Now;
 
                                         planDeProduccion.IdWorkCenter = idWorkCenter;
 

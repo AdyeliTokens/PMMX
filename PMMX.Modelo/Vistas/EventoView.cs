@@ -1,4 +1,5 @@
-﻿using PMMX.Modelo.Entidades.GembaWalks;
+﻿
+using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo.Entidades.Warehouse;
 using PMMX.Modelo.Vistas;
 using System;

@@ -12,15 +12,7 @@ namespace PMMX.Seguridad.Servicios
     public class UsuarioServicio
     {
         private PMMXContext db = new PMMXContext();
-
-        public User getUser()
-        {
-
-            var usuario = db.Users.Select(x => x).FirstOrDefault();
-
-            return usuario;
-        }
-
+        
         public List<DispositivoView> GetDispositivosDeMecanicosByBussinesUnit(int idBussinesUnit)
         {
             List<DispositivoView> dispositivos = new List<DispositivoView>();
@@ -120,10 +112,10 @@ namespace PMMX.Seguridad.Servicios
         {
             var emailList = db.EventoResponsable
                 .Where(e => e.IdEvento == idEvento)
-                .Select(e => e.Responsable.Usuarios.Where(d => d.Activo == true).Select(v => new UserView
+                .Select(e => e.Responsable.Users.Select(v => new UserView
                 {
                     Id = v.Id,
-                    Email = v.Email
+                    Email = v.Usuario.Email
                 }).ToList()
                 ).FirstOrDefault();
 

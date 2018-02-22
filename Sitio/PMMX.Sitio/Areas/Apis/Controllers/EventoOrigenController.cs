@@ -9,8 +9,8 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using PMMX.Infraestructura.Contexto;
-using PMMX.Modelo.Entidades.GembaWalks;
 using PMMX.Modelo.Vistas;
+using PMMX.Modelo.Entidades.Operaciones;
 
 namespace Sitio.Areas.Apis.Controllers
 {

@@ -5,7 +5,6 @@ using PMMX.Modelo.Entidades.Maquinaria;
 using PMMX.Modelo.Entidades.Paros;
 using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo.Entidades.Warehouse;
-using PMMX.Modelo.Entidades.GembaWalks;
 using PMMX.Modelo.Entidades.InsiteLAC;
 using PMMX.Modelo.Map;
 using PMMX.Modelo.Map.InsiteLAC;
@@ -33,7 +32,7 @@ namespace PMMX.Infraestructura.Contexto
             Database.SetInitializer<PMMXContext>(new CreateDatabaseIfNotExists<PMMXContext>());
 
         }
-        
+
 
         /// <summary>
         /// Contructor "Estatico" que retorna la entidad creada sin necesidad de intanciar previamente
@@ -57,7 +56,7 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new KPIMap());
 
             #endregion
-            
+
             #region Multimedia
 
             modelBuilder.Configurations.Add(new FotoMap());
@@ -92,10 +91,9 @@ namespace PMMX.Infraestructura.Contexto
 
             modelBuilder.Configurations.Add(new PersonaMap());
             modelBuilder.Configurations.Add(new PuestoMap());
-            modelBuilder.Configurations.Add(new UserMap());
-            modelBuilder.Configurations.Add(new EntornoMap());
             modelBuilder.Configurations.Add(new DispositivoMap());
             modelBuilder.Configurations.Add(new AspNetUserMap());
+            modelBuilder.Configurations.Add(new AspNetRolesMap());
             modelBuilder.Configurations.Add(new ShiftLeaderMap());
             modelBuilder.Configurations.Add(new PesadorMap());
             modelBuilder.Configurations.Add(new ElectricosMap());
@@ -146,7 +144,7 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new BitacoraGembaWalkMap());
             modelBuilder.Configurations.Add(new WorkFlowMap());
             modelBuilder.Configurations.Add(new TipoOperacionMap());
-            
+
 
 
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
@@ -158,7 +156,7 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<KPI> KPIs { get; set; }
 
         #endregion
-        
+
         #region Multimedia
 
         public DbSet<Foto> Fotos { get; set; }
@@ -187,18 +185,17 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<Horario> Horarios { get; set; }
         public DbSet<Indicador> Indicadores { get; set; }
         public DbSet<VolumenDeProduccion> VolumenesDeProduccion { get; set; }
-        public DbSet<Alias> Alias{ get; set; }
+        public DbSet<Alias> Alias { get; set; }
         public DbSet<PlanDeProduccion> PlanDeProduccion { get; set; }
         #endregion
 
         #region Seguridad
 
         public DbSet<Dispositivo> Dispositivos { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<Persona> Personas { get; set; }
         public DbSet<Puesto> Puestos { get; set; }
-        public DbSet<Entorno> Entornos { get; set; }
         public DbSet<AspNetUser> AspNetUser { get; set; }
+        public DbSet<AspNetRoles> AspNetRoles { get; set; }
         public DbSet<Operadores> Operadores { get; set; }
         public DbSet<Mecanicos> Mecanicos { get; set; }
         public DbSet<UsuariosPorPersona> UsuariosPorPersonas { get; set; }
