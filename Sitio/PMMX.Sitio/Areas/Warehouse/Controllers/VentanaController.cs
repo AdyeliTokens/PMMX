@@ -16,6 +16,7 @@ using Microsoft.AspNet.Identity;
 using PMMX.Operaciones.Servicios;
 using PMMX.Modelo.Vistas;
 using OfficeOpenXml;
+using Sitio.Helpers;
 
 namespace Sitio.Areas.Warehouse.Controllers
 {
@@ -175,11 +176,11 @@ namespace Sitio.Areas.Warehouse.Controllers
                 var estatus = db.StatusVentana
                     .Where(s => (s.IdVentana == ventana.Id))
                     .OrderByDescending(s => s.Fecha)
-                    .Select(s => s.IdStatus)
+                    .Select(s => s.Status)
                     .FirstOrDefault();
                 
                 WorkFlowServicio workflowServicio = new WorkFlowServicio();
-                IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, estatus, false);
+                IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, estatus.Id, false);
 
                 if (workFlow.EjecucionCorrecta)
                 {
@@ -190,7 +191,7 @@ namespace Sitio.Areas.Warehouse.Controllers
                     statusVentana.IdVentana = ventana.Id;
                     statusVentana.IdResponsable = persona.Respuesta.Id;
 
-                    if(estatus == 0)
+                    if(estatus.Id == 0)
                     {
                         statusVentana.IdStatus = workFlow.Respuesta.EstatusInicial.Id;
                     }
@@ -203,8 +204,24 @@ namespace Sitio.Areas.Warehouse.Controllers
                     statusVentana.Comentarios = " ";
                     db.StatusVentana.Add(statusVentana);
                     db.SaveChanges();
+
+                    UsuarioServicio usuarioServicio = new UsuarioServicio();
+                    NotificationService notify = new NotificationService();
+
+                    string senders = usuarioServicio.GetEmailByEvento(statusVentana.Ventana.IdEvento);
+                    EmailService emailService = new EmailService();
+                    emailService.SendMail(senders, ventana);
+
+                    List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(statusVentana.Ventana.IdEvento);
+                    List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
+
+                    foreach (string notificacion in llaves)
+                    {
+                        notify.SendPushNotification(notificacion, " Cambio de estatus Ventana: " + ventana.Evento.Descripcion + ". ", " Cambio de estatus a " + estatus.Nombre);
+                    }
+
                 }
-                
+
                 return true;
             }
             return false;
