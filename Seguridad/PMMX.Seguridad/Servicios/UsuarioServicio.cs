@@ -106,19 +106,18 @@ namespace PMMX.Seguridad.Servicios
 
             return dispositivos;
         }
-
-
+        
         public string GetEmailByEvento(int idEvento)
         {
             var emailList = db.EventoResponsable
                 .Where(e => e.IdEvento == idEvento)
-                .Select(e => e.Responsable.Users.Select(v => new UserView
+                .Select(e => e.Responsable.Users.Where(v => v.IdPersona == e.IdResponsable).Select(v => new UserView
                 {
                     Id = v.Id,
                     Email = v.Usuario.Email
                 }).ToList()
                 ).FirstOrDefault();
-
+            
             List<string> emails = emailList.Select(x => x.Email).ToList();
             string stringEmails = "";
              

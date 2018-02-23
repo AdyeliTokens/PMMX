@@ -16,6 +16,9 @@ using System.Configuration;
 using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo.Entidades;
 using PMMX.Modelo.Entidades.Warehouse;
+using Sitio.Helpers;
+using PMMX.Seguridad.Servicios;
+using PMMX.Modelo.Vistas;
 
 namespace Sitio
     {
@@ -49,7 +52,7 @@ namespace Sitio
                     
                     smail.Subject = "[PMMX Notification] Info: " + evento.Descripcion;
                     smail.Body = string.Format("<html><head><meta charset='UTF-8'></head><body>  ");
-                    smail.Body = smail.Body + string.Format("  <img src = '~/img/maya/logo.jpg' /><br /><br /> ");
+                    //smail.Body = smail.Body + string.Format("  <img src = '~/img/maya/logo.jpg' /><br /><br /> ");
                     smail.Body = smail.Body + string.Format("<div style = 'border - top:3px solid #22BCE5'>&nbsp;</div> ");
                     smail.Body = smail.Body + string.Format("<span style = 'font - family:Arial; font - size:10pt'> ");
                     smail.Body = smail.Body + string.Format(" Hello <b></b>,<br /><br /> ");
@@ -100,7 +103,7 @@ namespace Sitio
                 //smail.Body = smail.Body + string.Format(" <br /><br /><img src='~/img/augmented-reality/screen-1.png' alt=''><br /><br /> ");
                 smail.Body = smail.Body + string.Format("Has been change to status to <span style='color: #5caad2;'>" + estatus.Nombre);
                     
-                    if(ventana.BitacoraVentana.Where(b => (b.IdVentana == ventana.Id)).OrderByDescending(v=> v.Fecha).Select(v => v.IdRechazo).Count() > 0  )
+                    if(ventana.BitacoraVentana.Where(b => (b.IdVentana == ventana.Id) && (b.Estatus.Id == estatus.Id) ).OrderByDescending(v=> v.Fecha).Select(v => v.IdRechazo).Count() > 0  )
                     {
                         smail.Body = smail.Body + string.Format(" Rejected by" 
                             + "</br><span style='color: #21618C;'>"
@@ -122,7 +125,19 @@ namespace Sitio
                     smtp.UseDefaultCredentials = false;
                     smtp.Credentials = new System.Net.NetworkCredential("pmm.isoperation@gmail.com", "82000100");
                     smtp.Send(smail);
-                }
+
+                    NotificationService notify = new NotificationService();
+                    UsuarioServicio usuarioServicio = new UsuarioServicio();
+
+                    List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(ventana.IdEvento);
+                    List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
+
+                    foreach (string notificacion in llaves)
+                    {
+                        notify.SendPushNotification(notificacion, "Ventana: " + ventana.Evento.Descripcion + ". ", "La ventana "+ ventana.Evento.Descripcion +" ha cambiado de estatus a "+ estatus.Nombre);
+                    }
+
+            }
                 catch (SmtpException ex)
                 {
                     Console.WriteLine(ex.StatusCode);
