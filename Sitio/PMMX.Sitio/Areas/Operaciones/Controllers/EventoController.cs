@@ -269,26 +269,47 @@ namespace Sitio.Areas.Operaciones.Controllers
                         }
                     }
 
-                    NotificationService notify = new NotificationService();
-                    UsuarioServicio usuarioServicio = new UsuarioServicio();
-
-                    List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(evento.Id);
-                    List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
-
-                    foreach (string notificacion in llaves)
+                    SendNotification(evento);
+                }
+                else
+                {
+                    var lista = db.ListaDistribucion.Select(w => new { IdPersona = w.IdPersona }).ToList();
+                    foreach (var elemento in lista)
                     {
-                        notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + evento.Descripcion + ". ", "");
+                        EventoResponsable eResponsable = new EventoResponsable();
+                        eResponsable.IdEvento = evento.Id;
+                        eResponsable.IdResponsable = elemento.IdPersona;
+                        db.EventoResponsable.Add(eResponsable);
+                        db.SaveChanges();
                     }
 
-                    string senders = usuarioServicio.GetEmailByEvento(evento.Id);
-                    EmailService emailService = new EmailService();
-                    emailService.SendMail(senders, evento);
+                    SendNotification(evento);
                 }
-
+                
                 return RedirectToAction("Index");
             }
-
+                        
             return View(evento);
+        }
+
+        public bool SendNotification(Evento evento)
+        {
+            NotificationService notify = new NotificationService();
+            UsuarioServicio usuarioServicio = new UsuarioServicio();
+
+            List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(evento.Id);
+            List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
+
+            foreach (string notificacion in llaves)
+            {
+                notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + evento.Descripcion + ". ", "");
+            }
+
+            string senders = usuarioServicio.GetEmailByEvento(evento.Id);
+            EmailService emailService = new EmailService();
+            emailService.SendMail(senders, evento);
+
+            return true;
         }
 
         // GET: Eventos/Evento/Edit/5

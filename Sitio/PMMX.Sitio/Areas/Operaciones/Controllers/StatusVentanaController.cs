@@ -15,6 +15,7 @@ using Microsoft.AspNet.Identity;
 using PMMX.Modelo.Vistas;
 using PMMX.Operaciones.Servicios;
 using PMMX.Modelo.Entidades.Warehouse;
+using Sitio.Helpers;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -247,13 +248,26 @@ namespace Sitio.Areas.Operaciones.Controllers
                                  .Include(v => v.StatusVentana)
                                  .Include(v => v.StatusVentana.Select(s => s.Status))
                                  .Include(v => v.BitacoraVentana)
+                                 .Include(v => v.BitacoraVentana.Select(b => b.Estatus))
+                                 .Include(v => v.BitacoraVentana.Select(b => b.Rechazo))
+                                 .Include(v => v.Evento)
                                  .SingleOrDefault(x => x.Id == statusVentana.IdVentana);
 
-
                 UsuarioServicio usuarioServicio = new UsuarioServicio();
+                NotificationService notify = new NotificationService();
+
                 string senders = usuarioServicio.GetEmailByEvento(statusVentana.Ventana.IdEvento);
                 EmailService emailService = new EmailService();
                 emailService.SendMail(senders, ventana);
+                
+                List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(statusVentana.Ventana.IdEvento);
+                List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
+                var estatus = ventana.StatusVentana.OrderByDescending(s => s.Fecha).Select(s => s.Status).FirstOrDefault();
+
+                foreach (string notificacion in llaves)
+                {
+                   notify.SendPushNotification(notificacion, " Cambio de estatus Ventana: " + ventana.Evento.Descripcion + ". ", " Cambio de estatus a " + estatus.Nombre);
+                }
 
                 return RedirectToAction("Index");
             }
