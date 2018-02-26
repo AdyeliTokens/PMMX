@@ -22,13 +22,18 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         public ActionResult Index()
         {
+            
+            return View();
+        }
+
+        public ActionResult Reporte()
+        {
             var volumenesDeProduccion = db.VolumenesDeProduccion
                 .Include(v => v.MarcaDelCigarrillo)
                 .Include(v => v.Reportante)
                 .Include(v => v.WorkCenter);
             return View(volumenesDeProduccion.ToList());
         }
-
 
         public ActionResult Details(int? id)
         {

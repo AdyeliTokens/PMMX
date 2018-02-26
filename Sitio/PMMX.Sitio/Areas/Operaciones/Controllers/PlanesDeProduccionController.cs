@@ -12,6 +12,7 @@ using OfficeOpenXml;
 using PMMX.Seguridad.Servicios;
 using PMMX.Modelo.RespuestaGenerica;
 using Microsoft.AspNet.Identity;
+using Sitio.Models;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -61,7 +62,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         }
 
         [HttpPost]
-        public ActionResult Upload(PlanDeProduccion model, HttpPostedFileBase file)
+        public ActionResult Upload(FechaInicioFin model, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {

@@ -404,6 +404,7 @@
     <Compile Include="Helpers\NotificationService.cs" />
     <Compile Include="Helpers\VideoResult.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\FechaInicioFin.cs" />
     <Compile Include="Models\FechaModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -8050,6 +8051,7 @@
     <Content Include="Areas\Operaciones\Views\Desperdicios\Reporte.cshtml" />
     <Content Include="Areas\Operaciones\Views\NoConformidades\Reporte.cshtml" />
     <Content Include="Areas\Operaciones\Views\PlanesDeProduccion\Reporte.cshtml" />
+    <Content Include="Areas\Operaciones\Views\VolumenesDeProduccion\Reporte.cshtml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

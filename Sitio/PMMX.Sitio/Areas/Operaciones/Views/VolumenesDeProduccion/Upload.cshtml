@@ -1,7 +1,8 @@
-﻿
+﻿@using Sitio.Helpers
+
 @{
-    ViewBag.Title = "Upload";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Create";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="box box-primary">
@@ -26,11 +27,10 @@
                 </div>
             </div>
 
-
-
         </div>
-
         <div class="box-footer clearfix">
+            @Ajax.MenuLink(" Back to List", string.Format("{0:c}", "fa fa-chevron-left"), "Index", "VolumenesDeProduccion", new { area = "Operaciones" }, null, new { @class = "btn btn-default" })
+
             <input class="btn btn-primary pull-right" type="submit" value="Upload" />
         </div>
     }
