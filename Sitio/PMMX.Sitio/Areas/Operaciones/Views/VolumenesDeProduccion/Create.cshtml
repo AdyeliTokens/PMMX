@@ -1,7 +1,9 @@
-﻿@model PMMX.Modelo.Entidades.VolumenDeProduccion
+﻿@using Sitio.Helpers
+@model PMMX.Modelo.Entidades.VolumenDeProduccion
 
 @{
     ViewBag.Title = "Create";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="row">
@@ -13,13 +15,14 @@
 
                 </div>
             </div>
-            <div class="box-body">
-                @using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="box-body">
+
 
                     <div class="form-horizontal">
-                        
+
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-group">
                             @Html.LabelFor(model => model.New_Qty, htmlAttributes: new { @class = "control-label col-md-1" })
@@ -53,18 +56,23 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-md-offset-1 col-md-11">
-                                @Html.ActionLink("Back to List", "Index")
-                                <input type="submit" value="Create" class="btn btn-primary pull-right" />
-                            </div>
-                        </div>
+
                     </div>
-                }
 
 
-            </div>
+
+                </div>
+
+                <div class="box-footer clearfix">
+
+                    @Ajax.MenuLink(" Back to List", string.Format("{0:c}", "fa fa-chevron-left"), "Index", "VolumenesDeProduccion", new { area = "Operaciones" }, null, new { @class = "btn btn-default" })
+
+
+                    <input type="submit" value="Create" class="btn btn-primary pull-right" />
+
+                </div>
+
+            }
         </div>
     </div>
 </div>
-

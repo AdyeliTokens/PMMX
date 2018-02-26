@@ -277,6 +277,7 @@
     <Compile Include="Vistas\UserView.cs" />
     <Compile Include="Vistas\VentanaView.cs" />
     <Compile Include="Vistas\VolumenDeProduccionView.cs" />
+    <Compile Include="Vistas\VQIporWorkCenterView.cs" />
     <Compile Include="Vistas\VQIView.cs" />
     <Compile Include="Vistas\WorkCenterView.cs" />
     <Compile Include="Vistas\WorkFlowView.cs" />
