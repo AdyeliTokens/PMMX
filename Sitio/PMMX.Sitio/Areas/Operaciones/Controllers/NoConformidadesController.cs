@@ -15,6 +15,7 @@ using PMMX.Modelo.RespuestaGenerica;
 using Microsoft.AspNet.Identity;
 using System.Text.RegularExpressions;
 using PMMX.Operaciones.Servicios;
+using PMMX.Modelo.Vistas;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -24,6 +25,43 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         public ActionResult Index()
         {
+            DateTime diaSeleccionado = DateTime.Now.Date;
+            int delta = DayOfWeek.Monday - diaSeleccionado.DayOfWeek;
+            DateTime monday = diaSeleccionado.AddDays(delta);
+            var primerDiaDelAnio = new DateTime(DateTime.Now.Year, 1, 1);
+
+            var workCenters = db.WorkCenters.ToList();
+            var noConformidades = db.NoConformidades.Where(x => (x.Fecha >= monday && x.Fecha <= diaSeleccionado)).ToList();
+            var objetivos = db.ObjetivosVQI.Select(x => x).Where(x => (x.FechaInicial >= primerDiaDelAnio)).ToList();
+            IList<VQIporWorkCenterView> listadelistas = new List<VQIporWorkCenterView>();
+
+            foreach (var item in workCenters)
+            {
+                
+                IList<VQIView> vqi = new List<VQIView>();
+                VQIporWorkCenterView vqiWorkCenter = new VQIporWorkCenterView();
+                vqiWorkCenter.WorkCenter = item;
+
+                for (int i = delta; i <= (6 + delta); i++)
+                {
+                    int vqiTotal = noConformidades.Where(x => (x.IdWorkCenter == item.Id) && (x.Fecha.Date == diaSeleccionado.AddDays(i).Date)).Sum(o => o.Calificacion_VQI);
+                    int objetivo = objetivos.Where(x => (x.IdWorkCenter == item.Id) && (x.FechaInicial <= diaSeleccionado.AddDays(i).Date)).OrderByDescending(x => x.FechaInicial).Select(x => x.Objetivo).FirstOrDefault();
+
+                    vqi.Add(new VQIView { Fecha = diaSeleccionado.AddDays(i), VQI_Total = vqiTotal, Objetivo = objetivo  });
+                }
+                vqiWorkCenter.VQIs = new List<VQIView>();
+                vqiWorkCenter.VQIs.AddRange(vqi);
+                listadelistas.Add(vqiWorkCenter);
+            }
+
+            
+
+            
+
+            return View(listadelistas);
+        }
+
+        public ActionResult Reporte() {
             NoConformidadServicio servicio = new NoConformidadServicio(db);
             var respuesta = servicio.GetNoConformidades();
             return View(respuesta.Respuesta.ToList());

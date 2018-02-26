@@ -1,4 +1,5 @@
-﻿@model IEnumerable<PMMX.Modelo.Entidades.NoConformidad>
+﻿@using Sitio.Helpers
+@model IEnumerable<PMMX.Modelo.Vistas.VQIporWorkCenterView>
 
 @{
     ViewBag.Title = "Index";
@@ -7,7 +8,7 @@
 
 
 @section Styles {
-    @Styles.Render("~/Style/DataTables")
+
 
 }
 
@@ -17,99 +18,87 @@
             <div class="box-header">
                 <h3 class="box-title">No Conformidades</h3>
                 <div class="box-tools">
-                   <a href="@Url.Action("Create", "NoConformidades")" class="btn btn-primary btn-sm">
-                        <span class="fa fa-plus" aria-hidden="true"></span>
-                    </a>
-                    <a href="@Url.Action("Upload", "NoConformidades")" class="btn btn-primary btn-sm">
-                        <span class="fa fa-cloud-upload" aria-hidden="true"></span>
-                    </a>
+                    @Ajax.MenuLink(" Reporte", string.Format("{0:c}", "fa fa-list"), "Reporte", "NoConformidades", new { area = "Operaciones" }, null, new { @class = "btn btn-primary btn-sm" })
+
+                    @Ajax.MenuLink(" Nuevo", string.Format("{0:c}", "fa fa-plus"), "Create", "NoConformidades", new { area = "Operaciones" }, null, new { @class = "btn btn-primary btn-sm" })
+
+                    @Ajax.MenuLink(" Upload", string.Format("{0:c}", "fa fa-cloud-upload"), "Upload", "NoConformidades", new { area = "Operaciones" }, null, new { @class = "btn btn-primary btn-sm" })
+
                 </div>
             </div>
-            <div class="box-body table-responsive">
-                <table class="table table-hover table-striped" id="example1">
-                    <thead>
-                        <tr class="info">
-                            <th>
-                                @Html.DisplayNameFor(model => model.Fecha)
-                            </th>
-                            
-                           <th>
-                                @Html.DisplayNameFor(model => model.Seccion.Nombre)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.WorkCenter.Nombre)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Code)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.CodeDescription)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Calificacion_VQI)
-                            </th>
-                            
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Fecha)
-                                </td>
-                                
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Seccion.Nombre)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.WorkCenter.Nombre)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Code)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CodeDescription)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Calificacion_VQI)
-                                </td>
-                                
-                                <td>
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                    <tfoot>
-                        <tr class="info">
-                            <th>
-                                @Html.DisplayNameFor(model => model.Fecha)
-                            </th>
-                            
-                            <th>
-                                @Html.DisplayNameFor(model => model.Seccion.Nombre)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.WorkCenter.Nombre)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Code)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.CodeDescription)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Calificacion_VQI)
-                            </th>
+            <div class="box-body">
+                <div class="row">
 
-                            <th></th>
-                        </tr>
-                    </tfoot>
-                </table>
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-2">
+
+                            <div class="box box-widget widget-user-2">
+                                <div class="widget-user-header bg-gray">
+
+                                    <h3 class="widget-user-username">@Html.DisplayFor(modelItem => item.WorkCenter.Nombre)</h3>
+                                    <h5 class="widget-user-desc">@Html.DisplayFor(modelItem => item.WorkCenter.NombreCorto)</h5>
+
+                                    @*@Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-danger pull-right" })
+                                        @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-default pull-right" })
+                                        @Html.ActionLink("Detalles", "Details", new { id = item.Id }, new { @class = "btn btn-default pull-right" })*@
+
+                                </div>
+                                <div class="box-footer">
+                                    <div class="row">
+                                        <ul class="list-group">
+                                            @foreach (var vqi in item.VQIs)
+                                            {
+                                                if (vqi.VQI_Total < vqi.Objetivo)
+                                                {
+                                                    <li class="list-group-item list-group-item-success">
+                                                        <a href="#">
+                                                            @Html.DisplayFor(modelItem => vqi.Fecha)
+                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => vqi.Objetivo)</span>
+                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => vqi.VQI_Total)</span>
+                                                        </a>
+                                                    </li>
+
+                                                }
+                                                else if (vqi.VQI_Total > vqi.Objetivo)
+                                                {
+                                                    <li class="list-group-item list-group-item-danger">
+                                                        <a href="#">
+                                                            @Html.DisplayFor(modelItem => vqi.Fecha)
+                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => vqi.Objetivo)</span>
+                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => vqi.VQI_Total)</span>
+                                                        </a>
+                                                    </li>
+
+                                                }
+                                                else if (vqi.VQI_Total == vqi.Objetivo)
+                                                {
+                                                    <li class="list-group-item list-group-item-warning">
+                                                        <a href="#">
+
+                                                            @Html.DisplayFor(modelItem => vqi.Fecha)
+                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => vqi.Objetivo)</span>
+                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => vqi.VQI_Total)</span>
+                                                        </a>
+                                                    </li>
+
+                                                }
+
+                                            }
+
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    }
+
+
+                </div>
 
             </div>
         </div>
@@ -117,16 +106,7 @@
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/JS/DataTables")
-    <script>
-        $(function () {
-            $('#example1').DataTable();
-        });
-        $('#example1 input[type="checkbox"]').iCheck({
-            checkboxClass: 'icheckbox_flat-blue',
-            radioClass: 'iradio_flat-blue'
-        });
-    </script>
+
 }
 
 

@@ -8048,6 +8048,8 @@
     <Content Include="Areas\Operaciones\Views\PlanesDeProduccion\Index.cshtml" />
     <Content Include="Areas\Operaciones\Views\PlanesDeProduccion\Upload.cshtml" />
     <Content Include="Areas\Operaciones\Views\Desperdicios\Reporte.cshtml" />
+    <Content Include="Areas\Operaciones\Views\NoConformidades\Reporte.cshtml" />
+    <Content Include="Areas\Operaciones\Views\PlanesDeProduccion\Reporte.cshtml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

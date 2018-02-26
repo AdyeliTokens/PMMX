@@ -7,12 +7,10 @@ using System.Threading.Tasks;
 
 namespace PMMX.Modelo.Vistas
 {
-    public class VQIView
+    public class VQIporWorkCenterView
     {
+        public WorkCenter WorkCenter { get; set; }
 
-        public int VQI_Total { get; set; }
-
-        public int Objetivo { get; set; }
-        public DateTime Fecha { get; set; }
+        public List<VQIView> VQIs { get; set; }
     }
 }
