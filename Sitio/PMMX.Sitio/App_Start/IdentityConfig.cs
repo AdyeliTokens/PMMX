@@ -186,7 +186,7 @@ namespace Sitio
 
                 
                 manager.UserLockoutEnabledByDefault = true;
-                manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromDays(30);
                 manager.MaxFailedAccessAttemptsBeforeLockout = 5;
 
                 

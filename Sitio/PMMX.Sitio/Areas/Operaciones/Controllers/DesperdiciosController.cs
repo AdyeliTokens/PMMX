@@ -67,7 +67,11 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.Code_FA = new SelectList(db.Marcas.Select(x => new { Code_FA = x.Code_FA, Descripcion = x.Code_FA + " - " + x.Descripcion }), "Code_FA", "Descripcion");
+            DateTime hoy = DateTime.Now.Date;
+            
+            
+            ViewBag.Code_FA = new SelectList(db.PlanDeProduccion.Where(x=> x.Inicio < hoy && x.Fin > hoy).Select(x => new { Code_FA = x.Code_FA, Descripcion = x.Code_FA + " - " + x.Marca_FA.Descripcion }), "Code_FA", "Descripcion");
+            
             ViewBag.IdSeccion = new SelectList(db.ModuloSeccion, "Id", "Nombre");
             ViewBag.IdWorkCenter = new SelectList(db.WorkCenters, "Id", "Nombre");
             return View();

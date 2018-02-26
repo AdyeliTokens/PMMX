@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PMMX.Modelo.Entidades;
+using System.ComponentModel.DataAnnotations;
 
 namespace PMMX.Modelo.Vistas
 {
@@ -14,5 +15,7 @@ namespace PMMX.Modelo.Vistas
         public string Nombre { get; set; }
         public Double? DesperdiciosTotal { get; set; }
         public IEnumerable<Code_FA_View> Codes_FA { get; set; }
+
+        
     }
 }

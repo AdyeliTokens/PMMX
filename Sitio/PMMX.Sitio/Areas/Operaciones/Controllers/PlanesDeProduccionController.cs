@@ -12,6 +12,7 @@ using OfficeOpenXml;
 using PMMX.Seguridad.Servicios;
 using PMMX.Modelo.RespuestaGenerica;
 using Microsoft.AspNet.Identity;
+using Sitio.Models;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -21,6 +22,11 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         // GET: Operaciones/PlanesDeProduccion
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult Reporte()
         {
             var planDeProduccion = db.PlanDeProduccion.Include(p => p.Marca_FA).Include(p => p.Uploader).Include(p => p.WorkCenterEfectivo);
             return View(planDeProduccion.ToList());
@@ -56,88 +62,99 @@ namespace Sitio.Areas.Operaciones.Controllers
         }
 
         [HttpPost]
-        public ActionResult Upload(PlanDeProduccion model ,HttpPostedFileBase file)
+        public ActionResult Upload(FechaInicioFin model, HttpPostedFileBase file)
         {
-            if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+            if (ModelState.IsValid)
             {
-                string fileName = file.FileName;
-                string fileContentType = file.ContentType;
-                byte[] fileBytes = new byte[file.ContentLength];
-                var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
-                //var aliasWorkCenter = db.Alias.Include(w => w.WorkCenters).ToList();
-                var wcs = db.WorkCenters.ToList();
-                var codes = db.Marcas.ToList();
-
-                var planes = new List<PlanDeProduccion>();
-                using (var package = new ExcelPackage(file.InputStream))
+                if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
                 {
-                    PersonaServicio personaServicio = new PersonaServicio();
-                    IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
+                    string fileName = file.FileName;
+                    string fileContentType = file.ContentType;
+                    byte[] fileBytes = new byte[file.ContentLength];
+                    var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+                    //var aliasWorkCenter = db.Alias.Include(w => w.WorkCenters).ToList();
+                    var wcs = db.WorkCenters.ToList();
+                    var codes = db.Marcas.ToList();
 
-
-                    var currentSheet = package.Workbook.Worksheets;
-
-                    foreach (var workSheet in currentSheet)
+                    var planes = new List<PlanDeProduccion>();
+                    using (var package = new ExcelPackage(file.InputStream))
                     {
-                        var noOfCol = workSheet.Dimension.End.Column;
-                        var noOfRow = workSheet.Dimension.End.Row;
+                        PersonaServicio personaServicio = new PersonaServicio();
+                        IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
 
-                        for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
+
+                        var currentSheet = package.Workbook.Worksheets;
+
+                        foreach (var workSheet in currentSheet)
                         {
+                            var noOfCol = workSheet.Dimension.End.Column;
+                            var noOfRow = workSheet.Dimension.End.Row;
 
-                            if (workSheet.Cells[rowIterator, 1].Value != null && workSheet.Cells[rowIterator, 1].Value.ToString () != "")
+                            for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
                             {
-                                var str = workSheet.Cells[rowIterator, 7].Value.ToString().Trim();
-                                var wc = str.Substring(str.Length - 2, 2);
-                                var idWorkCenter = wcs.Where(w => w.NombreCorto == wc).Select(w => w.Id).FirstOrDefault();
-                                if (idWorkCenter != null && idWorkCenter>0)
+
+                                if (workSheet.Cells[rowIterator, 1].Value != null && workSheet.Cells[rowIterator, 1].Value.ToString() != "")
                                 {
-                                    
-                                    string code_FA = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
-                                    code_FA = code_FA.Replace(" ", "");
-                                    var codeExist = codes.Where(w => w.Code_FA == code_FA).Select(w => w.Code_FA).Count();
-                                    if (codeExist>0)
+                                    var str = workSheet.Cells[rowIterator, 7].Value.ToString().Trim();
+                                    var wc = str.Substring(str.Length - 2, 2);
+                                    var idWorkCenter = wcs.Where(w => w.NombreCorto == wc).Select(w => w.Id).FirstOrDefault();
+                                    if (idWorkCenter != null && idWorkCenter > 0)
                                     {
-                                        var planDeProduccion = new PlanDeProduccion();
 
-                                        planDeProduccion.IdUploader = persona.Respuesta.Id;
-                                        planDeProduccion.FechaSubida = DateTime.Now;
+                                        string code_FA = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
+                                        code_FA = code_FA.Replace(" ", "");
+                                        var codeExist = codes.Where(w => w.Code_FA == code_FA).Select(w => w.Code_FA).Count();
+                                        if (codeExist > 0)
+                                        {
+                                            var planDeProduccion = new PlanDeProduccion();
 
-                                        planDeProduccion.Code_FA = code_FA;
-                                        planDeProduccion.Codigo = workSheet.Cells[rowIterator, 1].Value.ToString().Trim();
-                                        planDeProduccion.Cantidad = Convert.ToDouble(workSheet.Cells[rowIterator, 8].Value.ToString().Trim());
-                                        planDeProduccion.Activo = true;
-                                        planDeProduccion.ClaseDeOrden = workSheet.Cells[rowIterator, 16].Value.ToString().Trim();
-                                        planDeProduccion.Inicio = model.Inicio;
-                                        planDeProduccion.Fin = model.Fin;
-                                        planDeProduccion.FechaSubida = DateTime.Now;
+                                            planDeProduccion.IdUploader = persona.Respuesta.Id;
+                                            planDeProduccion.FechaSubida = DateTime.Now;
 
-                                        planDeProduccion.IdWorkCenter = idWorkCenter;
+                                            planDeProduccion.Code_FA = code_FA;
+                                            planDeProduccion.Codigo = workSheet.Cells[rowIterator, 1].Value.ToString().Trim();
+                                            planDeProduccion.Cantidad = Convert.ToDouble(workSheet.Cells[rowIterator, 8].Value.ToString().Trim());
+                                            planDeProduccion.Activo = true;
+                                            planDeProduccion.ClaseDeOrden = workSheet.Cells[rowIterator, 16].Value.ToString().Trim();
+                                            planDeProduccion.Inicio = model.Inicio;
+                                            planDeProduccion.Fin = model.Fin;
+                                            planDeProduccion.FechaSubida = DateTime.Now;
+
+                                            planDeProduccion.IdWorkCenter = idWorkCenter;
 
 
-                                        planes.Add(planDeProduccion);
+                                            planes.Add(planDeProduccion);
+                                        }
+
+
+
                                     }
 
-                                    
+
 
                                 }
-
-                                
-
                             }
+
                         }
 
+                        db.PlanDeProduccion.AddRange(planes);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+
+
                     }
-
-
-
-                    db.PlanDeProduccion.AddRange(planes);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
                 }
+                else
+                {
+
+                    TempData["CustomError"] = "Sube un archivo por favor!!.";
+                    return View(model);
+                }
+
+
             }
 
-            return View("Index");
+            return View(model);
         }
 
         // POST: Operaciones/PlanesDeProduccion/Create
@@ -145,7 +162,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,IdWorkCenter,Code_FA,Cantidad,ClaseDeOrden,Inicio,Fin,FechaSubida,IdUploader")] PlanDeProduccion planDeProduccion)
+        public ActionResult Create(PlanDeProduccion planDeProduccion)
         {
             if (ModelState.IsValid)
             {

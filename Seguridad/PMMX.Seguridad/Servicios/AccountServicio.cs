@@ -67,9 +67,8 @@ namespace PMMX.Seguridad.Servicios
                     Entornos = u.Roles.Select(e => new EntornoView
                     {
                         Id = e.Id,
-                        Nombre = e.Name,
-                        Activo = true
-                    }).Where(o => o.Activo == true).ToList(),
+                        Nombre = e.Name
+                    }).ToList(),
                     Persona = new PersonaView
                     {
                         Id = u.PersonasConEsteUsuario.FirstOrDefault().Id,
