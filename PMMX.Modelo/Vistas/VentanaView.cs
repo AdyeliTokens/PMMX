@@ -48,6 +48,7 @@ namespace PMMX.Modelo.Vistas
         public string TipoUnidad { get; set; }
         [StringLength(250)]
         public string Dimension { get; set; }
+        [StringLength(20)]
         public string Temperatura { get; set; }
 
         // Conductor

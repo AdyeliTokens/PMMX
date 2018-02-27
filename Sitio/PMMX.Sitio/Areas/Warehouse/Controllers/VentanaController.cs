@@ -367,7 +367,7 @@ namespace Sitio.Areas.Warehouse.Controllers
                             ventana.Sellos = workSheet.Cells[17, 2].Value.ToString().Trim();
                             ventana.TipoUnidad = workSheet.Cells[18, 2].Value.ToString().Trim();
                             ventana.Dimension = workSheet.Cells[19, 2].Value.ToString().Trim();
-                            ventana.Temperatura = Convert.ToInt32(workSheet.Cells[20, 2].Value.ToString().Trim());
+                            ventana.Temperatura = workSheet.Cells[20, 2].Value.ToString().Trim();
 
                             db.Ventana.Add(ventana);
                             db.SaveChanges();
