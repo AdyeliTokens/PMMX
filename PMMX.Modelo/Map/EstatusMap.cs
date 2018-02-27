@@ -15,6 +15,7 @@ namespace PMMX.Modelo.Map
             Property(c => c.Id).HasColumnName("Id");
             Property(c => c.Nombre).HasColumnName("Nombre");
             Property(c => c.IdCategoria).HasColumnName("IdCategoria");
+            Property(c => c.Color).HasColumnName("Color");
             Property(c => c.Activo).HasColumnName("Activo");
             #endregion
 
