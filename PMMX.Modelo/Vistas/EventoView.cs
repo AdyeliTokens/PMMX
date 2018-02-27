@@ -32,8 +32,8 @@ namespace PMMX.Modelo.Vistas
         public CategoriaView Categoria { get; set; }
 
         public List<GembaWalkView> GembaWalk { get; set; }
-        public List<Ventana> Ventanas { get; set; }
-        public List<EventoOrigen> EventoOrigen { get; set; }
-        public List<EventoResponsable> EventoResponsable { get; set; }
+        public List<VentanaView> Ventanas { get; set; }
+        public List<EventoOrigenView> EventoOrigen { get; set; }
+        public List<EventoResponsableView> EventoResponsable { get; set; }
     }
 }

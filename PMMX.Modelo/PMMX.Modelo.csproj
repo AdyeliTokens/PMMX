@@ -274,6 +274,7 @@
     <Compile Include="Vistas\SubAreaView.cs" />
     <Compile Include="Vistas\SubCategoriaView.cs" />
     <Compile Include="Vistas\TiempoDeParoView.cs" />
+    <Compile Include="Vistas\TipoOperacionView.cs" />
     <Compile Include="Vistas\UserView.cs" />
     <Compile Include="Vistas\VentanaView.cs" />
     <Compile Include="Vistas\VolumenDeProduccionView.cs" />
