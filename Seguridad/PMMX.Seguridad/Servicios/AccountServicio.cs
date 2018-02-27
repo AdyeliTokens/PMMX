@@ -71,7 +71,7 @@ namespace PMMX.Seguridad.Servicios
                     }).ToList(),
                     Persona = new PersonaView
                     {
-                        Id = u.PersonasConEsteUsuario.FirstOrDefault().Id,
+                        Id = u.PersonasConEsteUsuario.FirstOrDefault().Persona.Id,
                         Nombre = u.PersonasConEsteUsuario.FirstOrDefault().Persona.Nombre,
                         Apellido1 = u.PersonasConEsteUsuario.FirstOrDefault().Persona.Apellido1,
                         Apellido2 = u.PersonasConEsteUsuario.FirstOrDefault().Persona.Apellido2,
