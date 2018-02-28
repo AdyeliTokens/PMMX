@@ -71,77 +71,8 @@ namespace Sitio.Areas.Operaciones.Controllers
 
             return View(statusVentana);
         }
-
-        // GET: Operaciones/StatusVentana/Details/5
-        public ActionResult Timeline(int? idVentana)
-        {
-            if (idVentana == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            var statusVentana = db.StatusVentana
-                .Where(s => (s.IdVentana == idVentana))
-                .OrderByDescending(s => s.Fecha)
-                .Select(s => new StatusVentanaView
-                {
-                    Id = s.Id,
-                    IdVentana = s.IdVentana,
-                    IdStatus = s.IdStatus,
-                    IdResponsable = s.IdResponsable,
-                    Fecha = s.Fecha,
-                    Ventana = new VentanaView
-                    {
-                        Id = s.Ventana.Id,
-                        PO = s.Ventana.PO,
-                        Destino = new LocacionView
-                        {
-                            Id = s.Ventana.Destino.Id,
-                            Nombre = s.Ventana.Destino.Nombre,
-                            NombreCorto = s.Ventana.Destino.NombreCorto
-                        },
-                        Procedencia = new LocacionView
-                        {
-                            Id = s.Ventana.Procedencia.Id,
-                            Nombre = s.Ventana.Procedencia.Nombre,
-                            NombreCorto = s.Ventana.Procedencia.NombreCorto
-                        },
-                    },
-                    Status = new EstatusView
-                    {
-                        Id = s.Status.Id,
-                        Nombre = s.Status.Nombre,
-                        BitacoraVentana = s.Status.BitacoraVentana
-                        .Where(b => (b.IdVentana == s.IdVentana) && (b.IdStatus == s.IdStatus))
-                        .Select(b => new BitacoraVentanaView
-                        {
-                            Id = b.Id,
-                            Rechazo = new RechazoView
-                            {
-                                Id = b.Rechazo.Id,
-                                Nombre = b.Rechazo.Nombre
-                            }                            
-                        }).ToList()
-
-                    },
-                    Responsable = new PersonaView
-                    {
-                        Id = s.Responsable.Id,
-                        Nombre = s.Responsable.Nombre,
-                        Apellido1 = s.Responsable.Apellido1,
-                        Apellido2 = s.Responsable.Apellido2
-                    }
-                }).ToList();
-
-            if (statusVentana == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(statusVentana);
-        }
-
-        public PartialViewResult getTimeline(int? IdVentana)
+        
+        public PartialViewResult getTimeline(int IdVentana)
         {
             var statusVentana = db.StatusVentana
                 .Where(s => (s.IdVentana == IdVentana))

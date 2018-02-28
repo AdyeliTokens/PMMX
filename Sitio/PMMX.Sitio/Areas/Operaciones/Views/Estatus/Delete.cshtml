@@ -1,7 +1,7 @@
 ﻿@model PMMX.Modelo.Entidades.Operaciones.Estatus
 
 @{
-    Layout = null;
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -33,6 +33,15 @@
                 @Html.DisplayFor(model => model.IdCategoria)
             </dd>
     
+            <dt>
+                @Html.DisplayNameFor(model => model.Color)
+            </dt>
+
+            <dd>
+                @Html.TextBoxFor(model => model.Color, new { Style = "background:" + @Model.Color + ";" })
+            </dd>
+
+
             <dt>
                 @Html.DisplayNameFor(model => model.Activo)
             </dt>

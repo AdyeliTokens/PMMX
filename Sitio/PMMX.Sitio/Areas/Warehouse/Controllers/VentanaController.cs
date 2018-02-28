@@ -173,11 +173,21 @@ namespace Sitio.Areas.Warehouse.Controllers
         {
             if (ModelState.IsValid)
             {
-                var estatus = db.StatusVentana
+                var estatus = new Estatus();
+
+               estatus = db.StatusVentana
                     .Where(s => (s.IdVentana == ventana.Id))
                     .OrderByDescending(s => s.Fecha)
                     .Select(s => s.Status)
                     .FirstOrDefault();
+
+                if (estatus == null)
+                {
+                    estatus = db.Estatus
+                        .Where(e => e.IdCategoria == (db.SubCategoria.Where(s => s.Id == ventana.IdSubCategoria).Select(s => s.IdCategoria).FirstOrDefault()))
+                        .FirstOrDefault();
+                }
+               
                 
                 WorkFlowServicio workflowServicio = new WorkFlowServicio();
                 IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, estatus.Id, false);

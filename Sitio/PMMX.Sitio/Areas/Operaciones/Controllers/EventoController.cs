@@ -33,7 +33,16 @@ namespace Sitio.Areas.Operaciones.Controllers
         {
             if (ModelState.IsValid)
             {
-                var events = db.Evento.ToList();
+                var events = db.Evento.Select(e => new EventoView
+                {
+                    Id = e.Id,
+                    Descripcion = e.Descripcion,
+                    FechaInicio = e.FechaInicio,
+                    FechaFin = e.FechaFin,
+                    Nota = e.Nota,
+                    Color = (e.Ventanas.Where(v=> v.IdEvento == e.Id).Count() == 0 ? "#F39C12" : (db.StatusVentana.OrderByDescending(s=> s.Fecha).Where(s => (s.Ventana.Id == s.IdVentana)).Select(s=> s.Status.Color).FirstOrDefault()))
+                }).ToList();
+
                 return Json(new { events }, JsonRequestBehavior.AllowGet);
             }
             else
@@ -53,6 +62,17 @@ namespace Sitio.Areas.Operaciones.Controllers
             {
                 return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        public string GetColorStatus(int idEvento)
+        {
+          var colors = db.StatusVentana.OrderByDescending(s=> s.Fecha).Where(s => s.Ventana.IdEvento == idEvento)
+                        .Select(s => s.Status.Color)
+                        .FirstOrDefault();
+
+            if (colors == null) colors = "#5DADE2";
+
+            return colors;
         }
 
         public ActionResult GetEventsBySubCategoria(int IdSubCategoria)

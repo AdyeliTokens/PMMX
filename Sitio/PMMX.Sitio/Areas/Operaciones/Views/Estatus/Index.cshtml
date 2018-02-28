@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<PMMX.Modelo.Entidades.Operaciones.Estatus>
 
 @{
-    Layout = null;
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -27,6 +27,9 @@
                 @Html.DisplayNameFor(model => model.Categoria)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Color)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Activo)
             </th>
             <th></th>
@@ -42,6 +45,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Categoria.Nombre)
+            </td>
+            <td>
+                @Html.TextBoxFor(modelItem => item.Color, new { Style = "background:" + item.Color + ";" })
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Activo)
