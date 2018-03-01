@@ -39,9 +39,13 @@ namespace Sitio.Areas.Operaciones.Controllers
                     Descripcion = e.Descripcion,
                     FechaInicio = e.FechaInicio,
                     FechaFin = e.FechaFin,
-                    Nota = e.Nota,
-                    Color = (e.Ventanas.Where(v=> v.IdEvento == e.Id).Count() == 0 ? "#F39C12" : (db.StatusVentana.OrderByDescending(s=> s.Fecha).Where(s => (s.Ventana.Id == s.IdVentana)).Select(s=> s.Status.Color).FirstOrDefault()))
+                    Nota = e.Nota
                 }).ToList();
+
+                foreach (var item in events)
+                {
+                    item.Color = GetColorStatus(item.Id);
+                }
 
                 return Json(new { events }, JsonRequestBehavior.AllowGet);
             }
