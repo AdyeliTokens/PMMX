@@ -137,8 +137,8 @@ namespace Sitio.Areas.Operaciones.Controllers
                 string fileContentType = file.ContentType;
                 byte[] fileBytes = new byte[file.ContentLength];
                 var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
-                //var aliasWorkCenter = db.Alias.Include(w => w.WorkCenters).ToList();
-                var wcs = db.WorkCenters.ToList();
+                var aliasWorkCenter = db.Alias.Include(w => w.WorkCenters).ToList();
+                //var wcs = db.WorkCenters.ToList();
 
                 var noConformidades = new List<NoConformidad>();
                 using (var package = new ExcelPackage(file.InputStream))
@@ -157,37 +157,44 @@ namespace Sitio.Areas.Operaciones.Controllers
 
                         for (int rowIterator = 3; rowIterator <= noOfRow; rowIterator++)
                         {
-                            if (workSheet.Cells[rowIterator, 6].Value != null)
+                            if (workSheet.Cells[rowIterator, 6].Value != null )
                             {
-                                var noconformidad = new NoConformidad();
+                                if (workSheet.Cells[rowIterator, 6].Value.ToString() != "")
+                                {
+                                    
+
+                                    var noconformidad = new NoConformidad();
 
 
-                                noconformidad.IdPersona = persona.Respuesta.Id;
-                                String fechaCadena = workSheet.Cells[rowIterator, 2].Value.ToString().Trim();
-                                noconformidad.Fecha = DateTime.ParseExact(fechaCadena, "dd/MM/yyyy", null);
+                                    noconformidad.IdPersona = persona.Respuesta.Id;
+                                    String fechaCadena = workSheet.Cells[rowIterator, 2].Value.ToString().Trim();
+                                    noconformidad.Fecha = DateTime.ParseExact(fechaCadena, "dd/MM/yyyy", null);
 
-                                if (workSheet.Cells[rowIterator, 5].Value.ToString().Trim() == "Cigarettes") { idseccion = 2; }
-                                else if (workSheet.Cells[rowIterator, 5].Value.ToString().Trim() == "Packs") { idseccion = 1; }
-                                noconformidad.IdSeccion = idseccion;
-
-
-                                noconformidad.Code = workSheet.Cells[rowIterator, 6].Value.ToString().Trim();
-                                noconformidad.CodeDescription = workSheet.Cells[rowIterator, 7].Value.ToString().Trim();
-                                noconformidad.Calificacion_VQI = Convert.ToInt32(Convert.ToDouble(workSheet.Cells[rowIterator, 8].Value.ToString().Trim()));
+                                    if (workSheet.Cells[rowIterator, 5].Value.ToString().Trim() == "Cigarettes") { idseccion = 2; }
+                                    else if (workSheet.Cells[rowIterator, 5].Value.ToString().Trim() == "Packs") { idseccion = 1; }
+                                    noconformidad.IdSeccion = idseccion;
 
 
-
-                                var str = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
-                                var palabra = str.Substring(0, str.IndexOf(" "));
-                                var wc = palabra.Substring(palabra.Length - 2, 2);
-
-                                //var idWC = aliasWorkCenter.Where(w => w.Nombre == str.Substring(0, str.IndexOf(" "))).Select(a => a.WorkCenters.Select(f=> f.Id).FirstOrDefault()).FirstOrDefault();
-                                var idWorkCenter = wcs.Where(w => w.NombreCorto == wc).Select(w => w.Id).FirstOrDefault();
-                                noconformidad.IdWorkCenter = idWorkCenter;
+                                    noconformidad.Code = workSheet.Cells[rowIterator, 6].Value.ToString().Trim();
+                                    noconformidad.CodeDescription = workSheet.Cells[rowIterator, 7].Value.ToString().Trim();
+                                    noconformidad.Calificacion_VQI = Convert.ToInt32(Convert.ToDouble(workSheet.Cells[rowIterator, 8].Value.ToString().Trim()));
 
 
 
-                                noConformidades.Add(noconformidad);
+                                    var str = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
+                                    var palabra = str.Substring(0, str.IndexOf(" "));
+                                    var wc = palabra.Substring(palabra.Length - 2, 2);
+
+                                    var idWorkCenter = aliasWorkCenter.Where(w => w.Nombre == palabra).Select(a => a.WorkCenters.Select(f=> f.Id).FirstOrDefault()).FirstOrDefault();
+                                    //var idWorkCenter = wcs.Where(w => w.NombreCorto == wc).Select(w => w.Id).FirstOrDefault();
+                                    noconformidad.IdWorkCenter = idWorkCenter;
+
+
+
+                                    noConformidades.Add(noconformidad);
+                                }
+
+                               
                             }
 
 

@@ -46,5 +46,17 @@ namespace Sitio.Controllers.Tests
         {
             Assert.Fail();
         }
+
+        [TestMethod()]
+        [DataRow(12)]
+        [DataRow(6)]
+        [DataRow(3)]
+        [DataRow(0)]
+        [DataRow(-2)]
+        [DataRow(null)]
+        public void numerosTest()
+        {
+            Assert.Fail();
+        }
     }
 }

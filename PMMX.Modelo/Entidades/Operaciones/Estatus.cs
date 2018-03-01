@@ -18,6 +18,8 @@ namespace PMMX.Modelo.Entidades.Operaciones
         [StringLength(250)]
         public string Nombre { get; set; }
         public int IdCategoria { get; set; }
+        [StringLength(10)]
+        public string Color { get; set; }
         public bool Activo { get; set; }
         #endregion
 

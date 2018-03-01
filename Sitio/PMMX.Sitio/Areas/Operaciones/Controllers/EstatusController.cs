@@ -18,9 +18,13 @@ namespace Sitio.Areas.Operaciones.Controllers
         // GET: Operaciones/Estatus
         public ActionResult Index()
         {
-            return View(db.Estatus.ToList());
-        }
+            var estatus = db.Estatus
+                           .Include(e => e.Categoria)
+                           .ToList();
 
+            return View(estatus);
+        }
+        
         // GET: Operaciones/Estatus/Details/5
         public ActionResult Details(int? id)
         {
