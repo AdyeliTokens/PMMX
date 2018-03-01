@@ -110,5 +110,76 @@ namespace Sitio.Controllers
             return new VideoResult();
 
         }
+
+
+
+        public Boolean numeros(List<int> arreglo, int  detectar, int cantidad) {
+            Boolean respuesta= false;
+            int contador = 0;
+
+            var algo = arreglo.Where(x => x == detectar).Count();
+
+
+            foreach (var item in arreglo)
+            {
+                if (item == detectar) {
+                    
+                    contador++;
+                }
+            }
+            if (contador == cantidad)
+            {
+                respuesta = true;
+            }
+
+
+            return respuesta;
+        }
+
+
+        public Boolean Palindromo(String palabra)
+        {
+            Boolean respuesta = false;
+            palabra = palabra.Replace(" ", "");
+            String palindromo="";
+
+
+            foreach (var item in palabra)
+            {
+                palindromo = item + "" + palindromo;   
+            }
+
+            if (palindromo == palabra) {
+                respuesta = true;
+            }
+
+
+            return respuesta;
+        }
+
+
+        public Boolean ComparacionDeLaSumaNumerosParesEImpares(List<int> arreglo)
+        {
+            Boolean respuesta = false;
+            int sumaPares = 0;
+            int sumaInpares=0;
+
+            foreach (var item in arreglo)
+            {
+                if ((item % 2) == 0)
+                {
+                    sumaPares = sumaPares + item;
+                }
+                else {
+                    sumaInpares = sumaInpares + item;
+                }
+            }
+
+            if (sumaPares == sumaInpares)
+            {
+                respuesta = true;
+            }
+            return respuesta;
+        }
     }
 }

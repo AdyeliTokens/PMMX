@@ -53,8 +53,14 @@ namespace Sitio.Areas.Apis.Controllers
             RespuestaServicio<List<WorkCenterView>> respuesta = new RespuestaServicio<List<WorkCenterView>>();
             respuesta = servicio.GetWorkCentersByPersona(idPersona);
 
-            return Ok(respuesta);
-
+            if (respuesta.EjecucionCorrecta)
+            {
+                return Ok(respuesta.Respuesta);
+            }
+            else
+            {
+                return NotFound();
+            }
 
         }
 

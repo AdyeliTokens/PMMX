@@ -45,7 +45,7 @@ namespace Sitio.Areas.Apis.Controllers
         {
             WorkCenterServicio servicio = new WorkCenterServicio(db);
             var respuesta = servicio.GetWorkCenterByOperador(idOperador);
-            return Ok(respuesta.Respuesta);
+            return Ok(respuesta);
         }
 
 
