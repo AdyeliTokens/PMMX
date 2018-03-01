@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.Maquinaria;
+using PMMX.Modelo.Entidades;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -81,6 +82,7 @@ namespace Sitio.Areas.Operaciones.Controllers
 
             return View(workCenter);
         }
+        
 
         public ActionResult Edit(int? id)
         {
