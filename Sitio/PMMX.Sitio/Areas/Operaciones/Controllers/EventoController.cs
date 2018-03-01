@@ -59,7 +59,22 @@ namespace Sitio.Areas.Operaciones.Controllers
         {
             if (ModelState.IsValid)
             {
-                var events = db.Evento.Where(e => e.IdCategoria == IdCategoria).ToList();
+                var events = db.Evento
+                    .Where(e => e.IdCategoria == IdCategoria)
+                    .Select(e => new EventoView
+                    {
+                        Id = e.Id,
+                        Descripcion = e.Descripcion,
+                        FechaInicio = e.FechaInicio,
+                        FechaFin = e.FechaFin,
+                        Nota = e.Nota
+                    }).ToList();
+
+                foreach (var item in events)
+                {
+                    item.Color = GetColorStatus(item.Id);
+                }
+
                 return Json(new { events }, JsonRequestBehavior.AllowGet);
             }
             else
@@ -96,7 +111,12 @@ namespace Sitio.Areas.Operaciones.Controllers
                         EsRecurrente = e.Evento.EsRecurrente,
                         Activo = e.Evento.Activo
                     }).ToList();
-                    
+
+                foreach (var item in events)
+                {
+                    item.Color = GetColorStatus(item.Id);
+                }
+
                 return Json(new { events }, JsonRequestBehavior.AllowGet);
             }
             else
