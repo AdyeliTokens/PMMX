@@ -106,7 +106,7 @@ namespace PMMX.Seguridad.Servicios
 
             return dispositivos;
         }
-        
+
         public string GetEmailByEvento(int idEvento)
         {
             var emailList = db.EventoResponsable
@@ -116,9 +116,9 @@ namespace PMMX.Seguridad.Servicios
                     Id = v.Id,
                     Email = v.Usuario.Email
                 }).ToList()
-                ).FirstOrDefault();
-            
-            List<string> emails = emailList.Select(x => x.Email).ToList();
+                ).ToList();
+
+            List<string> emails = emailList.Select(x => x.Select(y => y.Email).FirstOrDefault()).ToList();
             string stringEmails = "";
              
             foreach (string email in emails)
