@@ -1,9 +1,7 @@
 ﻿using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Account;
 using PMMX.Modelo.Entidades;
-using PMMX.Modelo.Interfaces.Seguridad;
 using PMMX.Modelo.RespuestaGenerica;
-using PMMX.Modelo.Servicios;
 using PMMX.Modelo.Vistas;
 using System;
 using System.Collections.Generic;
@@ -27,10 +25,12 @@ namespace PMMX.Seguridad.Servicios
             _context = new PMMXContext();
         }
 
-        public RespuestaServicio<UserView> Login(LoginModel login)
+        
+
+        public RespuestaServicio<UserView> ExternalLogin(LoginModel login)
         {
             RespuestaServicio<UserView> respuesta = new RespuestaServicio<UserView>();
-            respuesta = GetUser(login);
+            respuesta = GetUserExternal(login);
             if (respuesta.EjecucionCorrecta)
             {
                 if (login.Llave != null || login.Llave != "")
@@ -53,50 +53,48 @@ namespace PMMX.Seguridad.Servicios
 
         }
         
-        public RespuestaServicio<UserView> GetUser(LoginModel login)
+        public RespuestaServicio<UserView> GetUserExternal(LoginModel login)
         {
             RespuestaServicio<UserView> respuesta = new RespuestaServicio<UserView>();
-            var user = _context.Users
-                .Where(x => x.Email == login.Email && x.Password == login.Password)
+            var user = _context.AspNetUser
+                .Where(x => x.Email == login.Email)
                 .Select(u => new UserView
                 {
-                    Id = u.Id,
                     Email = u.Email,
-                    IdPersona = u.IdPersona,
-                    Password = u.Password,
-                    Activo = u.Activo,
+                    IdPersona = u.PersonasConEsteUsuario.FirstOrDefault().Persona.Id,
+                    Activo = true,
                     UserName = u.UserName,
-                    Entornos = u.Entornos.Select(e => new EntornoView
+                    Entornos = u.Roles.Select(e => new EntornoView
                     {
                         Id = e.Id,
-                        Nombre = e.Nombre,
-                        Activo = e.Activo
-                    }).Where(o => o.Activo == true).ToList(),
+                        Nombre = e.Name
+                    }).ToList(),
                     Persona = new PersonaView
                     {
-                        Id = u.Persona.Id,
-                        Nombre = u.Persona.Nombre,
-                        Apellido1 = u.Persona.Apellido1,
-                        Apellido2 = u.Persona.Apellido2,
-                        IdPuesto = u.Persona.IdPuesto,
-                        Activo = u.Persona.Activo,
+                        Id = u.PersonasConEsteUsuario.FirstOrDefault().Persona.Id,
+                        Nombre = u.PersonasConEsteUsuario.FirstOrDefault().Persona.Nombre,
+                        Apellido1 = u.PersonasConEsteUsuario.FirstOrDefault().Persona.Apellido1,
+                        Apellido2 = u.PersonasConEsteUsuario.FirstOrDefault().Persona.Apellido2,
+                        IdPuesto = u.PersonasConEsteUsuario.FirstOrDefault().Persona.IdPuesto,
+                        Activo = u.PersonasConEsteUsuario.FirstOrDefault().Persona.Activo,
                         Puesto = new PuestoView
                         {
-                            Id = u.Persona.Puesto.Id,
-                            Nombre = u.Persona.Puesto.Nombre,
-                            Activo = u.Persona.Puesto.Activo
+                            Id = u.PersonasConEsteUsuario.FirstOrDefault().Persona.Puesto.Id,
+                            Nombre = u.PersonasConEsteUsuario.FirstOrDefault().Persona.Puesto.Nombre,
+                            Activo = u.PersonasConEsteUsuario.FirstOrDefault().Persona.Puesto.Activo
                         }
                     }
                 })
                 .FirstOrDefault();
 
-            
+
 
 
 
             if (user != null)
             {
-                if (user.Entornos.Count() == 1) {
+                if (user.Entornos.Count() == 1)
+                {
                     user.Entorno = user.Entornos.FirstOrDefault();
                     user.IdEntorno = user.Entornos.FirstOrDefault().Id;
                 }

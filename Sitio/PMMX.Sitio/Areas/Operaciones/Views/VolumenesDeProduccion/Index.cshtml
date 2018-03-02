@@ -1,4 +1,5 @@
-﻿@model IEnumerable<PMMX.Modelo.Entidades.VolumenDeProduccion>
+﻿@using Sitio.Helpers
+@model IEnumerable<PMMX.Modelo.Vistas.VolumenDeProduccionPorWorkCenterView>
 
 @{
     ViewBag.Title = "Index";
@@ -6,8 +7,7 @@
 }
 
 @section Styles {
-    @Styles.Render("~/Style/DataTables")
-
+    
 }
 <div class="row">
     <div class="col-md-12">
@@ -15,117 +15,94 @@
             <div class="box-header">
                 <h3 class="box-title">Volumenes de Produccion - FA</h3>
                 <div class="box-tools">
-                    <a href="@Url.Action("DeleteAll", "VolumenesDeProduccion")" class="btn btn-danger btn-sm">
-                        <span class="fa fa-trash" aria-hidden="true"></span> Eliminar todo
-                    </a>
-                    <a href="@Url.Action("Create", "VolumenesDeProduccion")" class="btn btn-primary btn-sm">
-                        <span class="fa fa-plus" aria-hidden="true"></span>
-                    </a>
-                    <a href="@Url.Action("Upload", "VolumenesDeProduccion")" class="btn btn-primary btn-sm">
-                        <span class="fa fa-cloud-upload" aria-hidden="true"></span>
-                    </a>
+                    @Ajax.MenuLink(" Reporte", string.Format("{0:c}", "fa fa-list"), "Reporte", "VolumenesDeProduccion", new { area = "Operaciones" }, null, new { @class = "btn btn-primary btn-sm" })
+
+                    @Ajax.MenuLink(" Nuevo", string.Format("{0:c}", "fa fa-plus"), "Create", "VolumenesDeProduccion", new { area = "Operaciones" }, null, new { @class = "btn btn-primary btn-sm" })
+
+                    @Ajax.MenuLink(" Upload", string.Format("{0:c}", "fa fa-cloud-upload"), "Upload", "VolumenesDeProduccion", new { area = "Operaciones" }, null, new { @class = "btn btn-primary btn-sm" })
+
+
                 </div>
             </div>
-            <div class="box-body table-responsive">
-                <table class="table table-hover table-striped" id="example1">
-                    <thead>
-                        <tr class="info">
-                            <th>
-                                @Html.DisplayNameFor(model => model.MarcaDelCigarrillo.Code_FA)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.MarcaDelCigarrillo.Descripcion)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Reportante.Nombre)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.WorkCenter.Nombre)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.New_Qty)
-                            </th>
+            <div class="box-body">
+                <div class="row">
 
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-2">
 
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.MarcaDelCigarrillo.Code_FA)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.MarcaDelCigarrillo.Descripcion)
-                                </td>
-                                <td>
-                                    <div class="user-block">
-                                        <img class="img-circle img-responsive img-bordered-sm" src="@Url.Action("Usuario", "Fotos", new { idPersona = item.IdPersona, area = "" })" alt="User Image">
-                                        <span class="username">
-                                            <a href="#">
-                                                @Html.DisplayFor(modelItem => item.Reportante.Nombre) @Html.DisplayFor(modelItem => item.Reportante.Apellido1) @Html.DisplayFor(modelItem => item.Reportante.Apellido2).
-                                            </a>
-                                        </span>
-                                        <span class="description">Reporto el - @Html.DisplayFor(modelItem => item.Fecha)</span>
+                            <div class="box box-widget widget-user-2">
+                                <div class="widget-user-header bg-gray">
+
+                                    <h3 class="widget-user-username">@Html.DisplayFor(modelItem => item.WorkCenter.Nombre)</h3>
+                                    <h5 class="widget-user-desc">@Html.DisplayFor(modelItem => item.WorkCenter.NombreCorto)</h5>
+
+                                    @*@Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-danger pull-right" })
+                                @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-default pull-right" })
+                                @Html.ActionLink("Detalles", "Details", new { id = item.Id }, new { @class = "btn btn-default pull-right" })*@
+
+                                </div>
+                                <div class="box-footer">
+                                    <div class="row">
+                                        <ul class="list-group">
+                                            @foreach (var plan in item.PlanesDeProduccion)
+                                            {
+                                                if (plan.Plan_Attainment_Total < plan.Objetivo)
+                                                {
+                                                    <li class="list-group-item list-group-item-success">
+                                                        <a href="#">
+                                                            @Html.DisplayFor(modelItem => plan.Fecha)
+                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => plan.Objetivo)</span>
+                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => plan.Plan_Attainment_Total)</span>
+                                                        </a>
+                                                    </li>
+
+                                                }
+                                                else if (plan.Plan_Attainment_Total > plan.Objetivo)
+                                                {
+                                                    <li class="list-group-item list-group-item-danger">
+                                                        <a href="#">
+                                                            @Html.DisplayFor(modelItem => plan.Fecha)
+                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => plan.Objetivo)</span>
+                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => plan.Plan_Attainment_Total)</span>
+                                                        </a>
+                                                    </li>
+
+                                                }
+                                                else if (plan.Plan_Attainment_Total == plan.Objetivo)
+                                                {
+                                                    <li class="list-group-item list-group-item-warning">
+                                                        <a href="#">
+
+                                                            @Html.DisplayFor(modelItem => plan.Fecha)
+                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => plan.Objetivo)</span>
+                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => plan.Plan_Attainment_Total)</span>
+                                                        </a>
+                                                    </li>
+
+                                                }
+
+                                            }
+
+                                        </ul>
                                     </div>
 
+                                </div>
+                            </div>
 
-                                    
-                                
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.WorkCenter.Nombre)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.New_Qty)
-                                </td>
+                        </div>
 
-                                <td>
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                    <tfoot>
-                        <tr class="info">
-                            <th>
-                                @Html.DisplayNameFor(model => model.MarcaDelCigarrillo.Code_FA)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.MarcaDelCigarrillo.Descripcion)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Reportante.Nombre)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.WorkCenter.Nombre)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.New_Qty)
-                            </th>
-                            
-                            <th></th>
-                        </tr>
-                    </tfoot>
-                </table>
+
+                    }
+
+
+                </div>
+
             </div>
         </div>
     </div>
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/JS/DataTables")
-    <script>
-        $(function () {
-            $('#example1').DataTable();
-        });
-        $('#example1 input[type="checkbox"]').iCheck({
-            checkboxClass: 'icheckbox_flat-blue',
-            radioClass: 'iradio_flat-blue'
-        });
-    </script>
+    
 }

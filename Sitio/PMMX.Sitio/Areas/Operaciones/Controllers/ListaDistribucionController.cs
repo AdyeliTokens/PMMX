@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.Operaciones;
-
+using PMMX.Modelo.Entidades;
 
 namespace Sitio.Areas.Operaciones
 {
@@ -90,9 +90,10 @@ namespace Sitio.Areas.Operaciones
             {
                 return HttpNotFound();
             }
+
+            ViewBag.IdSubarea = new SelectList(db.SubArea.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", listaDistribucion.IdSubarea);
+            ViewBag.IdPersona = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre", listaDistribucion.IdPersona);
             
-            ViewBag.IdSubarea = new SelectList(db.SubArea, "Id", "Nombre", listaDistribucion.IdSubarea);
-            ViewBag.IdPersona = new SelectList(db.Personas, "Id", "Nombre", listaDistribucion.IdPersona);
             return View(listaDistribucion);
         }
 

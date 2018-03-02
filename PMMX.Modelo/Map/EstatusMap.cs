@@ -1,11 +1,9 @@
-﻿using PMMX.Modelo.Entidades.Operaciones;
-using System;
-using System.Collections.Generic;
+﻿
+using PMMX.Modelo.Entidades.Operaciones;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Web;
 
-namespace PMMX.Modelo.Entidades.Operaciones
+
+namespace PMMX.Modelo.Map
 {
     public class EstatusMap : EntityTypeConfiguration<Estatus>
     {
@@ -17,6 +15,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
             Property(c => c.Id).HasColumnName("Id");
             Property(c => c.Nombre).HasColumnName("Nombre");
             Property(c => c.IdCategoria).HasColumnName("IdCategoria");
+            Property(c => c.Color).HasColumnName("Color");
             Property(c => c.Activo).HasColumnName("Activo");
             #endregion
 

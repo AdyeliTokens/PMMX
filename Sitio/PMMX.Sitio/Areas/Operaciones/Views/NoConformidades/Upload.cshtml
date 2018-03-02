@@ -1,18 +1,16 @@
-﻿@model PMMX.Modelo.Entidades.NoConformidad
+﻿@using Sitio.Helpers
+@model PMMX.Modelo.Entidades.NoConformidad
 
 @{
     ViewBag.Title = "Upload";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="box box-primary">
     <div class="box-header with-border">
         <h3 class="box-title">Cargar condiciones anormales.</h3>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                <i class="fa fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            
         </div>
     </div>
     @using (Html.BeginForm("Upload", "NoConformidades", FormMethod.Post, new { area = "Operaciones", enctype = "multipart/form-data" , @class = "form-horizontal" }))
@@ -32,7 +30,9 @@
         </div>
 
         <div class="box-footer clearfix">
-            <input class="btn btn-sm btn-info btn-flat  pull-right" type="submit" value="Upload Image"/>
+            @Ajax.MenuLink(" Back to List", string.Format("{0:c}", "fa fa-chevron-left"), "Index", "NoConformidades", new { area = "Operaciones" }, null, new { @class = "btn btn-default" })
+
+            <input class="btn btn-primary pull-right" type="submit" value="Upload Image"/>
         </div>
     }
 </div>

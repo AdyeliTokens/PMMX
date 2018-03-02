@@ -2,13 +2,10 @@
 using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo.Entidades.Maquinaria;
 using PMMX.Modelo.Entidades.Paros;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using PMMX.Modelo.Entidades.GembaWalks;
 using PMMX.Modelo.Entidades.Warehouse;
+
 
 namespace PMMX.Modelo.Entidades
 {
@@ -41,7 +38,6 @@ namespace PMMX.Modelo.Entidades
         public ICollection<ShiftLeaders> CelulasPorVigilar { get; set; }
         public ICollection<WorkCenter> WorkCentersDondeEsResponsable { get; set; }
         public ICollection<BussinesUnit> BussinesUnitsDondeEsResponsable { get; set; }
-        public ICollection<User> Usuarios { get; set; }
         public ICollection<UsuariosPorPersona> Users { get; set; }
         public ICollection<Paro> ParosReportados { get; set; }
         public ICollection<Paro> ParosAsignados { get; set; }
@@ -78,6 +74,7 @@ namespace PMMX.Modelo.Entidades
         public ICollection<StatusVentana> StatusVentana { get; set; }
         public ICollection<BitacoraVentana> BitacoraVentana { get; set; }
         public ICollection<BitacoraGembaWalk> BitacoraGembaWalk { get; set; }
+        public ICollection<PlanDeProduccion> PlanesDeProduccionReportados { get; set; }
         #endregion
 
     }

@@ -1,4 +1,5 @@
-﻿using PMMX.Modelo.Entidades.GembaWalks;
+﻿
+using PMMX.Modelo.Entidades.Operaciones;
 using PMMX.Modelo.Entidades.Warehouse;
 using PMMX.Modelo.Vistas;
 using System;
@@ -24,6 +25,8 @@ namespace PMMX.Modelo.Vistas
 
         [StringLength(250)]
         public string Nota { get; set; }
+        [StringLength(20)]
+        public string Color { get; set; }
         public bool EsRecurrente { get; set; }
         public bool Activo { get; set; }
 
@@ -31,8 +34,8 @@ namespace PMMX.Modelo.Vistas
         public CategoriaView Categoria { get; set; }
 
         public List<GembaWalkView> GembaWalk { get; set; }
-        public List<Ventana> Ventanas { get; set; }
-        public List<EventoOrigen> EventoOrigen { get; set; }
-        public List<EventoResponsable> EventoResponsable { get; set; }
+        public List<VentanaView> Ventanas { get; set; }
+        public List<EventoOrigenView> EventoOrigen { get; set; }
+        public List<EventoResponsableView> EventoResponsable { get; set; }
     }
 }

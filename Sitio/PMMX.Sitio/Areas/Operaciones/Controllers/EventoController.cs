@@ -14,8 +14,6 @@ using PMMX.Seguridad.Servicios;
 using PMMX.Modelo.RespuestaGenerica;
 using PMMX.Modelo.Entidades;
 using Microsoft.AspNet.Identity;
-using PMMX.Modelo.Entidades.GembaWalks;
-using PMMX.Operaciones.Servicios;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -27,7 +25,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         public ActionResult Index()
         {
             var evento = db.Evento.Include(e => e.Asignador).Include(e => e.Categoria);
-            return View(evento);
+            return View(evento.ToList());
         }
 
 
@@ -35,7 +33,20 @@ namespace Sitio.Areas.Operaciones.Controllers
         {
             if (ModelState.IsValid)
             {
-                var events = db.Evento.ToList();
+                var events = db.Evento.Select(e => new EventoView
+                {
+                    Id = e.Id,
+                    Descripcion = e.Descripcion,
+                    FechaInicio = e.FechaInicio,
+                    FechaFin = e.FechaFin,
+                    Nota = e.Nota
+                }).ToList();
+
+                foreach (var item in events)
+                {
+                    item.Color = GetColorStatus(item.Id);
+                }
+
                 return Json(new { events }, JsonRequestBehavior.AllowGet);
             }
             else
@@ -48,13 +59,39 @@ namespace Sitio.Areas.Operaciones.Controllers
         {
             if (ModelState.IsValid)
             {
-                var events = db.Evento.Where(e => e.IdCategoria == IdCategoria).ToList();
+                var events = db.Evento
+                    .Where(e => e.IdCategoria == IdCategoria)
+                    .Select(e => new EventoView
+                    {
+                        Id = e.Id,
+                        Descripcion = e.Descripcion,
+                        FechaInicio = e.FechaInicio,
+                        FechaFin = e.FechaFin,
+                        Nota = e.Nota
+                    }).ToList();
+
+                foreach (var item in events)
+                {
+                    item.Color = GetColorStatus(item.Id);
+                }
+
                 return Json(new { events }, JsonRequestBehavior.AllowGet);
             }
             else
             {
                 return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        public string GetColorStatus(int idEvento)
+        {
+          var colors = db.StatusVentana.OrderByDescending(s=> s.Fecha).Where(s => s.Ventana.IdEvento == idEvento)
+                        .Select(s => s.Status.Color)
+                        .FirstOrDefault();
+
+            if (colors == null) colors = "#5DADE2";
+
+            return colors;
         }
 
         public ActionResult GetEventsBySubCategoria(int IdSubCategoria)
@@ -74,7 +111,12 @@ namespace Sitio.Areas.Operaciones.Controllers
                         EsRecurrente = e.Evento.EsRecurrente,
                         Activo = e.Evento.Activo
                     }).ToList();
-                    
+
+                foreach (var item in events)
+                {
+                    item.Color = GetColorStatus(item.Id);
+                }
+
                 return Json(new { events }, JsonRequestBehavior.AllowGet);
             }
             else
@@ -271,26 +313,47 @@ namespace Sitio.Areas.Operaciones.Controllers
                         }
                     }
 
-                    NotificationService notify = new NotificationService();
-                    UsuarioServicio usuarioServicio = new UsuarioServicio();
-
-                    List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(evento.Id);
-                    List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
-
-                    foreach (string notificacion in llaves)
+                    SendNotification(evento);
+                }
+                else
+                {
+                    var lista = db.ListaDistribucion.Select(w => new { IdPersona = w.IdPersona }).ToList();
+                    foreach (var elemento in lista)
                     {
-                        notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + evento.Descripcion + ". ", "");
+                        EventoResponsable eResponsable = new EventoResponsable();
+                        eResponsable.IdEvento = evento.Id;
+                        eResponsable.IdResponsable = elemento.IdPersona;
+                        db.EventoResponsable.Add(eResponsable);
+                        db.SaveChanges();
                     }
 
-                    string senders = usuarioServicio.GetEmailByEvento(evento.Id);
-                    EmailService emailService = new EmailService();
-                    emailService.SendMail(senders, evento);
+                    SendNotification(evento);
                 }
-
+                
                 return RedirectToAction("Index");
             }
-
+                        
             return View(evento);
+        }
+
+        public bool SendNotification(Evento evento)
+        {
+            NotificationService notify = new NotificationService();
+            UsuarioServicio usuarioServicio = new UsuarioServicio();
+
+            List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(evento.Id);
+            List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
+
+            foreach (string notificacion in llaves)
+            {
+                notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + evento.Descripcion + ". ", "");
+            }
+
+            string senders = usuarioServicio.GetEmailByEvento(evento.Id);
+            EmailService emailService = new EmailService();
+            emailService.SendMail(senders, evento);
+
+            return true;
         }
 
         // GET: Eventos/Evento/Edit/5

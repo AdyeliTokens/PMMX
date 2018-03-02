@@ -16,6 +16,7 @@ using Microsoft.AspNet.Identity;
 using PMMX.Operaciones.Servicios;
 using PMMX.Modelo.Vistas;
 using OfficeOpenXml;
+using Sitio.Helpers;
 
 namespace Sitio.Areas.Warehouse.Controllers
 {
@@ -33,6 +34,7 @@ namespace Sitio.Areas.Warehouse.Controllers
                 .Include(e => e.Destino)
                 .Include(e => e.Procedencia)
                 .Include(e => e.SubCategoria)
+                .Include(e => e.TipoOperacion)
                 .ToList();
 
             return View(ventana);
@@ -53,6 +55,7 @@ namespace Sitio.Areas.Warehouse.Controllers
                  .Include(e => e.Destino)
                  .Include(e => e.Procedencia)
                  .Include(e => e.SubCategoria)
+                 .Include(e => e.TipoOperacion)
                  .FirstOrDefault();
 
             if (ventana == null)
@@ -92,7 +95,14 @@ namespace Sitio.Areas.Warehouse.Controllers
         {
             if (ModelState.IsValid)
             {
-                var ventana = db.Ventana.Where(o => (o.IdEvento == idEvento)).Select(o => new { Id = o.Id, PO = o.PO }).FirstOrDefault();
+                var ventana = db.Ventana.Where(o => (o.IdEvento == idEvento))
+                    .Select(o => new
+                    {
+                        Id = o.Id,
+                        PO = o.PO,
+                        Cancelado = o.StatusVentana.OrderByDescending(s => s.Fecha).Select(s => s.Status.WorkFlowInicial.Select( w => w.Inicial)).FirstOrDefault()
+                    }).FirstOrDefault();
+                
                 return Json(new { ventana }, JsonRequestBehavior.AllowGet);
             }
             else
@@ -109,6 +119,7 @@ namespace Sitio.Areas.Warehouse.Controllers
             ViewBag.IdDestino = new SelectList(db.Locacion.Select(x => new { Id = x.Id, Nombre = (x.NombreCorto + " " + x.Nombre) }).OrderBy(x => x.Nombre), "Id", "Nombre");
             ViewBag.IdCarrier = new SelectList(db.Carrier.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
             ViewBag.IdSubCategoria = new SelectList(db.SubCategoria.Where(x => (x.IdCategoria == 10)).Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
+            ViewBag.IdOperacion = new SelectList(db.TipoOperacion.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
 
             return View();
         }
@@ -125,7 +136,23 @@ namespace Sitio.Areas.Warehouse.Controllers
             ViewBag.IdDestino = new SelectList(db.Locacion.Select(x => new { Id = x.Id, Nombre = (x.NombreCorto + " " + x.Nombre) }).OrderBy(x => x.Nombre), "Id", "Nombre");
             ViewBag.IdCarrier = new SelectList(db.Carrier.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
             ViewBag.IdSubCategoria = new SelectList(db.SubCategoria.Where(x => (x.IdCategoria == 10)).Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
+            ViewBag.IdOperacion = new SelectList(db.TipoOperacion.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
 
+            if (ventana.PO == null) ventana.PO = " ";
+            if (ventana.Recurso == null) ventana.Recurso = " ";
+            if (ventana.TipoUnidad == null) ventana.TipoUnidad = " ";
+            if (ventana.NombreCarrier == null) ventana.NombreCarrier = " ";
+            if (ventana.Dimension == null) ventana.Dimension = " ";
+            if (ventana.NumeroEconomico == null) ventana.NumeroEconomico = " ";
+            if (ventana.NumeroPlaca == null) ventana.NumeroPlaca = " ";
+            if (ventana.EconomicoRemolque == null) ventana.EconomicoRemolque = " ";
+            if (ventana.ColorContenedor == null) ventana.ColorContenedor = " ";
+            if (ventana.PlacaRemolque == null) ventana.PlacaRemolque = " ";
+            if (ventana.Sellos == null) ventana.Sellos = " ";
+            if (ventana.ModeloContenedor == null) ventana.ModeloContenedor = " ";
+            if (ventana.Conductor == null) ventana.Conductor = " ";
+            if (ventana.MovilConductor == null) ventana.MovilConductor = " ";
+            
             if (ModelState.IsValid)
             {
                 db.Ventana.Add(ventana);
@@ -146,14 +173,24 @@ namespace Sitio.Areas.Warehouse.Controllers
         {
             if (ModelState.IsValid)
             {
-                var estatus = db.StatusVentana
+                var estatus = new Estatus();
+
+               estatus = db.StatusVentana
                     .Where(s => (s.IdVentana == ventana.Id))
                     .OrderByDescending(s => s.Fecha)
-                    .Select(s => s.IdStatus)
+                    .Select(s => s.Status)
                     .FirstOrDefault();
+
+                if (estatus == null)
+                {
+                    estatus = db.Estatus
+                        .Where(e => e.IdCategoria == (db.SubCategoria.Where(s => s.Id == ventana.IdSubCategoria).Select(s => s.IdCategoria).FirstOrDefault()))
+                        .FirstOrDefault();
+                }
+               
                 
                 WorkFlowServicio workflowServicio = new WorkFlowServicio();
-                IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, estatus, false);
+                IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, estatus.Id, false);
 
                 if (workFlow.EjecucionCorrecta)
                 {
@@ -163,12 +200,38 @@ namespace Sitio.Areas.Warehouse.Controllers
                     StatusVentana statusVentana = new StatusVentana();
                     statusVentana.IdVentana = ventana.Id;
                     statusVentana.IdResponsable = persona.Respuesta.Id;
-                    statusVentana.IdStatus = workFlow.Respuesta.EstatusInicial.Id;
+
+                    if(estatus.Id == 0)
+                    {
+                        statusVentana.IdStatus = workFlow.Respuesta.EstatusInicial.Id;
+                    }
+                    else
+                    {
+                        statusVentana.IdStatus = workFlow.Respuesta.EstatusSiguiente.Id;
+                    }
+                    
                     statusVentana.Fecha = DateTime.Now;
+                    statusVentana.Comentarios = " ";
                     db.StatusVentana.Add(statusVentana);
                     db.SaveChanges();
+
+                    UsuarioServicio usuarioServicio = new UsuarioServicio();
+                    NotificationService notify = new NotificationService();
+
+                    string senders = usuarioServicio.GetEmailByEvento(statusVentana.Ventana.IdEvento);
+                    EmailService emailService = new EmailService();
+                    emailService.SendMail(senders, ventana);
+
+                    List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(statusVentana.Ventana.IdEvento);
+                    List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
+
+                    foreach (string notificacion in llaves)
+                    {
+                        notify.SendPushNotification(notificacion, " Cambio de estatus Ventana: " + ventana.Evento.Descripcion + ". ", " Cambio de estatus a " + estatus.Nombre);
+                    }
+
                 }
-                
+
                 return true;
             }
             return false;
@@ -193,6 +256,7 @@ namespace Sitio.Areas.Warehouse.Controllers
             ViewBag.IdDestino = new SelectList(db.Locacion.Select(x => new { Id = x.Id, Nombre = (x.NombreCorto + " " + x.Nombre) }).OrderBy(x => x.Nombre), "Id", "Nombre", ventana.IdDestino);
             ViewBag.IdCarrier = new SelectList(db.Carrier.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", ventana.IdCarrier);
             ViewBag.IdSubCategoria = new SelectList(db.SubCategoria.Where(x => (x.IdCategoria == 10)).Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", ventana.IdSubCategoria);
+            ViewBag.IdOperacion = new SelectList(db.TipoOperacion.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
 
             return View(ventana);
         }
@@ -216,6 +280,7 @@ namespace Sitio.Areas.Warehouse.Controllers
             ViewBag.IdDestino = new SelectList(db.Locacion.Select(x => new { Id = x.Id, Nombre = (x.NombreCorto + " " + x.Nombre) }).OrderBy(x => x.Nombre), "Id", "Nombre", ventana.IdDestino);
             ViewBag.IdCarrier = new SelectList(db.Carrier.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", ventana.IdCarrier);
             ViewBag.IdSubCategoria = new SelectList(db.SubCategoria.Where(x => (x.IdCategoria == 10)).Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", ventana.IdSubCategoria);
+            ViewBag.IdOperacion = new SelectList(db.TipoOperacion.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
 
             return View(ventana);
         }
@@ -235,6 +300,7 @@ namespace Sitio.Areas.Warehouse.Controllers
                  .Include(e => e.Destino)
                  .Include(e => e.Procedencia)
                  .Include(e => e.SubCategoria)
+                 .Include(e => e.TipoOperacion)
                  .FirstOrDefault();
 
             if (ventana == null)
@@ -311,10 +377,11 @@ namespace Sitio.Areas.Warehouse.Controllers
                             ventana.Sellos = workSheet.Cells[17, 2].Value.ToString().Trim();
                             ventana.TipoUnidad = workSheet.Cells[18, 2].Value.ToString().Trim();
                             ventana.Dimension = workSheet.Cells[19, 2].Value.ToString().Trim();
-                            ventana.Temperatura = Convert.ToInt32(workSheet.Cells[20, 2].Value.ToString().Trim());
+                            ventana.Temperatura = workSheet.Cells[20, 2].Value.ToString().Trim();
 
                             db.Ventana.Add(ventana);
                             db.SaveChanges();
+
                             for(int i=0; i<3; i++)
                             {
                                 changeEstatus(ventana);

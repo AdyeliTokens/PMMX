@@ -12,7 +12,7 @@ namespace Sitio.Models
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-           
+
             return userIdentity;
         }
     }
@@ -21,8 +21,11 @@ namespace Sitio.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("PMMXContext")
+            : base("PMMXContext", throwIfV1Schema: false)
         {
+            Configuration.ProxyCreationEnabled = false;
+            Configuration.LazyLoadingEnabled = false;
+
         }
 
         public static ApplicationDbContext Create()

@@ -28,11 +28,11 @@ namespace Sitio.Areas.Apis.Controllers
 
         // GET: api/GembaWalk/5
         [ResponseType(typeof(EventoView))]
-        public IHttpActionResult GetEventobyResponsableporDias(int idResponsable, int dias, bool activo)
+        public IHttpActionResult GetEventobyResponsableporDias(int idResponsable, int idCategoria, int dias, bool activo)
         {
             var today = DateTime.Now.Date;
             DateTime dateInit = today.AddDays(dias);
-
+            
             var evento = db.EventoResponsable
                  .Where(e => (e.IdResponsable == idResponsable) && (e.Evento.FechaInicio >= dateInit) && (e.Evento.Activo == activo))
                  .Select(s => new EventoView
@@ -46,6 +46,11 @@ namespace Sitio.Areas.Apis.Controllers
                      IdCategoria = s.Evento.IdCategoria,
                      Activo = s.Evento.Activo
                  }).ToList();
+
+            if( idCategoria !=0 )
+            {
+                evento = evento.Where(e => (e.IdCategoria == idCategoria)).ToList();
+            }
             
             if (evento == null)
             {
@@ -56,7 +61,7 @@ namespace Sitio.Areas.Apis.Controllers
         }
 
         [ResponseType(typeof(EventoView))]
-        public IHttpActionResult GetEventobyResponsableporFecha(int idResponsable, DateTime fecha, bool activo)
+        public IHttpActionResult GetEventobyResponsableporFecha(int idResponsable, int idCategoria, DateTime fecha, bool activo)
         {
             DateTime hoy = fecha.Date;
             DateTime mañana = hoy.AddDays(1);
@@ -74,6 +79,16 @@ namespace Sitio.Areas.Apis.Controllers
                      IdCategoria = s.Evento.IdCategoria,
                      Activo = s.Evento.Activo
                  }).ToList();
+
+            if (idCategoria != 0)
+            {
+                evento = evento.Where(e => (e.IdCategoria == idCategoria)).ToList();
+            }
+
+            if (evento == null)
+            {
+                return NotFound();
+            }
 
             return Ok(evento);
         }
@@ -100,7 +115,42 @@ namespace Sitio.Areas.Apis.Controllers
                         Descripcion = j.Descripcion,
                         IdReportador = j.IdReportador,
                         IdResponsable = j.IdResponsable
+                    }).ToList(),
+                    Ventanas = d.Ventanas.Select(v => new VentanaView
+                    {
+                        Id = v.Id,
+                        PO = v.PO,
+                        Recurso = v.Recurso,
+                        Cantidad = v.Cantidad,
+                        NumeroEconomico = v.NumeroEconomico,
+                        NumeroPlaca = v.NumeroPlaca,
+                        TipoUnidad = v.TipoUnidad,
+                        Dimension = v.Dimension,
+                        Temperatura = v.Temperatura,
+                        Conductor = v.Conductor,
+                        MovilConductor = v.MovilConductor,
+                        SubCategoria = new SubCategoriaView
+                        {
+                            Id = v.SubCategoria.Id,
+                            Nombre = v.SubCategoria.Nombre
+                        },
+                        Carrier = new CarrierView
+                        {
+                            Id = v.Carrier.Id,
+                            Nombre = v.Carrier.Nombre
+                        },
+                        Procedencia = new LocacionView
+                        {
+                            Id = v.Procedencia.Id,
+                            Nombre = v.Procedencia.Nombre
+                        },
+                        Destino = new LocacionView
+                        {
+                            Id = v.Destino.Id,
+                            Nombre = v.Destino.Nombre
+                        }
                     }).ToList()
+
                 })
                 .ToList();
 

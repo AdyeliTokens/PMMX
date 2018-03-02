@@ -14,6 +14,11 @@ using Sitio.Models;
 using System.Net.Mail;
 using System.Configuration;
 using PMMX.Modelo.Entidades.Operaciones;
+using PMMX.Modelo.Entidades;
+using PMMX.Modelo.Entidades.Warehouse;
+using Sitio.Helpers;
+using PMMX.Seguridad.Servicios;
+using PMMX.Modelo.Vistas;
 
 namespace Sitio
     {
@@ -47,7 +52,7 @@ namespace Sitio
                     
                     smail.Subject = "[PMMX Notification] Info: " + evento.Descripcion;
                     smail.Body = string.Format("<html><head><meta charset='UTF-8'></head><body>  ");
-                    smail.Body = smail.Body + string.Format("  <img src = '~/img/maya/logo.jpg' /><br /><br /> ");
+                    //smail.Body = smail.Body + string.Format("  <img src = '~/img/maya/logo.jpg' /><br /><br /> ");
                     smail.Body = smail.Body + string.Format("<div style = 'border - top:3px solid #22BCE5'>&nbsp;</div> ");
                     smail.Body = smail.Body + string.Format("<span style = 'font - family:Arial; font - size:10pt'> ");
                     smail.Body = smail.Body + string.Format(" Hello <b></b>,<br /><br /> ");
@@ -72,6 +77,84 @@ namespace Sitio
                 }
                 return true;
             }
+
+            public bool SendMail(string To_Mail, Ventana ventana)
+            {
+            try
+            {
+                MailMessage smail = new MailMessage();
+                smail.IsBodyHtml = true;
+                smail.BodyEncoding = System.Text.Encoding.GetEncoding("iso-8859-1");
+                smail.From = new MailAddress("pmm.isoperation@gmail.com", "maya@pmi.com");
+
+                string[] emails = To_Mail.Split(',');
+                foreach (string email in emails)
+                {
+                    if (email != "") smail.To.Add(email);
+                }
+
+                var estatus = ventana.StatusVentana.OrderByDescending(s => s.Fecha).Select(s => s.Status).FirstOrDefault();
+
+                smail.Subject = "[PMMX Notification] Ventana: " + ventana.PO +" "+ventana.NombreCarrier+" "+ ventana.TipoOperacion.Nombre;
+                smail.Body = string.Format("<html><head><meta charset='UTF-8'></head>");
+                smail.Body = smail.Body + string.Format("<body> <div style='width:100%'>"
+                                                        + "<div align='center' style='font-weight:bold; text-align: center; width:50%; margin: 0 auto; display: table; background: #D6EAF8;' >");
+                smail.Body = smail.Body + string.Format(" <h1 style ='text - transform: uppercase; background: #21618C; color: #FFFFFF;'> Ventana " + ventana.PO + " </h1>");
+                smail.Body = smail.Body + string.Format("Has been change to status to <span style='color: #5caad2;'>" + estatus.Nombre);
+                    
+                if(ventana.BitacoraVentana.Where(b => (b.IdVentana == ventana.Id) && (b.Estatus.Id == estatus.Id) ).OrderByDescending(v=> v.Fecha).Select(v => v.IdRechazo).Count() > 0  )
+                {
+                    smail.Body = smail.Body + string.Format(" Rejected by" 
+                        + "</br><span style='color: #21618C;'>"
+                        + ventana.BitacoraVentana.OrderByDescending(s => s.Fecha).Select(s => s.Rechazo.Nombre).FirstOrDefault() 
+                        + "</span>");
+                }
+
+                smail.Body = smail.Body + string.Format(" <br /><br /><br /><br /> ");
+                smail.Body = smail.Body + string.Format("<h3 style ='text - transform: uppercase; background: #21618C; color: #FFFFFF;'><a style='color: #FFFFFF;'' href='https://serverpmi.tr3sco.net/'>For more information click here</a><br /></h3> ");
+                smail.Body = smail.Body + string.Format(" </div>" 
+                                        +   "</div>" 
+                                        +   "</body>" 
+                                        +   "</html> ");
+
+                //SmtpClient smtp = new SmtpClient();
+                //smtp.Host = "smtp.gmail.com";
+                //smtp.Port = 587;
+                //smtp.EnableSsl = true;
+                //smtp.UseDefaultCredentials = false;
+                //smtp.Credentials = new System.Net.NetworkCredential("pmm.isoperation@gmail.com", "82000100");
+                //smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                //smtp.Timeout = 100000;
+                //smtp.Send(smail);
+
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "serverpmi.tr3sco.net";
+                smtp.Port = 25;
+                smtp.EnableSsl = true;
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new System.Net.NetworkCredential("adriana.flores@serverpmi.tr3sco.net", "Yles5~39");
+                smtp.Send(smail);
+
+                NotificationService notify = new NotificationService();
+                UsuarioServicio usuarioServicio = new UsuarioServicio();
+
+                List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(ventana.IdEvento);
+                List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
+
+                foreach (string notificacion in llaves)
+                {
+                    notify.SendPushNotification(notificacion, "Ventana: " + ventana.Evento.Descripcion + ". ", "La ventana "+ ventana.Evento.Descripcion +" ha cambiado de estatus a "+ estatus.Nombre);
+                }
+
+            }
+            catch (SmtpException ex)
+            {
+                Console.WriteLine(ex.StatusCode);
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+            return true;
+            }
     }
 
         public class SmsService : IIdentityMessageService
@@ -93,14 +176,14 @@ namespace Sitio
             public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
             {
                 var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
-                // Configure validation logic for usernames
+                
                 manager.UserValidator = new UserValidator<ApplicationUser>(manager)
                 {
                     AllowOnlyAlphanumericUserNames = false,
                     RequireUniqueEmail = true
                 };
 
-                // Configure validation logic for passwords
+                
                 manager.PasswordValidator = new PasswordValidator
                 {
                     RequiredLength = 6,
@@ -110,13 +193,12 @@ namespace Sitio
                     RequireUppercase = false,
                 };
 
-                // Configure user lockout defaults
+                
                 manager.UserLockoutEnabledByDefault = true;
-                manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromDays(30);
                 manager.MaxFailedAccessAttemptsBeforeLockout = 5;
 
-                // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
-                // You can write your own provider and plug it in here.
+                
                 manager.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<ApplicationUser>
                 {
                     MessageFormat = "Your security code is {0}"

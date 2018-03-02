@@ -15,6 +15,7 @@ using Microsoft.AspNet.Identity;
 using PMMX.Modelo.Vistas;
 using PMMX.Operaciones.Servicios;
 using PMMX.Modelo.Entidades.Warehouse;
+using Sitio.Helpers;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -70,77 +71,8 @@ namespace Sitio.Areas.Operaciones.Controllers
 
             return View(statusVentana);
         }
-
-        // GET: Operaciones/StatusVentana/Details/5
-        public ActionResult Timeline(int? idVentana)
-        {
-            if (idVentana == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            var statusVentana = db.StatusVentana
-                .Where(s => (s.IdVentana == idVentana))
-                .OrderByDescending(s => s.Fecha)
-                .Select(s => new StatusVentanaView
-                {
-                    Id = s.Id,
-                    IdVentana = s.IdVentana,
-                    IdStatus = s.IdStatus,
-                    IdResponsable = s.IdResponsable,
-                    Fecha = s.Fecha,
-                    Ventana = new VentanaView
-                    {
-                        Id = s.Ventana.Id,
-                        PO = s.Ventana.PO,
-                        Destino = new LocacionView
-                        {
-                            Id = s.Ventana.Destino.Id,
-                            Nombre = s.Ventana.Destino.Nombre,
-                            NombreCorto = s.Ventana.Destino.NombreCorto
-                        },
-                        Procedencia = new LocacionView
-                        {
-                            Id = s.Ventana.Procedencia.Id,
-                            Nombre = s.Ventana.Procedencia.Nombre,
-                            NombreCorto = s.Ventana.Procedencia.NombreCorto
-                        },
-                    },
-                    Status = new EstatusView
-                    {
-                        Id = s.Status.Id,
-                        Nombre = s.Status.Nombre,
-                        BitacoraVentana = s.Status.BitacoraVentana
-                        .Where(b => (b.IdVentana == s.IdVentana) && (b.IdStatus == s.IdStatus))
-                        .Select(b => new BitacoraVentanaView
-                        {
-                            Id = b.Id,
-                            Rechazo = new RechazoView
-                            {
-                                Id = b.Rechazo.Id,
-                                Nombre = b.Rechazo.Nombre
-                            }                            
-                        }).ToList()
-
-                    },
-                    Responsable = new PersonaView
-                    {
-                        Id = s.Responsable.Id,
-                        Nombre = s.Responsable.Nombre,
-                        Apellido1 = s.Responsable.Apellido1,
-                        Apellido2 = s.Responsable.Apellido2
-                    }
-                }).ToList();
-
-            if (statusVentana == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(statusVentana);
-        }
-
-        public PartialViewResult getTimeline(int? IdVentana)
+        
+        public PartialViewResult getTimeline(int IdVentana)
         {
             var statusVentana = db.StatusVentana
                 .Where(s => (s.IdVentana == IdVentana))
@@ -231,21 +163,48 @@ namespace Sitio.Areas.Operaciones.Controllers
                 {
                     statusVentana.IdResponsable = persona.Respuesta.Id;
                 }
-                
-                Ventana ventana = db.Ventana.Find(statusVentana.IdVentana);
+
+                var IdSubCategoria = db.Ventana.Where(x => x.Id == statusVentana.IdVentana).Select(x => x.IdSubCategoria).FirstOrDefault();
+
                 WorkFlowServicio workflowServicio = new WorkFlowServicio();
-                IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, statusVentana.IdStatus, false);
+                IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(IdSubCategoria, statusVentana.IdStatus, false);
 
                 statusVentana.IdStatus = workFlow.Respuesta.EstatusSiguiente.Id;
                 statusVentana.Fecha = DateTime.Now;
                 db.StatusVentana.Add(statusVentana);
                 db.SaveChanges();
+
+                Ventana ventana = db.Ventana
+                                 .Include(v => v.TipoOperacion)
+                                 .Include(v => v.StatusVentana)
+                                 .Include(v => v.StatusVentana.Select(s => s.Status))
+                                 .Include(v => v.BitacoraVentana)
+                                 .Include(v => v.BitacoraVentana.Select(b => b.Estatus))
+                                 .Include(v => v.BitacoraVentana.Select(b => b.Rechazo))
+                                 .Include(v => v.Evento)
+                                 .SingleOrDefault(x => x.Id == statusVentana.IdVentana);
+
+                UsuarioServicio usuarioServicio = new UsuarioServicio();
+                NotificationService notify = new NotificationService();
+
+                string senders = usuarioServicio.GetEmailByEvento(statusVentana.Ventana.IdEvento);
+                EmailService emailService = new EmailService();
+                emailService.SendMail(senders, ventana);
                 
+                List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(statusVentana.Ventana.IdEvento);
+                List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
+                var estatus = ventana.StatusVentana.OrderByDescending(s => s.Fecha).Select(s => s.Status).FirstOrDefault();
+
+                foreach (string notificacion in llaves)
+                {
+                   notify.SendPushNotification(notificacion, " Cambio de estatus Ventana: " + ventana.Evento.Descripcion + ". ", " Cambio de estatus a " + estatus.Nombre);
+                }
+
                 return RedirectToAction("Index");
             }
             
             return View(statusVentana);
-        } 
+        }
         
         // GET: Operaciones/StatusVentana/Edit/5
         public ActionResult Edit(int? id)
