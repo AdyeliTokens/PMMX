@@ -85,7 +85,7 @@ namespace Sitio
                 MailMessage smail = new MailMessage();
                 smail.IsBodyHtml = true;
                 smail.BodyEncoding = System.Text.Encoding.GetEncoding("iso-8859-1");
-                smail.From = new MailAddress("notificaciones.maya@pmi.com", "notificaciones.maya@pmi.com");
+                smail.From = new MailAddress("adriana.flores@serverpmi.tr3sco.net", "notificaciones.maya@pmi.com");
 
                 string[] emails = To_Mail.Split(',');
                 foreach (string email in emails)
