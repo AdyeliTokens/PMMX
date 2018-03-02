@@ -138,7 +138,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 byte[] fileBytes = new byte[file.ContentLength];
                 var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
                 var aliasWorkCenter = db.Alias.Include(w => w.WorkCenters).ToList();
-                //var wcs = db.WorkCenters.ToList();
+                var wcs = db.WorkCenters.ToList();
 
                 var noConformidades = new List<NoConformidad>();
                 using (var package = new ExcelPackage(file.InputStream))
@@ -185,8 +185,8 @@ namespace Sitio.Areas.Operaciones.Controllers
                                     var palabra = str.Substring(0, str.IndexOf(" "));
                                     var wc = palabra.Substring(palabra.Length - 2, 2);
 
-                                    var idWorkCenter = aliasWorkCenter.Where(w => w.Nombre == palabra).Select(a => a.WorkCenters.Select(f=> f.Id).FirstOrDefault()).FirstOrDefault();
-                                    //var idWorkCenter = wcs.Where(w => w.NombreCorto == wc).Select(w => w.Id).FirstOrDefault();
+                                    //var idWorkCenter = aliasWorkCenter.Where(w => w.Nombre == palabra).Select(a => a.WorkCenters.Select(f=> f.Id).FirstOrDefault()).FirstOrDefault();
+                                    var idWorkCenter = wcs.Where(w => w.NombreCorto == wc).Select(w => w.Id).FirstOrDefault();
                                     noconformidad.IdWorkCenter = idWorkCenter;
 
 

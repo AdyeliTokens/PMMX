@@ -1,5 +1,5 @@
 ﻿@using Sitio.Helpers
-@model IEnumerable<PMMX.Modelo.Entidades.VolumenDeProduccion>
+@model IEnumerable<PMMX.Modelo.Vistas.VolumenDeProduccionPorWorkCenterView>
 
 @{
     ViewBag.Title = "Index";
@@ -25,7 +25,79 @@
                 </div>
             </div>
             <div class="box-body">
-                
+                <div class="row">
+
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-2">
+
+                            <div class="box box-widget widget-user-2">
+                                <div class="widget-user-header bg-gray">
+
+                                    <h3 class="widget-user-username">@Html.DisplayFor(modelItem => item.WorkCenter.Nombre)</h3>
+                                    <h5 class="widget-user-desc">@Html.DisplayFor(modelItem => item.WorkCenter.NombreCorto)</h5>
+
+                                    @*@Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-danger pull-right" })
+                                @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-default pull-right" })
+                                @Html.ActionLink("Detalles", "Details", new { id = item.Id }, new { @class = "btn btn-default pull-right" })*@
+
+                                </div>
+                                <div class="box-footer">
+                                    <div class="row">
+                                        <ul class="list-group">
+                                            @foreach (var plan in item.PlanesDeProduccion)
+                                            {
+                                                if (plan.Plan_Attainment_Total < plan.Objetivo)
+                                                {
+                                                    <li class="list-group-item list-group-item-success">
+                                                        <a href="#">
+                                                            @Html.DisplayFor(modelItem => plan.Fecha)
+                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => plan.Objetivo)</span>
+                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => plan.Plan_Attainment_Total)</span>
+                                                        </a>
+                                                    </li>
+
+                                                }
+                                                else if (plan.Plan_Attainment_Total > plan.Objetivo)
+                                                {
+                                                    <li class="list-group-item list-group-item-danger">
+                                                        <a href="#">
+                                                            @Html.DisplayFor(modelItem => plan.Fecha)
+                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => plan.Objetivo)</span>
+                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => plan.Plan_Attainment_Total)</span>
+                                                        </a>
+                                                    </li>
+
+                                                }
+                                                else if (plan.Plan_Attainment_Total == plan.Objetivo)
+                                                {
+                                                    <li class="list-group-item list-group-item-warning">
+                                                        <a href="#">
+
+                                                            @Html.DisplayFor(modelItem => plan.Fecha)
+                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => plan.Objetivo)</span>
+                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => plan.Plan_Attainment_Total)</span>
+                                                        </a>
+                                                    </li>
+
+                                                }
+
+                                            }
+
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    }
+
+
+                </div>
+
             </div>
         </div>
     </div>
