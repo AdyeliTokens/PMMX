@@ -40,7 +40,7 @@ namespace PMMX.Modelo.Vistas
 
         public PersonaView PersonaQueDioDeAlta { get; set; }
         public ICollection<DesperdicioView> Desperdicios { get; set; }
-        public ICollection<VolumenDeProduccionView> VolumenesProducidos { get; set; }
-        public ICollection<PlanDeProduccionView> PlanesDeProduccion { get; set; }
+        public ICollection<VolumenDeProduccionPorWorkCenterView> VolumenesProducidos { get; set; }
+        public ICollection<PlanDeProduccionPorWorkCenterView> PlanesDeProduccion { get; set; }
     }
 }

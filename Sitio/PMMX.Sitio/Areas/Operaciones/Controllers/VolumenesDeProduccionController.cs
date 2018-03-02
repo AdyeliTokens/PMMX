@@ -12,6 +12,7 @@ using OfficeOpenXml;
 using PMMX.Seguridad.Servicios;
 using PMMX.Modelo.RespuestaGenerica;
 using Microsoft.AspNet.Identity;
+using PMMX.Modelo.Vistas;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -22,8 +23,37 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         public ActionResult Index()
         {
+
+            DateTime diaSeleccionado = DateTime.Now.Date;
+            int delta = DayOfWeek.Monday - diaSeleccionado.DayOfWeek;
+            DateTime monday = diaSeleccionado.AddDays(delta);
+            var primerDiaDelAnio = new DateTime(DateTime.Now.Year, 1, 1);
+
+            var workCenters = db.WorkCenters.ToList();
+            var volumenes = db.VolumenesDeProduccion.Where(x => (x.Fecha >= monday && x.Fecha <= diaSeleccionado)).ToList();
+            var objetivos = db.ObjetivosPlanAttainment.Select(x => x).Where(x => (x.FechaInicial >= primerDiaDelAnio)).ToList();
+            IList<VolumenDeProduccionPorWorkCenterView> listadelistas = new List<VolumenDeProduccionPorWorkCenterView>();
+
+            foreach (var item in workCenters)
+            {
+
+                IList<PlanAttainmentView> cumplimientiAlPlan = new List<PlanAttainmentView>();
+                VolumenDeProduccionPorWorkCenterView planPorWorkCenter = new VolumenDeProduccionPorWorkCenterView();
+                planPorWorkCenter.WorkCenter = item;
+
+                for (int i = delta; i <= (6 + delta); i++)
+                {
+                    Double planTotal = volumenes.Where(x => (x.IdWorkCenter == item.Id) && (x.Fecha.Date == diaSeleccionado.AddDays(i).Date)).Sum(o => o.New_Qty);
+                    Double objetivo = objetivos.Where(x => (x.IdWorkCenter == item.Id) && (x.FechaInicial <= diaSeleccionado.AddDays(i).Date)).OrderByDescending(x => x.FechaInicial).Select(x => x.Objetivo).FirstOrDefault();
+
+                    cumplimientiAlPlan.Add(new PlanAttainmentView { Fecha = diaSeleccionado.AddDays(i),  Plan_Attainment_Total = planTotal, Objetivo = objetivo });
+                }
+                planPorWorkCenter.PlanesDeProduccion = new List<PlanAttainmentView>();
+                planPorWorkCenter.PlanesDeProduccion.AddRange(cumplimientiAlPlan);
+                listadelistas.Add(planPorWorkCenter);
+            }
             
-            return View();
+            return View(listadelistas);
         }
 
         public ActionResult Reporte()
