@@ -13,6 +13,7 @@ using PMMX.Seguridad.Servicios;
 using PMMX.Modelo.RespuestaGenerica;
 using Microsoft.AspNet.Identity;
 using Sitio.Models;
+using PMMX.Modelo.Vistas;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -23,7 +24,26 @@ namespace Sitio.Areas.Operaciones.Controllers
         // GET: Operaciones/PlanesDeProduccion
         public ActionResult Index()
         {
-            return View();
+            DateTime diaSeleccionado = DateTime.Now.Date;
+
+            var workCenters = db.WorkCenters.ToList();
+            var planes = db.PlanDeProduccion.Where(x => (x.Inicio <= diaSeleccionado && x.Fin >= diaSeleccionado)).ToList();
+            //var objetivos = db.ObjetivosPlanAttainment.Select(x => x).Where(x => (x.FechaInicial >= primerDiaDelAnio)).ToList();
+
+
+            IList<PlanDeProduccionPorWorkCenterView> listadelistas = new List<PlanDeProduccionPorWorkCenterView>();
+            foreach (var item in workCenters)
+            {
+                PlanDeProduccionPorWorkCenterView planPorWorkCenter = new PlanDeProduccionPorWorkCenterView();
+                planPorWorkCenter.WorkCenter = item;
+                var planTotal = planes.Where(x => (x.IdWorkCenter == item.Id)).GroupBy(rd => rd.Code_FA, rd => rd.Cantidad, (code, cant) => new PlanDeProduccionView { Code_FA = code, Cantidad = cant.Sum() }).ToList();
+                planPorWorkCenter.Produccion = new List<PlanDeProduccionView>();
+                planPorWorkCenter.Produccion = planTotal;
+                
+                listadelistas.Add(planPorWorkCenter);
+            }
+
+            return View(listadelistas);
         }
 
         public ActionResult Reporte()

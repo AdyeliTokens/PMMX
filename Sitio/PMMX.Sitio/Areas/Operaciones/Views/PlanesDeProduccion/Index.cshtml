@@ -1,5 +1,5 @@
 ﻿@using Sitio.Helpers
-@model IEnumerable<PMMX.Modelo.Entidades.PlanDeProduccion>
+@model IEnumerable<PMMX.Modelo.Vistas.PlanDeProduccionPorWorkCenterView>
 
 @{
     ViewBag.Title = "Index";
@@ -7,7 +7,7 @@
 }
 
 @section Styles {
-    
+
 
 }
 <div class="row">
@@ -16,7 +16,7 @@
             <div class="box-header">
                 <h3 class="box-title">Plan de Produccion</h3>
                 <div class="box-tools">
-                    
+
 
                     @Ajax.MenuLink(" Reporte", string.Format("{0:c}", "fa fa-list"), "Reporte", "PlanesDeProduccion", new { area = "Operaciones" }, null, new { @class = "btn btn-primary btn-sm" })
 
@@ -27,7 +27,45 @@
 
                 </div>
             </div>
-            <div class="box-body">
+            <div class="box-body no-padding">
+                
+
+                    <table class="table table-bordered table-striped">
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td >
+                                        @Html.DisplayFor(modelItem => item.WorkCenter.Nombre)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.WorkCenter.NombreCorto)
+                                    </td>
+                                    <td>
+                                        <table class="table" >
+
+                                            <tbody>
+                                                @foreach (var plan in item.Produccion)
+                                                {
+                                                    <tr style="width:100%">
+                                                        <td style="width:50%">@Html.DisplayFor(modelItem => plan.Code_FA)</td>
+                                                        <td style="width:50%">@Html.DisplayFor(modelItem => plan.Cantidad)</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+
+
+                                        </table>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        
+                    </table>
+
+
+
                 
             </div>
         </div>
@@ -35,5 +73,5 @@
 </div>
 
 @section Scripts {
-    
+
 }

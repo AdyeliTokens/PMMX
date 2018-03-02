@@ -31,7 +31,7 @@
 
                     @foreach (var item in Model)
                     {
-                        <div class="col-md-2">
+                        <div class="col-md-4">
 
                             <div class="box box-widget widget-user-2">
                                 <div class="widget-user-header bg-gray">
@@ -49,7 +49,18 @@
                                         <ul class="list-group">
                                             @foreach (var vqi in item.VQIs)
                                             {
-                                                if (vqi.VQI_Total < vqi.Objetivo)
+                                                if (vqi.VQI_Total == 0)
+                                                {
+                                                    <li class="list-group-item">
+                                                        <a href="#">
+                                                            @Html.DisplayFor(modelItem => vqi.Fecha)
+                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => vqi.Objetivo)</span>
+                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => vqi.VQI_Total)</span>
+                                                        </a>
+                                                    </li>
+
+                                                }
+                                                else if (vqi.VQI_Total < vqi.Objetivo)
                                                 {
                                                     <li class="list-group-item list-group-item-success">
                                                         <a href="#">
