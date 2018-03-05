@@ -24,7 +24,7 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
         public IHttpActionResult GetVolumenesPorIdWorkCenter(int IdWorkCenter)
         {
             RespuestaServicio<List<PlanAttainmentView>> respuesta = new RespuestaServicio<List<PlanAttainmentView>>();
-            DateTime diaSeleccionado = DateTime.Now.Date;
+            DateTime diaSeleccionado = DateTime.Now.Date.AddDays(1);
             int delta = DayOfWeek.Monday - diaSeleccionado.DayOfWeek;
             DateTime monday = diaSeleccionado.AddDays(delta);
             var primerDiaDelAnio = new DateTime(DateTime.Now.Year, 1, 1);
