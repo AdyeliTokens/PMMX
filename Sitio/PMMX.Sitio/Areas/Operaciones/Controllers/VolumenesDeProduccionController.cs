@@ -25,6 +25,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         {
 
             DateTime diaSeleccionado = DateTime.Now.Date;
+            diaSeleccionado = diaSeleccionado.AddDays(1);
             int delta = DayOfWeek.Monday - diaSeleccionado.DayOfWeek;
             DateTime monday = diaSeleccionado.AddDays(delta);
             var primerDiaDelAnio = new DateTime(DateTime.Now.Year, 1, 1);
