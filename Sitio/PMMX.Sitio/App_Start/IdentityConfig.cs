@@ -42,7 +42,7 @@ namespace Sitio
                     MailMessage smail = new MailMessage();
                     smail.IsBodyHtml = true;
                     smail.BodyEncoding = System.Text.Encoding.GetEncoding("iso-8859-1");
-                    smail.From = new MailAddress("pmm.isoperation@gmail.com", "maya@pmi.com");
+                    smail.From = new MailAddress("pmm.isoperation@gmail.com", "notificaciones.maya@pmi.com");
                 
                     string[] emails = To_Mail.Split(',');
                     foreach (string email in emails)
@@ -52,14 +52,15 @@ namespace Sitio
                     
                     smail.Subject = "[PMMX Notification] Info: " + evento.Descripcion;
                     smail.Body = string.Format("<html><head><meta charset='UTF-8'></head><body>  ");
-                    //smail.Body = smail.Body + string.Format("  <img src = '~/img/maya/logo.jpg' /><br /><br /> ");
-                    smail.Body = smail.Body + string.Format("<div style = 'border - top:3px solid #22BCE5'>&nbsp;</div> ");
+                    smail.Body = smail.Body + string.Format("<div align='center' style='font-weight:bold; text-align: center; width:50%; margin: 0 auto; display: table; background: #D6EAF8;' >");
+                    smail.Body = smail.Body + string.Format(" <h1 style ='text - transform: uppercase; background: #21618C; color: #FFFFFF;'> New Event </h1></div>");
                     smail.Body = smail.Body + string.Format("<span style = 'font - family:Arial; font - size:10pt'> ");
-                    smail.Body = smail.Body + string.Format(" Hello <b></b>,<br /><br /> ");
                     smail.Body = smail.Body + string.Format("   A new event has been asigned to you <h3>" + evento.Descripcion + "</h3> to " + evento.FechaInicio);
-                    smail.Body = smail.Body + string.Format(" <br /><br /> ");
-                    smail.Body = smail.Body + string.Format("  Thanks<br /> ");
-                    smail.Body = smail.Body + string.Format(" </span></body></html> ");
+                    smail.Body = smail.Body + string.Format(" <br /><br /></span> ");
+                    smail.Body = smail.Body + string.Format("<h3 style ='text - transform: uppercase; background: #21618C; color: #FFFFFF;'>" 
+                        + "<a style='color: #FFFFFF;'' href='https://serverpmi.tr3sco.net/'>For more information click here</a>"
+                        + "<br /></h3> ");
+                    smail.Body = smail.Body + string.Format(" </body></html> ");
 
                     SmtpClient smtp = new SmtpClient();
                     smtp.Host = "smtp.gmail.com";
@@ -85,7 +86,7 @@ namespace Sitio
                 MailMessage smail = new MailMessage();
                 smail.IsBodyHtml = true;
                 smail.BodyEncoding = System.Text.Encoding.GetEncoding("iso-8859-1");
-                smail.From = new MailAddress("adriana.flores@serverpmi.tr3sco.net", "notificaciones.maya@pmi.com");
+                smail.From = new MailAddress("pmm.isoperation@gmail.com", "notificaciones.maya@pmi.com");
 
                 string[] emails = To_Mail.Split(',');
                 foreach (string email in emails)
@@ -117,24 +118,16 @@ namespace Sitio
                                         +   "</body>" 
                                         +   "</html> ");
 
-                //SmtpClient smtp = new SmtpClient();
-                //smtp.Host = "smtp.gmail.com";
-                //smtp.Port = 587;
-                //smtp.EnableSsl = true;
-                //smtp.UseDefaultCredentials = false;
-                //smtp.Credentials = new System.Net.NetworkCredential("pmm.isoperation@gmail.com", "82000100");
-                //smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                //smtp.Timeout = 100000;
-                //smtp.Send(smail);
-
                 SmtpClient smtp = new SmtpClient();
-                smtp.Host = "serverpmi.tr3sco.net";
-                smtp.Port = 25;
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
                 smtp.EnableSsl = true;
                 smtp.UseDefaultCredentials = false;
-                smtp.Credentials = new System.Net.NetworkCredential("adriana.flores@serverpmi.tr3sco.net", "Yles5~39");
+                smtp.Credentials = new System.Net.NetworkCredential("pmm.isoperation@gmail.com", "82000100");
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtp.Timeout = 100000;
                 smtp.Send(smail);
-
+                
                 NotificationService notify = new NotificationService();
                 UsuarioServicio usuarioServicio = new UsuarioServicio();
 
