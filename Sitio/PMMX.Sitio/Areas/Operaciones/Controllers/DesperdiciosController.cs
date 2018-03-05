@@ -32,7 +32,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             
 
             var workCenters = db.WorkCenters.ToList();
-            var desperdicios = db.Desperdicios.Where(x => (x.Fecha <= monday && x.Fecha >= diaSeleccionado)).ToList();
+            var desperdicios = db.Desperdicios.Where(x => (x.Fecha >= monday && x.Fecha <= diaSeleccionado)).ToList();
             var objetivos = db.ObjetivosCRR.Select(x => x).Where(x => (x.FechaInicial >= primerDiaDelAnio)).ToList();
             var volumenes = db.VolumenesDeProduccion.Where(x => (x.Fecha <= diaSeleccionado  && x.Fecha >= monday)).ToList();
 
@@ -54,7 +54,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                     .GroupBy(rd => rd.Code_FA, rd => rd.New_Qty, (code, cant) => new DesperdicioView
                     {
                         Code_FA = code,
-                        Cantidad = desperdicios.Where(d => d.Code_FA == code).Select(d => d.Cantidad).Sum() / cant.Sum()
+                        Cantidad = desperdicios.Where(d => d.Code_FA == code && d.IdWorkCenter == item.Id).Select(d => d.Cantidad).Sum() / cant.Sum()
                         
                         
                     })
@@ -101,6 +101,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 DateTime hoy = DateTime.Now.Date;
                 var lista = db.PlanDeProduccion.Where(x =>(x.Inicio <= hoy && x.Fin >= hoy) && (x.IdWorkCenter == idWorkCenter) )
                             .Select(x => new { Code_FA = x.Code_FA, Descripcion = x.Code_FA + " - " + x.Marca_FA.Descripcion })
+                            .Distinct()
                             .ToList();
 
                 return Json(new { lista }, JsonRequestBehavior.AllowGet);
