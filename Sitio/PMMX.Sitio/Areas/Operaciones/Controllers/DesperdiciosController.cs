@@ -30,17 +30,47 @@ namespace Sitio.Areas.Operaciones.Controllers
             DateTime monday = diaSeleccionado.AddDays(delta);
             var primerDiaDelAnio = new DateTime(DateTime.Now.Year, 1, 1);
             
-            var reporte = db.WorkCenters.Select(r=> new ReporteView {
-                 IdWorkCenter = r.Id,
-                 NombreCorto = r.NombreCorto,
-                 Nombre = r.Nombre,
-                 DesperdiciosTotal = r.Desperdicios.Where(d => d.Fecha >= monday && d.Fecha <= diaSeleccionado).Sum(d => d.Cantidad),
-                 Codes_FA = r.Desperdicios.Where(d => d.Fecha >= monday && d.Fecha <= diaSeleccionado).Select(d => new Code_FA_View { Code_FA = d.MarcaDelCigarrillo.Code_FA , Cantidad  = d.MarcaDelCigarrillo.Desperdicios.Where(p => p.IdWorkCenter == r.Id).Sum( p => p.Cantidad) })
-            });
+
+            var workCenters = db.WorkCenters.ToList();
+            var desperdicios = db.Desperdicios.Where(x => (x.Fecha <= monday && x.Fecha >= diaSeleccionado)).ToList();
+            var objetivos = db.ObjetivosCRR.Select(x => x).Where(x => (x.FechaInicial >= primerDiaDelAnio)).ToList();
+            var volumenes = db.VolumenesDeProduccion.Where(x => (x.Fecha <= diaSeleccionado  && x.Fecha >= monday)).ToList();
+
+            IList<CRRPorWorkCenter> listadelistas = new List<CRRPorWorkCenter>();
+            foreach (var item in workCenters)
+            {
+                CRRPorWorkCenter crrPorWorkCenter = new CRRPorWorkCenter();
+                crrPorWorkCenter.WorkCenter = item;
+                var desperdicioTotal = desperdicios
+                    .Where(x => (x.IdWorkCenter == item.Id))
+                    .GroupBy(rd => rd.Code_FA, rd => rd.Cantidad ,(code, cant ) => new DesperdicioView {
+                        Code_FA = code,
+                        Cantidad = cant.Sum()
+                    })
+                    .ToList();
+
+                var VolumenesTotal = volumenes
+                    .Where(x => (x.IdWorkCenter == item.Id))
+                    .GroupBy(rd => rd.Code_FA, rd => rd.New_Qty, (code, cant) => new DesperdicioView
+                    {
+                        Code_FA = code,
+                        Cantidad = desperdicios.Where(d => d.Code_FA == code).Select(d => d.Cantidad).Sum() / cant.Sum()
+                        
+                        
+                    })
+                    .ToList();
+
+                
+
+
+                crrPorWorkCenter.Desperdicio = new List<DesperdicioView>();
+                crrPorWorkCenter.Desperdicio = VolumenesTotal;
+
+                listadelistas.Add(crrPorWorkCenter);
+            }
+
+            return View(listadelistas);
             
-
-
-            return View(reporte);
         }
 
         public ActionResult Reporte()
@@ -86,6 +116,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
             desperdicio.IdPersona = persona.Respuesta.Id;
             desperdicio.Fecha = DateTime.Now;
+            DateTime hoy = DateTime.Now.Date;
             if (ModelState.IsValid)
             {
 
@@ -94,7 +125,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Code_FA = new SelectList(db.Marcas.Select(x => new { Code_FA = x.Code_FA, Descripcion = x.Code_FA + " - " + x.Descripcion }), "Code_FA", "Descripcion");
+            ViewBag.Code_FA = new SelectList(db.PlanDeProduccion.Where(x => x.Inicio < hoy && x.Fin > hoy).Select(x => new { Code_FA = x.Code_FA, Descripcion = x.Code_FA + " - " + x.Marca_FA.Descripcion }), "Code_FA", "Descripcion");
             ViewBag.IdSeccion = new SelectList(db.ModuloSeccion, "Id", "Nombre", desperdicio.IdSeccion);
             ViewBag.IdWorkCenter = new SelectList(db.WorkCenters, "Id", "Nombre", desperdicio.IdWorkCenter);
             return View(desperdicio);
