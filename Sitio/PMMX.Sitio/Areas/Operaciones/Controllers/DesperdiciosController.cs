@@ -94,6 +94,22 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(desperdicio);
         }
 
+        public ActionResult GetCode_FA(int idWorkCenter)
+        {
+            if (ModelState.IsValid)
+            {
+                DateTime hoy = DateTime.Now.Date;
+                var lista = db.PlanDeProduccion.Where(x =>(x.Inicio <= hoy && x.Fin >= hoy) && (x.IdWorkCenter == idWorkCenter) )
+                            .Select(x => new { Code_FA = x.Code_FA, Descripcion = x.Code_FA + " - " + x.Marca_FA.Descripcion })
+                            .ToList();
+
+                return Json(new { lista }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
         public ActionResult Create()
         {

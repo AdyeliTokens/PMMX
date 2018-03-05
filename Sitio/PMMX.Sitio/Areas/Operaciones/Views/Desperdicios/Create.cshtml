@@ -56,8 +56,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Code_FA, "Code_FA", htmlAttributes: new { @class = "control-label col-md-1" })
                     <div class="col-md-11">
-                        @Html.DropDownList("Code_FA", null, htmlAttributes: new { @class = "form-control select2" })
-                        @Html.ValidationMessageFor(model => model.Code_FA, "", new { @class = "text-danger" })
+                        <select id="Code_FA" class="form-control select2"></select>
                     </div>
                 </div>
 
@@ -83,6 +82,28 @@
         $(function () {
 
             $('.select2').select2()
+
+            $("#IdWorkCenter").on("change", function () {
+                var IdWorkCenter = $("#IdWorkCenter").val();
+               
+                $.ajax({
+                    dataType: "json",
+                    contentType: "application/json",
+                    url: "/Operaciones/Desperdicios/GetCode_FA?IdWorkCenter=" + IdWorkCenter,
+                    success: function (data) {
+                        items = '<option></option>';
+                        $.each(data.lista, function (i, k) {
+                            items += "<option value='" + k.Code_FA + "'>" + k.Descripcion + "</option>";
+                        });
+                        $('#Code_FA').html(items);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert('There was an error while fetching data!');
+                    }
+                })
+
+            });
+
         });
     </script>
 }
