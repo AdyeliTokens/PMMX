@@ -610,7 +610,8 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
             return Ok(defectoView);
         }
 
-        [ResponseType(typeof(DefectoView))]
+        [HttpPost]
+        [ResponseType(typeof(RespuestaServicio<DefectoView>))]
         public IHttpActionResult PostDefecto(Defecto defecto)
         {
             RespuestaServicio<DefectoView> respuesta = new RespuestaServicio<DefectoView>();
