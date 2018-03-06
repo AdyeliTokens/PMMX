@@ -27,6 +27,15 @@ namespace PMMX.Modelo.Vistas
         public int IdSubCategoria { get; set; }
         public int Tipo { get; set; }
         public int? ActividadesCount { get; set; }
+
+        //
+        public string ReportadorNombre { get; set; }
+        public string ResponsableNombre { get; set; }
+        public string SubcategoriaNombre { get; set; }
+        public string TipoNombre { get; set; }
+        public string OrigenNombre { get; set; }
+        public string SubCategoriaNombre { get; set; }
+        public string StatusNombre { get; set; }
         #endregion
 
         #region Navegacion

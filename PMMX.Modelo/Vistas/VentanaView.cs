@@ -58,6 +58,15 @@ namespace PMMX.Modelo.Vistas
         public string MovilConductor { get; set; }
         //
         public bool Activo { get; set; }
+
+        //
+        public string ProcedenciaNombre { get; set; }
+        public string DestinoNombre { get; set; }
+        public string ProveedorNombre { get; set; }
+        public string SubCategoriaNombre { get; set; }
+        public string CarrierNombre { get; set; }
+        public string StatusNombre { get; set; }
+
         #endregion
 
         #region Navegacion

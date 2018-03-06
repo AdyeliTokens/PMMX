@@ -215,21 +215,41 @@ namespace Sitio.Areas.Warehouse.Controllers
                     db.StatusVentana.Add(statusVentana);
                     db.SaveChanges();
 
-                    UsuarioServicio usuarioServicio = new UsuarioServicio();
-                    NotificationService notify = new NotificationService();
-
-                    string senders = usuarioServicio.GetEmailByEvento(statusVentana.Ventana.IdEvento);
-                    EmailService emailService = new EmailService();
-                    emailService.SendMail(senders, ventana);
-
-                    List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(statusVentana.Ventana.IdEvento);
-                    List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
-
-                    foreach (string notificacion in llaves)
+                    try
                     {
-                        notify.SendPushNotification(notificacion, " Cambio de estatus Ventana: " + ventana.Evento.Descripcion + ". ", " Cambio de estatus a " + estatus.Nombre);
-                    }
+                        UsuarioServicio usuarioServicio = new UsuarioServicio();
+                        NotificationService notify = new NotificationService();
 
+                        string senders = usuarioServicio.GetEmailByEvento(statusVentana.Ventana.IdEvento);
+                        if (senders != null)
+                        {
+                            EmailService emailService = new EmailService();
+
+                            Ventana ventanaSend = db.Ventana
+                                     .Include(v => v.TipoOperacion)
+                                     .Include(v => v.StatusVentana)
+                                     .Include(v => v.StatusVentana.Select(s => s.Status))
+                                     .Include(v => v.BitacoraVentana)
+                                     .Include(v => v.BitacoraVentana.Select(b => b.Estatus))
+                                     .Include(v => v.BitacoraVentana.Select(b => b.Rechazo))
+                                     .Include(v => v.Evento)
+                                     .SingleOrDefault(x => x.Id == statusVentana.IdVentana);
+
+                            emailService.SendMail(senders, ventanaSend);
+                        }
+
+                        List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(statusVentana.Ventana.IdEvento);
+                        List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
+
+                        foreach (string notificacion in llaves)
+                        {
+                            notify.SendPushNotification(notificacion, " Cambio de estatus Ventana: " + ventana.Evento.Descripcion + ". ", " Cambio de estatus a " + estatus.Nombre);
+                        }
+                    }
+                    catch(Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
                 }
 
                 return true;

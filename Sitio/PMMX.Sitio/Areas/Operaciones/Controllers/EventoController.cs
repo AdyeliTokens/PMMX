@@ -29,19 +29,24 @@ namespace Sitio.Areas.Operaciones.Controllers
         }
 
 
-        public ActionResult GetEvents()
+        public ActionResult GetEvents(DateTime date)
         {
             if (ModelState.IsValid)
             {
-                var events = db.Evento.Select(e => new EventoView
-                {
-                    Id = e.Id,
-                    Descripcion = e.Descripcion,
-                    FechaInicio = e.FechaInicio,
-                    FechaFin = e.FechaFin,
-                    Nota = e.Nota
-                }).ToList();
+                var lastDay = DateTime.DaysInMonth(date.Year, date.Month);
+                var LastDate = date.AddDays(lastDay-1);
 
+                var events = db.Evento
+                    .Where(e => (e.FechaInicio >= date && e.FechaFin <= LastDate))
+                    .Select(e => new EventoView
+                    {
+                        Id = e.Id,
+                        Descripcion = e.Descripcion,
+                        FechaInicio = e.FechaInicio,
+                        FechaFin = e.FechaFin,
+                        Nota = e.Nota
+                    }).ToList(); 
+                
                 foreach (var item in events)
                 {
                     item.Color = GetColorStatus(item.Id);
@@ -55,12 +60,15 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
         }
 
-        public ActionResult GetEventsByCategoria(int IdCategoria)
+        public ActionResult GetEventsByCategoria(int IdCategoria, DateTime date)
         {
             if (ModelState.IsValid)
             {
+                var lastDay = DateTime.DaysInMonth(date.Year, date.Month);
+                var LastDate = date.AddDays(lastDay - 1);
+
                 var events = db.Evento
-                    .Where(e => e.IdCategoria == IdCategoria)
+                    .Where(e => (e.IdCategoria == IdCategoria) && (e.FechaInicio >= date && e.FechaInicio <= LastDate) )
                     .Select(e => new EventoView
                     {
                         Id = e.Id,
@@ -94,11 +102,15 @@ namespace Sitio.Areas.Operaciones.Controllers
             return colors;
         }
 
-        public ActionResult GetEventsBySubCategoria(int IdSubCategoria)
+        public ActionResult GetEventsBySubCategoria(int IdSubCategoria, DateTime date)
         {
             if (ModelState.IsValid)
             {
-                var events = db.Ventana.Where(v => (v.IdSubCategoria == IdSubCategoria))
+                var lastDay = DateTime.DaysInMonth(date.Year, date.Month);
+                var LastDate = date.AddDays(lastDay - 1);
+
+                var events = db.Ventana
+                    .Where(v => (v.IdSubCategoria == IdSubCategoria) && (v.Evento.FechaInicio >= date && v.Evento.FechaFin <= LastDate) )
                     .Select( e => new EventoView
                     {
                         Id = e.Evento.Id,
