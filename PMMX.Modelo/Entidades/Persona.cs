@@ -42,7 +42,6 @@ namespace PMMX.Modelo.Entidades
         public ICollection<Paro> ParosReportados { get; set; }
         public ICollection<Paro> ParosAsignados { get; set; }
         public ICollection<Defecto> DefectosReportados { get; set; }
-        public ICollection<Defecto> DefectosAsignados { get; set; }
         public ICollection<ActividadEnParo> ActividadesEnParoRealizadas { get; set; }
         public ICollection<ActividadEnDefecto> ActividadesEnDefectoRealizadas { get; set; }
         public ICollection<Dispositivo> Dispositivos { get; set; }
