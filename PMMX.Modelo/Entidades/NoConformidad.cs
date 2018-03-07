@@ -14,8 +14,7 @@ namespace PMMX.Modelo.Entidades
         public int Calificacion_VQI { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = @"{0:dd\/MM\/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Fecha { get; set; }
         public int IdPersona { get; set; }
         public int IdWorkCenter { get; set; }
