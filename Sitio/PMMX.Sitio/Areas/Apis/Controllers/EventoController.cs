@@ -106,51 +106,7 @@ namespace Sitio.Areas.Apis.Controllers
                     FechaFin = d.FechaFin,
                     Nota = d.Nota,
                     IdCategoria = d.IdCategoria,
-                    Activo = d.Activo,
-                    GembaWalk = d.GembaWalk.Select(j => new GembaWalkView
-                    {
-                        Id = j.Id,
-                        IdEvento = j.IdEvento,
-                        IdOrigen = j.IdOrigen,
-                        Descripcion = j.Descripcion,
-                        IdReportador = j.IdReportador,
-                        IdResponsable = j.IdResponsable
-                    }).ToList(),
-                    Ventanas = d.Ventanas.Select(v => new VentanaView
-                    {
-                        Id = v.Id,
-                        PO = v.PO,
-                        Recurso = v.Recurso,
-                        Cantidad = v.Cantidad,
-                        NumeroEconomico = v.NumeroEconomico,
-                        NumeroPlaca = v.NumeroPlaca,
-                        TipoUnidad = v.TipoUnidad,
-                        Dimension = v.Dimension,
-                        Temperatura = v.Temperatura,
-                        Conductor = v.Conductor,
-                        MovilConductor = v.MovilConductor,
-                        SubCategoria = new SubCategoriaView
-                        {
-                            Id = v.SubCategoria.Id,
-                            Nombre = v.SubCategoria.Nombre
-                        },
-                        Carrier = new CarrierView
-                        {
-                            Id = v.Carrier.Id,
-                            Nombre = v.Carrier.Nombre
-                        },
-                        Procedencia = new LocacionView
-                        {
-                            Id = v.Procedencia.Id,
-                            Nombre = v.Procedencia.Nombre
-                        },
-                        Destino = new LocacionView
-                        {
-                            Id = v.Destino.Id,
-                            Nombre = v.Destino.Nombre
-                        }
-                    }).ToList()
-
+                    Activo = d.Activo
                 })
                 .ToList();
 

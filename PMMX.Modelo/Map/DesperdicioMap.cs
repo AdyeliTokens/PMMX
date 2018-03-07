@@ -22,7 +22,6 @@ namespace PMMX.Modelo.Map
             Property(c => c.Fecha).HasColumnName("Fecha");
             Property(c => c.IdPersona).HasColumnName("IdPersona");
             Property(c => c.IdWorkCenter).HasColumnName("IdWorkCenter");
-            Property(c => c.IdSeccion).HasColumnName("IdSeccion");
             Property(c => c.Code_FA).HasColumnName("Code_FA");
 
             #endregion
@@ -36,7 +35,6 @@ namespace PMMX.Modelo.Map
 
             #region HasRequired
             HasRequired(c => c.Reportante).WithMany(x => x.DesperdicioReportado).HasForeignKey(c => c.IdPersona);
-            HasRequired(c => c.Seccion).WithMany(x => x.Desperdicios).HasForeignKey(c => c.IdSeccion);
             HasRequired(c => c.WorkCenter).WithMany(x => x.Desperdicios).HasForeignKey(c => c.IdWorkCenter);
             HasRequired(c => c.MarcaDelCigarrillo).WithMany(x => x.Desperdicios).HasForeignKey(c => c.Code_FA);
 

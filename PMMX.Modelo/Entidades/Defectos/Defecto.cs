@@ -26,14 +26,12 @@ namespace PMMX.Modelo.Entidades.Defectos
 
         [StringLength(250)]
         public string NotificacionSAP { get; set; }
-        public int IdResponsable { get; set; }
         #endregion
         
         #region Navegacion
         public Persona Reportador { get; set; }
         public Origen Origen { get; set; }
-        public Persona Responsable { get; set; }
-        public List<Foto> Fotos { get; set; }
+        public ICollection<Foto> Fotos { get; set; }
         public ICollection<ActividadEnDefecto> Actividades { get; set; }
         public ICollection<Comentario> Comentarios { get; set; }
         public ICollection<Asignacion> Asignaciones { get; set; }

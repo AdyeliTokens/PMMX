@@ -100,7 +100,6 @@ namespace PMMX.Operaciones.Servicios
                     Fecha = y.Fecha,
                     Code_FA = y.Code_FA,
                     IdPersona = y.IdPersona,
-                    IdSeccion = y.IdSeccion,
                     IdWorkCenter = y.IdWorkCenter,
                     MarcaDelCigarrillo = y.MarcaDelCigarrillo
                 })
