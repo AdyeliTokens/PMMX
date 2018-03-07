@@ -17,17 +17,18 @@ using Sitio.Models;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
+    [Authorize]
     public class DesperdiciosController : Controller
     {
         private PMMXContext db = new PMMXContext();
 
-
+        
         public ActionResult Index()
         {
             FechaInicioFin model = new FechaInicioFin();
             model.Inicio = DateTime.Now.Date;
             model.Fin = DateTime.Now.Date.AddDays(1);
-            return View();
+            return View(model);
             
         }
 
