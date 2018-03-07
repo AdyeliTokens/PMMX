@@ -1,53 +1,107 @@
 ﻿@model IEnumerable<PMMX.Modelo.Entidades.Maquinaria.ObjetivoCRR>
 
 @{
-    Layout = null;
+    ViewBag.Title = "Index";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
+@section Styles {
+    @Styles.Render("~/Style/DataTables")
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.WorkCenter.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Objetivo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaInicial)
-            </th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.WorkCenter.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Objetivo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaInicial)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-            </td>
-        </tr>
-    }
-    
-    </table>
-</body>
-</html>
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Objetivos CRR</h3>
+                <div class="box-tools">
+                    
+                    <a href="@Url.Action("Create", "ObjetivosCRR")" class="btn btn-primary btn-sm">
+                        <span class="fa fa-plus" aria-hidden="true"></span>
+                    </a>
+                    <a href="@Url.Action("Upload", "Marcas")" class="btn btn-primary btn-sm">
+                        <span class="fa fa-cloud-upload" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="box-body table-responsive">
+                <table class="table">
+                    <tr>
+                        
+                    </tr>
+
+                    
+
+                </table>
+
+
+                <table class="table table-hover table-striped" id="example1">
+                    <thead>
+                        <tr class="info">
+                            <th>
+                                @Html.DisplayNameFor(model => model.WorkCenter.Nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Objetivo)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FechaInicial)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.WorkCenter.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Objetivo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FechaInicial)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr class="info">
+                            <th>
+                                @Html.DisplayNameFor(model => model.WorkCenter.Nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Objetivo)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FechaInicial)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/JS/DataTables")
+    <script>
+        $(function () {
+            $('#example1').DataTable();
+        });
+        $('#example1 input[type="checkbox"]').iCheck({
+            checkboxClass: 'icheckbox_flat-blue',
+            radioClass: 'iradio_flat-blue'
+        });
+    </script>
+}
+
+

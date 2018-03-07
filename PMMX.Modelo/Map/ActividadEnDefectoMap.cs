@@ -11,17 +11,18 @@ namespace PMMX.Modelo.Map
     {
         public ActividadEnDefectoMap()
         {
-            this.ToTable("ActividadesEnDefectos");
-            this.HasKey(c => c.Id);
-            this.Property(c => c.Id).HasColumnName("Id");
-            this.Property(c => c.IdDefecto).HasColumnName("IdDefecto");
-            this.Property(c => c.IdEjecutante).HasColumnName("IdEjecutante");
-            this.Property(c => c.Descripcion).HasColumnName("Descripcion");
-            this.Property(c => c.Fecha).HasColumnName("Fecha");
+            ToTable("ActividadesEnDefectos");
+            HasKey(c => c.Id);
+            Property(c => c.Id).HasColumnName("Id");
+            Property(c => c.IdDefecto).HasColumnName("IdDefecto");
+            Property(c => c.IdEjecutante).HasColumnName("IdEjecutante");
+            Property(c => c.Descripcion).HasColumnName("Descripcion");
+            Property(c => c.Fecha).HasColumnName("Fecha");
 
 
 
-            this.HasRequired(c => c.Defecto).WithMany(x => x.Actividades).HasForeignKey( c => c.IdDefecto);
+            HasRequired(c => c.Defecto).WithMany(x => x.Actividades).HasForeignKey( c => c.IdDefecto);
+            HasRequired(c => c.Ejecutante).WithMany(x => x.ActividadesEnDefectoRealizadas).HasForeignKey(c => c.IdEjecutante);
 
         }
     }

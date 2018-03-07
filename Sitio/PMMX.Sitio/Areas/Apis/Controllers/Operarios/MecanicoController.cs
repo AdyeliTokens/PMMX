@@ -80,7 +80,6 @@ namespace Sitio.Areas.Apis.Controllers.Operarios
                 Id = d.Id,
                 IdOrigen = d.IdOrigen,
                 IdReportador = d.IdReportador,
-                IdResponsable = d.IdResponsable,
                 Descripcion = d.Descripcion,
                 Activo = d.Activo,
                 FechaReporte = d.FechaReporte,

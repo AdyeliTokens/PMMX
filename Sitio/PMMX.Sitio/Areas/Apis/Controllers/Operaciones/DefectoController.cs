@@ -37,7 +37,6 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
                     Id = d.Id,
                     IdOrigen = d.IdOrigen,
                     IdReportador = d.IdReportador,
-                    IdResponsable = d.IdResponsable,
                     Descripcion = d.Descripcion,
                     Activo = d.Activo,
                     FechaReporte = d.FechaReporte,
@@ -105,7 +104,6 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
                     Id = d.Id,
                     IdOrigen = d.IdOrigen,
                     IdReportador = d.IdReportador,
-                    IdResponsable = d.IdResponsable,
                     Descripcion = d.Descripcion,
                     Activo = d.Activo,
                     FechaReporte = d.FechaReporte,
@@ -167,7 +165,6 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
                     Id = d.Id,
                     IdOrigen = d.IdOrigen,
                     IdReportador = d.IdReportador,
-                    IdResponsable = d.IdResponsable,
                     Descripcion = d.Descripcion,
                     Activo = d.Activo,
                     FechaReporte = d.FechaReporte,
@@ -222,7 +219,6 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
                     Id = d.Id,
                     IdOrigen = d.IdOrigen,
                     IdReportador = d.IdReportador,
-                    IdResponsable = d.IdResponsable,
                     Descripcion = d.Descripcion,
                     Activo = d.Activo,
                     FechaReporte = d.FechaReporte,
@@ -331,7 +327,6 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
                     Id = d.Id,
                     IdOrigen = d.IdOrigen,
                     IdReportador = d.IdReportador,
-                    IdResponsable = d.IdResponsable,
                     Descripcion = d.Descripcion,
                     Activo = d.Activo,
                     //NotificacionSAP = d.NotificacionSAP,
@@ -415,7 +410,6 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
                     Id = d.Id,
                     IdOrigen = d.IdOrigen,
                     IdReportador = d.IdReportador,
-                    IdResponsable = d.IdResponsable,
                     Descripcion = d.Descripcion,
                     Activo = d.Activo,
                     //NotificacionSAP = d.NotificacionSAP,
@@ -484,8 +478,7 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
             actividad.Fecha = DateTime.Now;
             defecto.Actividades = new List<ActividadEnDefecto>();
             defecto.Actividades.Add(actividad);
-
-            defecto.IdResponsable = idResponsable;
+            
             db.SaveChanges();
 
             var defectoView = db.Defectos
@@ -495,7 +488,6 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
                     Id = d.Id,
                     IdOrigen = d.IdOrigen,
                     IdReportador = d.IdReportador,
-                    IdResponsable = d.IdResponsable,
                     Descripcion = d.Descripcion,
                     Activo = d.Activo,
                     //NotificacionSAP = d.NotificacionSAP,
@@ -563,7 +555,6 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
                     Id = d.Id,
                     IdOrigen = d.IdOrigen,
                     IdReportador = d.IdReportador,
-                    IdResponsable = d.IdResponsable,
                     Descripcion = d.Descripcion,
                     Activo = d.Activo,
                     //NotificacionSAP = d.NotificacionSAP,
