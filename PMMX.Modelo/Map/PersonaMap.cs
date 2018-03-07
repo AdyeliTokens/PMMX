@@ -30,7 +30,6 @@ namespace PMMX.Modelo.Map
             
             HasMany(c => c.ParosReportados).WithRequired(p => p.Reportador).HasForeignKey(c => c.IdReportador);
             HasMany(c => c.DefectosReportados).WithRequired(p => p.Reportador).HasForeignKey(c => c.IdReportador);
-            HasMany(c => c.DefectosAsignados).WithRequired(p => p.Responsable).HasForeignKey(c => c.IdResponsable);
             HasMany(c => c.ActividadesEnDefectoRealizadas).WithRequired(p => p.Ejecutante).HasForeignKey(c => c.IdEjecutante);
             HasMany(c => c.ActividadesEnParoRealizadas).WithRequired(p => p.Ejecutante).HasForeignKey(c => c.IdPersona);
             HasMany(c => c.BussinesUnitsDondeEsResponsable).WithRequired(b => b.Responsable).HasForeignKey(c => c.IdResponsable);

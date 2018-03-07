@@ -40,7 +40,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // GET: Operaciones/ObjetivosCRR/Create
         public ActionResult Create()
         {
-            ViewBag.IdWorkCenter = new SelectList(db.WorkCenters, "Id", "Nombre");
+            ViewBag.IdWorkCenter = new SelectList(db.WorkCenters.OrderBy(x => x.NombreCorto), "Id", "NombreCorto");
             return View();
         }
 
@@ -49,7 +49,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,IdWorkCenter,Objetivo,FechaInicial")] ObjetivoCRR objetivoCRR)
+        public ActionResult Create(ObjetivoCRR objetivoCRR)
         {
             if (ModelState.IsValid)
             {
@@ -58,7 +58,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdWorkCenter = new SelectList(db.WorkCenters, "Id", "Nombre", objetivoCRR.IdWorkCenter);
+            ViewBag.IdWorkCenter = new SelectList(db.WorkCenters.OrderBy(x=> x.NombreCorto), "Id", "NombreCorto", objetivoCRR.IdWorkCenter);
             return View(objetivoCRR);
         }
 

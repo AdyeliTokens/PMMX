@@ -23,7 +23,6 @@ namespace PMMX.Modelo.Vistas
 
         [StringLength(250)]
         public string NotificacionSAP{ get; set; }
-        public int IdResponsable { get; set; }
 
         public List<ComentarioView> Comentarios { get; set; }
         public int? ComentariosCount { get; set; }

@@ -17,7 +17,8 @@
         <div class="box-tools pull-right">
 
         </div>
-    </div>@using (Html.BeginForm())
+    </div>
+    @using (Html.BeginForm())
     {
         <div class="box-body">
 
@@ -45,21 +46,12 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.IdSeccion, "IdSeccion", htmlAttributes: new { @class = "control-label col-md-1" })
-                    <div class="col-md-11">
-                        @Html.DropDownList("IdSeccion", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.IdSeccion, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-
-                <div class="form-group">
                     @Html.LabelFor(model => model.Code_FA, "Code_FA", htmlAttributes: new { @class = "control-label col-md-1" })
                     <div class="col-md-11">
                         @*<select id="Code_FA" class="form-control select2"></select>*@
 
                         @Html.DropDownListFor(model => model.Code_FA, null, htmlAttributes: new { @class = "form-control select2" })
-                        @Html.ValidationMessageFor(model => model.IdSeccion, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.Code_FA, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
