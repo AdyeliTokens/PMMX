@@ -1,108 +1,110 @@
 ﻿@using Sitio.Helpers
-@model IEnumerable<PMMX.Modelo.Vistas.VolumenDeProduccionPorWorkCenterView>
+@model Sitio.Models.FechaInicioFin
 
 @{
     ViewBag.Title = "Index";
     Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
+
 @section Styles {
-    
+
+
 }
+
+
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-3">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">Volumenes de Produccion - FA</h3>
+                <h3 class="box-title">Parametros</h3>
+            </div>
+            @using (Ajax.BeginForm("Reporte", "VolumenesDeProduccion",
+                new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    InsertionMode = InsertionMode.Replace,
+                    OnSuccess = "",
+                    UpdateTargetId = "reporte-content"
+                },
+                new
+                {
+                    area = "Operaciones",
+                    enctype = "multipart/form-data",
+                    @class = "form-horizontal"
+                }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="box-body">
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Inicio, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.EditorFor(model => model.Inicio, new { htmlAttributes = new { @class = "form-control  pull-right" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Inicio, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Fin, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.EditorFor(model => model.Fin, new { htmlAttributes = new { @class = "form-control  pull-right" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Fin, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="box-footer clearfix">
+
+                    <input class="btn btn-primary pull-right" type="submit" value="submit" />
+                </div>
+            }
+
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Volumen de produccion</h3>
                 <div class="box-tools">
-                    @Ajax.MenuLink(" Reporte", string.Format("{0:c}", "fa fa-list"), "Reporte", "VolumenesDeProduccion", new { area = "Operaciones" }, null, new { @class = "btn btn-primary btn-sm" })
 
-                    @Ajax.MenuLink(" Nuevo", string.Format("{0:c}", "fa fa-plus"), "Create", "VolumenesDeProduccion", new { area = "Operaciones" }, null, new { @class = "btn btn-primary btn-sm" })
 
-                    @Ajax.MenuLink(" Upload", string.Format("{0:c}", "fa fa-cloud-upload"), "Upload", "VolumenesDeProduccion", new { area = "Operaciones" }, null, new { @class = "btn btn-primary btn-sm" })
 
+                    <a href="@Url.Action("Create", "VolumenesDeProduccion")" class="btn btn-primary btn-sm">
+                        <span class="fa fa-plus" aria-hidden="true"></span>
+                    </a>
+                    <a href="@Url.Action("Reporte", "VolumenesDeProduccion")" class="btn btn-primary btn-sm">
+                        <span class="fa fa-list-alt" aria-hidden="true"></span>
+                    </a>
 
                 </div>
             </div>
-            <div class="box-body">
-                <div class="row">
-
-                    @foreach (var item in Model)
-                    {
-                        <div class="col-md-2">
-
-                            <div class="box box-widget widget-user-2">
-                                <div class="widget-user-header bg-gray">
-
-                                    <h3 class="widget-user-username">@Html.DisplayFor(modelItem => item.WorkCenter.Nombre)</h3>
-                                    <h5 class="widget-user-desc">@Html.DisplayFor(modelItem => item.WorkCenter.NombreCorto)</h5>
-
-                                    @*@Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-danger pull-right" })
-                                @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-default pull-right" })
-                                @Html.ActionLink("Detalles", "Details", new { id = item.Id }, new { @class = "btn btn-default pull-right" })*@
-
-                                </div>
-                                <div class="box-footer">
-                                    <div class="row">
-                                        <ul class="list-group">
-                                            @foreach (var plan in item.PlanesDeProduccion)
-                                            {
-                                                if (plan.Plan_Attainment_Total < plan.Objetivo)
-                                                {
-                                                    <li class="list-group-item list-group-item-success">
-                                                        <a href="#">
-                                                            @Html.DisplayFor(modelItem => plan.Fecha)
-                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => plan.Objetivo)</span>
-                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => plan.Plan_Attainment_Total)</span>
-                                                        </a>
-                                                    </li>
-
-                                                }
-                                                else if (plan.Plan_Attainment_Total > plan.Objetivo)
-                                                {
-                                                    <li class="list-group-item list-group-item-danger">
-                                                        <a href="#">
-                                                            @Html.DisplayFor(modelItem => plan.Fecha)
-                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => plan.Objetivo)</span>
-                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => plan.Plan_Attainment_Total)</span>
-                                                        </a>
-                                                    </li>
-
-                                                }
-                                                else if (plan.Plan_Attainment_Total == plan.Objetivo)
-                                                {
-                                                    <li class="list-group-item list-group-item-warning">
-                                                        <a href="#">
-
-                                                            @Html.DisplayFor(modelItem => plan.Fecha)
-                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => plan.Objetivo)</span>
-                                                            <span class="pull-right badge bg-gray">@Html.DisplayFor(modelItem => plan.Plan_Attainment_Total)</span>
-                                                        </a>
-                                                    </li>
-
-                                                }
-
-                                            }
-
-                                        </ul>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
 
 
-                    }
 
 
-                </div>
+            <div class="box-body" id="reporte-content">
+
 
             </div>
         </div>
     </div>
 </div>
 
+
+
+
 @section Scripts {
-    
+
 }

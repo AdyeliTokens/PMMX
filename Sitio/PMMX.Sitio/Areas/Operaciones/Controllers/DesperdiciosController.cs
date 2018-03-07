@@ -13,40 +13,78 @@ using PMMX.Modelo.RespuestaGenerica;
 using Microsoft.AspNet.Identity;
 using PMMX.Modelo.Vistas;
 using PMMX.Operaciones.Servicios;
+using Sitio.Models;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
+    [Authorize]
     public class DesperdiciosController : Controller
     {
         private PMMXContext db = new PMMXContext();
 
-
+        
         public ActionResult Index()
         {
-            DateTime diaSeleccionado = DateTime.Now.Date;
-            diaSeleccionado = diaSeleccionado.AddDays(1);
-
-            int delta = DayOfWeek.Monday - diaSeleccionado.DayOfWeek;
-            DateTime monday = diaSeleccionado.AddDays(delta);
-            var primerDiaDelAnio = new DateTime(DateTime.Now.Year, 1, 1);
+            FechaInicioFin model = new FechaInicioFin();
+            model.Inicio = DateTime.Now.Date;
+            model.Fin = DateTime.Now.Date.AddDays(1);
+            return View(model);
             
-            var reporte = db.WorkCenters.Select(r=> new ReporteView {
-                 IdWorkCenter = r.Id,
-                 NombreCorto = r.NombreCorto,
-                 Nombre = r.Nombre,
-                 DesperdiciosTotal = r.Desperdicios.Where(d => d.Fecha >= monday && d.Fecha <= diaSeleccionado).Sum(d => d.Cantidad),
-                 Codes_FA = r.Desperdicios.Where(d => d.Fecha >= monday && d.Fecha <= diaSeleccionado).Select(d => new Code_FA_View { Code_FA = d.MarcaDelCigarrillo.Code_FA , Cantidad  = d.MarcaDelCigarrillo.Desperdicios.Where(p => p.IdWorkCenter == r.Id).Sum( p => p.Cantidad) })
-            });
-            
-
-
-            return View(reporte);
         }
 
-        public ActionResult Reporte()
+        [HttpPost]
+        public ActionResult Reporte(FechaInicioFin model)
         {
-            var desperdicios = db.Desperdicios.Include(d => d.MarcaDelCigarrillo).Include(d => d.Reportante).Include(d => d.Seccion).Include(d => d.WorkCenter);
-            return View(desperdicios.ToList());
+            DateTime fechaFin = model.Fin;
+            fechaFin = fechaFin.AddDays(1);
+
+           
+            DateTime fechaInicio = model.Inicio;
+            var primerDiaDelAnio = new DateTime(DateTime.Now.Year, 1, 1);
+
+
+            var workCenters = db.WorkCenters.ToList();
+            var desperdicios = db.Desperdicios.Where(x => (x.Fecha >= fechaInicio && x.Fecha <= fechaFin)).ToList();
+            var objetivos = db.ObjetivosCRR.Select(x => x).Where(x => (x.FechaInicial >= primerDiaDelAnio)).ToList();
+            var volumenes = db.VolumenesDeProduccion.Where(x => (x.Fecha <= fechaFin && x.Fecha >= fechaInicio)).ToList();
+
+            IList<CRRPorWorkCenter> listadelistas = new List<CRRPorWorkCenter>();
+            foreach (var item in workCenters)
+            {
+                CRRPorWorkCenter crrPorWorkCenter = new CRRPorWorkCenter();
+                crrPorWorkCenter.WorkCenter = item;
+                var desperdicioTotal = desperdicios
+                    .Where(x => (x.IdWorkCenter == item.Id))
+                    .GroupBy(rd => rd.Code_FA, rd => rd.Cantidad, (code, cant) => new DesperdicioView
+                    {
+                        Code_FA = code,
+                        Cantidad = cant.Sum()
+                    })
+                    .ToList();
+
+                var VolumenesTotal = volumenes
+                    .Where(x => (x.IdWorkCenter == item.Id))
+                    .GroupBy(rd => rd.Code_FA, rd => rd.New_Qty, (code, cant) => new DesperdicioView
+                    {
+                        Code_FA = code,
+                        Cantidad = Math.Round((desperdicios.Where(d => d.Code_FA == code && d.IdWorkCenter == item.Id).Select(d => d.Cantidad).Sum() / (cant.Sum() * 1000)), 2)
+
+                
+
+
+                    })
+                    .ToList();
+
+
+
+
+                crrPorWorkCenter.Desperdicio = new List<DesperdicioView>();
+                crrPorWorkCenter.Desperdicio = VolumenesTotal;
+
+                listadelistas.Add(crrPorWorkCenter);
+            }
+
+            return PartialView(listadelistas);
         }
 
 
@@ -64,6 +102,23 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(desperdicio);
         }
 
+        public ActionResult GetCode_FA(int idWorkCenter)
+        {
+            if (ModelState.IsValid)
+            {
+                DateTime hoy = DateTime.Now.Date;
+                var lista = db.PlanDeProduccion.Where(x =>(x.Inicio <= hoy && x.Fin >= hoy) && (x.IdWorkCenter == idWorkCenter) )
+                            .Select(x => new { Code_FA = x.Code_FA, Descripcion = x.Code_FA + " - " + x.Marca_FA.Descripcion })
+                            .Distinct()
+                            .ToList();
+
+                return Json(new { lista }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
         public ActionResult Create()
         {
@@ -86,6 +141,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
             desperdicio.IdPersona = persona.Respuesta.Id;
             desperdicio.Fecha = DateTime.Now;
+            DateTime hoy = DateTime.Now.Date;
             if (ModelState.IsValid)
             {
 
@@ -94,8 +150,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Code_FA = new SelectList(db.Marcas.Select(x => new { Code_FA = x.Code_FA, Descripcion = x.Code_FA + " - " + x.Descripcion }), "Code_FA", "Descripcion");
-            ViewBag.IdSeccion = new SelectList(db.ModuloSeccion, "Id", "Nombre", desperdicio.IdSeccion);
+            ViewBag.Code_FA = new SelectList(db.PlanDeProduccion.Where(x => x.Inicio < hoy && x.Fin > hoy).Select(x => new { Code_FA = x.Code_FA, Descripcion = x.Code_FA + " - " + x.Marca_FA.Descripcion }), "Code_FA", "Descripcion");
             ViewBag.IdWorkCenter = new SelectList(db.WorkCenters, "Id", "Nombre", desperdicio.IdWorkCenter);
             return View(desperdicio);
         }
@@ -113,8 +168,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 return HttpNotFound();
             }
             ViewBag.Code_FA = new SelectList(db.Marcas.Select(x => new { Code_FA = x.Code_FA, Descripcion = x.Code_FA + " - " + x.Descripcion }), "Code_FA", "Descripcion");
-            ViewBag.IdSeccion = new SelectList(db.ModuloSeccion, "Id", "Nombre", desperdicio.IdSeccion);
-            ViewBag.IdWorkCenter = new SelectList(db.WorkCenters, "Id", "Nombre", desperdicio.IdWorkCenter);
+            ViewBag.IdWorkCenter = new SelectList(db.WorkCenters, "Id", "NombreCorto", desperdicio.IdWorkCenter);
             return View(desperdicio);
         }
 
@@ -134,8 +188,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.Code_FA = new SelectList(db.Marcas.Select(x => new { Code_FA = x.Code_FA, Descripcion = x.Code_FA + " - " + x.Descripcion }), "Code_FA", "Descripcion");
-            ViewBag.IdSeccion = new SelectList(db.ModuloSeccion, "Id", "Nombre", desperdicio.IdSeccion);
-            ViewBag.IdWorkCenter = new SelectList(db.WorkCenters, "Id", "Nombre", desperdicio.IdWorkCenter);
+            ViewBag.IdWorkCenter = new SelectList(db.WorkCenters, "Id", "NombreCorto", desperdicio.IdWorkCenter);
             return View(desperdicio);
         }
 

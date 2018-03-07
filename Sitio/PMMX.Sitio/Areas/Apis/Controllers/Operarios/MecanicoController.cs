@@ -75,24 +75,7 @@ namespace Sitio.Areas.Apis.Controllers.Operarios
                 }
 
             }).ToList()).FirstOrDefault();
-            mecanico.DefectosAsignados = db.Personas.Where(y=> y.Id ==id ).Select(y => y.DefectosAsignados.Where(d => d.Activo == true).Select(d => new DefectoView
-            {
-                Id = d.Id,
-                IdOrigen = d.IdOrigen,
-                IdReportador = d.IdReportador,
-                IdResponsable = d.IdResponsable,
-                Descripcion = d.Descripcion,
-                Activo = d.Activo,
-                FechaReporte = d.FechaReporte,
-                FechaEstimada = d.FechaEstimada,
-                Prioridad = d.Prioridad,
-                Fotos = d.Fotos.Select(f => new FotoView
-                {
-                    Id = f.Id,
-                    Nombre = f.Nombre,
-                    Path = f.Path
-                }).ToList()
-            }).ToList()).FirstOrDefault();
+            
 
 
                

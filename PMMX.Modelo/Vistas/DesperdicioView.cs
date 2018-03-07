@@ -16,7 +16,6 @@ namespace PMMX.Modelo.Vistas
         public DateTime Fecha { get; set; }
         public int IdPersona { get; set; }
         public int IdWorkCenter { get; set; }
-        public int IdSeccion { get; set; }
         public string Code_FA { get; set; }
 
 

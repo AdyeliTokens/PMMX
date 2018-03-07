@@ -20,7 +20,6 @@ namespace PMMX.Modelo.Map
             #region HasMany
 
             HasMany(c => c.NoConformidades).WithRequired(x => x.Seccion).HasForeignKey(c => c.IdSeccion);
-            HasMany(c => c.Desperdicios).WithRequired(x => x.Seccion).HasForeignKey(c => c.IdSeccion);
             HasMany(c => c.Modulos).WithOptional(x => x.Seccion).HasForeignKey(c => c.IdSeccion);
             HasMany(c => c.Operadores).WithMany(x => x.Secciones).Map(cs =>
             {

@@ -23,7 +23,6 @@ namespace PMMX.Modelo.Vistas
 
         [StringLength(250)]
         public string NotificacionSAP{ get; set; }
-        public int IdResponsable { get; set; }
 
         public List<ComentarioView> Comentarios { get; set; }
         public int? ComentariosCount { get; set; }
@@ -31,7 +30,6 @@ namespace PMMX.Modelo.Vistas
 
         public List<FotoView> Fotos { get; set; }
         public PersonaView Reportador { get; set; }
-        public PersonaView Responsable { get; set; }
         public OrigenView Origen { get; set; }
     }
 }

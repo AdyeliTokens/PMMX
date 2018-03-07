@@ -4,9 +4,11 @@ using PMMX.Modelo.RespuestaGenerica;
 using PMMX.Modelo.Vistas;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net;
+using System.Web;
 
 namespace PMMX.Operaciones.Servicios
 {
@@ -37,26 +39,15 @@ namespace PMMX.Operaciones.Servicios
             var primerDiaDelAnio = new DateTime(DateTime.Now.Year, 1, 1);
 
             var desperdicios = _context.Desperdicios
+                .Include(e => e.MarcaDelCigarrillo)
                 .Where(x => (x.IdWorkCenter == IdWorkCenter) && (x.Fecha >= monday && x.Fecha <= diaSeleccionado))
-                .Select(y => new DesperdicioView
-                {
-                    Id = y.Id,
-                    Cantidad = y.Cantidad,
-                    Fecha = y.Fecha,
-                    Code_FA = y.Code_FA,
-                    IdPersona = y.IdPersona,
-                    IdSeccion = y.IdSeccion,
-                    IdWorkCenter = y.IdWorkCenter,
-                    MarcaDelCigarrillo = y.MarcaDelCigarrillo
-                })
                 .ToList();
 
             var volumenes = _context.VolumenesDeProduccion
                 .Where(x => (x.IdWorkCenter == IdWorkCenter) && (x.Fecha >= monday && x.Fecha <= diaSeleccionado))
-                .Select(x => x)
                 .ToList();
 
-            var marcas = desperdicios.Select(x => x.MarcaDelCigarrillo).Distinct();
+            //var marcas = desperdicios.Select(x => x.MarcaDelCigarrillo).Distinct();
 
             var objetivos = _context.ObjetivosCRR.Select(x => x).Where(x => (x.IdWorkCenter == IdWorkCenter) && (x.FechaInicial >= primerDiaDelAnio)).ToList();
 
@@ -64,7 +55,7 @@ namespace PMMX.Operaciones.Servicios
             for (int i = delta; i <= (6 + delta); i++)
             {
                 Double crrTotal = 0;
-                foreach (var item in marcas)
+                foreach (var item in desperdicios.Select(x=> x.MarcaDelCigarrillo).Distinct())
                 {
                     Double crrTotalPorMarca = desperdicios.Where(x => (x.Fecha.Date == diaSeleccionado.AddDays(i).Date) && (x.Code_FA == item.Code_FA)).Sum(o => o.Cantidad);
                     Double volumen = volumenes.Where(v => (v.Code_FA == item.Code_FA) && (v.Fecha.Date == diaSeleccionado.AddDays(i).Date)).Sum(o => o.New_Qty);
@@ -109,7 +100,6 @@ namespace PMMX.Operaciones.Servicios
                     Fecha = y.Fecha,
                     Code_FA = y.Code_FA,
                     IdPersona = y.IdPersona,
-                    IdSeccion = y.IdSeccion,
                     IdWorkCenter = y.IdWorkCenter,
                     MarcaDelCigarrillo = y.MarcaDelCigarrillo
                 })

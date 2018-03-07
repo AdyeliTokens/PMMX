@@ -1,4 +1,5 @@
-﻿@model IEnumerable<PMMX.Modelo.Vistas.ReporteView>
+﻿@using Sitio.Helpers
+@model Sitio.Models.FechaInicioFin
 
 @{
     ViewBag.Title = "Index";
@@ -13,7 +14,66 @@
 
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-3">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Parametros</h3>
+            </div>
+            @using (Ajax.BeginForm("Reporte", "Desperdicios",
+                new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    InsertionMode = InsertionMode.Replace,
+                    OnSuccess = "",
+                    UpdateTargetId = "desperdicio-content"
+                },
+                new
+                {
+                    area = "Operaciones",
+                    enctype = "multipart/form-data",
+                    @class = "form-horizontal"
+                }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="box-body">
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Inicio, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.EditorFor(model => model.Inicio, new { htmlAttributes = new { @class = "form-control  pull-right" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Inicio, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Fin, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.EditorFor(model => model.Fin, new { htmlAttributes = new { @class = "form-control  pull-right" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Fin, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="box-footer clearfix">
+                    
+                    <input class="btn btn-primary pull-right" type="submit" value="submit" />
+                </div>
+            }
+
+        </div>
+    </div>
+    <div class="col-md-9">
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title">Desperdicios</h3>
@@ -31,126 +91,11 @@
                 </div>
             </div>
 
-            
 
 
-            <div class="box-body table-responsive">
-                <table class="table table-hover table-striped" id="example1">
-                    <thead>
-                        <tr class="info">
-                            <th>
-                                @Html.DisplayNameFor(model => model.Nombre)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.NombreCorto)
-                            </th>
-                            <th>
 
-                            </th>
-                            <th>
-                                Total
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Nombre)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.NombreCorto)
-                            </td>
-                            <td>
-                                @if (item.Codes_FA.Count() > 0)
-                                    {
-                                    <table class="table table-hover table-striped">
-                                        <thead>
-                                            <tr class="info">
-                                                <th>
-                                                    CODE FA
-                                                </th>
-                                                <th>
-                                                    DESCRIPCION
-                                                </th>
-                                                <th>
-                                                    TOTAL
-                                                </th>
+            <div class="box-body" id="desperdicio-content">
 
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var code_fa in item.Codes_FA.Distinct())
-                                                {
-                                                <tr>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => code_fa.Code_FA)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => code_fa.Cantidad)
-                                                    </td>
-                                                    <td></td>
-                                                    <td>
-                                                        @Html.ActionLink("Edit", "Edit", new { id = code_fa.Code_FA }) |
-                                                        @Html.ActionLink("Details", "Details", new { id = code_fa.Code_FA }) |
-                                                        @Html.ActionLink("Delete", "Delete", new { id = code_fa.Code_FA })
-                                                    </td>
-                                                </tr>
-                                                }
-
-                                        </tbody>
-                                        <tfoot>
-                                            <tr class="info">
-                                                <th>
-                                                    CODE FA
-                                                </th>
-                                                <th>
-                                                    DESCRIPCION
-                                                </th>
-                                                <th>
-                                                    TOTAL
-                                                </th>
-
-                                                <th></th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-
-                                    }
-
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DesperdiciosTotal)
-                            </td>
-                            <td>
-                                @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
-                            </td>
-                        </tr>
-                        }
-                    </tbody>
-                    <tfoot>
-                        <tr class="info">
-                            <th>
-                                @Html.DisplayNameFor(model => model.Nombre)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.NombreCorto)
-                            </th>
-                            <th>
-                                @*@Html.DisplayNameFor(model => model.Desperdicios)*@
-                            </th>
-                            <th>
-                                Total
-                            </th>
-                            <th></th>
-                        </tr>
-                    </tfoot>
-                </table>
 
             </div>
         </div>
@@ -161,5 +106,5 @@
 
 
 @section Scripts {
-
+    
 }
