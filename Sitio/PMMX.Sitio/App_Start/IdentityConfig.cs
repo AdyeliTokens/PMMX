@@ -95,8 +95,8 @@ namespace Sitio
                 }
 
                 var estatus = ventana.StatusVentana.OrderByDescending(s => s.Fecha).Select(s => s.Status).FirstOrDefault();
-
-                smail.Subject = "[PMMX Notification] Ventana: " + ventana.PO +" "+ventana.NombreCarrier+" "+ ventana.TipoOperacion.Nombre;
+                
+                smail.Subject = "[PMMX Notification] Ventana: " + ventana.PO +" "+ventana.NombreCarrier;
                 smail.Body = string.Format("<html><head><meta charset='UTF-8'></head>");
                 smail.Body = smail.Body + string.Format("<body> <div style='width:100%'>"
                                                         + "<div align='center' style='font-weight:bold; text-align: center; width:50%; margin: 0 auto; display: table; background: #D6EAF8;' >");

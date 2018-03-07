@@ -113,7 +113,6 @@ namespace Sitio.Areas.Warehouse.Controllers
             db.SaveChanges();
 
             Ventana ventana = db.Ventana
-                                 .Include(v => v.TipoOperacion)
                                  .Include(v => v.StatusVentana)
                                  .Include(v => v.StatusVentana.Select(s => s.Status))
                                  .Include(v => v.BitacoraVentana)
@@ -122,20 +121,27 @@ namespace Sitio.Areas.Warehouse.Controllers
                                  .Include(v => v.Evento)
                                  .SingleOrDefault(x => x.Id == statusVentana.IdVentana);
 
-            UsuarioServicio usuarioServicio = new UsuarioServicio();
-            NotificationService notify = new NotificationService();
-
-            string senders = usuarioServicio.GetEmailByEvento(statusVentana.Ventana.IdEvento);
-            EmailService emailService = new EmailService();
-            emailService.SendMail(senders, ventana);
-
-            List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(statusVentana.Ventana.IdEvento);
-            List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
-            var estatus = ventana.StatusVentana.OrderByDescending(s => s.Fecha).Select(s => s.Status).FirstOrDefault();
-
-            foreach (string notificacion in llaves)
+            try
             {
-                notify.SendPushNotification(notificacion, " Rechazo Ventana: " + ventana.Evento.Descripcion + ". ", " Cambio de estatus a " + estatus.Nombre);
+                UsuarioServicio usuarioServicio = new UsuarioServicio();
+                NotificationService notify = new NotificationService();
+
+                string senders = usuarioServicio.GetEmailByEvento(statusVentana.Ventana.IdEvento);
+                EmailService emailService = new EmailService();
+                emailService.SendMail(senders, ventana);
+
+                List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(statusVentana.Ventana.IdEvento);
+                List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
+                var estatus = ventana.StatusVentana.OrderByDescending(s => s.Fecha).Select(s => s.Status).FirstOrDefault();
+
+                foreach (string notificacion in llaves)
+                {
+                    notify.SendPushNotification(notificacion, " Rechazo Ventana: " + ventana.Evento.Descripcion + ". ", " Cambio de estatus a " + estatus.Nombre);
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
             }
 
             return true;

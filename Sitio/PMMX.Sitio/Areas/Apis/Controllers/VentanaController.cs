@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.Warehouse;
+using PMMX.Modelo.Vistas;
 
 namespace Sitio.Areas.Apis.Controllers
 {
@@ -28,6 +29,51 @@ namespace Sitio.Areas.Apis.Controllers
         public IHttpActionResult GetVentana(int id)
         {
             Ventana ventana = db.Ventana.Find(id);
+            if (ventana == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(ventana);
+        }
+
+        // GET: api/Ventana/5
+        [ResponseType(typeof(Ventana))]
+        public IHttpActionResult GetVentanabyEvento(int idEvento)
+        {
+            var ventana = db.Ventana
+                          .Where(ve => (ve.IdEvento == idEvento))
+                          .Select(v => new VentanaView
+                          {
+                              Id = v.Id,
+                              PO = v.PO,
+                              SubCategoriaNombre = db.SubCategoria.Where(s => s.Id == v.IdSubCategoria).Select(s => s.Nombre).FirstOrDefault(),
+                              Recurso = v.Recurso,
+                              Cantidad = v.Cantidad,
+                              CarrierNombre = db.Carrier.Where(c => c.Id == v.IdCarrier).Select(c => c.Nombre).FirstOrDefault(),
+                              NombreCarrier = v.NombreCarrier,
+                              ProcedenciaNombre = db.Locacion.Where(l => l.Id == v.IdProcedencia).Select(l => l.Nombre).FirstOrDefault(),
+                              DestinoNombre = db.Locacion.Where(l => l.Id == v.IdDestino).Select(l => l.Nombre).FirstOrDefault(),
+                              ProveedorNombre = db.Proveedores.Where(p => p.Id == v.IdProveedor).Select(l => l.Nombre).FirstOrDefault(),
+                              // Vehículo
+                              NumeroEconomico = v.NumeroEconomico,
+                              NumeroPlaca = v.NumeroPlaca,
+                              EconomicoRemolque = v.EconomicoRemolque,
+                              PlacaRemolque = v.PlacaRemolque,
+                              ModeloContenedor = v.ModeloContenedor,
+                              ColorContenedor = v.ColorContenedor,
+                              Sellos = v.Sellos,
+                              TipoUnidad = v.TipoUnidad,
+                              Dimension = v.Dimension,
+                              Temperatura = v.Temperatura,
+                              // Conductor
+                              Conductor = v.Conductor,
+                              MovilConductor = v.MovilConductor,
+                              Activo = v.Activo,
+                              StatusNombre = db.StatusVentana.Where(s => s.IdVentana == v.Id).Select(s => s.Status.Nombre).FirstOrDefault()
+                          })
+                          .FirstOrDefault();
+
             if (ventana == null)
             {
                 return NotFound();

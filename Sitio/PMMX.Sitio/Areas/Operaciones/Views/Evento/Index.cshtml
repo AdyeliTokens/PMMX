@@ -55,8 +55,22 @@
             $(document).ready(function ()
             {
                 $('.select2').select2();
-                GetEvents();
+                
+                GetEvents(formatDate(new Date()));
                 getCategorias();
+
+                function formatDate(date) {
+                    var d = new Date(date),
+                        month = '' + (d.getMonth() + 1),
+                        //day = '' + d.getDate(),
+                        day = '01',
+                        year = d.getFullYear();
+
+                    if (month.length < 2) month = '0' + month;
+                    if (day.length < 2) day = '0' + day;
+
+                    return [year, month, day].join('-');
+                }
 
                 function getCategorias() {
                     $.ajax({
@@ -94,12 +108,13 @@
                     });
                 }
 
-                function GetEvents() {
+                function GetEvents(date)
+                {
                     $.ajax({
                         dataType: "json",
                         contentType: "application/json",
                         data: "{}",
-                        url: "/Evento/GetEvents",
+                        url: "/Evento/GetEvents?date="+date,
                         dataType: "json",
                         success: function (data) {
                             $('#calendar').fullCalendar('destroy');
@@ -118,6 +133,7 @@
                                 eventLimit: 15,
                                 eventLimitText: 'More',
                                 weekMode: 'liquid',
+                                displayEventTime: false,
                                 events: $.map(data.events, function (item, i) {
                                     var event = new Object();
                                     event.start = moment(item.FechaInicio).utc();
@@ -137,8 +153,9 @@
                                         $('#IdEventoModal').val(calEvent.id);
                                     });
                                 }
-
                             });
+
+                            $('#calendar').fullCalendar('gotoDate', date);
 
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -147,10 +164,23 @@
                     });
                 }
 
+                $('#calendar').on('click', '.fc-next-button', function () {
+                    var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");
+                    GetEvents(date);
+                }); 
+
+                $('#calendar').on('click', '.fc-prev-button', function () {
+                    var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");
+                    GetEvents(date);
+                });
+                
+
                 $('#slt-Categorias').on("change", function ()
-                {    
+                {
+                    var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD"); 
+
                     if ($('#slt-Categorias').val() == "Categoria" )
-                        GetEvents();
+                        GetEvents(date);
                     else
                     {
                         getSubCategorias();
@@ -159,7 +189,7 @@
                             dataType: "json",
                             contentType: "application/json",
                             data: "{}",
-                            url: "/Evento/GetEventsByCategoria?IdCategoria=" + $('#slt-Categorias').val(),
+                            url: "/Evento/GetEventsByCategoria?IdCategoria=" + $('#slt-Categorias').val() + "&Date=" + date,
                             dataType: "json",
                             success: function (data) {
                                 $('#calendar').fullCalendar('destroy');
@@ -178,6 +208,7 @@
                                     eventLimit: 15,
                                     eventLimitText: 'More',
                                     weekMode: 'liquid',
+                                    displayEventTime: false,
                                     events: $.map(data.events, function (item, i) {
                                         var event = new Object();
                                         event.start = moment(item.FechaInicio).utc();
@@ -200,6 +231,7 @@
 
                                 });
 
+                                $('#calendar').fullCalendar('gotoDate', date);
                             },
                             error: function (XMLHttpRequest, textStatus, errorThrown) {
                                 alert('There was an error while fetching events!');
@@ -210,12 +242,13 @@
 
                 $('#slt-SubCategorias').on("change", function () {
                     var IdSubCategoria = $('#slt-SubCategorias').val();
+                    var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");
 
                     $.ajax({
                         dataType: "json",
                         contentType: "application/json",
                         data: "{}",
-                        url: "/Evento/GetEventsBySubCategoria?IdSubCategoria=" + IdSubCategoria,
+                        url: "/Evento/GetEventsBySubCategoria?IdSubCategoria=" + IdSubCategoria + "&Date=" + date,
                         dataType: "json",
                         success: function (data) {
                             $('#calendar').fullCalendar('destroy');
@@ -234,6 +267,7 @@
                                 eventLimit: 15,
                                 eventLimitText: 'More',
                                 weekMode: 'liquid',
+                                displayEventTime: false,
                                 events: $.map(data.events, function (item, i) {
                                     var event = new Object();
                                     event.start = moment(item.FechaInicio).utc();
@@ -255,6 +289,7 @@
                                 }
 
                             });
+                            $('#calendar').fullCalendar('gotoDate', date);
 
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {

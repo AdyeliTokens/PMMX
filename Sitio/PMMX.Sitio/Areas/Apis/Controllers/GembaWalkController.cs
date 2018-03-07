@@ -157,6 +157,37 @@ namespace Sitio.Areas.Apis.Controllers
             return Ok(GembaWalk);
         }
 
+        // GET: api/Ventana/5
+        [ResponseType(typeof(GembaWalk))]
+        public IHttpActionResult GetGembaWalkbyEvento(int idEvento)
+        {
+            var gemaWalk = db.GembaWalk
+                          .Where(ve => (ve.IdEvento == idEvento))
+                          .Select(g => new GembaWalkView
+                          {
+                            Id = g.Id,
+                            ReportadorNombre = db.Personas.Where(o => o.Id == g.IdReportador).Select(o => o.Nombre + " "+ o.Apellido1 +" "+ o.Apellido2).FirstOrDefault(),
+                            OrigenNombre = db.Origens.Where(o => o.Id == g.IdOrigen).Select(o => o.WorkCenter.NombreCorto + " " + o.Modulo.NombreCorto).FirstOrDefault(),
+                            Descripcion = g.Descripcion,
+                            Activo = g.Activo,
+                            FechaReporte = g.FechaReporte,
+                            FechaEstimada = g.FechaEstimada,
+                            Prioridad = g.Prioridad,
+                            ResponsableNombre = db.Personas.Where(o => o.Id == g.IdResponsable).Select(o => o.Nombre + " " + o.Apellido1 + " " + o.Apellido2).FirstOrDefault(),
+                            SubCategoriaNombre = db.SubCategoria.Where(o => o.Id == g.IdSubCategoria).Select(o => o.Nombre ).FirstOrDefault(),
+                            TipoNombre = (g.Tipo == 1) ? "JustDoIt" : "CAPAIA",
+                            StatusNombre = db.BitacoraGembaWalks.Where(s => s.IdGembaWalk == g.Id).Select(s => s.Estatus.Nombre).FirstOrDefault()
+                          }).ToList();
+
+            if (gemaWalk == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(gemaWalk);
+        }
+
+
         // PUT: api/GembaWalk/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutGembaWalk(int id, GembaWalk GembaWalk)
