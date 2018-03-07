@@ -29,8 +29,9 @@ namespace PMMX.Infraestructura.Contexto
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
 
+            Database.Log = s => System.Diagnostics.Trace.WriteLine(s);
             Database.SetInitializer<PMMXContext>(new CreateDatabaseIfNotExists<PMMXContext>());
-
+            
         }
 
 

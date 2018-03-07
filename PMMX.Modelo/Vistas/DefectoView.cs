@@ -30,7 +30,6 @@ namespace PMMX.Modelo.Vistas
 
         public List<FotoView> Fotos { get; set; }
         public PersonaView Reportador { get; set; }
-        public PersonaView Responsable { get; set; }
         public OrigenView Origen { get; set; }
     }
 }

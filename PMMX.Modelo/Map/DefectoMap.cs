@@ -34,12 +34,12 @@ namespace PMMX.Modelo.Map
                 cs.MapRightKey("IdFoto");
                 cs.ToTable("DefectoFoto");
             });
-            HasMany(c => c.Asignaciones).WithMany(x => x.Defectos).Map(cs =>
-            {
-                cs.MapLeftKey("IdDefecto");
-                cs.MapRightKey("IdAsignacion");
-                cs.ToTable("asignacionesendefecto");
-            });
+            //HasMany(c => c.Asignaciones).WithMany(x => x.Defectos).Map(cs =>
+            //{
+            //    cs.MapLeftKey("IdDefecto");
+            //    cs.MapRightKey("IdAsignacion");
+            //    cs.ToTable("asignacionesendefecto");
+            //});
         }
 
     }
