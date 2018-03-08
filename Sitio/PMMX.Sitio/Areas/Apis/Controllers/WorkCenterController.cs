@@ -23,9 +23,25 @@ namespace Sitio.Areas.Apis.Controllers
         public IQueryable<WorkCenter> GetWorkCenter()
         {
             WorkCenterServicio servicio = new WorkCenterServicio();
-
-
+            
             return servicio.GetWorkCenters().Respuesta;
+        }
+
+        [ResponseType(typeof(IList<WorkCenter>))]
+        public IHttpActionResult GetWorkCenterbyActivo(bool activo)
+        {
+            WorkCenterServicio servicio = new WorkCenterServicio();
+            RespuestaServicio<List<WorkCenterView>> respuesta = new RespuestaServicio<List<WorkCenterView>>();
+            respuesta = servicio.GetWorkCenterbyOrigen(activo);
+
+            if (respuesta.EjecucionCorrecta)
+            {
+                return Ok(respuesta.Respuesta);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [ResponseType(typeof(WorkCenter))]

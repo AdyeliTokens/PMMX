@@ -35,6 +35,34 @@ namespace PMMX.Operaciones.Servicios
             return respuesta;
         }
 
+        public RespuestaServicio<List<WorkCenterView>> GetWorkCenterbyOrigen(bool activo)
+        {
+            RespuestaServicio<List<WorkCenterView>> respuesta = new RespuestaServicio<List<WorkCenterView>>();
+
+            List < WorkCenterView > workCenter = _context.Origens
+                                    .Where(o=> o.WorkCenter.Activo == activo)
+                                   .Select(o=> new WorkCenterView
+                                   {
+                                       Id = o.WorkCenter.Id,
+                                       IdBussinesUnit = o.WorkCenter.IdBussinesUnit,
+                                       Nombre = o.WorkCenter.Nombre,
+                                       NombreCorto = o.WorkCenter.NombreCorto,
+                                       Activo = o.WorkCenter.Activo
+                                    })
+                                   .ToList();
+
+            if (workCenter != null)
+            {
+                respuesta.Respuesta = workCenter;
+            }
+            else
+            {
+                respuesta.Mensaje = "LU inexistente";
+            }
+
+            return respuesta;
+        }
+
         public RespuestaServicio<WorkCenterView> GetWorkCenter(int id)
         {
             RespuestaServicio<WorkCenterView> respuesta = new RespuestaServicio<WorkCenterView>();
