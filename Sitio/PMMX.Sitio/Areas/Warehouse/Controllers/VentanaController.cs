@@ -17,6 +17,7 @@ using PMMX.Operaciones.Servicios;
 using PMMX.Modelo.Vistas;
 using OfficeOpenXml;
 using Sitio.Helpers;
+using System.Drawing;
 
 namespace Sitio.Areas.Warehouse.Controllers
 {
@@ -163,6 +164,19 @@ namespace Sitio.Areas.Warehouse.Controllers
                     changeEstatus(ventana);
                 }
 
+                Ventana ventanaSend = db.Ventana
+                            .Include(v => v.TipoOperacion)
+                            .Include(v => v.StatusVentana)
+                            .Include(v => v.StatusVentana.Select(s => s.Status))
+                            .Include(v => v.BitacoraVentana)
+                            .Include(v => v.BitacoraVentana.Select(b => b.Estatus))
+                            .Include(v => v.BitacoraVentana.Select(b => b.Rechazo))
+                            .Include(v => v.Evento)
+                            .Include(v => v.Proveedor)
+                            .SingleOrDefault(x => x.Id == ventana.Id);
+
+                sendNotifications(ventanaSend);
+
                 return RedirectToAction("Index");
             }
 
@@ -188,7 +202,6 @@ namespace Sitio.Areas.Warehouse.Controllers
                         .FirstOrDefault();
                 }
                
-                
                 WorkFlowServicio workflowServicio = new WorkFlowServicio();
                 IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, estatus.Id, false);
 
@@ -213,48 +226,49 @@ namespace Sitio.Areas.Warehouse.Controllers
                     statusVentana.Fecha = DateTime.Now;
                     statusVentana.Comentarios = " ";
                     db.StatusVentana.Add(statusVentana);
-                    db.SaveChanges();
-
-                    try
-                    {
-                        UsuarioServicio usuarioServicio = new UsuarioServicio();
-                        NotificationService notify = new NotificationService();
-
-                        string senders = usuarioServicio.GetEmailByEvento(statusVentana.Ventana.IdEvento);
-                        if (senders != null)
-                        {
-                            EmailService emailService = new EmailService();
-
-                            Ventana ventanaSend = db.Ventana
-                                     .Include(v => v.TipoOperacion)
-                                     .Include(v => v.StatusVentana)
-                                     .Include(v => v.StatusVentana.Select(s => s.Status))
-                                     .Include(v => v.BitacoraVentana)
-                                     .Include(v => v.BitacoraVentana.Select(b => b.Estatus))
-                                     .Include(v => v.BitacoraVentana.Select(b => b.Rechazo))
-                                     .Include(v => v.Evento)
-                                     .SingleOrDefault(x => x.Id == statusVentana.IdVentana);
-
-                            emailService.SendMail(senders, ventanaSend);
-                        }
-
-                        List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(statusVentana.Ventana.IdEvento);
-                        List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
-
-                        foreach (string notificacion in llaves)
-                        {
-                            notify.SendPushNotification(notificacion, " Cambio de estatus Ventana: " + ventana.Evento.Descripcion + ". ", " Cambio de estatus a " + estatus.Nombre);
-                        }
-                    }
-                    catch(Exception e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
+                    db.SaveChanges();     
                 }
 
                 return true;
             }
             return false;
+        }
+
+        public bool sendNotifications(Ventana ventana)
+        {
+            try
+            {
+                UsuarioServicio usuarioServicio = new UsuarioServicio();
+                NotificationService notify = new NotificationService();
+
+                string senders = usuarioServicio.GetEmailByEvento(ventana.IdEvento);
+                if (senders != null)
+                {
+                    EmailService emailService = new EmailService();
+                    emailService.SendMail(senders, ventana);
+                }
+
+                List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(ventana.IdEvento);
+                List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
+
+                var estatus = db.StatusVentana
+                         .Where(s => (s.IdVentana == ventana.Id))
+                         .OrderByDescending(s => s.Fecha)
+                         .Select(s => s.Status)
+                         .FirstOrDefault();
+
+                foreach (string notificacion in llaves)
+                {
+                    notify.SendPushNotification(notificacion, " Cambio de estatus Ventana: " + ventana.Evento.Descripcion + ". ", " Cambio de estatus a " + estatus.Nombre);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            return true;
         }
 
         // GET: Warehouse/Ventana/Edit/5
@@ -413,7 +427,54 @@ namespace Sitio.Areas.Warehouse.Controllers
             }
             return View("Index");
         }
-        
+
+        public void downloadDataVentana(int IdVentana)
+        {
+            Ventana ventana = db.Ventana
+                            .Include(v => v.TipoOperacion)
+                            .Include(v => v.StatusVentana)
+                            .Include(v => v.StatusVentana.Select(s => s.Status))
+                            .Include(v => v.BitacoraVentana)
+                            .Include(v => v.BitacoraVentana.Select(b => b.Estatus))
+                            .Include(v => v.BitacoraVentana.Select(b => b.Rechazo))
+                            .Include(v => v.Evento)
+                            .Include(v => v.Proveedor)
+                            .SingleOrDefault(x => x.Id == IdVentana);
+
+            var fileName = (ventana.PO+"_"+ventana.Proveedor.NombreCorto+"_"+ventana.NombreCarrier+".xlsx").ToString();
+            
+            using (var package = new OfficeOpenXml.ExcelPackage(fileName))
+            {
+                var worksheet = package.Workbook.Worksheets.FirstOrDefault(x => x.Name == "Attempts");
+                worksheet = package.Workbook.Worksheets.Add("Assessment Attempts");
+                worksheet.Row(1).Height = 20;
+
+                worksheet.TabColor = Color.Gold;
+                worksheet.DefaultRowHeight = 12;
+                worksheet.Row(1).Height = 20;
+
+                worksheet.Cells[1, 1].Value = "Employee Number";
+                worksheet.Cells[1, 2].Value = "Course Code";
+
+                var cells = worksheet.Cells["A1:J1"];
+                var rowCounter = 2;
+
+                worksheet.Cells[rowCounter, 1].Value = ventana.PO;
+                worksheet.Cells[rowCounter, 2].Value = ventana.PO;
+                
+                worksheet.Column(1).AutoFit();
+                worksheet.Column(2).AutoFit();
+
+
+                package.Workbook.Properties.Title = "Attempts";
+                this.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                this.Response.AddHeader(
+                          "content-disposition",
+                          string.Format("attachment;  filename={0}", "ExcellData.xlsx"));
+                this.Response.BinaryWrite(package.GetAsByteArray());
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
