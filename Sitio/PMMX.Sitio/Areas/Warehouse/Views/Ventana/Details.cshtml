@@ -8,6 +8,7 @@
     Detalle
     <p align="right">
         <button id="btn-EditarVentana" class="btn btn-default" alt="Editar"><i class="fa fa-pencil text-info"></i></button>
+        <button id="btn-downloadVentana" class="btn btn-default" alt="Download"><i class="fa fa-cloud-download text-info"></i></button>
     </p>
 </h3>
 
@@ -161,7 +162,22 @@
                         $('#createAssetContainer').html(data);
                         $('#createAssetModal').modal('show');
                     });
-             });
+            });
+
+            /*$("#btn-downloadVentana").on("click", function () {
+                var url = ("/Warehouse/Ventana/downloadDataVentana?IdVentana=" + IdVentana);
+               
+
+                $.get(url, function (data) {
+                    window.location = data;
+                });
+            });*/
+
+            $("#btn-downloadVentana").on("click", function (e) {
+                window.open("/Warehouse/Ventana/downloadDataVentana?IdVentana=" + IdVentana);
+                e.preventDefault();
+
+            });
     
         });
 </script>

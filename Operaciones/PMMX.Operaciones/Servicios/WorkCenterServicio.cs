@@ -39,17 +39,18 @@ namespace PMMX.Operaciones.Servicios
         {
             RespuestaServicio<List<WorkCenterView>> respuesta = new RespuestaServicio<List<WorkCenterView>>();
 
-            List < WorkCenterView > workCenter = _context.Origens
-                                    .Where(o=> o.WorkCenter.Activo == activo)
-                                   .Select(o=> new WorkCenterView
-                                   {
-                                       Id = o.WorkCenter.Id,
-                                       IdBussinesUnit = o.WorkCenter.IdBussinesUnit,
-                                       Nombre = o.WorkCenter.Nombre,
-                                       NombreCorto = o.WorkCenter.NombreCorto,
-                                       Activo = o.WorkCenter.Activo
-                                    })
-                                   .ToList();
+            var listOrigens = _context.Origens.Select(o => o.IdWorkCenter).ToList();
+            List<WorkCenterView> workCenter = _context.WorkCenters
+                                .Where(w => listOrigens.Contains(w.Id) && (w.Activo == activo))
+                                .Select(w => new WorkCenterView
+                                {
+                                    Id = w.Id,
+                                    IdBussinesUnit = w.IdBussinesUnit,
+                                    Nombre = w.Nombre,
+                                    NombreCorto = w.NombreCorto,
+                                    Activo = w.Activo
+                                })
+                                .ToList();
 
             if (workCenter != null)
             {
