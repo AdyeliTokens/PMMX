@@ -18,6 +18,7 @@ using PMMX.Modelo.Vistas;
 using OfficeOpenXml;
 using Sitio.Helpers;
 using System.Drawing;
+using System.IO;
 
 namespace Sitio.Areas.Warehouse.Controllers
 {
@@ -428,7 +429,7 @@ namespace Sitio.Areas.Warehouse.Controllers
             return View("Index");
         }
 
-        public void downloadDataVentana(int IdVentana)
+        public ActionResult downloadDataVentana(int IdVentana)
         {
             Ventana ventana = db.Ventana
                             .Include(v => v.TipoOperacion)
@@ -439,40 +440,81 @@ namespace Sitio.Areas.Warehouse.Controllers
                             .Include(v => v.BitacoraVentana.Select(b => b.Rechazo))
                             .Include(v => v.Evento)
                             .Include(v => v.Proveedor)
+                            .Include(v => v.Procedencia)
+                            .Include(v => v.Destino)
+                            .Include(v => v.Carrier)
                             .SingleOrDefault(x => x.Id == IdVentana);
 
-            var fileName = (ventana.PO+"_"+ventana.Proveedor.NombreCorto+"_"+ventana.NombreCarrier+".xlsx").ToString();
-            
-            using (var package = new OfficeOpenXml.ExcelPackage(fileName))
+            var fileName = ventana.PO+"_"+ventana.Proveedor.NombreCorto+"_"+ventana.NombreCarrier+ DateTime.Now.ToString("yyyy-MM-dd--hh-mm-ss") + ".xlsx";
+
+
+            using (var package = new ExcelPackage())
             {
-                var worksheet = package.Workbook.Worksheets.FirstOrDefault(x => x.Name == "Attempts");
-                worksheet = package.Workbook.Worksheets.Add("Assessment Attempts");
+                var worksheet = package.Workbook.Worksheets.FirstOrDefault(x => x.Name == "");
+                worksheet = package.Workbook.Worksheets.Add(ventana.Evento.Descripcion);
                 worksheet.Row(1).Height = 20;
 
                 worksheet.TabColor = Color.Gold;
                 worksheet.DefaultRowHeight = 12;
                 worksheet.Row(1).Height = 20;
 
-                worksheet.Cells[1, 1].Value = "Employee Number";
-                worksheet.Cells[1, 2].Value = "Course Code";
+                worksheet.Cells[1, 1].Value = "Evento";
+                worksheet.Cells[1, 2].Value = ventana.Evento.Descripcion;
 
-                var cells = worksheet.Cells["A1:J1"];
-                var rowCounter = 2;
+                worksheet.Cells[2, 1].Value = "PO";
+                worksheet.Cells[2, 2].Value = ventana.PO;
+                worksheet.Cells[2, 3].Value = ventana.TipoOperacion.Nombre;
 
-                worksheet.Cells[rowCounter, 1].Value = ventana.PO;
-                worksheet.Cells[rowCounter, 2].Value = ventana.PO;
+                worksheet.Cells[3, 1].Value = "Material";
+                worksheet.Cells[3, 2].Value = ventana.Cantidad;
+                worksheet.Cells[3, 3].Value = ventana.Proveedor.NombreCorto+" : "+ ventana.Proveedor.Nombre;
+
+                worksheet.Cells[4, 1].Value = "Ubicación";
+                worksheet.Cells[4, 2].Value = "Origen: "+ventana.Procedencia.NombreCorto+"-"+ventana.Procedencia.Nombre;
+                worksheet.Cells[4, 3].Value = "Destino: " + ventana.Destino.NombreCorto + "-" + ventana.Destino.Nombre;
+
+                worksheet.Cells[5, 1].Value = "Transporte";
+                worksheet.Cells[5, 2].Value = "Linea: " + ventana.Carrier.NombreCorto + " " + ventana.NombreCarrier;
+                worksheet.Cells[5, 3].Value = "Color: " + ventana.ColorContenedor;
+                worksheet.Cells[6, 2].Value = "Sello" + ventana.Sellos;
+
+                worksheet.Cells[7, 1].Value = "";
+                worksheet.Cells[7, 2].Value = "Tipo Unidad: " + ventana.TipoUnidad;
+                worksheet.Cells[7, 3].Value = "#Economico Tractor: " + ventana.NumeroEconomico;
+                worksheet.Cells[8, 2].Value = "#Placa Tractor" + ventana.NumeroPlaca;
+
+                worksheet.Cells[9, 1].Value = "";
+                worksheet.Cells[9, 2].Value = "Modelo contenedor: " + ventana.ModeloContenedor;
+                worksheet.Cells[9, 3].Value = "#Economico remolque: " + ventana.EconomicoRemolque;
+
+                worksheet.Cells[10, 1].Value = "";
+                worksheet.Cells[10, 2].Value = "Dimensión: " + ventana.Dimension;
+                worksheet.Cells[10, 3].Value = "Temperatura: " + ventana.Temperatura;
+
+                worksheet.Cells[11, 1].Value = "Conductor";
+                worksheet.Cells[11, 2].Value = ventana.Conductor;
+                worksheet.Cells[11, 3].Value = ventana.MovilConductor;
                 
                 worksheet.Column(1).AutoFit();
                 worksheet.Column(2).AutoFit();
+                worksheet.Column(3).AutoFit();
 
 
-                package.Workbook.Properties.Title = "Attempts";
+                for (var i = 0; i < 11; i++)
+                {
+                    worksheet.Cells[i + 1, 1].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    worksheet.Cells[i + 1, 1].Style.Font.Color.SetColor(Color.White);
+                    worksheet.Cells[i + 1, 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.MidnightBlue);                    
+                }
+
+                package.Workbook.Properties.Title = ventana.Evento.Descripcion;
                 this.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                 this.Response.AddHeader(
                           "content-disposition",
-                          string.Format("attachment;  filename={0}", "ExcellData.xlsx"));
+                          string.Format("attachment;  filename={0}", fileName));
                 this.Response.BinaryWrite(package.GetAsByteArray());
             }
+            return View();
         }
 
         protected override void Dispose(bool disposing)
