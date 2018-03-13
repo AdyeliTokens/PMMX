@@ -181,6 +181,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                             .Include(v => v.BitacoraVentana.Select(b => b.Estatus))
                             .Include(v => v.BitacoraVentana.Select(b => b.Rechazo))
                             .Include(v => v.Evento)
+                            .Include(v => v.Proveedor)
                             .Where(x => x.Id == statusVentana.IdVentana)
                             .FirstOrDefault();
 
@@ -195,18 +196,6 @@ namespace Sitio.Areas.Operaciones.Controllers
                     {
                         EmailService emailService = new EmailService();
                         emailService.SendMail(senders, ventana);
-                    }
-
-                    List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(statusVentana.Ventana.IdEvento);
-                    List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
-                    var estatus = ventana.StatusVentana.OrderByDescending(s => s.Fecha).Select(s => s.Status).FirstOrDefault();
-
-                    if (llaves.Count > 0)
-                    {
-                        foreach (string notificacion in llaves)
-                        {
-                            notify.SendPushNotification(notificacion, " Cambio de estatus Ventana: " + ventana.Evento.Descripcion + ". ", " Cambio de estatus a " + estatus.Nombre);
-                        }
                     }
                 }
                 catch(Exception e)
