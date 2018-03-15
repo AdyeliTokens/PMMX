@@ -56,7 +56,7 @@
             {
                 $('.select2').select2();
                 
-                GetEvents(formatDate(new Date()));
+                GetEvents(formatDate(new Date()), "/Evento/GetEvents?date=" + formatDate(new Date()));
                 getCategorias();
 
                 function formatDate(date) {
@@ -72,6 +72,32 @@
                     return [year, month, day].join('-');
                 }
 
+                $('#calendar').on('click', '.fc-next-button', function () {
+                    var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");
+                    var url = "/Evento/GetEvents?date=" + date;
+
+                    GetEvents(date, url);
+                });
+
+                $('#calendar').on('click', '.fc-prev-button', function () {
+                    var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");
+                    var url = "/Evento/GetEvents?date=" + date;
+
+                    GetEvents(date, url);
+                });
+
+                $('#calendar').on('click', '.fc-basicWeek-button', function () {
+                    var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");
+                    $('#calendar').fullCalendar('gotoDate', date);
+                    $('#calendar').fullCalendar('changeView', 'agendaWeek');
+                });
+
+                $('#calendar').on('click', '.fc-basicDay-button', function () {
+                    var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");
+                    $('#calendar').fullCalendar('gotoDate', date);
+                    $('#calendar').fullCalendar('changeView', 'agendaDay');
+                });
+                
                 function getCategorias() {
                     $.ajax({
                         dataType: "json",
@@ -108,13 +134,13 @@
                     });
                 }
 
-                function GetEvents(date)
+                function GetEvents(date, url)
                 {
                     $.ajax({
                         dataType: "json",
                         contentType: "application/json",
                         data: "{}",
-                        url: "/Evento/GetEvents?date="+date,
+                        url: url,
                         dataType: "json",
                         success: function (data) {
                             $('#calendar').fullCalendar('destroy');
@@ -156,148 +182,36 @@
                             });
 
                             $('#calendar').fullCalendar('gotoDate', date);
-
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
                             alert('There was an error while fetching events!');
                         }
                     });
                 }
-
-                $('#calendar').on('click', '.fc-next-button', function () {
-                    var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");
-                    GetEvents(date);
-                }); 
-
-                $('#calendar').on('click', '.fc-prev-button', function () {
-                    var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");
-                    GetEvents(date);
-                });
                 
-
                 $('#slt-Categorias').on("change", function ()
                 {
                     var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD"); 
+                    var url = "/Evento/GetEvents?date=" + date;
 
-                    if ($('#slt-Categorias').val() == "Categoria" )
-                        GetEvents(date);
+                    if ($('#slt-Categorias').val() == "Categoria")
+                        GetEvents(date, url);
                     else
                     {
                         getSubCategorias();
-
-                        $.ajax({
-                            dataType: "json",
-                            contentType: "application/json",
-                            data: "{}",
-                            url: "/Evento/GetEventsByCategoria?IdCategoria=" + $('#slt-Categorias').val() + "&Date=" + date,
-                            dataType: "json",
-                            success: function (data) {
-                                $('#calendar').fullCalendar('destroy');
-                                $('#calendar').fullCalendar('render');
-
-                                $('#calendar').fullCalendar({
-                                    theme: false,
-                                    header: {
-                                        left: 'prev,next today',
-                                        center: 'title',
-                                        right: 'month,basicWeek,basicDay'
-                                    },
-                                    defaultView: 'month',
-                                    editable: false,
-                                    lang: 'es',
-                                    eventLimit: 15,
-                                    eventLimitText: 'More',
-                                    weekMode: 'liquid',
-                                    displayEventTime: false,
-                                    events: $.map(data.events, function (item, i) {
-                                        var event = new Object();
-                                        event.start = moment(item.FechaInicio).utc();
-                                        event.end = moment(item.FechaFin).utc();
-                                        event.title = item.Descripcion;
-                                        event.brief = item.Nota;
-                                        event.id = item.Id;
-                                        event.color = item.Color;
-                                        return event;
-                                    }),
-                                    eventClick: function (calEvent, jsEvent, view) {
-                                        var url = "/Operaciones/Evento/Details/" + calEvent.id;
-
-                                        $.get(url, function (data) {
-                                            $('#createAssetContainer').html(data);
-                                            $('#createAssetModal').modal('show');
-                                            $('#IdEventoModal').val(calEvent.id);
-                                        });
-                                    }
-
-                                });
-
-                                $('#calendar').fullCalendar('gotoDate', date);
-                            },
-                            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                                alert('There was an error while fetching events!');
-                            }
-                        });
+                        url = "/Evento/GetEventsByCategoria?IdCategoria=" + $('#slt-Categorias').val() + "&Date=" + date,
+                        GetEvents(date, url);
                     }
                 });
 
                 $('#slt-SubCategorias').on("change", function () {
                     var IdSubCategoria = $('#slt-SubCategorias').val();
                     var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");
+                    var url = "/Evento/GetEventsBySubCategoria?IdSubCategoria=" + IdSubCategoria + "&Date=" + date;
 
-                    $.ajax({
-                        dataType: "json",
-                        contentType: "application/json",
-                        data: "{}",
-                        url: "/Evento/GetEventsBySubCategoria?IdSubCategoria=" + IdSubCategoria + "&Date=" + date,
-                        dataType: "json",
-                        success: function (data) {
-                            $('#calendar').fullCalendar('destroy');
-                            $('#calendar').fullCalendar('render');
-
-                            $('#calendar').fullCalendar({
-                                theme: false,
-                                header: {
-                                    left: 'prev,next today',
-                                    center: 'title',
-                                    right: 'month,basicWeek,basicDay'
-                                },
-                                defaultView: 'month',
-                                editable: false,
-                                lang: 'es',
-                                eventLimit: 15,
-                                eventLimitText: 'More',
-                                weekMode: 'liquid',
-                                displayEventTime: false,
-                                events: $.map(data.events, function (item, i) {
-                                    var event = new Object();
-                                    event.start = moment(item.FechaInicio).utc();
-                                    event.end = moment(item.FechaFin).utc();
-                                    event.title = item.Descripcion;
-                                    event.brief = item.Nota;
-                                    event.id = item.Id;
-                                    event.color = item.Color;
-                                    return event;
-                                }),
-                                eventClick: function (calEvent, jsEvent, view) {
-                                    var url = "/Operaciones/Evento/Details/" + calEvent.id;
-
-                                    $.get(url, function (data) {
-                                        $('#createAssetContainer').html(data);
-                                        $('#createAssetModal').modal('show');
-                                        $('#IdEventoModal').val(calEvent.id);
-                                    });
-                                }
-
-                            });
-                            $('#calendar').fullCalendar('gotoDate', date);
-
-                        },
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            alert('There was an error while fetching events!');
-                        }
-                    });
+                    GetEvents(date, url);
                 });
             });
-
+            
         </script>
     
