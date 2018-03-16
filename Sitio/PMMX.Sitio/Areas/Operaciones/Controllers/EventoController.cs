@@ -50,6 +50,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 foreach (var item in events)
                 {
                     item.Color = GetColorStatus(item.Id);
+                    item.Clasificacion = GetClasificacion(item.Id);
                 }
 
                 return Json(new { events }, JsonRequestBehavior.AllowGet);
@@ -100,6 +101,17 @@ namespace Sitio.Areas.Operaciones.Controllers
             if (colors == null) colors = "#5DADE2";
 
             return colors;
+        }
+
+        public string GetClasificacion(int idEvento)
+        {
+            var clasificacion = db.Ventana.Where(s => s.IdEvento == idEvento)
+                          .Select(s => s.SubCategoria.Nombre + "-" + (s.Evento.FechaInicio.Hour < 12 ? "Mañana" : "Tarde" ) )
+                          .FirstOrDefault();
+
+            if (clasificacion == null) clasificacion = "d";
+
+            return clasificacion;
         }
 
         public ActionResult GetEventsBySubCategoria(int IdSubCategoria, DateTime date)

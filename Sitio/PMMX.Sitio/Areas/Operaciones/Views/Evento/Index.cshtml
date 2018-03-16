@@ -181,46 +181,64 @@
                                 nowIndicator: true,
                                 resources: [ 
                                     {
-                                        id: 'a',
+                                        id: '15',
+                                        title: 'Importacion',
+                                        children: [
+                                            {
+                                                id: 'Importacion-Mañana',
+                                                title: 'Mañana'
+                                            },
+                                            {
+                                                id: 'Importacion-Tarde',
+                                                title: 'Tarde'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        id: '16',
+                                        title: 'Exportacion',
+                                        children: [
+                                            {
+                                                id: 'Exportacion-Mañana',
+                                                title: 'Mañana'
+                                            },
+                                            {
+                                                id: 'Exportacion-Tarde',
+                                                title: 'Tarde'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        id: '17',
                                         title: 'Local',
                                         children: [
                                             {
-                                                id: 'a1',
+                                                id: 'Local-Mañana',
                                                 title: 'Mañana'
                                             },
                                             {
-                                                id: 'a2',
+                                                id: 'Local-Tarde',
                                                 title: 'Tarde'
                                             }
                                         ]
                                     },
                                     {
-                                        id: 'b',
-                                        title: 'Importación',
+                                        id: '18',
+                                        title: 'Tab expandido',
                                         children: [
                                             {
-                                                id: 'b1',
+                                                id: 'Tab expandido-Mañana',
                                                 title: 'Mañana'
                                             },
                                             {
-                                                id: 'b2',
+                                                id: 'Tab expandido-Tarde',
                                                 title: 'Tarde'
                                             }
                                         ]
                                     },
                                     {
-                                        id: 'c',
-                                        title: 'Exportación',
-                                        children: [
-                                            {
-                                                id: 'c1',
-                                                title: 'Mañana'
-                                            },
-                                            {
-                                                id: 'c2',
-                                                title: 'Tarde'
-                                            }
-                                        ]
+                                        id: 'd',
+                                        title: 'Sin Datos'
                                     },
 
                                 ],
@@ -232,7 +250,7 @@
                                     event.brief = item.Nota;
                                     event.id = item.Id;
                                     event.color = item.Color;
-                                    event.resourceId = "a1";
+                                    event.resourceId = item.Clasificacion;
                                     return event;
                                 }),
                                 eventClick: function (calEvent, jsEvent, view) {
