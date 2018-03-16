@@ -182,7 +182,7 @@
                                 resources: [ 
                                     {
                                         id: '15',
-                                        title: 'Importacion',
+                                        title: 'Impo',
                                         children: [
                                             {
                                                 id: 'Importacion-Mañana',
@@ -196,7 +196,7 @@
                                     },
                                     {
                                         id: '16',
-                                        title: 'Exportacion',
+                                        title: 'Expo',
                                         children: [
                                             {
                                                 id: 'Exportacion-Mañana',
@@ -244,6 +244,7 @@
                                 ],
                                 events: $.map(data.events, function (item, i) {
                                     var event = new Object();
+                                    alert(moment(item.FechaInicio).utc());
                                     event.start = moment(item.FechaInicio).utc();
                                     event.end = moment(item.FechaFin).utc();
                                     event.title = item.Descripcion;
