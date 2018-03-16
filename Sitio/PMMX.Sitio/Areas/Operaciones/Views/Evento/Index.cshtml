@@ -8,6 +8,7 @@
     @Styles.Render("~/Style/Bootstrap")
     @Styles.Render("~/Style/Font-Awesome")
     @Styles.Render("~/Style/FullCalendar")
+    @Styles.Render("~/Style/Scheduler")
     @Styles.Render("~/Style/AdminLTE")
     @Styles.Render("~/Style/Select2")
 
@@ -49,6 +50,7 @@
         @Scripts.Render("~/JS/Moment")
         @Scripts.Render("~/JS/jquery")
         @Scripts.Render("~/JS/FullCalendar")
+        @Scripts.Render("~/JS/Scheduler")
         @Scripts.Render("~/JS/Select2")
 
         <script>
@@ -102,14 +104,14 @@
                    var date = formatCurrentDate(new Date());
 
                     $('#calendar').fullCalendar('gotoDate', date);
-                    $('#calendar').fullCalendar('changeView', 'agendaWeek');
+                    $('#calendar').fullCalendar('changeView', 'timelineWeek');
                 });
 
                 $('#calendar').on('click', '.fc-basicDay-button', function () {
                     var date = formatCurrentDate(new Date());
 
                     $('#calendar').fullCalendar('gotoDate', date);
-                    $('#calendar').fullCalendar('changeView', 'agendaDay');
+                    $('#calendar').fullCalendar('changeView', 'timelineDay');
                 });
                 
                 function getCategorias() {
@@ -161,6 +163,7 @@
                             $('#calendar').fullCalendar('render');
 
                             $('#calendar').fullCalendar({
+                                schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
                                 theme: false,
                                 header: {
                                     left: 'prev,next today',
@@ -176,8 +179,52 @@
                                 displayEventTime: false,
                                 slotEventOverlap: false,
                                 nowIndicator: true,
-                                now: formatCurrentDate(new Date()) + 'T14:00:00',
-                                resources: [  {id: 'a',title: 'Room A'} ],                                events: $.map(data.events, function (item, i) {
+                                resources: [ 
+                                    {
+                                        id: 'a',
+                                        title: 'Local',
+                                        children: [
+                                            {
+                                                id: 'a1',
+                                                title: 'Mañana'
+                                            },
+                                            {
+                                                id: 'a2',
+                                                title: 'Tarde'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        id: 'b',
+                                        title: 'Importación',
+                                        children: [
+                                            {
+                                                id: 'b1',
+                                                title: 'Mañana'
+                                            },
+                                            {
+                                                id: 'b2',
+                                                title: 'Tarde'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        id: 'c',
+                                        title: 'Exportación',
+                                        children: [
+                                            {
+                                                id: 'c1',
+                                                title: 'Mañana'
+                                            },
+                                            {
+                                                id: 'c2',
+                                                title: 'Tarde'
+                                            }
+                                        ]
+                                    },
+
+                                ],
+                                events: $.map(data.events, function (item, i) {
                                     var event = new Object();
                                     event.start = moment(item.FechaInicio).utc();
                                     event.end = moment(item.FechaFin).utc();
@@ -185,7 +232,7 @@
                                     event.brief = item.Nota;
                                     event.id = item.Id;
                                     event.color = item.Color;
-                                    event.resourceId = 'a';
+                                    event.resourceId = "a1";
                                     return event;
                                 }),
                                 eventClick: function (calEvent, jsEvent, view) {

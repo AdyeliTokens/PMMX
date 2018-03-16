@@ -15,6 +15,7 @@ namespace Sitio
                 "~/dist/css/skins/_all-skins.css",
                 "~/plugins/iCheck/flat/blue.css"));
             bundles.Add(new StyleBundle("~/Style/FullCalendar").Include("~/bower_components/fullcalendar/dist/fullcalendar.min.css"));
+            bundles.Add(new StyleBundle("~/Style/Scheduler").Include("~/bower_components/fullcalendar-scheduler/dist/scheduler.min.css"));
             bundles.Add(new StyleBundle("~/Style/DataTables").Include("~/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css"));
             bundles.Add(new StyleBundle("~/Style/DataRangePicker").Include("~/bower_components/bootstrap-daterangepicker/daterangepicker.css"));
             bundles.Add(new StyleBundle("~/Style/DataPicker").Include("~/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css"));
@@ -43,6 +44,7 @@ namespace Sitio
             bundles.Add(new ScriptBundle("~/JS/Demo").Include("~/bower_components/dist/js/demo.js"));
             bundles.Add(new ScriptBundle("~/JS/Moment").Include("~/bower_components/moment/moment.js"));
             bundles.Add(new ScriptBundle("~/JS/FullCalendar").Include("~/bower_components/fullcalendar/dist/fullcalendar.min.js"));
+            bundles.Add(new ScriptBundle("~/JS/Scheduler").Include("~/bower_components/fullcalendar-scheduler/dist/scheduler.min.js"));
             bundles.Add(new ScriptBundle("~/JS/select2").Include("~/bower_components/select2/dist/js/select2.full.min.js"));
             
              bundles.Add(new ScriptBundle("~/JS/DataRangePicker").Include(
