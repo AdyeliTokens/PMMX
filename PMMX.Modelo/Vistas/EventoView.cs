@@ -27,6 +27,8 @@ namespace PMMX.Modelo.Vistas
         public string Nota { get; set; }
         [StringLength(20)]
         public string Color { get; set; }
+        [StringLength(20)]
+        public string Clasificacion { get; set; }
         public bool EsRecurrente { get; set; }
         public bool Activo { get; set; }
 

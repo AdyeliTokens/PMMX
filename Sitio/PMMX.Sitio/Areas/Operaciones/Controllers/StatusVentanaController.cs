@@ -171,6 +171,7 @@ namespace Sitio.Areas.Operaciones.Controllers
 
                 statusVentana.IdStatus = workFlow.Respuesta.EstatusSiguiente.Id;
                 statusVentana.Fecha = DateTime.Now;
+                if(statusVentana.Comentarios == null) statusVentana.Comentarios = " ";
                 db.StatusVentana.Add(statusVentana);
                 db.SaveChanges();
 
