@@ -402,9 +402,9 @@ namespace Sitio.Areas.Warehouse.Controllers
                             ventana.MovilConductor = workSheet.Cells[8, 2].Value == null ? string.Empty : workSheet.Cells[8, 2].Value.ToString().Trim();
 
                             var nombreCorto = workSheet.Cells[9, 2].Value == null ? "MX" : workSheet.Cells[9, 2].Value.ToString().Trim();
-                            ventana.IdProcedencia = db.Locacion.Where(l => l.NombreCorto == nombreCorto).Select(l => l.Id).FirstOrDefault();
+                            ventana.IdProcedencia = db.Locacion.Where(l => l.NombreCorto == nombreCorto).Select(l => l.Id).FirstOrDefault() == 0 ? db.Locacion.Where(l => l.NombreCorto == "MX").Select(l => l.Id).FirstOrDefault() : db.Locacion.Where(l => l.NombreCorto == nombreCorto).Select(l => l.Id).FirstOrDefault();
                             nombreCorto = workSheet.Cells[10, 2].Value == null ? "MX" : workSheet.Cells[10, 2].Value.ToString().Trim();
-                            ventana.IdDestino = db.Locacion.Where(l => l.NombreCorto == nombreCorto).Select(l => l.Id).FirstOrDefault();
+                            ventana.IdDestino = db.Locacion.Where(l => l.NombreCorto == nombreCorto).Select(l => l.Id).FirstOrDefault() == 0 ? db.Locacion.Where(l => l.NombreCorto == "MX").Select(l => l.Id).FirstOrDefault() : db.Locacion.Where(l => l.NombreCorto == nombreCorto).Select(l => l.Id).FirstOrDefault();
 
                             ventana.NumeroEconomico = workSheet.Cells[11, 2].Value == null ? string.Empty : workSheet.Cells[11, 2].Value.ToString().Trim();
                             ventana.NumeroPlaca = workSheet.Cells[12, 2].Value == null ? string.Empty : workSheet.Cells[12, 2].Value.ToString().Trim();

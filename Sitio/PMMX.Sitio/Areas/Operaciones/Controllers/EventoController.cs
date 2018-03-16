@@ -82,6 +82,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 foreach (var item in events)
                 {
                     item.Color = GetColorStatus(item.Id);
+                    item.Clasificacion = GetClasificacion(item.Id);
                 }
 
                 return Json(new { events }, JsonRequestBehavior.AllowGet);
@@ -139,6 +140,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 foreach (var item in events)
                 {
                     item.Color = GetColorStatus(item.Id);
+                    item.Clasificacion = GetClasificacion(item.Id);
                 }
 
                 return Json(new { events }, JsonRequestBehavior.AllowGet);
