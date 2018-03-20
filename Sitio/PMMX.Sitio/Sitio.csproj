@@ -360,7 +360,6 @@
     <Compile Include="Areas\Operaciones\Controllers\WorkCentersController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\ListaDistribucionController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\LineLeadersController.cs" />
-    <Compile Include="Areas\Operaciones\Controllers\OperacionesAreaRegistration.cs" />
     <Compile Include="Areas\Operaciones\Controllers\SubAreaController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\WorkFlowsController.cs" />
     <Compile Include="Areas\Operaciones\OperacionesAreaRegistration.cs" />
