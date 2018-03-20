@@ -12,6 +12,7 @@ using System.Web.Http.Description;
 
 namespace Sitio.Areas.Operaciones
 {
+    [Authorize]
     public class LineLeadersController : ApiController
     {
         private PMMXContext db = new PMMXContext();

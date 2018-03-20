@@ -12,6 +12,7 @@ using PMMX.Modelo.Entidades;
 
 namespace Sitio.Areas.Operaciones
 {
+    [Authorize]
     public class ListaDistribucionController : Controller
     {
         private PMMXContext db = new PMMXContext();

@@ -11,6 +11,7 @@ using PMMX.Modelo.Entidades;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
+    [Authorize]
     public class ElectricosController : Controller
     {
         private PMMXContext db = new PMMXContext();

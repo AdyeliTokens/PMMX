@@ -12,6 +12,7 @@ using PMMX.Modelo.Entidades.Operaciones;
 
 namespace Sitio.Areas.Operaciones
 {
+    [Authorize]
     public class WorkFlowsController : Controller
     {
         private PMMXContext db = new PMMXContext();

@@ -17,6 +17,7 @@ using Sitio.Models;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
+    [Authorize]
     public class VolumenesDeProduccionController : Controller
     {
         private PMMXContext db = new PMMXContext();

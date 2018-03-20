@@ -2,17 +2,18 @@
 
 namespace Sitio.Areas.Operaciones
 {
-    public class OperacionesAreaRegistration : AreaRegistration
+
+    public class OperacionesAreaRegistration : AreaRegistration 
     {
-        public override string AreaName
+        public override string AreaName 
         {
-            get
+            get 
             {
                 return "Operaciones";
             }
         }
 
-        public override void RegisterArea(AreaRegistrationContext context)
+        public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(
                 "Operaciones_default",

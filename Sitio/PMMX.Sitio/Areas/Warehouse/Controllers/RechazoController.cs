@@ -11,6 +11,7 @@ using PMMX.Modelo.Entidades.Warehouse;
 
 namespace Sitio.Areas.Warehouse.Controllers
 {
+    [Authorize]
     public class RechazoController : Controller
     {
         private PMMXContext db = new PMMXContext();

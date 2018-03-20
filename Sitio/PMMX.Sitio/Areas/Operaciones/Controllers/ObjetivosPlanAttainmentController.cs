@@ -11,6 +11,7 @@ using PMMX.Modelo.Entidades.Maquinaria;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
+    [Authorize]
     public class ObjetivosPlanAttainmentController : Controller
     {
         private PMMXContext db = new PMMXContext();
