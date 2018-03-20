@@ -363,6 +363,7 @@
     <Compile Include="Areas\Operaciones\Controllers\OperacionesAreaRegistration.cs" />
     <Compile Include="Areas\Operaciones\Controllers\SubAreaController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\WorkFlowsController.cs" />
+    <Compile Include="Areas\Operaciones\OperacionesAreaRegistration.cs" />
     <Compile Include="Areas\Seguridad\Controllers\DispositivosController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\ElectricosController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\MecanicosController.cs" />
@@ -3639,6 +3640,10 @@
     <Content Include="bower_components\font-awesome\css\font-awesome.min.css" />
     <Content Include="bower_components\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="bower_components\font-awesome\HELP-US-OUT.txt" />
+    <Content Include="bower_components\fullcalendar-scheduler\dist\scheduler.css" />
+    <Content Include="bower_components\fullcalendar-scheduler\dist\scheduler.js" />
+    <Content Include="bower_components\fullcalendar-scheduler\dist\scheduler.min.css" />
+    <Content Include="bower_components\fullcalendar-scheduler\dist\scheduler.min.js" />
     <Content Include="bower_components\fullcalendar\dist\fullcalendar.css" />
     <Content Include="bower_components\fullcalendar\dist\fullcalendar.js" />
     <Content Include="bower_components\fullcalendar\dist\fullcalendar.min.css" />
@@ -5863,6 +5868,7 @@
     <Content Include="bower_components\jquery\src\ajax.js" />
     <Content Include="bower_components\jquery\src\ajax\jsonp.js" />
     <Content Include="bower_components\jquery\src\ajax\load.js" />
+    <Content Include="bower_components\jquery\src\ajax\parseJSON.js" />
     <Content Include="bower_components\jquery\src\ajax\parseXML.js" />
     <Content Include="bower_components\jquery\src\ajax\script.js" />
     <Content Include="bower_components\jquery\src\ajax\var\location.js" />
@@ -5892,11 +5898,13 @@
     <Content Include="bower_components\jquery\src\css\addGetHookIf.js" />
     <Content Include="bower_components\jquery\src\css\adjustCSS.js" />
     <Content Include="bower_components\jquery\src\css\curCSS.js" />
+    <Content Include="bower_components\jquery\src\css\defaultDisplay.js" />
     <Content Include="bower_components\jquery\src\css\hiddenVisibleSelectors.js" />
     <Content Include="bower_components\jquery\src\css\showHide.js" />
     <Content Include="bower_components\jquery\src\css\support.js" />
     <Content Include="bower_components\jquery\src\css\var\cssExpand.js" />
     <Content Include="bower_components\jquery\src\css\var\getStyles.js" />
+    <Content Include="bower_components\jquery\src\css\var\isHidden.js" />
     <Content Include="bower_components\jquery\src\css\var\isHiddenWithinTree.js" />
     <Content Include="bower_components\jquery\src\css\var\rmargin.js" />
     <Content Include="bower_components\jquery\src\css\var\rnumnonpx.js" />
@@ -5921,6 +5929,7 @@
     <Content Include="bower_components\jquery\src\event\trigger.js" />
     <Content Include="bower_components\jquery\src\exports\amd.js" />
     <Content Include="bower_components\jquery\src\exports\global.js" />
+    <Content Include="bower_components\jquery\src\intro.js" />
     <Content Include="bower_components\jquery\src\jquery.js" />
     <Content Include="bower_components\jquery\src\manipulation.js" />
     <Content Include="bower_components\jquery\src\manipulation\buildFragment.js" />
@@ -5933,6 +5942,7 @@
     <Content Include="bower_components\jquery\src\manipulation\wrapMap.js" />
     <Content Include="bower_components\jquery\src\manipulation\_evalUrl.js" />
     <Content Include="bower_components\jquery\src\offset.js" />
+    <Content Include="bower_components\jquery\src\outro.js" />
     <Content Include="bower_components\jquery\src\queue.js" />
     <Content Include="bower_components\jquery\src\queue\delay.js" />
     <Content Include="bower_components\jquery\src\selector-native.js" />
@@ -5958,6 +5968,7 @@
     <Content Include="bower_components\jquery\src\var\push.js" />
     <Content Include="bower_components\jquery\src\var\rcssNum.js" />
     <Content Include="bower_components\jquery\src\var\rnothtmlwhite.js" />
+    <Content Include="bower_components\jquery\src\var\rnotwhite.js" />
     <Content Include="bower_components\jquery\src\var\slice.js" />
     <Content Include="bower_components\jquery\src\var\support.js" />
     <Content Include="bower_components\jquery\src\var\toString.js" />
@@ -6948,6 +6959,7 @@
     <Content Include="css\new-age.css" />
     <Content Include="css\new-age.min.css" />
     <Content Include="css\style.css" />
+    <Content Include="demo.mp4" />
     <Content Include="device-mockups\apple_watch\edition\gold.png" />
     <Content Include="device-mockups\apple_watch\edition\rose.png" />
     <Content Include="device-mockups\apple_watch\sport\black.png" />
@@ -7072,6 +7084,8 @@
     <Content Include="dist\css\skins\skin-yellow.min.css" />
     <Content Include="dist\css\skins\_all-skins.css" />
     <Content Include="dist\css\skins\_all-skins.min.css" />
+    <Content Include="dist\img\Android.png" />
+    <Content Include="dist\img\AppleLogo.ico" />
     <Content Include="dist\img\avatar.png" />
     <Content Include="dist\img\avatar04.png" />
     <Content Include="dist\img\avatar2.png" />
@@ -8052,6 +8066,13 @@
     <Content Include="Areas\Operaciones\Views\NoConformidades\Reporte.cshtml" />
     <Content Include="Areas\Operaciones\Views\PlanesDeProduccion\Reporte.cshtml" />
     <Content Include="Areas\Operaciones\Views\VolumenesDeProduccion\Reporte.cshtml" />
+    <Content Include="bower_components\fullcalendar-scheduler\.bower.json" />
+    <Content Include="bower_components\fullcalendar-scheduler\bower.json" />
+    <Content Include="bower_components\fullcalendar-scheduler\CHANGELOG.md" />
+    <Content Include="bower_components\fullcalendar-scheduler\CONTRIBUTING.md" />
+    <Content Include="bower_components\fullcalendar-scheduler\LICENSE.md" />
+    <Content Include="bower_components\fullcalendar-scheduler\README.md" />
+    <Content Include="bower_components\jquery\src\.jshintrc" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
