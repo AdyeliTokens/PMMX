@@ -11,6 +11,7 @@ using PMMX.Modelo.Entidades;
 
 namespace Sitio.Areas.Seguridad.Controllers
 {
+    [Authorize]
     public class ShiftLeadersController : Controller
     {
         private PMMXContext db = new PMMXContext();

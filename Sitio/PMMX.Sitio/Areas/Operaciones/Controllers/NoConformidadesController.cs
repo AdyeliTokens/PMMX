@@ -19,6 +19,7 @@ using PMMX.Modelo.Vistas;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
+    [Authorize]
     public class NoConformidadesController : Controller
     {
         private PMMXContext db = new PMMXContext();

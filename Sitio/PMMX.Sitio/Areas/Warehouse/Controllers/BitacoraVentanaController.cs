@@ -19,6 +19,7 @@ using Sitio.Helpers;
 
 namespace Sitio.Areas.Warehouse.Controllers
 {
+    [Authorize]
     public class BitacoraVentanaController : Controller
     {
         private PMMXContext db = new PMMXContext();
