@@ -188,7 +188,7 @@ namespace PMMX.Operaciones.Servicios
             catch (Exception e)
             {
 
-                respuesta.Mensaje = e.Message;
+                respuesta.Mensaje = e.InnerException.InnerException.Message;
             }
 
             return respuesta;

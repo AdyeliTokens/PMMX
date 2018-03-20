@@ -11,6 +11,7 @@ using PMMX.Modelo.Entidades.Operaciones;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
+    [Authorize]
     public class EventoOrigenController : Controller
     {
         private PMMXContext db = new PMMXContext();

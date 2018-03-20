@@ -16,6 +16,7 @@ using PMMX.Operaciones.Servicios;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
+    [Authorize]
     public class MarcasController : Controller
     {
         private PMMXContext db = new PMMXContext();

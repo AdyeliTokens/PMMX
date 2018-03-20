@@ -69,9 +69,6 @@ namespace Sitio.Areas.Operaciones.Controllers
                         Code_FA = code,
                         Cantidad = Math.Round((desperdicios.Where(d => d.Code_FA == code && d.IdWorkCenter == item.Id).Select(d => d.Cantidad).Sum() / (cant.Sum() * 1000)), 2)
 
-                
-
-
                     })
                     .ToList();
 

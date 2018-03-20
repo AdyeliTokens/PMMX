@@ -2,6 +2,7 @@
 
 namespace Sitio.Areas.Operaciones
 {
+
     public class OperacionesAreaRegistration : AreaRegistration 
     {
         public override string AreaName 

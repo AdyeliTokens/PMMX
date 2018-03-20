@@ -22,6 +22,7 @@ using System.IO;
 
 namespace Sitio.Areas.Warehouse.Controllers
 {
+    [Authorize]
     public class VentanaController : Controller
     {
         private PMMXContext db = new PMMXContext();

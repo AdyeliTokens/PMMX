@@ -13,7 +13,7 @@ using PMMX.Modelo.RespuestaGenerica;
 
 namespace Sitio.Areas.Seguridad.Controllers
 {
-    [Authorize]
+    
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;

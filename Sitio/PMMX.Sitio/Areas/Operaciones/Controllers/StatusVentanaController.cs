@@ -19,6 +19,7 @@ using Sitio.Helpers;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
+    [Authorize]
     public class StatusVentanaController : Controller
     {
         private PMMXContext db = new PMMXContext();

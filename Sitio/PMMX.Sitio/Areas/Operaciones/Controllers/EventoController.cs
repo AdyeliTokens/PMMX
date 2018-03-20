@@ -17,6 +17,7 @@ using Microsoft.AspNet.Identity;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
+    [Authorize]
     public class EventoController : Controller
     {
         private PMMXContext db = new PMMXContext();
