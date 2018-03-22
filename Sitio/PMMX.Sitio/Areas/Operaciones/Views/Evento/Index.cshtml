@@ -57,7 +57,7 @@
             $(document).ready(function ()
             {
                 $('.select2').select2();
-                
+
                 GetEvents(formatDate(new Date()), "/Evento/GetEvents?date=" + formatDate(new Date()));
                 getCategorias();
 
@@ -113,7 +113,7 @@
                     $('#calendar').fullCalendar('gotoDate', date);
                     $('#calendar').fullCalendar('changeView', 'timelineDay');
                 });
-                
+
                 function getCategorias() {
                     $.ajax({
                         dataType: "json",
@@ -179,7 +179,7 @@
                                 displayEventTime: false,
                                 slotEventOverlap: false,
                                 nowIndicator: true,
-                                resources: [ 
+                                resources: [
                                     {
                                         id: '15',
                                         title: 'Impo',
@@ -271,10 +271,10 @@
                         }
                     });
                 }
-                
+
                 $('#slt-Categorias').on("change", function ()
                 {
-                    var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD"); 
+                    var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");
                     var url = "/Evento/GetEvents?date=" + date;
 
                     if ($('#slt-Categorias').val() == "Categoria")
@@ -295,6 +295,6 @@
                     GetEvents(date, url);
                 });
             });
-            
+
         </script>
     
