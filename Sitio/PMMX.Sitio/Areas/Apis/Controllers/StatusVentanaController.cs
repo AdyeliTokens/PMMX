@@ -85,28 +85,29 @@ namespace Sitio.Areas.Apis
                 return BadRequest(ModelState);
             }
 
-            var IdSubCategoria = db.Ventana.Where(x => x.Id == statusVentana.IdVentana).Select(x => x.IdSubCategoria).FirstOrDefault();
-
-            WorkFlowServicio workflowServicio = new WorkFlowServicio();
-            IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(IdSubCategoria, statusVentana.IdStatus, false);
-
-            statusVentana.IdStatus = workFlow.Respuesta.EstatusSiguiente.Id;
-            statusVentana.Fecha = DateTime.Now;
-            db.StatusVentana.Add(statusVentana);
-            db.SaveChanges();
-
-            var ventana = db.Ventana
-                        .Include(v => v.StatusVentana)
-                        .Include(v => v.StatusVentana.Select(s => s.Status))
-                        .Include(v => v.BitacoraVentana)
-                        .Include(v => v.BitacoraVentana.Select(b => b.Estatus))
-                        .Include(v => v.BitacoraVentana.Select(b => b.Rechazo))
-                        .Include(v => v.Evento)
-                        .Where(x => x.Id == statusVentana.IdVentana)
-                        .FirstOrDefault();
-
             try
             {
+                var IdSubCategoria = db.Ventana.Where(x => x.Id == statusVentana.IdVentana).Select(x => x.IdSubCategoria).FirstOrDefault();
+                var IdActualStatus = db.StatusVentana.OrderByDescending(x=> x.Fecha).Where(x=> x.IdVentana == statusVentana.IdVentana).Select(x => x.IdStatus).FirstOrDefault();
+
+                WorkFlowServicio workflowServicio = new WorkFlowServicio();
+                IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(IdSubCategoria, IdActualStatus, false);
+
+                statusVentana.IdStatus = workFlow.Respuesta.EstatusSiguiente.Id;
+                statusVentana.Fecha = DateTime.Now;
+                db.StatusVentana.Add(statusVentana);
+                db.SaveChanges();
+
+                var ventana = db.Ventana
+                            .Include(v => v.StatusVentana)
+                            .Include(v => v.StatusVentana.Select(s => s.Status))
+                            .Include(v => v.BitacoraVentana)
+                            .Include(v => v.BitacoraVentana.Select(b => b.Estatus))
+                            .Include(v => v.BitacoraVentana.Select(b => b.Rechazo))
+                            .Include(v => v.Evento)
+                            .Where(x => x.Id == statusVentana.IdVentana)
+                            .FirstOrDefault();
+
                 UsuarioServicio usuarioServicio = new UsuarioServicio();
                 NotificationService notify = new NotificationService();
 
