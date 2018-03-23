@@ -100,7 +100,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                         .Select(s => s.Status.Color)
                         .FirstOrDefault();
 
-            if (colors == null) colors = "#5DADE2";
+            if (colors == null) colors = "#95A5A6";
 
             return colors;
         }
