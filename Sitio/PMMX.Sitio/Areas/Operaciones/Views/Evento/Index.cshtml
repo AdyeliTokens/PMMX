@@ -18,15 +18,12 @@
 <p>
     <i class="fa fa-plus-circle text-green"></i>
     @Html.ActionLink("Create New", "Create")
-</p>
-<p align="center">
+
     <div class="form-group">
         <div class="col-md-6"><select id="slt-Categorias" class="form-control select2"></select></div>
-        <div class="col-md-6"><select id="slt-SubCategorias" class="form-control select2"></select></div>
         </br></br>
     </div>
 </p>
-
 
 <div id='calendar' style="width: 70%; height: 70%; max-width: 900px; margin: 0 auto;"></div>
 
@@ -86,20 +83,33 @@
                     return [year, month, day].join('-');
                 }
 
-                $('#calendar').on('click', '.fc-next-button', function () {
-                    var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");
-                    var url = "/Evento/GetEvents?date=" + date;
+                $('#calendar').on('click', '.fc-next-button, .fc-prev-button', function () {
+                    var view = $('#calendar').fullCalendar('getView');
 
-                    GetEvents(date, url);
+                    switch (view.name)
+                    {
+                        case "month":
+                            var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");
+                            var url = "/Evento/GetEvents?date=" + date;
+                            GetEvents(date, url);
+                            break;
+                        case "timelineWeek":
+                            var d = new Date($('#calendar').fullCalendar('getDate'));
+                            var date = formatCurrentDate(d.setDate(d.getDate() + 7));
+                            
+                            $('#calendar').fullCalendar('gotoDate', date);
+                            $('#calendar').fullCalendar('changeView', view.name);
+                            break;
+                        case "timelineDay": 
+                            var d = new Date($('#calendar').fullCalendar('getDate'));
+                            var date = formatCurrentDate(d.setDate(d.getDate() + 1));
+                            
+                            $('#calendar').fullCalendar('gotoDate', date);
+                            $('#calendar').fullCalendar('changeView', view.name);
+                            break;
+                    }                   
                 });
-
-                $('#calendar').on('click', '.fc-prev-button', function () {
-                    var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");
-                    var url = "/Evento/GetEvents?date=" + date;
-
-                    GetEvents(date, url);
-                });
-
+                
                $('#calendar').on('click', '.fc-basicWeek-button', function () {
                    var date = formatCurrentDate(new Date());
 
@@ -113,43 +123,7 @@
                     $('#calendar').fullCalendar('gotoDate', date);
                     $('#calendar').fullCalendar('changeView', 'timelineDay');
                 });
-
-                function getCategorias() {
-                    $.ajax({
-                        dataType: "json",
-                        contentType: "application/json",
-                        url: "/Operaciones/Categoria/GetCategorias",
-                        success: function (data) {
-                            items = '<option>Categoria</option>';
-                            $.each(data.lista, function (i, k) {
-                                items += "<option value='" + k.Id + "'>" + k.Nombre + "</option>";
-                            });
-                            $('#slt-Categorias').html(items);
-                        },
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            alert('There was an error while fetching data!');
-                        }
-                    });
-                }
-
-                function getSubCategorias() {
-                    $.ajax({
-                        dataType: "json",
-                        contentType: "application/json",
-                        url: "/Operaciones/SubCategoria/GetSubCategoriasByCategoria?IdCategoria=" + $("#slt-Categorias").val(),
-                        success: function (data) {
-                            items = '<option>SubCategoria</option>';
-                            $.each(data.lista, function (i, k) {
-                                items += "<option value='" + k.Id + "'>" + k.Nombre + "</option>";
-                            });
-                            $('#slt-SubCategorias').html(items);
-                        },
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            alert('There was an error while fetching data!');
-                        }
-                    });
-                }
-
+                
                 function GetEvents(date, url)
                 {
                     $.ajax({
@@ -272,6 +246,24 @@
                     });
                 }
 
+                function getCategorias() {
+                    $.ajax({
+                        dataType: "json",
+                        contentType: "application/json",
+                        url: "/Operaciones/Categoria/GetCategorias",
+                        success: function (data) {
+                            items = '<option>Categoria</option>';
+                            $.each(data.lista, function (i, k) {
+                                items += "<option value='" + k.Id + "'>" + k.Nombre + "</option>";
+                            });
+                            $('#slt-Categorias').html(items);
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert('There was an error while fetching data!');
+                        }
+                    });
+                }
+
                 $('#slt-Categorias').on("change", function ()
                 {
                     var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");
@@ -281,19 +273,11 @@
                         GetEvents(date, url);
                     else
                     {
-                        getSubCategorias();
                         url = "/Evento/GetEventsByCategoria?IdCategoria=" + $('#slt-Categorias').val() + "&Date=" + date,
                         GetEvents(date, url);
                     }
                 });
-
-                $('#slt-SubCategorias').on("change", function () {
-                    var IdSubCategoria = $('#slt-SubCategorias').val();
-                    var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");
-                    var url = "/Evento/GetEventsBySubCategoria?IdSubCategoria=" + IdSubCategoria + "&Date=" + date;
-
-                    GetEvents(date, url);
-                });
+                
             });
 
         </script>
