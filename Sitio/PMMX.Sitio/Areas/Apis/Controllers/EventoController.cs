@@ -162,21 +162,37 @@ namespace Sitio.Areas.Apis.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (evento.Nota == null)
+                evento.Nota = " ";
+
+            evento.FechaInicio = DateTime.Now;
+            evento.FechaFin = DateTime.Now;
+            evento.EsRecurrente = false;
+            evento.Activo = true;
+            
             db.Evento.Add(evento);
             db.SaveChanges();
 
-            NotificationService notify = new NotificationService();
-            UsuarioServicio usuarioServicio = new UsuarioServicio();
-
-            List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(evento.Id);
-            List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
-
-            foreach (string notificacion in llaves)
+            try
             {
-               notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + evento.Descripcion + ". ", "");
+                NotificationService notify = new NotificationService();
+                UsuarioServicio usuarioServicio = new UsuarioServicio();
+
+                List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(evento.Id);
+                List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
+
+                foreach (string notificacion in llaves)
+                {
+                    notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + evento.Descripcion + ". ", "");
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = evento.Id }, evento);
+
+            return Ok(evento);
         }
 
         // DELETE: api/Evento/5

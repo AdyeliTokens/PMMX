@@ -82,29 +82,35 @@ namespace Sitio.Areas.Apis.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            Ventana ventana = db.Ventana
-                    .Include(v => v.StatusVentana)
-                    .Where(v => (v.Id == bitacoraVentana.IdVentana))
-                    .FirstOrDefault();
-
-            WorkFlowServicio workflowServicio = new WorkFlowServicio();
-            IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, ventana.StatusVentana.Where(s => s.IdVentana == bitacoraVentana.IdVentana).OrderByDescending(s => s.Fecha).FirstOrDefault().IdStatus, true);
-
-            if (workFlow.Respuesta != null)
+            try
             {
-                bitacoraVentana.IdStatus = workFlow.Respuesta.EstatusSiguiente.Id;
+                Ventana ventana = db.Ventana
+                        .Include(v => v.StatusVentana)
+                        .Where(v => (v.Id == bitacoraVentana.IdVentana))
+                        .FirstOrDefault();
+
+                WorkFlowServicio workflowServicio = new WorkFlowServicio();
+                IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, ventana.StatusVentana.Where(s => s.IdVentana == bitacoraVentana.IdVentana).OrderByDescending(s => s.Fecha).FirstOrDefault().IdStatus, true);
+
+                if (workFlow.Respuesta != null)
+                {
+                    bitacoraVentana.IdStatus = workFlow.Respuesta.EstatusSiguiente.Id;
+                }
+                else
+                {
+                    workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, ventana.StatusVentana.Where(s => s.IdVentana == bitacoraVentana.IdVentana).OrderByDescending(s => s.Fecha).FirstOrDefault().IdStatus, false);
+                    bitacoraVentana.IdStatus = workFlow.Respuesta.EstatusInicial.Id;
+                }
+
+                bitacoraVentana.Fecha = DateTime.Now.Date;
+
+                db.BitacoraVentana.Add(bitacoraVentana);
+                db.SaveChanges();
             }
-            else
+            catch(Exception e)
             {
-                workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, ventana.StatusVentana.Where(s => s.IdVentana == bitacoraVentana.IdVentana).OrderByDescending(s => s.Fecha).FirstOrDefault().IdStatus, false);
-                bitacoraVentana.IdStatus = workFlow.Respuesta.EstatusInicial.Id;
+                Console.WriteLine(e.Message);
             }
-
-            bitacoraVentana.Fecha = DateTime.Now.Date;
-
-            db.BitacoraVentana.Add(bitacoraVentana);
-            db.SaveChanges();
 
             BitacoraVentana bitacoraVentanaAdded = db.BitacoraVentana.Find(bitacoraVentana.Id);
             return Ok(bitacoraVentanaAdded);
