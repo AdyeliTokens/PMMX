@@ -517,6 +517,10 @@ namespace Sitio.Areas.Warehouse.Controllers
                           "content-disposition",
                           string.Format("attachment;  filename={0}", fileName));
                 this.Response.BinaryWrite(package.GetAsByteArray());
+                this.Response.Flush();
+                this.Response.Close();
+                this.Response.End();
+
             }
             return View();
         }
