@@ -20,9 +20,7 @@ namespace Sitio
             bundles.Add(new StyleBundle("~/Style/DataRangePicker").Include("~/bower_components/bootstrap-daterangepicker/daterangepicker.css"));
             bundles.Add(new StyleBundle("~/Style/DataPicker").Include("~/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css"));
             bundles.Add(new StyleBundle("~/Style/select2").Include("~/bower_components/select2/dist/css/select2.min.css"));
-           
-               bundles.Add(new StyleBundle("~/Style/ColorPicker").Include("~/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css"));
-
+            bundles.Add(new StyleBundle("~/Style/ColorPicker").Include("~/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css"));
             bundles.Add(new StyleBundle("~/Style/Vendor/Bootstrap").Include("~/vendor/bootstrap/css/bootstrap.min.css"));
             bundles.Add(new StyleBundle("~/Style/Vendor/Font-Awesome").Include("~/vendor/font-awesome/css/font-awesome.min.css", new CssRewriteUrlTransform()));
             bundles.Add(new StyleBundle("~/Style/Vendor/SimpleLineIcons").Include("~/vendor/simple-line-icons/css/simple-line-icons.css"));
@@ -31,6 +29,7 @@ namespace Sitio
             bundles.Add(new StyleBundle("~/Style/Vendor/NewAge").Include("~/css/new-age.css"));
             bundles.Add(new StyleBundle("~/Style/Vendor/NewAge").Include("~/css/new-age.css"));
             bundles.Add(new StyleBundle("~/Style/Select2").Include("~/bower_components/select2/dist/css/select2.min.css"));
+            bundles.Add(new StyleBundle("~/Content/cssVectorMap").Include("~/plugins/jvectormap/jquery-jvectormap-1.2.2.css"));
             #endregion
 
             #region JS
@@ -74,9 +73,10 @@ namespace Sitio
                         "~/Scripts/jquery-{version}.js"));
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
-            bundles.Add(new StyleBundle("~/Content/cssVectorMap").Include(
-                "~/plugins/jvectormap/jquery-jvectormap-1.2.2.css"));
+            
             bundles.Add(new ScriptBundle("~/JS/Select2").Include("~/bower_components/select2/dist/js/select2.full.min.js"));
+            bundles.Add(new ScriptBundle("~/JS/ChartJS").Include("~/bower_components/chart.js/Chart.js"));
+            bundles.Add(new ScriptBundle("~/JS/Sparkline").Include("~/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"));
             #endregion
 
 

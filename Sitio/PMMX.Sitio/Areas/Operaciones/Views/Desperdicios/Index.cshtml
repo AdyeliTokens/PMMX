@@ -19,7 +19,7 @@
             <div class="box-header">
                 <h3 class="box-title">Parametros</h3>
             </div>
-            @using (Ajax.BeginForm("Reporte", "Desperdicios",
+            @using (Ajax.BeginForm("ReporteAnual", "Desperdicios",
                 new AjaxOptions
                 {
                     HttpMethod = "POST",
@@ -84,7 +84,7 @@
                     <a href="@Url.Action("Create", "Desperdicios")" class="btn btn-primary btn-sm">
                         <span class="fa fa-plus" aria-hidden="true"></span>
                     </a>
-                    <a href="@Url.Action("Reporte", "Desperdicios")" class="btn btn-primary btn-sm">
+                    <a href="@Url.Action("ReporteAnual", "Desperdicios")" class="btn btn-primary btn-sm">
                         <span class="fa fa-list-alt" aria-hidden="true"></span>
                     </a>
 

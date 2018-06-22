@@ -84,6 +84,57 @@ namespace Sitio.Areas.Operaciones.Controllers
             return PartialView(listadelistas);
         }
 
+        [HttpPost]
+        public ActionResult ReporteAnual(FechaInicioFin model)
+        {
+            DateTime fechaFin = model.Fin;
+            fechaFin = fechaFin.AddDays(1);
+
+
+            DateTime fechaInicio = model.Inicio;
+            var primerDiaDelAnio = new DateTime(DateTime.Now.Year, 1, 1);
+
+
+            var workCenters = db.WorkCenters.ToList();
+            var desperdicios = db.Desperdicios.Where(x => (x.Fecha >= fechaInicio && x.Fecha <= fechaFin)).ToList();
+            var objetivos = db.ObjetivosCRR.Select(x => x).Where(x => (x.FechaInicial >= primerDiaDelAnio)).ToList();
+            var volumenes = db.VolumenesDeProduccion.Where(x => (x.Fecha <= fechaFin && x.Fecha >= fechaInicio)).ToList();
+
+            IList<CRRPorWorkCenter> listadelistas = new List<CRRPorWorkCenter>();
+            foreach (var item in workCenters)
+            {
+                CRRPorWorkCenter crrPorWorkCenter = new CRRPorWorkCenter();
+                crrPorWorkCenter.WorkCenter = item;
+                var desperdicioTotal = desperdicios
+                    .Where(x => (x.IdWorkCenter == item.Id))
+                    .GroupBy(rd => rd.Code_FA, rd => rd.Cantidad, (code, cant) => new DesperdicioView
+                    {
+                        Code_FA = code,
+                        Cantidad = cant.Sum()
+                    })
+                    .ToList();
+
+                var VolumenesTotal = volumenes
+                    .Where(x => (x.IdWorkCenter == item.Id))
+                    .GroupBy(rd => rd.Code_FA, rd => rd.New_Qty, (code, cant) => new DesperdicioView
+                    {
+                        Code_FA = code,
+                        Cantidad = Math.Round((desperdicios.Where(d => d.Code_FA == code && d.IdWorkCenter == item.Id).Select(d => d.Cantidad).Sum() / (cant.Sum() * 1000)), 2)
+
+                    })
+                    .ToList();
+
+
+
+
+                crrPorWorkCenter.Desperdicio = new List<DesperdicioView>();
+                crrPorWorkCenter.Desperdicio = VolumenesTotal;
+
+                listadelistas.Add(crrPorWorkCenter);
+            }
+
+            return PartialView(listadelistas);
+        }
 
         public ActionResult Details(int? id)
         {
