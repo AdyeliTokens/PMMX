@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PMMX.Modelo.Vistas.CRRPorWorkCenter>
+﻿@model IEnumerable<PMMX.Modelo.Vistas.CRRPorBusinessUnit>
 
 @{
     ViewBag.Title = "Index";
@@ -27,52 +27,79 @@
                         <!-- /.chart-responsive -->
                     </div>
                     <!-- /.col -->
-                    <div class="col-md-4" id="scrollDiv">
+                    <div class="col-md-4" style="overflow: scroll; width:30%; height: 300px;">
+                        @* id="scrollDiv"*@
+
                         @foreach (var item in Model)
                         {
-                            <div class="progress-group">
-                                <span class="progress-text">@Html.DisplayFor(modelItem => item.WorkCenter.NombreCorto)</span>
+                            <div class="progress-group collapsed-box">
+                            <div class="box box-default">
+                                <div class="box-header with-border">
+                                    <h4 class="box-title text-bold text-blue">@Html.DisplayFor(modelItem => item.BusinessUnit.NombreCorto)</h4>
+                                    <div class="box-tools pull-right">
+                                        <span data-toggle="tooltip" title="" class="badge bg-light-blue" data-original-title="Available">OK</span>
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <!-- /.box-tools -->
+                                </div>
+                                <!-- /.box-header -->
 
-                                @if (item.Valores.Count() > 0)
-                                {
-                                    <table class="table table-hover table-striped">
-                                        <thead>
-                                            <tr class="info" style="width:100%">
-                                                <th style="width:75%">
-                                                    FA
-                                                </th>
-                                                <th style="width:25%">
-                                                    CRR
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var code_fa in item.Valores)
-                                            {
-                                                <tr>
-                                                    <td>
-                                                        <div class="progress-group">
-                                                            <span class="progress-text">@Html.DisplayFor(modelItem => code_fa.Code_FA)</span>
-                                                            <span class="progress-number">
-                                                                <b>@Html.DisplayFor(modelItem => code_fa.PlanProduccion)</b>
-                                                                /@Html.DisplayFor(modelItem => code_fa.VolumenProduccion)
-                                                            </span>
-                                                            <div class="progress sm">
-                                                                @{double p = (@code_fa.PlanProduccion / (@code_fa.VolumenProduccion * 1000)) * 10;}
-                                                                <div class="progress-bar progress-bar-aqua" style="width: 60%"></div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => code_fa.CRR) %
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                }
+                                
                             </div>
+                            <!-- /.box -->
+                            
+
+                            @foreach (var workCenter in item.ValoresWorkCenters)
+                            {
+
+                                <div class="progress-group box-body">
+                                    <span class="label label-success">@Html.DisplayFor(modelItem => workCenter.WorkCenter.NombreCorto)</span>
+
+                                    @if (item.Valores.Count() > 0)
+                                    {
+                                        <table class="table table-hover table-striped">
+                                            <thead>
+                                                <tr class="info" style="width:100%">
+                                                    <th style="width:75%">
+                                                        FA
+                                                    </th>
+                                                    <th style="width:25%">
+                                                        CRR
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var code_fa in workCenter.Valores)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <div class="progress-group">
+                                                                <span class="progress-text">@Html.DisplayFor(modelItem => code_fa.Code_FA)</span>
+                                                                <span class="progress-number">
+                                                                    <b>@Html.DisplayFor(modelItem => code_fa.PlanProduccion)</b>
+                                                                    /@Html.DisplayFor(modelItem => code_fa.VolumenProduccion)
+                                                                </span>
+                                                                <div class="progress sm">
+                                                                    @{double p = (@code_fa.PlanProduccion / (@code_fa.VolumenProduccion * 1000)) * 10;}
+                                                                    <div class="progress-bar progress-bar-aqua" style="width: 60%"></div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => code_fa.CRR) %
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    }
+                                </div>
+                            }
+                        </div>
                         }
+
                     </div>
                     <!-- /.col -->
                 </div>
@@ -180,22 +207,18 @@
 </div>
 <!-- /.row -->
 
-
 @Scripts.Render("~/JS/jquery")
 @Scripts.Render("~/JS/Bootstrap")
 @Scripts.Render("~/JS/ChartJS")
 @Scripts.Render("~/JS/Sparkline")
-<!-- Slimscroll -->
-<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 
 <script>
     $(function ()
     {
         'use strict';
-        $('#scrollDiv').slimScroll({
-            height: '250px'
-        });
+
         getChartData();
+        $("#scrollDiv").scroll();
 
         //INITIALIZE SPARKLINE CHARTS
         $(".sparkline").each(function () {

@@ -233,6 +233,7 @@
     <Compile Include="Vistas\ClasificacionView.cs" />
     <Compile Include="Vistas\ComentarioView.cs" />
     <Compile Include="Vistas\CRRPorFA.cs" />
+    <Compile Include="Vistas\CRRPorBusinessUnit.cs" />
     <Compile Include="Vistas\CRRPorWorkCenter.cs" />
     <Compile Include="Vistas\CRRView.cs" />
     <Compile Include="Vistas\DefectoView.cs" />

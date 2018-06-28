@@ -7,10 +7,10 @@ using PMMX.Modelo.Entidades.Maquinaria;
 
 namespace PMMX.Modelo.Vistas
 {
-    public class CRRPorWorkCenter
+    public class CRRPorBusinessUnit
     {
-        public WorkCenter WorkCenter { get; set; }
+        public BussinesUnit BusinessUnit { get; set; }
         public List<ReporteTotalView> Valores { get; set; }
-        public List<DesperdicioView> Desperdicio { get; set; }
+        public IList<CRRPorWorkCenter> ValoresWorkCenters { get; set; }
     }
 }

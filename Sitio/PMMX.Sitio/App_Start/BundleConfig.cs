@@ -77,6 +77,7 @@ namespace Sitio
             bundles.Add(new ScriptBundle("~/JS/Select2").Include("~/bower_components/select2/dist/js/select2.full.min.js"));
             bundles.Add(new ScriptBundle("~/JS/ChartJS").Include("~/bower_components/chart.js/Chart.js"));
             bundles.Add(new ScriptBundle("~/JS/Sparkline").Include("~/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"));
+            bundles.Add(new ScriptBundle("~/JS/SlimScroll").Include("~/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"));
             #endregion
 
 
