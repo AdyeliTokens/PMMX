@@ -32,57 +32,55 @@ namespace Sitio.Areas.Operaciones.Controllers
             
         }
 
-        [HttpPost]
-        public ActionResult Reporte(FechaInicioFin model)
-        {
-            DateTime fechaFin = model.Fin;
-            fechaFin = fechaFin.AddDays(1);
+        //[HttpPost]
+        //public ActionResult Reporte(FechaInicioFin model)
+        //{
+        //    DateTime fechaFin = model.Fin;
+        //    fechaFin = fechaFin.AddDays(1);
 
            
-            DateTime fechaInicio = model.Inicio;
-            var primerDiaDelAnio = new DateTime(DateTime.Now.Year, 1, 1);
+        //    DateTime fechaInicio = model.Inicio;
+        //    var primerDiaDelAnio = new DateTime(DateTime.Now.Year, 1, 1);
 
 
-            var workCenters = db.WorkCenters.ToList();
-            var desperdicios = db.Desperdicios.Where(x => (x.Fecha >= fechaInicio && x.Fecha <= fechaFin)).ToList();
-            var objetivos = db.ObjetivosCRR.Select(x => x).Where(x => (x.FechaInicial >= primerDiaDelAnio)).ToList();
-            var volumenes = db.VolumenesDeProduccion.Where(x => (x.Fecha <= fechaFin && x.Fecha >= fechaInicio)).ToList();
+        //    var workCenters = db.WorkCenters.ToList();
+        //    var desperdicios = db.Desperdicios.Where(x => (x.Fecha >= fechaInicio && x.Fecha <= fechaFin)).ToList();
+        //    var objetivos = db.ObjetivosCRR.Select(x => x).Where(x => (x.FechaInicial >= primerDiaDelAnio)).ToList();
+        //    var volumenes = db.VolumenesDeProduccion.Where(x => (x.Fecha <= fechaFin && x.Fecha >= fechaInicio)).ToList();
 
-            IList<CRRPorWorkCenter> listadelistas = new List<CRRPorWorkCenter>();
-            foreach (var item in workCenters)
-            {
-                CRRPorWorkCenter crrPorWorkCenter = new CRRPorWorkCenter();
-                crrPorWorkCenter.WorkCenter = item;
-                var desperdicioTotal = desperdicios
-                    .Where(x => (x.IdWorkCenter == item.Id))
-                    .GroupBy(rd => rd.Code_FA, rd => rd.Cantidad, (code, cant) => new DesperdicioView
-                    {
-                        Code_FA = code,
-                        Cantidad = cant.Sum()
-                    })
-                    .ToList();
+        //    IList<CRRPorWorkCenter> listadelistas = new List<CRRPorWorkCenter>();
+        //    foreach (var item in workCenters)
+        //    {
+        //        CRRPorWorkCenter crrPorWorkCenter = new CRRPorWorkCenter();
+        //        crrPorWorkCenter.WorkCenter = item;
+        //        var desperdicioTotal = desperdicios
+        //            .Where(x => (x.IdWorkCenter == item.Id))
+        //            .GroupBy(rd => rd.Code_FA, rd => rd.Cantidad, (code, cant) => new DesperdicioView
+        //            {
+        //                Code_FA = code,
+        //                Cantidad = cant.Sum()
+        //            })
+        //            .ToList();
 
-                var VolumenesTotal = volumenes
-                    .Where(x => (x.IdWorkCenter == item.Id))
-                    .GroupBy(rd => rd.Code_FA, rd => rd.New_Qty, (code, cant) => new DesperdicioView
-                    {
-                        Code_FA = code,
-                        Cantidad = Math.Round((desperdicios.Where(d => d.Code_FA == code && d.IdWorkCenter == item.Id).Select(d => d.Cantidad).Sum() / (cant.Sum() * 1000)), 2)
+        //        var VolumenesTotal = volumenes
+        //            .Where(x => (x.IdWorkCenter == item.Id))
+        //            .GroupBy(rd => rd.Code_FA, rd => rd.New_Qty, (code, cant) => new DesperdicioView
+        //            {
+        //                Code_FA = code,
+        //                Cantidad = Math.Round((desperdicios.Where(d => d.Code_FA == code && d.IdWorkCenter == item.Id).Select(d => d.Cantidad).Sum() / (cant.Sum() * 1000)), 2)
 
-                    })
-                    .ToList();
-
-
+        //            })
+        //            .ToList();
 
 
-                crrPorWorkCenter.Desperdicio = new List<DesperdicioView>();
-                crrPorWorkCenter.Desperdicio = VolumenesTotal;
+        //        crrPorWorkCenter.Desperdicio = new List<DesperdicioView>();
+        //        crrPorWorkCenter.Desperdicio = VolumenesTotal;
 
-                listadelistas.Add(crrPorWorkCenter);
-            }
+        //        listadelistas.Add(crrPorWorkCenter);
+        //    }
 
-            return PartialView(listadelistas);
-        }
+        //    return PartialView(listadelistas);
+        //}
 
         [HttpPost]
         public ActionResult ReporteAnual(FechaInicioFin model)
@@ -90,51 +88,128 @@ namespace Sitio.Areas.Operaciones.Controllers
             DateTime fechaFin = model.Fin;
             fechaFin = fechaFin.AddDays(1);
 
-
             DateTime fechaInicio = model.Inicio;
             var primerDiaDelAnio = new DateTime(DateTime.Now.Year, 1, 1);
-
-
+            
             var workCenters = db.WorkCenters.ToList();
             var desperdicios = db.Desperdicios.Where(x => (x.Fecha >= fechaInicio && x.Fecha <= fechaFin)).ToList();
             var objetivos = db.ObjetivosCRR.Select(x => x).Where(x => (x.FechaInicial >= primerDiaDelAnio)).ToList();
             var volumenes = db.VolumenesDeProduccion.Where(x => (x.Fecha <= fechaFin && x.Fecha >= fechaInicio)).ToList();
+            var planes = db.PlanDeProduccion.Where(x => (x.Inicio <= fechaInicio && x.Fin >= fechaFin)).ToList();
 
             IList<CRRPorWorkCenter> listadelistas = new List<CRRPorWorkCenter>();
             foreach (var item in workCenters)
             {
                 CRRPorWorkCenter crrPorWorkCenter = new CRRPorWorkCenter();
                 crrPorWorkCenter.WorkCenter = item;
-                var desperdicioTotal = desperdicios
-                    .Where(x => (x.IdWorkCenter == item.Id))
-                    .GroupBy(rd => rd.Code_FA, rd => rd.Cantidad, (code, cant) => new DesperdicioView
-                    {
-                        Code_FA = code,
-                        Cantidad = cant.Sum()
-                    })
-                    .ToList();
 
                 var VolumenesTotal = volumenes
                     .Where(x => (x.IdWorkCenter == item.Id))
-                    .GroupBy(rd => rd.Code_FA, rd => rd.New_Qty, (code, cant) => new DesperdicioView
+                    .GroupBy(rd => rd.Code_FA, rd => rd.New_Qty, (code, cant) => new ReporteTotalView
                     {
                         Code_FA = code,
-                        Cantidad = Math.Round((desperdicios.Where(d => d.Code_FA == code && d.IdWorkCenter == item.Id).Select(d => d.Cantidad).Sum() / (cant.Sum() * 1000)), 2)
-
+                        CRR = Math.Round((desperdicios.Where(d => d.Code_FA == code && d.IdWorkCenter == item.Id).Select(d => d.Cantidad).Sum() / (cant.Sum() * 1000)), 2),
+                        PlanProduccion = Math.Round((planes.Where(d => d.Code_FA == code && d.IdWorkCenter == item.Id).Select(d => d.Cantidad).Sum()),2),
+                        VolumenProduccion = Math.Round(cant.Sum()*1000, 2)
                     })
                     .ToList();
 
-
-
-
-                crrPorWorkCenter.Desperdicio = new List<DesperdicioView>();
-                crrPorWorkCenter.Desperdicio = VolumenesTotal;
-
+                crrPorWorkCenter.Valores = new List<ReporteTotalView>();
+                crrPorWorkCenter.Valores = VolumenesTotal;
                 listadelistas.Add(crrPorWorkCenter);
             }
 
             return PartialView(listadelistas);
         }
+
+        public ActionResult Parametros(DateTime Inicio)
+        {
+            if (ModelState.IsValid)
+            {
+                int dia = (Convert.ToInt32(Inicio.DayOfWeek)-1);
+
+                DateTime weekInicio = Inicio.AddDays((dia) * (-2));
+                DateTime weekFin = weekInicio.AddDays(6);
+                DateTime monthInicio = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                DateTime monthFin = monthInicio.AddMonths(1);
+                DateTime yearInicio = new DateTime(DateTime.Now.Year, 1, 1);
+                DateTime yearFin = new DateTime(DateTime.Now.Year, 12, 31);
+                
+                var fa = db.VolumenesDeProduccion.Where(x => (x.Fecha >= yearInicio && x.Fecha <= yearFin)).Select(v=> v.Code_FA).ToList();
+                var codes = fa.Distinct();
+                var desperdicios = db.Desperdicios.Where(x => (x.Fecha >= yearInicio && x.Fecha <= yearFin)).ToList();
+                var volumenes = db.VolumenesDeProduccion.Where(x => (x.Fecha >= yearInicio && x.Fecha <= yearFin)).ToList();
+                var planes = db.PlanDeProduccion.Where(x => (x.Inicio >= yearInicio && x.Fin <= yearFin)).ToList();
+
+                IList<CRRPorFA> listadelistas = new List<CRRPorFA>();
+                foreach (var item in codes)
+                {
+                    CRRPorFA crrPorFA = new CRRPorFA();
+                    crrPorFA.Code_FA = item;
+
+                    var VolumenesDaily = volumenes
+                        .Where(x => (x.Code_FA == item) && (x.Fecha >= Inicio))
+                        .GroupBy(rd => rd.Code_FA, rd => rd.New_Qty, (code, cant) => new ReporteTotalView
+                        {
+                            Code_FA = code,
+                            CRR = Math.Round((desperdicios.Where(d => d.Code_FA == code && d.Code_FA == item).Select(d => d.Cantidad).Sum() / (cant.Sum() * 1000)), 2),
+                            PlanProduccion = Math.Round((planes.Where(d => d.Code_FA == code && d.Code_FA == item).Select(d => d.Cantidad).Sum()), 2),
+                            VolumenProduccion = Math.Round(cant.Sum() * 1000, 2)
+                        }).ToList();
+
+                    var VolumenesWeekly = volumenes
+                        .Where(x => (x.Code_FA == item) && (x.Fecha >= weekInicio && x.Fecha <= weekFin))
+                        .GroupBy(rd => rd.Code_FA, rd => rd.New_Qty, (code, cant) => new ReporteTotalView
+                        {
+                            Code_FA = code,
+                            CRR = Math.Round((desperdicios.Where(d => d.Code_FA == code && d.Code_FA == item).Select(d => d.Cantidad).Sum() / (cant.Sum() * 1000)), 2),
+                            PlanProduccion = Math.Round((planes.Where(d => d.Code_FA == code && d.Code_FA == item).Select(d => d.Cantidad).Sum()), 2),
+                            VolumenProduccion = Math.Round(cant.Sum() * 1000, 2)
+                        }).ToList();
+
+                    var VolumenesMonthly = volumenes
+                        .Where(x => (x.Code_FA == item) && (x.Fecha >= monthInicio && x.Fecha <= monthFin ))
+                        .GroupBy(rd => rd.Code_FA, rd => rd.New_Qty, (code, cant) => new ReporteTotalView
+                        {
+                            Code_FA = code,
+                            CRR = Math.Round((desperdicios.Where(d => d.Code_FA == code && d.Code_FA == item).Select(d => d.Cantidad).Sum() / (cant.Sum() * 1000)), 2),
+                            PlanProduccion = Math.Round((planes.Where(d => d.Code_FA == code && d.Code_FA == item).Select(d => d.Cantidad).Sum()), 2),
+                            VolumenProduccion = Math.Round(cant.Sum() * 1000, 2)
+                        }).ToList();
+
+                    var VolumenesYearly = volumenes
+                        .Where(x => (x.Code_FA == item) && (x.Fecha >= yearInicio && x.Fecha <= yearFin))
+                        .GroupBy(rd => rd.Code_FA, rd => rd.New_Qty, (code, cant) => new ReporteTotalView
+                        {
+                            Code_FA = code,
+                            CRR = Math.Round((desperdicios.Where(d => d.Code_FA == code && d.Code_FA == item).Select(d => d.Cantidad).Sum() / (cant.Sum() * 1000)), 2),
+                            PlanProduccion = Math.Round((planes.Where(d => d.Code_FA == code && d.Code_FA == item).Select(d => d.Cantidad).Sum()), 2),
+                            VolumenProduccion = Math.Round(cant.Sum() * 1000, 2)
+                        }).ToList();
+
+                    crrPorFA.Daily = new List<ReporteTotalView>();
+                    crrPorFA.Daily = VolumenesDaily;
+
+                    crrPorFA.Weekly = new List<ReporteTotalView>();
+                    crrPorFA.Weekly = VolumenesWeekly;
+
+                    crrPorFA.Monthly = new List<ReporteTotalView>();
+                    crrPorFA.Monthly = VolumenesMonthly;
+
+                    crrPorFA.Yearly = new List<ReporteTotalView>();
+                    crrPorFA.Yearly = VolumenesYearly;
+
+                    listadelistas.Add(crrPorFA);
+                }
+
+                return Json(new { listadelistas }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
 
         public ActionResult Details(int? id)
         {
