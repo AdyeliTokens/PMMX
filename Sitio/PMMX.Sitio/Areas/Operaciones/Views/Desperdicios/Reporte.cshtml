@@ -35,7 +35,7 @@
                                 @Html.DisplayFor(modelItem => item.WorkCenter.NombreCorto)
                             </td>
                             <td>
-                                @if (item.Desperdicio.Count() > 0)
+                                @if (item.Valores.Count() > 0)
                                     {
                                     <table class="table table-hover table-striped">
                                         <thead>
@@ -49,14 +49,14 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var code_fa in item.Desperdicio)
+                                            @foreach (var code_fa in item.Valores)
                                                 {
                                                 <tr>
                                                     <td>
                                                         @Html.DisplayFor(modelItem => code_fa.Code_FA)
                                                     </td>
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => code_fa.Cantidad) %
+                                                        @Html.DisplayFor(modelItem => code_fa.CRR) %
                                                     </td>
 
                                                 </tr>

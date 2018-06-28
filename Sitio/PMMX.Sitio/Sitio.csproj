@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -8073,6 +8074,7 @@
     <Content Include="bower_components\fullcalendar-scheduler\LICENSE.md" />
     <Content Include="bower_components\fullcalendar-scheduler\README.md" />
     <Content Include="bower_components\jquery\src\.jshintrc" />
+    <Content Include="Areas\Operaciones\Views\Desperdicios\ReporteAnual.cshtml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

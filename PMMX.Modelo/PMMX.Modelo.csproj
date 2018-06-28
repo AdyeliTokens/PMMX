@@ -232,6 +232,8 @@
     <Compile Include="Vistas\CategoriaView.cs" />
     <Compile Include="Vistas\ClasificacionView.cs" />
     <Compile Include="Vistas\ComentarioView.cs" />
+    <Compile Include="Vistas\CRRPorFA.cs" />
+    <Compile Include="Vistas\CRRPorBusinessUnit.cs" />
     <Compile Include="Vistas\CRRPorWorkCenter.cs" />
     <Compile Include="Vistas\CRRView.cs" />
     <Compile Include="Vistas\DefectoView.cs" />
@@ -268,6 +270,7 @@
     <Compile Include="Vistas\PuestoView.cs" />
     <Compile Include="Vistas\RechazoView.cs" />
     <Compile Include="Vistas\RemitentesView.cs" />
+    <Compile Include="Vistas\ReporteTotalView.cs" />
     <Compile Include="Vistas\ReporteView.cs" />
     <Compile Include="Vistas\RespuestaView.cs" />
     <Compile Include="Vistas\ShiftLeadersView.cs" />
