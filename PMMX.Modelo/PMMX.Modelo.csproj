@@ -85,6 +85,7 @@
     <Compile Include="Entidades\AspNetRoles.cs" />
     <Compile Include="Entidades\AspNetUser.cs" />
     <Compile Include="Entidades\AspNetUserClaims.cs" />
+    <Compile Include="Entidades\Feeds.cs" />
     <Compile Include="Entidades\Operaciones\BitacoraGembaWalk.cs" />
     <Compile Include="Entidades\Desperdicio.cs" />
     <Compile Include="Entidades\Electricos.cs" />
@@ -223,6 +224,7 @@
     <Compile Include="RespuestaGenerica\RespuestaServicio.cs" />
     <Compile Include="Vistas\ActividadEnDefectoView.cs" />
     <Compile Include="Vistas\ActividadEnParoView.cs" />
+    <Compile Include="Vistas\AtomFeedView.cs" />
     <Compile Include="Vistas\BitacoraGembaWalkView.cs" />
     <Compile Include="Vistas\BitacoraVentanaView.cs" />
     <Compile Include="Vistas\BussinesUnitView.cs" />
