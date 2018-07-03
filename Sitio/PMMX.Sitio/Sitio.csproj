@@ -6959,6 +6959,9 @@
     <Content Include="bower_components\select2\tests\vendor\qunit-1.23.1.css" />
     <Content Include="bower_components\select2\tests\vendor\qunit-1.23.1.js" />
     <Content Include="bower_components\select2\vendor\jquery-2.1.0.js" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Site.css" />
     <Content Include="css\new-age.css" />
     <Content Include="css\new-age.min.css" />
     <Content Include="css\style.css" />
@@ -7123,6 +7126,7 @@
     <Content Include="dist\js\pages\dashboard.js" />
     <Content Include="dist\js\pages\dashboard2.js" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -8077,6 +8081,12 @@
     <Content Include="bower_components\fullcalendar-scheduler\README.md" />
     <Content Include="bower_components\jquery\src\.jshintrc" />
     <Content Include="Areas\Operaciones\Views\Desperdicios\ReporteAnual.cshtml" />
+    <Content Include="Areas\Warehouse\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Ventana\Reporte.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -8226,6 +8236,8 @@
     <Content Include="plugins\timepicker\bootstrap-timepicker.min.js" />
     <Content Include="Scripts\app.js" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.js" />
@@ -8429,7 +8441,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Warehouse\Models\" />
-    <Folder Include="Areas\Warehouse\Views\Shared\" />
     <Folder Include="Results\" />
   </ItemGroup>
   <ItemGroup>
