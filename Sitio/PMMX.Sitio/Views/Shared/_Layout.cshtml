@@ -425,6 +425,9 @@
                                     <li>
                                         @Ajax.MenuLink("Bitacora Ventana", string.Format("{0:c}", "fa fa-link"), "Index", "BitacoraVentana", new { area = "Warehouse" }, null, null)
                                     </li>
+                                    <li>
+                                        @Ajax.MenuLink("Estadísticas Ventana", string.Format("{0:c}", "fa fa-link"), "Reporte", "Ventana", new { area = "Warehouse" }, null, null)
+                                    </li>
                                 </ul>
                             </li>
                             <li class="treeview">
@@ -474,8 +477,10 @@
                         @Ajax.MenuLink("Augmented Reality", string.Format("{0:c}", "fa fa-link"), "Index", "AugmentedReality", null, null, null)
                     </li>
                     <li>
-
                         @Html.ActionLink("InSiteLAC", "Index", "InSiteLAC", new { area = "" }, null)
+                    </li>
+                    <li>
+                        @Html.ActionLink("AtomFeed", "Index", "AtomFeed", new { area = "" }, null)
                     </li>
                     <li class="header">Help</li>
                     <li>

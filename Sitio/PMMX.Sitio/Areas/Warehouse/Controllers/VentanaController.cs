@@ -364,6 +364,11 @@ namespace Sitio.Areas.Warehouse.Controllers
             return View();
         }
 
+        public ActionResult Reporte()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file, Ventana ventana)
         {
@@ -524,7 +529,7 @@ namespace Sitio.Areas.Warehouse.Controllers
             }
             return View();
         }
-
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
