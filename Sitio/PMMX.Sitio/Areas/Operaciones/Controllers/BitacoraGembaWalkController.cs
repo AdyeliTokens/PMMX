@@ -11,6 +11,7 @@ using PMMX.Modelo.Entidades.Operaciones;
 
 namespace Sitio.Areas.Operaciones
 {
+    [Authorize]
     public class BitacoraJustDoItController : Controller
     {
         private PMMXContext db = new PMMXContext();

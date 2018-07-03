@@ -28,11 +28,11 @@ namespace Sitio.Areas.Apis.Controllers
 
         // GET: api/GembaWalk/5
         [ResponseType(typeof(EventoView))]
-        public IHttpActionResult GetEventobyResponsableporDias(int idResponsable, int dias, bool activo)
+        public IHttpActionResult GetEventobyResponsableporDias(int idResponsable, int idCategoria, int dias, bool activo)
         {
             var today = DateTime.Now.Date;
             DateTime dateInit = today.AddDays(dias);
-
+            
             var evento = db.EventoResponsable
                  .Where(e => (e.IdResponsable == idResponsable) && (e.Evento.FechaInicio >= dateInit) && (e.Evento.Activo == activo))
                  .Select(s => new EventoView
@@ -46,6 +46,11 @@ namespace Sitio.Areas.Apis.Controllers
                      IdCategoria = s.Evento.IdCategoria,
                      Activo = s.Evento.Activo
                  }).ToList();
+
+            if( idCategoria !=0 )
+            {
+                evento = evento.Where(e => (e.IdCategoria == idCategoria)).ToList();
+            }
             
             if (evento == null)
             {
@@ -56,7 +61,7 @@ namespace Sitio.Areas.Apis.Controllers
         }
 
         [ResponseType(typeof(EventoView))]
-        public IHttpActionResult GetEventobyResponsableporFecha(int idResponsable, DateTime fecha, bool activo)
+        public IHttpActionResult GetEventobyResponsableporFecha(int idResponsable, int idCategoria, DateTime fecha, bool activo)
         {
             DateTime hoy = fecha.Date;
             DateTime mañana = hoy.AddDays(1);
@@ -75,6 +80,16 @@ namespace Sitio.Areas.Apis.Controllers
                      Activo = s.Evento.Activo
                  }).ToList();
 
+            if (idCategoria != 0)
+            {
+                evento = evento.Where(e => (e.IdCategoria == idCategoria)).ToList();
+            }
+
+            if (evento == null)
+            {
+                return NotFound();
+            }
+
             return Ok(evento);
         }
         
@@ -91,16 +106,7 @@ namespace Sitio.Areas.Apis.Controllers
                     FechaFin = d.FechaFin,
                     Nota = d.Nota,
                     IdCategoria = d.IdCategoria,
-                    Activo = d.Activo,
-                    GembaWalk = d.GembaWalk.Select(j => new GembaWalkView
-                    {
-                        Id = j.Id,
-                        IdEvento = j.IdEvento,
-                        IdOrigen = j.IdOrigen,
-                        Descripcion = j.Descripcion,
-                        IdReportador = j.IdReportador,
-                        IdResponsable = j.IdResponsable
-                    }).ToList()
+                    Activo = d.Activo
                 })
                 .ToList();
 
@@ -156,21 +162,37 @@ namespace Sitio.Areas.Apis.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (evento.Nota == null)
+                evento.Nota = " ";
+
+            evento.FechaInicio = DateTime.Now;
+            evento.FechaFin = DateTime.Now;
+            evento.EsRecurrente = false;
+            evento.Activo = true;
+            
             db.Evento.Add(evento);
             db.SaveChanges();
 
-            NotificationService notify = new NotificationService();
-            UsuarioServicio usuarioServicio = new UsuarioServicio();
-
-            List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(evento.Id);
-            List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
-
-            foreach (string notificacion in llaves)
+            try
             {
-               notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + evento.Descripcion + ". ", "");
+                NotificationService notify = new NotificationService();
+                UsuarioServicio usuarioServicio = new UsuarioServicio();
+
+                List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(evento.Id);
+                List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
+
+                foreach (string notificacion in llaves)
+                {
+                    notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + evento.Descripcion + ". ", "");
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = evento.Id }, evento);
+
+            return Ok(evento);
         }
 
         // DELETE: api/Evento/5

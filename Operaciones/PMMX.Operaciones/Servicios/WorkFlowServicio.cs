@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PMMX.Modelo.Entidades;
+using PMMX.Seguridad.Servicios;
+using PMMX.Operaciones.Servicios;
 
 namespace PMMX.Operaciones.Servicios
 {

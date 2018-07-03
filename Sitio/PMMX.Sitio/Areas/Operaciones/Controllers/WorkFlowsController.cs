@@ -12,6 +12,7 @@ using PMMX.Modelo.Entidades.Operaciones;
 
 namespace Sitio.Areas.Operaciones
 {
+    [Authorize]
     public class WorkFlowsController : Controller
     {
         private PMMXContext db = new PMMXContext();
@@ -97,7 +98,7 @@ namespace Sitio.Areas.Operaciones
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,IdCategoria,Inicial,Anterior,Siguiente,Cancelado,Activo")] WorkFlow workFlow)
+        public ActionResult Edit(WorkFlow workFlow)
         {
             if (ModelState.IsValid)
             {

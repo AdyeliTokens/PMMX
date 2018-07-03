@@ -12,6 +12,7 @@ using PMMX.Modelo.Vistas;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
+    [Authorize]
     public class SubCategoriaController : Controller
     {
         private PMMXContext db = new PMMXContext();

@@ -43,7 +43,6 @@ namespace PMMX.Operaciones.Servicios
                 FechaEstimada = d.FechaEstimada,
                 Descripcion = d.Descripcion,
                 NotificacionSAP = d.NotificacionSAP,
-                IdResponsable = d.IdResponsable,
                 Reportador = new PersonaView
                 {
                     Id = d.Reportador.Id,
@@ -90,17 +89,7 @@ namespace PMMX.Operaciones.Servicios
             {
                 foreach (DefectoView df in respuesta.Respuesta)
                 {
-                    if (df.IdResponsable > 0)
-                    {
-                        df.Responsable = _context.Personas.Where(d => d.Id == df.IdResponsable).Select(d => new PersonaView
-                        {
-                            Id = d.Id,
-                            Nombre = d.Nombre,
-                            Apellido1 = d.Apellido1,
-                            Apellido2 = d.Apellido2
-
-                        }).FirstOrDefault();
-                    }
+                    
                 }
             }
             return respuesta;
@@ -239,9 +228,9 @@ namespace PMMX.Operaciones.Servicios
             defecto.Actividades.Add(actividad);
             try
             {
-                
 
                 _context.Defectos.Add(defecto);
+
                 _context.SaveChanges();
 
                 var respuesta_defecto = GetDefecto(defecto.Id);
@@ -255,7 +244,7 @@ namespace PMMX.Operaciones.Servicios
                 }
                 
             }
-            catch (DbUpdateConcurrencyException ex)
+            catch (Exception ex)
             {
                 respuesta.Mensaje = ex.ToString();
                 return respuesta;

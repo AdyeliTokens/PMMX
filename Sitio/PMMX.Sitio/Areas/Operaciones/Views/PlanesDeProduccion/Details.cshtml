@@ -1,0 +1,90 @@
+﻿@model PMMX.Modelo.Entidades.PlanDeProduccion
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>PlanDeProduccion</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Marca_FA.Descripcion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Marca_FA.Descripcion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Uploader.Nombre)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Uploader.Nombre)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.WorkCenterEfectivo.Nombre)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.WorkCenterEfectivo.Nombre)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Cantidad)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Cantidad)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ClaseDeOrden)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ClaseDeOrden)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Inicio)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Inicio)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Fin)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Fin)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.FechaSubida)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.FechaSubida)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Codigo }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

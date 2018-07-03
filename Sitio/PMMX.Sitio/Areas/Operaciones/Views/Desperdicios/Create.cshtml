@@ -1,7 +1,13 @@
-﻿@model PMMX.Modelo.Entidades.Desperdicio
+﻿@using Sitio.Helpers
+@model PMMX.Modelo.Entidades.Desperdicio
 
 @{
     ViewBag.Title = "Create";
+}
+
+@section Styles {
+    @Styles.Render("~/Style/DataTables")
+    @Styles.Render("~/Style/select2")
 }
 
 
@@ -9,12 +15,13 @@
     <div class="box-header with-border">
         <h3 class="box-title">Desperdicio</h3>
         <div class="box-tools pull-right">
-            
+
         </div>
     </div>
-    <div class="box-body">
-        @using (Html.BeginForm())
-        {
+    @using (Html.BeginForm())
+    {
+        <div class="box-body">
+
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
@@ -23,12 +30,12 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Cantidad, htmlAttributes: new { @class = "control-label col-md-1" })
                     <div class="col-md-11">
-                        @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
                         @Html.ValidationMessageFor(model => model.Cantidad, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                
+
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.IdWorkCenter, "IdWorkCenter", htmlAttributes: new { @class = "control-label col-md-1" })
@@ -39,33 +46,60 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.IdSeccion, "IdSeccion", htmlAttributes: new { @class = "control-label col-md-1" })
-                    <div class="col-md-11">
-                        @Html.DropDownList("IdSeccion", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.IdSeccion, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
                     @Html.LabelFor(model => model.Code_FA, "Code_FA", htmlAttributes: new { @class = "control-label col-md-1" })
                     <div class="col-md-11">
-                        @Html.DropDownList("Code_FA", null, htmlAttributes: new { @class = "form-control" })
+                        @*<select id="Code_FA" class="form-control select2"></select>*@
+
+                        @Html.DropDownListFor(model => model.Code_FA, null, htmlAttributes: new { @class = "form-control select2" })
                         @Html.ValidationMessageFor(model => model.Code_FA, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="col-md-offset-1 col-md-11">
-                        @Html.ActionLink("Back to List", "Index")
-                        <input type="submit" value="Create" class="btn btn-primary pull-right" />
-                    </div>
-                </div>
+
+
             </div>
-        }
-    </div>
-    
+
+        </div>
+        <div class="box-footer clearfix">
+            @Ajax.MenuLink(" Back to List", string.Format("{0:c}", "fa fa-chevron-left"), "Index", "Desperdicios", new { area = "Operaciones" }, null, new { @class = "btn btn-default" })
+
+
+
+            <input type="submit" value="Create" class="btn btn-primary pull-right" />
+        </div>
+    }
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/JS/select2")
+
+    <script>
+        $(function () {
+
+            $('.select2').select2()
+
+            $("#IdWorkCenter").on("change", function () {
+                var IdWorkCenter = $("#IdWorkCenter").val();
+
+                $.ajax({
+                    dataType: "json",
+                    contentType: "application/json",
+                    url: "/Operaciones/Desperdicios/GetCode_FA?IdWorkCenter=" + IdWorkCenter,
+                    success: function (data) {
+                        items = '<option></option>';
+                        $.each(data.lista, function (i, k) {
+                            items += "<option value='" + k.Code_FA + "'>" + k.Descripcion + "</option>";
+                        });
+                        $('#Code_FA').html(items);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert('There was an error while fetching data!');
+                    }
+                })
+
+            });
+
+        });
+    </script>
 }

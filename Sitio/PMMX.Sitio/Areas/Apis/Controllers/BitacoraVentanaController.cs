@@ -10,6 +10,9 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.Warehouse;
+using PMMX.Operaciones.Servicios;
+using PMMX.Modelo.RespuestaGenerica;
+using PMMX.Modelo.Vistas;
 
 namespace Sitio.Areas.Apis.Controllers
 {
@@ -79,11 +82,38 @@ namespace Sitio.Areas.Apis.Controllers
             {
                 return BadRequest(ModelState);
             }
+            try
+            {
+                Ventana ventana = db.Ventana
+                        .Include(v => v.StatusVentana)
+                        .Where(v => (v.Id == bitacoraVentana.IdVentana))
+                        .FirstOrDefault();
 
-            db.BitacoraVentana.Add(bitacoraVentana);
-            db.SaveChanges();
+                WorkFlowServicio workflowServicio = new WorkFlowServicio();
+                IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, ventana.StatusVentana.Where(s => s.IdVentana == bitacoraVentana.IdVentana).OrderByDescending(s => s.Fecha).FirstOrDefault().IdStatus, true);
 
-            return CreatedAtRoute("DefaultApi", new { id = bitacoraVentana.Id }, bitacoraVentana);
+                if (workFlow.Respuesta != null)
+                {
+                    bitacoraVentana.IdStatus = workFlow.Respuesta.EstatusSiguiente.Id;
+                }
+                else
+                {
+                    workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, ventana.StatusVentana.Where(s => s.IdVentana == bitacoraVentana.IdVentana).OrderByDescending(s => s.Fecha).FirstOrDefault().IdStatus, false);
+                    bitacoraVentana.IdStatus = workFlow.Respuesta.EstatusInicial.Id;
+                }
+
+                bitacoraVentana.Fecha = DateTime.Now.Date;
+
+                db.BitacoraVentana.Add(bitacoraVentana);
+                db.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            BitacoraVentana bitacoraVentanaAdded = db.BitacoraVentana.Find(bitacoraVentana.Id);
+            return Ok(bitacoraVentanaAdded);
         }
 
         // DELETE: api/BitacoraVentana/5

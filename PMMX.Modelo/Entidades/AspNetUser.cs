@@ -35,5 +35,7 @@ namespace PMMX.Modelo.Entidades
 
         public ICollection<UsuariosPorPersona> PersonasConEsteUsuario { get; set; }
 
+        public ICollection<AspNetRoles> Roles { get; set; }
+
     }
 }

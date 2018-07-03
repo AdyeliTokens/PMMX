@@ -1,4 +1,4 @@
-﻿@model PMMX.Modelo.Entidades.Operaciones.ListaDistribucion
+﻿@model PMMX.Modelo.Entidades.ListaDistribucion
 
 @{
     ViewBag.Title = "Edit";
@@ -16,17 +16,18 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
-
+        
         <div class="form-group">
-            @Html.LabelFor(model => model.IdSubarea, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IdSubarea, "Subarea", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.IdSubarea, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownList("IdSubarea", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdSubarea, "", new { @class = "text-danger" })
             </div>
         </div>
 
+
         <div class="form-group">
-            @Html.LabelFor(model => model.IdPersona, "IdPersona", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IdPersona, "Persona", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("IdPersona", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdPersona, "", new { @class = "text-danger" })

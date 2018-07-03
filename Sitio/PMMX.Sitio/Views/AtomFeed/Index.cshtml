@@ -1,0 +1,94 @@
+﻿@using Sitio.Helpers
+@model Sitio.Models.FechaInicioFin
+
+@{
+    ViewBag.Title = "Index";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+
+
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Parametros</h3>
+            </div>
+            @using (Ajax.BeginForm("PopulateAtomFeed", "AtomFeed",
+                new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    InsertionMode = InsertionMode.Replace,
+                    OnSuccess = "",
+                    UpdateTargetId = "atom-content"
+                },
+                new
+                {
+                    enctype = "multipart/form-data",
+                    @class = "form-horizontal"
+                }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="box-body">
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Inicio, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.EditorFor(model => model.Inicio, new { htmlAttributes = new { @class = "form-control  pull-right" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Inicio, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Fin, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.EditorFor(model => model.Fin, new { htmlAttributes = new { @class = "form-control  pull-right" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Fin, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="box-footer clearfix">
+
+                    <input class="btn btn-primary pull-right" type="submit" value="submit" />
+                </div>
+            }
+
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Atom Feed</h3>
+                <div class="box-tools">
+                    <a href="@Url.Action("Create", "AtomFeed")" class="btn btn-primary btn-sm">
+                        <span class="fa fa-plus" aria-hidden="true"></span>
+                    </a>
+                    <a href="@Url.Action("PopulateAtomFeed", "AtomFeed")" class="btn btn-primary btn-sm">
+                        <span class="fa fa-list-alt" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="box-body" id="atom-content">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+}

@@ -11,6 +11,7 @@ using PMMX.Modelo.Entidades.Operaciones;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
+    [Authorize]
     public class EstatusController : Controller
     {
         private PMMXContext db = new PMMXContext();
@@ -18,9 +19,13 @@ namespace Sitio.Areas.Operaciones.Controllers
         // GET: Operaciones/Estatus
         public ActionResult Index()
         {
-            return View(db.Estatus.ToList());
-        }
+            var estatus = db.Estatus
+                           .Include(e => e.Categoria)
+                           .ToList();
 
+            return View(estatus);
+        }
+        
         // GET: Operaciones/Estatus/Details/5
         public ActionResult Details(int? id)
         {

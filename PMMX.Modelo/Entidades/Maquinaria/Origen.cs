@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using PMMX.Modelo.Vistas;
-using PMMX.Modelo.Entidades.GembaWalks;
 
 namespace PMMX.Modelo.Entidades.Maquinaria
 {

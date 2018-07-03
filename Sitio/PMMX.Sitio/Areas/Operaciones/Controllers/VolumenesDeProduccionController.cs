@@ -12,9 +12,12 @@ using OfficeOpenXml;
 using PMMX.Seguridad.Servicios;
 using PMMX.Modelo.RespuestaGenerica;
 using Microsoft.AspNet.Identity;
+using PMMX.Modelo.Vistas;
+using Sitio.Models;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
+    [Authorize]
     public class VolumenesDeProduccionController : Controller
     {
         private PMMXContext db = new PMMXContext();
@@ -22,13 +25,50 @@ namespace Sitio.Areas.Operaciones.Controllers
 
         public ActionResult Index()
         {
-            var volumenesDeProduccion = db.VolumenesDeProduccion
-                .Include(v => v.MarcaDelCigarrillo)
-                .Include(v => v.Reportante)
-                .Include(v => v.WorkCenter);
-            return View(volumenesDeProduccion.ToList());
+            FechaInicioFin model = new FechaInicioFin();
+            model.Inicio = DateTime.Now.Date;
+            model.Fin = DateTime.Now.Date.AddDays(1);
+            return View(model);
+
         }
 
+        [HttpPost]
+        public ActionResult Reporte(FechaInicioFin model)
+        {
+            DateTime fechaFin = model.Fin;
+            fechaFin = fechaFin.AddDays(1);
+            DateTime fechaInicio = model.Inicio;
+            var primerDiaDelAnio = new DateTime(DateTime.Now.Year, 1, 1);
+
+
+            var diferencia = fechaFin - fechaInicio;
+
+            var workCenters = db.WorkCenters.ToList();
+            var volumenes = db.VolumenesDeProduccion.Where(x => (x.Fecha >= fechaInicio && x.Fecha <= fechaFin)).ToList();
+            var objetivos = db.ObjetivosPlanAttainment.Select(x => x).Where(x => (x.FechaInicial >= primerDiaDelAnio)).ToList();
+            IList<VolumenDeProduccionPorWorkCenterView> listadelistas = new List<VolumenDeProduccionPorWorkCenterView>();
+
+            foreach (var item in workCenters)
+            {
+
+                IList<PlanAttainmentView> cumplimientiAlPlan = new List<PlanAttainmentView>();
+                VolumenDeProduccionPorWorkCenterView planPorWorkCenter = new VolumenDeProduccionPorWorkCenterView();
+                planPorWorkCenter.WorkCenter = item;
+
+                for (int i = 0; i <= diferencia.Days; i++)
+                {
+                    Double planTotal = volumenes.Where(x => (x.IdWorkCenter == item.Id) && (x.Fecha.Date == fechaInicio.AddDays(i).Date)).Sum(o => o.New_Qty) * 1000;
+                    Double objetivo = objetivos.Where(x => (x.IdWorkCenter == item.Id) && (x.FechaInicial <= fechaInicio.AddDays(i).Date)).OrderByDescending(x => x.FechaInicial).Select(x => x.Objetivo).FirstOrDefault();
+
+                    cumplimientiAlPlan.Add(new PlanAttainmentView { Fecha = fechaInicio.AddDays(i), Plan_Attainment_Total = planTotal, Objetivo = objetivo });
+                }
+                planPorWorkCenter.PlanesDeProduccion = new List<PlanAttainmentView>();
+                planPorWorkCenter.PlanesDeProduccion.AddRange(cumplimientiAlPlan);
+                listadelistas.Add(planPorWorkCenter);
+            }
+
+            return PartialView(listadelistas);
+        }
 
         public ActionResult Details(int? id)
         {
@@ -161,9 +201,9 @@ namespace Sitio.Areas.Operaciones.Controllers
                                 string code_FA = workSheet.Cells[rowIterator, 2].Value.ToString().Trim();
                                 code_FA = code_FA.Replace(" ", "");
                                 var voumen = new VolumenDeProduccion();
-                                var nombreCorto = workSheet.Cells[rowIterator, 1].Value.ToString().Trim().Substring(32 , 2);
+                                var nombreCorto = workSheet.Cells[rowIterator, 1].Value.ToString().Trim().Substring(32, 2);
                                 var workCenter = wcs.Where(w => w.NombreCorto == nombreCorto).FirstOrDefault();
-                                if (workCenter!= null)
+                                if (workCenter != null)
                                 {
                                     int id = workCenter.Id;
                                     voumen.IdWorkCenter = id;
@@ -189,9 +229,9 @@ namespace Sitio.Areas.Operaciones.Controllers
 
                                 }
 
-                                
 
-                                
+
+
 
                             }
                         }

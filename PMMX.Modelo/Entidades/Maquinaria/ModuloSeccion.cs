@@ -23,7 +23,6 @@ namespace PMMX.Modelo.Entidades.Maquinaria
         public ICollection<Electricos> Electricos { get; set; }
         public ICollection<Operadores> Operadores { get; set; }
         public ICollection<NoConformidad> NoConformidades { get; set; }
-        public ICollection<Desperdicio> Desperdicios { get; set; }
 
         #endregion
     }

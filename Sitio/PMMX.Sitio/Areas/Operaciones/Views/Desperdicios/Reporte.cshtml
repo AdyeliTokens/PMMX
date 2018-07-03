@@ -1,0 +1,88 @@
+﻿@model IEnumerable<PMMX.Modelo.Vistas.CRRPorWorkCenter>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section Styles {
+
+
+}
+
+
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped" id="example1">
+        <thead>
+            <tr class="info">
+                
+                <th>
+                    @Html.DisplayNameFor(model => model.WorkCenter.NombreCorto)
+                </th>
+                <th>
+                    Desperdicio por FA
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+                        {
+                        <tr>
+                            
+                            <td>
+                                @Html.DisplayFor(modelItem => item.WorkCenter.NombreCorto)
+                            </td>
+                            <td>
+                                @if (item.Valores.Count() > 0)
+                                    {
+                                    <table class="table table-hover table-striped">
+                                        <thead>
+                                            <tr class="info" style="width:100%">
+                                                <th style="width:50%">
+                                                    CODE FA
+                                                </th>
+                                                <th style="width:50%">
+                                                    %
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var code_fa in item.Valores)
+                                                {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => code_fa.Code_FA)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => code_fa.CRR) %
+                                                    </td>
+
+                                                </tr>
+                                                }
+
+                                        </tbody>
+
+                                    </table>
+
+                                    }
+
+                            </td>
+
+
+                        </tr>
+                        }
+        </tbody>
+
+    </table>
+
+</div>
+
+
+
+
+
+@section Scripts {
+
+}

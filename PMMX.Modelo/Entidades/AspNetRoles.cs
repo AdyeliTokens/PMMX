@@ -13,5 +13,7 @@ namespace PMMX.Modelo.Entidades
 
         [StringLength(250)]
         public string Name { get; set; }
+
+        public ICollection<AspNetUser> Users { get; set; }
     }
 }

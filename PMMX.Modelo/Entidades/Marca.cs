@@ -24,9 +24,31 @@ namespace PMMX.Modelo.Entidades
 
         public DateTime FechaDeAlta { get; set; }
         public int IdPersonaQueDioDeAlta { get; set; }
+        public Double DesperdicioTotal
+        {
+            get
+            {
+                if (Desperdicios != null)
+                {
+                    Double desperdicioTotal = 0;
+                    foreach (var item in Desperdicios)
+                    {
+                        desperdicioTotal = desperdicioTotal + item.Cantidad;
+                    }
+                    return desperdicioTotal;
+                }
+                else
+                {
+                    return 0;
+                }
+
+            }
+            
+        }
 
         public Persona PersonaQueDioDeAlta { get; set; }
         public ICollection<Desperdicio> Desperdicios { get; set; }
         public ICollection<VolumenDeProduccion> VolumenesProducidos { get; set; }
+        public ICollection<PlanDeProduccion> PlanesDeProduccion { get; set; }
     }
 }

@@ -15,9 +15,11 @@ using Microsoft.AspNet.Identity;
 using PMMX.Operaciones.Servicios;
 using PMMX.Modelo.Vistas;
 using PMMX.Modelo.Entidades.Operaciones;
+using Sitio.Helpers;
 
 namespace Sitio.Areas.Warehouse.Controllers
 {
+    [Authorize]
     public class BitacoraVentanaController : Controller
     {
         private PMMXContext db = new PMMXContext();
@@ -77,7 +79,16 @@ namespace Sitio.Areas.Warehouse.Controllers
                 WorkFlowServicio workflowServicio = new WorkFlowServicio();
                 IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, ventana.StatusVentana.Where(s => s.IdVentana == bitacoraVentana.IdVentana).OrderByDescending(s=> s.Fecha).FirstOrDefault().IdStatus, true);
 
-                bitacoraVentana.IdStatus = workFlow.Respuesta.EstatusSiguiente.Id;
+                if (workFlow.Respuesta != null)
+                {
+                    bitacoraVentana.IdStatus = workFlow.Respuesta.EstatusSiguiente.Id;
+                }
+                else
+                {
+                    workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, ventana.StatusVentana.Where(s => s.IdVentana == bitacoraVentana.IdVentana).OrderByDescending(s => s.Fecha).FirstOrDefault().IdStatus, false);
+                    bitacoraVentana.IdStatus = workFlow.Respuesta.EstatusInicial.Id;
+                }
+                
                 bitacoraVentana.Fecha = DateTime.Now;
 
                 db.BitacoraVentana.Add(bitacoraVentana);
@@ -98,8 +109,33 @@ namespace Sitio.Areas.Warehouse.Controllers
             statusVentana.IdStatus = bitacoraVentana.IdStatus;
             statusVentana.IdVentana = bitacoraVentana.IdVentana;
             statusVentana.Fecha = bitacoraVentana.Fecha;
+            statusVentana.Comentarios = bitacoraVentana.Comentarios;
             db.StatusVentana.Add(statusVentana);
             db.SaveChanges();
+
+            Ventana ventana = db.Ventana
+                                 .Include(v => v.StatusVentana)
+                                 .Include(v => v.StatusVentana.Select(s => s.Status))
+                                 .Include(v => v.BitacoraVentana)
+                                 .Include(v => v.BitacoraVentana.Select(b => b.Estatus))
+                                 .Include(v => v.BitacoraVentana.Select(b => b.Rechazo ))
+                                 .Include(v => v.Evento)
+                                 .Include(v => v.Proveedor)
+                                 .SingleOrDefault(x => x.Id == statusVentana.IdVentana);
+
+            try
+            {
+                UsuarioServicio usuarioServicio = new UsuarioServicio();
+                NotificationService notify = new NotificationService();
+
+                string senders = usuarioServicio.GetEmailByEvento(statusVentana.Ventana.IdEvento);
+                EmailService emailService = new EmailService();
+                emailService.SendMail(senders, ventana);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
 
             return true;
         }

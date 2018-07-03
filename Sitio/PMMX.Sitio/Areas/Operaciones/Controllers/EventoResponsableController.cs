@@ -7,10 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PMMX.Infraestructura.Contexto;
-using PMMX.Modelo.Entidades.GembaWalks;
+using PMMX.Modelo.Entidades.Operaciones;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
+    [Authorize]
     public class EventoResponsableController : Controller
     {
         private PMMXContext db = new PMMXContext();

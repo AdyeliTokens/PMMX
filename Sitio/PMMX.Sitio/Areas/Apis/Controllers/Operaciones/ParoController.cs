@@ -78,7 +78,7 @@ namespace Sitio.Areas.Apis.Controllers.Operaciones
             
         }
         
-        [ResponseType(typeof(ParoView))]
+        [ResponseType(typeof(RespuestaServicio<Paro>))]
         [HttpPost]
         public IHttpActionResult PostParo(Paro paro)
         {

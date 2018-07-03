@@ -81,6 +81,10 @@
       <Project>{837934E3-EAC8-49B8-896C-A6CF1264210C}</Project>
       <Name>PMMX.Infraestructura</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Seguridad\PMMX.Seguridad\PMMX.Seguridad.csproj">
+      <Project>{05723739-BD43-448B-A60E-188A23A82DF3}</Project>
+      <Name>PMMX.Seguridad</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

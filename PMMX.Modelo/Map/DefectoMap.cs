@@ -22,10 +22,8 @@ namespace PMMX.Modelo.Map
             Property(c => c.FechaEstimada).HasColumnName("FechaEstimada");
             Property(c => c.Prioridad).HasColumnName("Prioridad");
             Property(c => c.NotificacionSAP).HasColumnName("NotificacionSAP");
-            Property(c => c.IdResponsable).HasColumnName("IdResponsable");
 
             HasRequired(c => c.Reportador).WithMany(p => p.DefectosReportados).HasForeignKey(c => c.IdReportador);
-            HasRequired(c => c.Responsable).WithMany(p => p.DefectosAsignados).HasForeignKey(c => c.IdResponsable);
             HasRequired(c => c.Origen).WithMany(p => p.Defectos).HasForeignKey(c => c.IdOrigen);
             HasMany(c => c.Actividades).WithRequired(x => x.Defecto).HasForeignKey(c => c.IdDefecto);
 
@@ -36,12 +34,12 @@ namespace PMMX.Modelo.Map
                 cs.MapRightKey("IdFoto");
                 cs.ToTable("DefectoFoto");
             });
-            HasMany(c => c.Asignaciones).WithMany(x => x.Defectos).Map(cs =>
-            {
-                cs.MapLeftKey("IdDefecto");
-                cs.MapRightKey("IdAsignacion");
-                cs.ToTable("asignacionesendefecto");
-            });
+            //HasMany(c => c.Asignaciones).WithMany(x => x.Defectos).Map(cs =>
+            //{
+            //    cs.MapLeftKey("IdDefecto");
+            //    cs.MapRightKey("IdAsignacion");
+            //    cs.ToTable("asignacionesendefecto");
+            //});
         }
 
     }
