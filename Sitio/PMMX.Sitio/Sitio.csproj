@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -156,6 +157,7 @@
       <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Spatial, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Spatial.5.6.0\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
@@ -385,6 +387,7 @@
     <Compile Include="Areas\Warehouse\Controllers\VentanaController.cs" />
     <Compile Include="Areas\Warehouse\WarehouseAreaRegistration.cs" />
     <Compile Include="Areas\Seguridad\Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AtomFeedController.cs" />
     <Compile Include="Controllers\AugmentedRealityController.cs" />
     <Compile Include="Controllers\FotosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -6956,6 +6959,9 @@
     <Content Include="bower_components\select2\tests\vendor\qunit-1.23.1.css" />
     <Content Include="bower_components\select2\tests\vendor\qunit-1.23.1.js" />
     <Content Include="bower_components\select2\vendor\jquery-2.1.0.js" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Site.css" />
     <Content Include="css\new-age.css" />
     <Content Include="css\new-age.min.css" />
     <Content Include="css\style.css" />
@@ -7120,6 +7126,7 @@
     <Content Include="dist\js\pages\dashboard.js" />
     <Content Include="dist\js\pages\dashboard2.js" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -8073,6 +8080,13 @@
     <Content Include="bower_components\fullcalendar-scheduler\LICENSE.md" />
     <Content Include="bower_components\fullcalendar-scheduler\README.md" />
     <Content Include="bower_components\jquery\src\.jshintrc" />
+    <Content Include="Areas\Operaciones\Views\Desperdicios\ReporteAnual.cshtml" />
+    <Content Include="Areas\Warehouse\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Ventana\Reporte.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -8222,6 +8236,8 @@
     <Content Include="plugins\timepicker\bootstrap-timepicker.min.js" />
     <Content Include="Scripts\app.js" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.js" />
@@ -8417,13 +8433,14 @@
     <Content Include="Views\InSiteLAC\Listado.cshtml" />
     <Content Include="Views\InSiteLAC\UploadFile.cshtml" />
     <Content Include="Views\Maya\Upload.cshtml" />
+    <Content Include="Views\AtomFeed\Index.cshtml" />
+    <Content Include="Views\AtomFeed\PopulateAtomFeed.cshtml" />
     <None Include="Views\Shared\_LayoutVideo.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Warehouse\Models\" />
-    <Folder Include="Areas\Warehouse\Views\Shared\" />
     <Folder Include="Results\" />
   </ItemGroup>
   <ItemGroup>

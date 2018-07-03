@@ -10,14 +10,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    
-    
+
+
     @Styles.Render("~/Style/Bootstrap")
     @Styles.Render("~/Style/Font-Awesome")
     @Styles.Render("~/Style/AdminLTE")
     @Scripts.Render("~/bundles/modernizr")
     @RenderSection("styles", required: false)
-    
+
 </head>
 
 <body class="hold-transition skin-blue fixed sidebar-mini">
@@ -425,6 +425,9 @@
                                     <li>
                                         @Ajax.MenuLink("Bitacora Ventana", string.Format("{0:c}", "fa fa-link"), "Index", "BitacoraVentana", new { area = "Warehouse" }, null, null)
                                     </li>
+                                    <li>
+                                        @Ajax.MenuLink("Estadísticas Ventana", string.Format("{0:c}", "fa fa-link"), "Reporte", "Ventana", new { area = "Warehouse" }, null, null)
+                                    </li>
                                 </ul>
                             </li>
                             <li class="treeview">
@@ -474,8 +477,10 @@
                         @Ajax.MenuLink("Augmented Reality", string.Format("{0:c}", "fa fa-link"), "Index", "AugmentedReality", null, null, null)
                     </li>
                     <li>
-
                         @Html.ActionLink("InSiteLAC", "Index", "InSiteLAC", new { area = "" }, null)
+                    </li>
+                    <li>
+                        @Html.ActionLink("AtomFeed", "Index", "AtomFeed", new { area = "" }, null)
                     </li>
                     <li class="header">Help</li>
                     <li>

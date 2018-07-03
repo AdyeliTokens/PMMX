@@ -85,6 +85,7 @@
     <Compile Include="Entidades\AspNetRoles.cs" />
     <Compile Include="Entidades\AspNetUser.cs" />
     <Compile Include="Entidades\AspNetUserClaims.cs" />
+    <Compile Include="Entidades\Feeds.cs" />
     <Compile Include="Entidades\Operaciones\BitacoraGembaWalk.cs" />
     <Compile Include="Entidades\Desperdicio.cs" />
     <Compile Include="Entidades\Electricos.cs" />
@@ -223,6 +224,7 @@
     <Compile Include="RespuestaGenerica\RespuestaServicio.cs" />
     <Compile Include="Vistas\ActividadEnDefectoView.cs" />
     <Compile Include="Vistas\ActividadEnParoView.cs" />
+    <Compile Include="Vistas\AtomFeedView.cs" />
     <Compile Include="Vistas\BitacoraGembaWalkView.cs" />
     <Compile Include="Vistas\BitacoraVentanaView.cs" />
     <Compile Include="Vistas\BussinesUnitView.cs" />
@@ -232,6 +234,8 @@
     <Compile Include="Vistas\CategoriaView.cs" />
     <Compile Include="Vistas\ClasificacionView.cs" />
     <Compile Include="Vistas\ComentarioView.cs" />
+    <Compile Include="Vistas\CRRPorFA.cs" />
+    <Compile Include="Vistas\CRRPorBusinessUnit.cs" />
     <Compile Include="Vistas\CRRPorWorkCenter.cs" />
     <Compile Include="Vistas\CRRView.cs" />
     <Compile Include="Vistas\DefectoView.cs" />
@@ -268,6 +272,7 @@
     <Compile Include="Vistas\PuestoView.cs" />
     <Compile Include="Vistas\RechazoView.cs" />
     <Compile Include="Vistas\RemitentesView.cs" />
+    <Compile Include="Vistas\ReporteTotalView.cs" />
     <Compile Include="Vistas\ReporteView.cs" />
     <Compile Include="Vistas\RespuestaView.cs" />
     <Compile Include="Vistas\ShiftLeadersView.cs" />
