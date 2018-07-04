@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Details";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
 <h3>
@@ -117,7 +118,7 @@
 
 </div>
 
-@Scripts.Render("~/JS/Select2")
+@*@Scripts.Render("~/JS/Select2")*@
 <script>
         $(function () {
             var IdVentana = $("#IdVentanaEvento").val();
