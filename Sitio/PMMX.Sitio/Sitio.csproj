@@ -399,7 +399,9 @@
     <Compile Include="Controllers\RequisicionDeDescargasController.cs" />
     <Compile Include="Controllers\ThumbnailController.cs" />
     <Compile Include="Helpers\AccountService.cs" />
+    <Compile Include="Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Helpers\MenuLinkHelper.cs" />
+    <Compile Include="Helpers\RenderAjaxPartialScriptsResponseFilter.cs" />
     <Compile Include="Hubs\ExempleHhub.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -7793,6 +7795,8 @@
     <Content Include="img\pmm-mini.png" />
     <Content Include="img\pmm.png" />
     <Content Include="img\user-default.png" />
+    <Content Include="js\DetailsEvento.js" />
+    <Content Include="js\Evento.js" />
     <Content Include="js\new-age.js" />
     <Content Include="js\new-age.min.js" />
     <Content Include="plugins\input-mask\phone-codes\phone-be.json" />

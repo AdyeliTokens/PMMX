@@ -29,7 +29,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(evento.ToList());
         }
 
-
+        [RenderAjaxPartialScripts]
         public ActionResult GetEvents(DateTime date)
         {
             if (ModelState.IsValid)
@@ -62,6 +62,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
         }
 
+        [RenderAjaxPartialScripts]
         public ActionResult GetEventsByCategoria(int IdCategoria, DateTime date)
         {
             if (ModelState.IsValid)
@@ -94,6 +95,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
         }
 
+        [RenderAjaxPartialScripts]
         public string GetColorStatus(int idEvento)
         {
           var colors = db.StatusVentana.OrderByDescending(s=> s.Fecha).Where(s => s.Ventana.IdEvento == idEvento)
@@ -105,6 +107,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             return colors;
         }
 
+        [RenderAjaxPartialScripts]
         public string GetClasificacion(int idEvento)
         {
             var clasificacion = db.Ventana.Where(s => s.IdEvento == idEvento)
@@ -116,6 +119,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             return clasificacion;
         }
 
+        [RenderAjaxPartialScripts]
         public ActionResult GetEventsBySubCategoria(int IdSubCategoria, DateTime date)
         {
             if (ModelState.IsValid)
@@ -356,7 +360,7 @@ namespace Sitio.Areas.Operaciones.Controllers
 
                     SendNotification(evento);
                 }
-                
+
                 return RedirectToAction("Index");
             }
                         

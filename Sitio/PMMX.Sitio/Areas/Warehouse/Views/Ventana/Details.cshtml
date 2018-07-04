@@ -160,23 +160,14 @@
 
                     $.get(url, function (data) {
                         $('#createAssetContainer').html(data);
+                        jQuery.noConflict();
                         $('#createAssetModal').modal('show');
                     });
             });
-
-            /*$("#btn-downloadVentana").on("click", function () {
-                var url = ("/Warehouse/Ventana/downloadDataVentana?IdVentana=" + IdVentana);
-               
-
-                $.get(url, function (data) {
-                    window.location = data;
-                });
-            });*/
-
+            
             $("#btn-downloadVentana").on("click", function (e) {
                 window.open("/Warehouse/Ventana/downloadDataVentana?IdVentana=" + IdVentana);
                 e.preventDefault();
-
             });
     
         });

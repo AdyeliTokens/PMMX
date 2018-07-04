@@ -39,8 +39,8 @@ namespace Sitio.Areas.Warehouse.Controllers
                 .Include(e => e.SubCategoria)
                 .Include(e => e.TipoOperacion)
                 .ToList();
-
-            return View(ventana);
+            
+            return View(ventana);            
         }
         
         // GET: Warehouse/Ventana/Details/5
@@ -179,7 +179,7 @@ namespace Sitio.Areas.Warehouse.Controllers
 
                 sendNotifications(ventanaSend);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Evento", new { Area = "Operaciones" });
             }
 
             return View(ventana);
