@@ -122,8 +122,12 @@
 <script>
         $(function () {
             var IdVentana = $("#IdVentanaEvento").val();
-            getStatusActualVentana(IdVentana);
-            GetRechazoActualVentana(IdVentana);
+
+            if (IdVentana != null) {
+                getStatusActualVentana(IdVentana);
+                GetRechazoActualVentana(IdVentana);
+            }
+           
     
 
             function getStatusActualVentana(IdVentana) {

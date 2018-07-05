@@ -308,7 +308,7 @@ namespace Sitio.Areas.Warehouse.Controllers
             {
                 db.Entry(ventana).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Evento", new { Area = "Operaciones" });
             }
 
             ViewBag.IdProveedor = new SelectList(db.Proveedores.Select(x => new { Id = x.Id, NombreCorto = x.NombreCorto }).OrderBy(x => x.NombreCorto), "Id", "NombreCorto", ventana.IdProveedor);

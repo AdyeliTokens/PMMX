@@ -1,0 +1,85 @@
+﻿@model PMMX.Modelo.Entidades.Operaciones.StatusVentana
+
+@{
+    ViewBag.Title = "Index";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Parametros</h3>
+            </div>
+            @using (Ajax.BeginForm("getTimeline", "StatusVentana",
+                new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    InsertionMode = InsertionMode.Replace,
+                    OnSuccess = "",
+                    UpdateTargetId = "result-content"
+                },
+                new
+                {
+                    area = "StatusVentana",
+                    enctype = "multipart/form-data",
+                    @class = "form-horizontal"
+                }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="box-body">
+                    <div class="form-group">
+                        @Html.Label("Ventana: ", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("IdEvento", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="box-footer clearfix">
+                    <input class="btn btn-primary pull-right" type="submit" value="submit" />
+                </div>
+                @Html.Hidden("IdVentana")
+            }
+
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Timeline</h3>
+            </div>
+            <div class="box-body" id="result-content"></div>
+        </div>
+    </div>
+</div>
+ 
+    <script>
+        $(function () {
+            $("#IdEvento").on("change", function () {
+                $.ajax({
+                    dataType: "json",
+                    contentType: "application/json",
+                    url: "/Warehouse/Ventana/GetVentanabyEvento?IdEvento=" + $("#IdEvento").val(),
+                    success: function (data) {
+                        $("#result-content").html("");
+                        if (data.ventana != null) 
+                            $("#IdVentana").val(data.ventana.Id);
+                        
+                        else
+                            alert("Ventana sin datos")
+                        
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert('There was an error while fetching data!');
+                    }
+                });
+            });
+
+        });
+    </script>
+

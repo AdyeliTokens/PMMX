@@ -141,7 +141,16 @@ namespace Sitio.Areas.Operaciones.Controllers
 
             return idEstatus;
         }
-        
+        public PartialViewResult SearchTimeline()
+        {
+            DateTime inicio = DateTime.Now.AddDays(-7);
+            DateTime fin = DateTime.Now.AddDays(7);
+
+            ViewBag.IdEvento = new SelectList(db.Evento.Where(x => x.FechaInicio >= inicio && x.FechaFin <= fin).Select(x => new { Id = x.Id, Descripcion = x.Descripcion }), "Id", "Descripcion");
+
+            return PartialView("SearchTimeline");
+        }
+
         // GET: Operaciones/StatusVentana/Create
         public ActionResult Create()
         {
