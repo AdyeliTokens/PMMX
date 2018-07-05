@@ -176,6 +176,10 @@
                 "maxDate": "YYYY-MM-DD  h:mm A"
             });
 
+            $('#FechaInicio').on("change", function () {
+                $("#FechaFin").val($(this).val());
+            });
+
             $("#IdCategoria").on("change", function () {
                 var idCategoria = $('#IdCategoria').val();
                 
