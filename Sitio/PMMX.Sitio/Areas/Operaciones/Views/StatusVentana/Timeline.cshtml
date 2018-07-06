@@ -14,19 +14,51 @@
                 {
                     <ul class="timeline">
                         <li class="time-label">
-                            <span class="bg-green">
-                                @Html.DisplayFor(modelItem => item.Status.Nombre)
+                            <span style="background-color: @item.Status.Color; color: #ffffff">
+                                @Html.DisplayFor(modelItem => item.Status.Nombre)                                
                             </span>
                         </li>
                         <li>
-                            <i class="fa fa-user-circle bg-blue"></i>
+                            <i class="fa fa-envelope bg-blue"></i>
+                            <div class="timeline-item">
+                                @if (item.Status.WorkFlowInicial != null)
+                                {
+                                    <h3 class="timeline-header">
+                                        @foreach (var wf in item.Status.WorkFlowInicial)
+                                        {
+                                            <a href="#">@Html.DisplayFor(modelItem => wf.SubArea.Nombre) </a>
+                                        }
+                                    </h3>
+                                  }
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa fa-user-circle bg-aqua"></i>
                             <div class="timeline-item">
                                 <span class="time"><i class="fa fa-clock-o"></i> @Html.DisplayFor(modelItem => item.Fecha)</span>
-                                <h3 class="timeline-header"><a href="#">@Html.DisplayFor(modelItem => item.Responsable.Nombre) @Html.DisplayFor(modelItem => item.Responsable.Apellido1) @Html.DisplayFor(modelItem => item.Responsable.Apellido2)</a> </h3>
+                                <h3 class="timeline-header">
+                                    <a href="#">@Html.DisplayFor(modelItem => item.Responsable.Nombre) @Html.DisplayFor(modelItem => item.Responsable.Apellido1) @Html.DisplayFor(modelItem => item.Responsable.Apellido2)</a>
+                                </h3>
+                                <div class="timeline-body">
+                                    @if (item.Status.BitacoraVentana != null)
+                                    {
+                                        foreach (var bitacora in item.Status.BitacoraVentana)
+                                        {
+                                            <a class="btn btn-danger btn-xs">@Html.DisplayFor(modelItem => bitacora.Rechazo.Nombre)</a>
+                                            <a class="btn btn-warning btn-xs">@Html.DisplayFor(modelItem => bitacora.Comentarios)</a>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-warning btn-xs">@Html.DisplayFor(modelItem => item.Comentarios)</a>
+                                    }
+                                    <p></p>
+
+                                </div>
                             </div>
                         </li>
                     </ul>
-                }
+                                    }
             </div>
         </div>
     </div>
