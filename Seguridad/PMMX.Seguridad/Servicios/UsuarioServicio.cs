@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace PMMX.Seguridad.Servicios
 {
@@ -117,7 +118,7 @@ namespace PMMX.Seguridad.Servicios
                     Email = v.Usuario.Email
                 }).ToList()
                 ).ToList();
-
+                        
             List<string> emails = emailList.Select(x => x.Select(y => y.Email).FirstOrDefault()).ToList();
             string stringEmails = "";
              
@@ -128,5 +129,28 @@ namespace PMMX.Seguridad.Servicios
             
             return stringEmails;
         }
+
+        public string GetEmailBySubArea(int idSubArea)
+        {
+            var emailList = db.ListaDistribucion
+                .Where(e => e.IdSubarea == idSubArea )
+                .Select(e => e.Remitente.Users.Where(v => v.IdPersona == e.Remitente.Id).Select(v => new UserView
+                {
+                    Id = v.Id,
+                    Email = v.Usuario.Email
+                }).ToList()
+                ).ToList();
+
+            List<string> emails = emailList.Select(x => x.Select(y => y.Email).FirstOrDefault()).ToList();
+            string stringEmails = "";
+
+            foreach (string email in emails)
+            {
+                stringEmails += (email + ",");
+            }
+
+            return stringEmails;
+        }
+
     }
 }

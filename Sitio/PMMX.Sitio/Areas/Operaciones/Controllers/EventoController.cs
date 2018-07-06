@@ -344,7 +344,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                         }
                     }
 
-                    SendNotification(evento);
+                    //SendNotification(evento);
                 }
                 else
                 {
@@ -358,7 +358,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                         db.SaveChanges();
                     }
 
-                    SendNotification(evento);
+                    //SendNotification(evento);
                 }
 
                 return RedirectToAction("Index");
