@@ -96,7 +96,7 @@ namespace Sitio.Areas.Warehouse.Controllers
 
                 saveStatusVentana(bitacoraVentana);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Evento", new { Area = "Operaciones" });
             }
             else
                 return View(bitacoraVentana);

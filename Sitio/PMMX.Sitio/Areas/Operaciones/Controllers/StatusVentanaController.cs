@@ -210,8 +210,8 @@ namespace Sitio.Areas.Operaciones.Controllers
                 {
                     Console.WriteLine(e.Message);
                 }
-                
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Index", "Evento", new { Area = "Operaciones" });
             }
             
             return View(statusVentana);
