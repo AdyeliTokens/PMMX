@@ -39,8 +39,8 @@ namespace Sitio.Areas.Warehouse.Controllers
                 .Include(e => e.SubCategoria)
                 .Include(e => e.TipoOperacion)
                 .ToList();
-
-            return View(ventana);
+            
+            return View(ventana);            
         }
         
         // GET: Warehouse/Ventana/Details/5
@@ -177,9 +177,9 @@ namespace Sitio.Areas.Warehouse.Controllers
                             .Include(v => v.Proveedor)
                             .SingleOrDefault(x => x.Id == ventana.Id);
 
-                sendNotifications(ventanaSend);
+                //sendNotifications(ventanaSend);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Evento", new { Area = "Operaciones" });
             }
 
             return View(ventana);
@@ -308,7 +308,7 @@ namespace Sitio.Areas.Warehouse.Controllers
             {
                 db.Entry(ventana).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Evento", new { Area = "Operaciones" });
             }
 
             ViewBag.IdProveedor = new SelectList(db.Proveedores.Select(x => new { Id = x.Id, NombreCorto = x.NombreCorto }).OrderBy(x => x.NombreCorto), "Id", "NombreCorto", ventana.IdProveedor);

@@ -24,6 +24,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
 
             #region HasMany
             HasMany(c => c.ListaDistribucion).WithRequired(x => x.SubArea).HasForeignKey(c => c.IdSubarea);
+            HasMany(c=> c.WorkFlows).WithRequired(x => x.SubArea).HasForeignKey(c => c.IdSubArea);
             #endregion
 
             #region HasOptional

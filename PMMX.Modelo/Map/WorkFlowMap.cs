@@ -18,6 +18,7 @@ namespace PMMX.Modelo.Map
             HasKey(c => c.Id);
             Property(c => c.Id).HasColumnName("Id");
             Property(c => c.IdSubCategoria).HasColumnName("IdSubcategoria");
+            Property(c => c.IdSubArea).HasColumnName("IdSubArea");
             Property(c => c.Inicial).HasColumnName("Inicial");
             Property(c => c.Anterior).HasColumnName("Anterior");
             Property(c => c.Siguiente).HasColumnName("Siguiente");
@@ -36,6 +37,7 @@ namespace PMMX.Modelo.Map
 
             #region HasRequired
             this.HasRequired(x => x.SubCategoria).WithMany(c => c.WorkFlows);
+            this.HasRequired(x => x.SubArea).WithMany(c => c.WorkFlows);
             #endregion
         }
     }

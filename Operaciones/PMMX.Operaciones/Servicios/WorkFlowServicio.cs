@@ -33,6 +33,7 @@ namespace PMMX.Operaciones.Servicios
             {
                 Id = d.Id,
                 IdSubCategoria = d.IdSubCategoria,
+                IdSubArea = d.IdSubArea,
                 Inicial = d.Inicial,
                 Anterior = d.Anterior,
                 Siguiente = d.Siguiente,
@@ -73,6 +74,7 @@ namespace PMMX.Operaciones.Servicios
                 {
                     Id = d.Id,
                     IdSubCategoria = d.IdSubCategoria,
+                    IdSubArea = d.IdSubArea,
                     Inicial = d.Inicial,
                     Anterior = d.Anterior,
                     Siguiente = d.Siguiente,
@@ -129,6 +131,7 @@ namespace PMMX.Operaciones.Servicios
                       {
                           Id = w.Id,
                           IdSubCategoria = w.IdSubCategoria,
+                          IdSubArea = w.IdSubArea,
                           Inicial = w.Inicial,
                           Siguiente = w.Siguiente,
                           Anterior = w.Anterior,
@@ -158,6 +161,7 @@ namespace PMMX.Operaciones.Servicios
                     .Select(w => new WorkFlowView {
                         Id = w.Id,
                         IdSubCategoria = w.IdSubCategoria,
+                        IdSubArea = w.IdSubArea,
                         Inicial = w.Inicial,
                         Siguiente = w.Siguiente,
                         Anterior = w.Anterior,

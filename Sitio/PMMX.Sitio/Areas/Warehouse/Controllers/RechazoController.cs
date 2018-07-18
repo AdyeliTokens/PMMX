@@ -48,7 +48,7 @@ namespace Sitio.Areas.Warehouse.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nombre,NombreCorto,Activo")] Rechazo Rechazo)
+        public ActionResult Create(Rechazo Rechazo)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace Sitio.Areas.Warehouse.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nombre,NombreCorto,Activo")] Rechazo Rechazo)
+        public ActionResult Edit(Rechazo Rechazo)
         {
             if (ModelState.IsValid)
             {
