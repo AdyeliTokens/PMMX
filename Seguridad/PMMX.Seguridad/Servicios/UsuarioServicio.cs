@@ -133,8 +133,8 @@ namespace PMMX.Seguridad.Servicios
         public string GetEmailBySubArea(int idSubArea)
         {
             var emailList = db.ListaDistribucion
-                .Where(e => e.IdSubarea == idSubArea )
-                .Select(e => e.Remitente.Users.Where(v => v.IdPersona == e.Remitente.Id).Select(v => new UserView
+                .Where(e => e.IdSubarea == idSubArea && e.Activo == true )
+                .Select(e => e.Remitente.Users.Where(v => v.IdPersona == e.Remitente.Id && e.Remitente.Activo == true).Select(v => new UserView
                 {
                     Id = v.Id,
                     Email = v.Usuario.Email

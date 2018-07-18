@@ -26,7 +26,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         public ActionResult Index()
         {
             var evento = db.Evento.Include(e => e.Asignador).Include(e => e.Categoria);
-            return View(evento.ToList());
+            return View(evento.Where(e => e.Activo == true).ToList());
         }
 
         [RenderAjaxPartialScripts]
@@ -38,7 +38,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 var LastDate = date.AddDays(lastDay-1);
 
                 var events = db.Evento
-                    .Where(e => (e.FechaInicio >= date && e.FechaFin <= LastDate))
+                    .Where(e => (e.FechaInicio >= date && e.FechaFin <= LastDate) && e.Activo == true)
                     .Select(e => new EventoView
                     {
                         Id = e.Id,
@@ -71,7 +71,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 var LastDate = date.AddDays(lastDay - 1);
 
                 var events = db.Evento
-                    .Where(e => (e.IdCategoria == IdCategoria) && (e.FechaInicio >= date && e.FechaInicio <= LastDate) )
+                    .Where(e => (e.IdCategoria == IdCategoria) && (e.FechaInicio >= date && e.FechaInicio <= LastDate) && (e.Activo == true) )
                     .Select(e => new EventoView
                     {
                         Id = e.Id,
@@ -128,7 +128,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 var LastDate = date.AddDays(lastDay - 1);
 
                 var events = db.Ventana
-                    .Where(v => (v.IdSubCategoria == IdSubCategoria) && (v.Evento.FechaInicio >= date && v.Evento.FechaFin <= LastDate) )
+                    .Where(v => (v.IdSubCategoria == IdSubCategoria) && (v.Evento.FechaInicio >= date && v.Evento.FechaFin <= LastDate) && (v.Evento.Activo == true))
                     .Select( e => new EventoView
                     {
                         Id = e.Evento.Id,
@@ -448,8 +448,10 @@ namespace Sitio.Areas.Operaciones.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Evento evento = db.Evento.Find(id);
-            db.Evento.Remove(evento);
+            //db.Evento.Remove(evento);
+            evento.Activo = false;
             db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 

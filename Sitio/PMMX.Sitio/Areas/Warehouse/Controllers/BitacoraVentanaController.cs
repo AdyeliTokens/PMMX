@@ -127,8 +127,11 @@ namespace Sitio.Areas.Warehouse.Controllers
             {
                 UsuarioServicio usuarioServicio = new UsuarioServicio();
                 NotificationService notify = new NotificationService();
+                WorkFlowServicio workflowServicio = new WorkFlowServicio();
+                IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, statusVentana.IdStatus, false);
 
-                string senders = usuarioServicio.GetEmailByEvento(statusVentana.Ventana.IdEvento);
+                //string senders = usuarioServicio.GetEmailByEvento(statusVentana.Ventana.IdEvento);
+                string senders = usuarioServicio.GetEmailBySubArea(workFlow.Respuesta.IdSubArea);
                 EmailService emailService = new EmailService();
                 emailService.SendMail(senders, ventana);
             }
