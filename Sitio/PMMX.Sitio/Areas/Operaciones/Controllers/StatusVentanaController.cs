@@ -46,6 +46,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                     IdVentana = s.IdVentana,
                     IdStatus = s.IdStatus,
                     IdResponsable = s.IdResponsable,
+                    Comentarios = s.Comentarios,
                     Ventana = new VentanaView
                     {
                         Id = s.Ventana.Id,
@@ -83,41 +84,37 @@ namespace Sitio.Areas.Operaciones.Controllers
                     Id = s.Id,
                     IdVentana = s.IdVentana,
                     IdStatus = s.IdStatus,
-                    IdResponsable = s.IdResponsable,
                     Fecha = s.Fecha,
-                    Ventana = new VentanaView
-                    {
-                        Id = s.Ventana.Id,
-                        PO = s.Ventana.PO,
-                        Destino = new LocacionView
-                        {
-                            Id = s.Ventana.Destino.Id,
-                            Nombre = s.Ventana.Destino.Nombre,
-                            NombreCorto = s.Ventana.Destino.NombreCorto
-                        },
-                        Procedencia = new LocacionView
-                        {
-                            Id = s.Ventana.Procedencia.Id,
-                            Nombre = s.Ventana.Procedencia.Nombre,
-                            NombreCorto = s.Ventana.Procedencia.NombreCorto
-                        },
-                    },
+                    Comentarios = s.Comentarios,
                     Status = new EstatusView
                     {
                         Id = s.Status.Id,
                         Nombre = s.Status.Nombre,
+                        Color = s.Status.Color,
                         BitacoraVentana = s.Status.BitacoraVentana
                         .Where(b => (b.IdVentana == s.IdVentana) && (b.IdStatus == s.IdStatus))
                         .Select(b => new BitacoraVentanaView
                         {
                             Id = b.Id,
+                            Comentarios = b.Comentarios,
                             Rechazo = new RechazoView
                             {
                                 Id = b.Rechazo.Id,
                                 Nombre = b.Rechazo.Nombre
+                                
+                            }
+                        }).ToList(),
+                        WorkFlowInicial = s.Status.WorkFlowInicial
+                        .Where(w => (w.Id == s.Status.Id))
+                        .Select(w => new WorkFlowView
+                        {
+                            Id = w.Id,
+                            SubArea = new SubAreaView
+                            {
+                                Id = w.SubArea.Id,
+                                Nombre = w.SubArea.Nombre
                             }
                         }).ToList()
-
                     },
                     Responsable = new PersonaView
                     {
@@ -141,7 +138,16 @@ namespace Sitio.Areas.Operaciones.Controllers
 
             return idEstatus;
         }
-        
+        public PartialViewResult SearchTimeline()
+        {
+            DateTime inicio = DateTime.Now.AddDays(-7);
+            DateTime fin = DateTime.Now.AddDays(7);
+
+            ViewBag.IdEvento = new SelectList(db.Evento.Where(x => x.FechaInicio >= inicio && x.FechaFin <= fin).Select(x => new { Id = x.Id, Descripcion = x.Descripcion }), "Id", "Descripcion");
+
+            return PartialView("SearchTimeline");
+        }
+
         // GET: Operaciones/StatusVentana/Create
         public ActionResult Create()
         {
@@ -192,7 +198,8 @@ namespace Sitio.Areas.Operaciones.Controllers
                     UsuarioServicio usuarioServicio = new UsuarioServicio();
                     NotificationService notify = new NotificationService();
 
-                    string senders = usuarioServicio.GetEmailByEvento(ventana.IdEvento);
+                    // string senders = usuarioServicio.GetEmailByEvento(ventana.IdEvento);
+                    string senders = usuarioServicio.GetEmailBySubArea(workFlow.Respuesta.IdSubArea);
 
                     if (senders != "")
                     {
@@ -204,8 +211,8 @@ namespace Sitio.Areas.Operaciones.Controllers
                 {
                     Console.WriteLine(e.Message);
                 }
-                
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Index", "Evento", new { Area = "Operaciones" });
             }
             
             return View(statusVentana);

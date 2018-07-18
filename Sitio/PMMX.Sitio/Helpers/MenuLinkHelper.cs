@@ -18,7 +18,7 @@ namespace Sitio.Helpers
             {
                 ajaxOptions = new AjaxOptions
                 {
-                    HttpMethod = "GET",
+                    HttpMethod = "POST",
                     InsertionMode = InsertionMode.Replace,
                     OnSuccess = "",
                     OnBegin = "divLoading",

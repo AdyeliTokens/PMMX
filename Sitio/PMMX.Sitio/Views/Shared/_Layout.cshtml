@@ -10,14 +10,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
-
+    
     @Styles.Render("~/Style/Bootstrap")
     @Styles.Render("~/Style/Font-Awesome")
     @Styles.Render("~/Style/AdminLTE")
     @Scripts.Render("~/bundles/modernizr")
-    @RenderSection("styles", required: false)
-
+    @RenderSection("Styles", required: false)
+    
 </head>
 
 <body class="hold-transition skin-blue fixed sidebar-mini">
@@ -420,7 +419,7 @@
                                         @Ajax.MenuLink("Ventanas", string.Format("{0:c}", "fa fa-link"), "Index", "Ventana", new { area = "Warehouse" }, null, null)
                                     </li>
                                     <li>
-                                        @Ajax.MenuLink("Estatus Ventana", string.Format("{0:c}", "fa fa-link"), "Index", "StatusVentana", new { area = "Operaciones" }, null, null)
+                                        @Ajax.MenuLink("Estatus Ventana", string.Format("{0:c}", "fa fa-link"), "SearchTimeline", "StatusVentana", new { area = "Operaciones" }, null, null)
                                     </li>
                                     <li>
                                         @Ajax.MenuLink("Bitacora Ventana", string.Format("{0:c}", "fa fa-link"), "Index", "BitacoraVentana", new { area = "Warehouse" }, null, null)
@@ -491,9 +490,9 @@
         </aside>
         <div class="content-wrapper">
             <section class="content" id="row-content">
-                
-                    @RenderBody()
-                
+
+                @RenderBody()
+
             </section>
         </div>
         <footer class="main-footer">
@@ -652,14 +651,15 @@
         </aside>
         <div class="control-sidebar-bg"></div>
     </div>
+
     <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase.js"></script>
     @Scripts.Render("~/JS/jquery")
-    @Scripts.Render("~/JS/Bootstrap")
     @Scripts.Render("~/JS/Complements")
     @Scripts.Render("~/JS/AdminLTE")
     @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
     @Scripts.Render("~/JS/Demo")
     <script src="~/Scripts/app.js"></script>
-    @RenderSection("scripts", required: false)
+    @Scripts.Render("~/JS/Bootstrap")
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
