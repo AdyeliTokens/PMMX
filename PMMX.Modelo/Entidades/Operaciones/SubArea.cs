@@ -28,7 +28,9 @@ namespace PMMX.Modelo.Entidades.Operaciones
         #region Navegacion
         public Area Area { get; set; }
         public Persona Responsable { get; set; }
+        
         public ICollection<ListaDistribucion> ListaDistribucion { get; set; }
+        public ICollection<WorkFlow> WorkFlows { get; set; }
         #endregion
 
     }

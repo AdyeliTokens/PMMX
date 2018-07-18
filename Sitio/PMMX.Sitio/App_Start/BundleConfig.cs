@@ -34,7 +34,6 @@ namespace Sitio
 
             #region JS
             bundles.Add(new ScriptBundle("~/JS/jquery").Include("~/bower_components/jquery/dist/jquery.min.js"));
-            bundles.Add(new ScriptBundle("~/JS/Bootstrap").Include("~/bower_components/bootstrap/dist/js/bootstrap.min.js"));
             bundles.Add(new ScriptBundle("~/JS/Complements").Include(
                 "~/bower_components/jquery-slimscroll/jquery.slimscroll.min.js",
                 "~/bower_components/fastclick/lib/fastclick.js",
@@ -46,31 +45,13 @@ namespace Sitio
             bundles.Add(new ScriptBundle("~/JS/Scheduler").Include("~/bower_components/fullcalendar-scheduler/dist/scheduler.min.js"));
             bundles.Add(new ScriptBundle("~/JS/select2").Include("~/bower_components/select2/dist/js/select2.full.min.js"));
             
-             bundles.Add(new ScriptBundle("~/JS/DataRangePicker").Include(
-                "~/bower_components/moment/min/moment.min.js",
-                "~/bower_components/bootstrap-daterangepicker/daterangepicker.js"));
-
-
-            bundles.Add(new ScriptBundle("~/JS/DataPicker").Include(
-                 "~/bower_components/moment/min/moment.min.js",
-                 "~/bower_components/bootstrap-daterangepicker/daterangepicker.js",
-                 "~/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
-                 "~/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js",
-                 "~/plugins/timepicker/bootstrap-timepicker.min.js"));
-
-
-
-
-            bundles.Add(new ScriptBundle("~/JS/ColorPicker").Include("~/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"));
+             
             bundles.Add(new ScriptBundle("~/JS/Vendor/JQuery").Include("~/vendor/jquery/jquery.min.js"));
             bundles.Add(new ScriptBundle("~/JS/Vendor/Popper").Include("~/vendor/popper/popper.min.js"));
-            bundles.Add(new ScriptBundle("~/JS/Vendor/Bootstrap").Include("~/vendor/bootstrap/js/bootstrap.min.js"));
             bundles.Add(new ScriptBundle("~/JS/Vendor/JQueryEasing").Include("~/vendor/jquery-easing/jquery.easing.min.js"));
             bundles.Add(new ScriptBundle("~/JS/Vendor/NewAge").Include("~/js/new-age.min.js"));
-            bundles.Add(new ScriptBundle("~/JS/DataTables").Include("~/bower_components/datatables.net/js/jquery.dataTables.min.js",
-                "~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"));
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+
+            
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
             
@@ -78,6 +59,30 @@ namespace Sitio
             bundles.Add(new ScriptBundle("~/JS/ChartJS").Include("~/bower_components/chart.js/Chart.js"));
             bundles.Add(new ScriptBundle("~/JS/Sparkline").Include("~/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"));
             bundles.Add(new ScriptBundle("~/JS/SlimScroll").Include("~/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"));
+            bundles.Add(new ScriptBundle("~/JS/Evento").Include("~/js/Evento.js"));
+            bundles.Add(new ScriptBundle("~/JS/DetailsEvento").Include("~/js/DetailsEvento.js"));
+
+            bundles.Add(new ScriptBundle("~/JS/Bootstrap").Include("~/bower_components/bootstrap/dist/js/bootstrap.min.js"));
+            bundles.Add(new ScriptBundle("~/JS/Vendor/Bootstrap").Include("~/vendor/bootstrap/js/bootstrap.min.js"));
+            bundles.Add(new ScriptBundle("~/JS/DataTables").Include("~/bower_components/datatables.net/js/jquery.dataTables.min.js",
+                "~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                        "~/Scripts/jquery-{version}.js"));
+            
+            bundles.Add(new ScriptBundle("~/JS/DataPicker").Include(
+                 "~/bower_components/moment/min/moment.min.js",
+                 "~/bower_components/bootstrap-daterangepicker/daterangepicker.js",
+                 "~/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
+                 "~/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js",
+                 "~/plugins/timepicker/bootstrap-timepicker.min.js"));
+
+            bundles.Add(new ScriptBundle("~/JS/DataRangePicker").Include(
+                "~/bower_components/moment/min/moment.min.js",
+                "~/bower_components/bootstrap-daterangepicker/daterangepicker.js"));
+
+            bundles.Add(new ScriptBundle("~/JS/ColorPicker").Include("~/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                        "~/Scripts/bootstrap.js"));
             #endregion
 
 

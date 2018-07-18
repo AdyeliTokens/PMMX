@@ -4,7 +4,17 @@
     ViewBag.Title = "Details";
     Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
-@Styles.Render("~/Style/Bootstrap")
+
+@if (Request.IsAjaxRequest())
+{
+    @Styles.Render("~/Style/Bootstrap")
+}
+else
+{
+    @section Styles{
+        @Styles.Render("~/Style/Bootstrap")
+    }
+}
 
 <h2>@Html.DisplayFor(model => model.Descripcion)</h2>
 
@@ -77,120 +87,24 @@
     </dl>
 </div>
 
-    <div id="opciones-ventana" class="form-group" align="center">
-         <button id="btn-Continuar" class="btn btn-success" >Continuar</button>
-         <button id="btn-Rechazo" class="btn btn-danger">Rechazar</button>
-    </div>
-
+<div id="opciones-ventana" class="form-group" align="center">
+    <button id="btn-Continuar" class="btn btn-success">Continuar</button>
+    <button id="btn-Rechazo" class="btn btn-danger">Rechazar</button>
+</div>
+@if (Request.IsAjaxRequest())
+{
     @Scripts.Render("~/JS/jquery")
-    @Scripts.Render("~/JS/Bootstrap")
     @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
-
-    <script>
-        $(document).ready(function ()
-        {
-            var id = $("#Id").val();
-            start();
-
-            function start()
-            {
-                var idCategoria = $("#IdCategoria").val();
-                $("#opciones-ventana").hide();
-                $('#subVista').hide();
-                
-            }
-
-            $("#btn-CreateVentana").on("click", function () {
-                var url = ("/Warehouse/Ventana/Upload");
-
-                $.get(url, function (data) {
-                    $('#createAssetContainer').html(data);
-
-                    $('#createAssetModal').modal('show');
-                });
-            });
-
-            $("#btn-Editar").on("click", function ()
-            {
-                var url = ("/Operaciones/Evento/Edit/"+id);
-
-                $.get(url, function (data) {
-                    $('#createAssetContainer').html(data);
-
-                    $('#createAssetModal').modal('show');
-                });
-            });
-
-            $("#btn-Info").on("click", function () {
-                $.ajax({
-                    dataType: "json",
-                    contentType: "application/json",
-                    url: "/Warehouse/Ventana/GetVentanabyEvento?idEvento=" + id,
-                    success: function (data)
-                    {
-                        $.each(data, function (i, k)
-                        {
-                            if (k != null)
-                            {
-                                var url = ("/Warehouse/Ventana/Details/" + k.Id);
-
-                                $("#IdVentanaEvento").val(k.Id);
-                                
-                                $("#opciones-ventana").show();
-                                $("#btn-Rechazo").hide();
-
-                                if (k.Cancelado[0] != 0)
-                                {
-                                    $("#btn-Rechazo").show();
-                                }
-
-                                $.get(url, function (data) {
-                                    $('#subVista').show();
-                                    $('#subVista').html(data);
-                                });
-                            }
-                            else
-                            {
-                                alert("Sin datos en ventana");
-                            }
-                        });
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert('There was an error while fetching data!');
-                    }
-                });
-            });
-
-
-            $("#btn-Delete").on("click", function () {
-                var url = ("/Operaciones/Evento/Delete/" + id);
-
-                $.get(url, function (data) {
-                    $('#createAssetContainer').html(data);
-
-                    $('#createAssetModal').modal('show');
-                });
-            });
-
-            $("#btn-Continuar").on("click", function () {
-                var url = ("/Operaciones/StatusVentana/Create");
-
-                $.get(url, function (data) {
-                    $('#createAssetContainer').html(data);
-
-                    $('#createAssetModal').modal('show');
-                });
-            });
-
-            $("#btn-Rechazo").on("click", function (e) {
-                var url = ("/Warehouse/BitacoraVentana/Create");
-                
-                $.get(url, function (data) {
-                    $('#createAssetContainer').html(data);
-                    $('#createAssetModal').modal('show');
-                });
-            });
-
-        });
-    </script>
-
+    @Scripts.Render("~/JS/DetailsEvento")
+    @Scripts.Render("~/JS/Bootstrap")
+}
+else
+{
+    @section Scripts
+    {
+        @Scripts.Render("~/JS/jquery")
+        @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+        @Scripts.Render("~/JS/DetailsEvento")
+        @Scripts.Render("~/JS/Bootstrap")
+    }
+}
