@@ -177,7 +177,7 @@ namespace Sitio.Areas.Warehouse.Controllers
                             .Include(v => v.Proveedor)
                             .SingleOrDefault(x => x.Id == ventana.Id);
 
-                sendNotifications(ventanaSend);
+                //sendNotifications(ventanaSend);
 
                 return RedirectToAction("Index", "Evento", new { Area = "Operaciones" });
             }
