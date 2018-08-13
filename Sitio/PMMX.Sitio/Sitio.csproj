@@ -366,6 +366,7 @@
     <Compile Include="Areas\Operaciones\Controllers\SubAreaController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\WorkFlowsController.cs" />
     <Compile Include="Areas\Operaciones\OperacionesAreaRegistration.cs" />
+    <Compile Include="Areas\Seguridad\Controllers\AccesoController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\DispositivosController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\ElectricosController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\MecanicosController.cs" />
@@ -8092,6 +8093,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Areas\Operaciones\Views\StatusVentana\SearchTimeline.cshtml" />
+    <Content Include="Areas\Seguridad\Views\Acceso\Create.cshtml" />
+    <Content Include="Areas\Seguridad\Views\Acceso\Delete.cshtml" />
+    <Content Include="Areas\Seguridad\Views\Acceso\Details.cshtml" />
+    <Content Include="Areas\Seguridad\Views\Acceso\Edit.cshtml" />
+    <Content Include="Areas\Seguridad\Views\Acceso\Index.cshtml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -8440,6 +8446,7 @@
     <Content Include="Views\Maya\Upload.cshtml" />
     <Content Include="Views\AtomFeed\Index.cshtml" />
     <Content Include="Views\AtomFeed\PopulateAtomFeed.cshtml" />
+    <Content Include="Views\Shared\_LayoutN.cshtml" />
     <None Include="Views\Shared\_LayoutVideo.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />

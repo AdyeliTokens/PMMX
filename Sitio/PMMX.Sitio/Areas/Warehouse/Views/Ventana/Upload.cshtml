@@ -73,7 +73,9 @@
         function start()
         {
             var IdEvento = $('#IdEventoModal').val();
-
+            $('#SelectSubCategoria').append(new Option("Select one", 0, true, true));
+            $('#SelectOperacion').append(new Option("Select one", 0, true, true));
+            
             $("#Activo").val(true);
             $("#IdEvento").val(IdEvento);
         }
