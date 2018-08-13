@@ -224,6 +224,7 @@
     <Compile Include="Map\WorkCenterMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RespuestaGenerica\RespuestaServicio.cs" />
+    <Compile Include="Vistas\AccesoView.cs" />
     <Compile Include="Vistas\ActividadEnDefectoView.cs" />
     <Compile Include="Vistas\ActividadEnParoView.cs" />
     <Compile Include="Vistas\AtomFeedView.cs" />

@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades.Seguridad;
+using PMMX.Modelo.Vistas;
+using Sitio.Helpers;
 
 namespace Sitio.Areas.Seguridad.Controllers
 {
@@ -88,6 +90,26 @@ namespace Sitio.Areas.Seguridad.Controllers
                 return RedirectToAction("Index");
             }
             return View(acceso);
+        }
+
+        [RenderAjaxPartialScripts]
+        public ActionResult AccesoByPersona(int IdPersona)
+        {
+            List<AccesoView> list = new List<AccesoView>();
+
+            list = db.Personas
+                .Where(p => p.Id == IdPersona)
+                .Select(p => p.Accesos.Where(a => a.Activo==true).Select(v => new AccesoView
+                {
+                    Area = v.Area,
+                    Menu = v.Menu,
+                    SubMenu = v.SubMenu,
+                    Programa = v.Programa,
+                    Ruta = v.Ruta
+                }).ToList()
+                ).FirstOrDefault();
+
+            return Json(new { list }, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Seguridad/Acceso/Delete/5

@@ -8323,7 +8323,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_LayoutA.cshtml" />
     <Content Include="Views\Home\Video.cshtml" />
     <Content Include="Views\Home\Controles.cshtml" />
     <Content Include="Areas\Seguridad\Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -8446,7 +8446,7 @@
     <Content Include="Views\Maya\Upload.cshtml" />
     <Content Include="Views\AtomFeed\Index.cshtml" />
     <Content Include="Views\AtomFeed\PopulateAtomFeed.cshtml" />
-    <Content Include="Views\Shared\_LayoutN.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <None Include="Views\Shared\_LayoutVideo.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
