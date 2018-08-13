@@ -10,13 +10,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    
+
     @Styles.Render("~/Style/Bootstrap")
     @Styles.Render("~/Style/Font-Awesome")
     @Styles.Render("~/Style/AdminLTE")
     @Scripts.Render("~/bundles/modernizr")
     @RenderSection("Styles", required: false)
-    
+
 </head>
 
 <body class="hold-transition skin-blue fixed sidebar-mini">
@@ -96,8 +96,10 @@
                         </span>
                     </div>
                 </form>
+
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">Menu</li>
+                    
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-address-book"></i>
@@ -486,6 +488,7 @@
                         @Html.ActionLink("Apis", "Index", "Help", new { area = "" }, null)
                     </li>
                 </ul>
+            
             </section>
         </aside>
         <div class="content-wrapper">
@@ -663,3 +666,4 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+
