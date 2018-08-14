@@ -64,6 +64,12 @@ namespace PMMX.Modelo.Map
             HasMany(c => c.MarcasDadasDeAlta).WithRequired(b => b.PersonaQueDioDeAlta).HasForeignKey(c => c.IdPersonaQueDioDeAlta);
             HasMany(c => c.PlanesDeProduccionReportados).WithRequired(b => b.Uploader).HasForeignKey(c => c.IdUploader);
 
+            HasMany(c => c.Accesos).WithMany(x => x.Personas).Map(cs =>
+            {
+                cs.MapLeftKey("IdPersona");
+                cs.MapRightKey("IdAcceso");
+                cs.ToTable("AccesoPersona");
+            });
             #endregion
 
             #region HasRequired

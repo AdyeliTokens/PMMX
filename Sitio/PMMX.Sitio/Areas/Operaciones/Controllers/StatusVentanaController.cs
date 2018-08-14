@@ -140,8 +140,8 @@ namespace Sitio.Areas.Operaciones.Controllers
         }
         public PartialViewResult SearchTimeline()
         {
-            DateTime inicio = DateTime.Now.AddDays(-7);
-            DateTime fin = DateTime.Now.AddDays(7);
+            DateTime inicio = DateTime.Now.AddDays(-15);
+            DateTime fin = DateTime.Now.AddDays(15);
 
             ViewBag.IdEvento = new SelectList(db.Evento.Where(x => x.FechaInicio >= inicio && x.FechaFin <= fin).Select(x => new { Id = x.Id, Descripcion = x.Descripcion }), "Id", "Descripcion");
 

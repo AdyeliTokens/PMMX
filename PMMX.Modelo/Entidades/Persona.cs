@@ -5,7 +5,7 @@ using PMMX.Modelo.Entidades.Paros;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using PMMX.Modelo.Entidades.Warehouse;
-
+using PMMX.Modelo.Entidades.Seguridad;
 
 namespace PMMX.Modelo.Entidades
 {
@@ -74,6 +74,7 @@ namespace PMMX.Modelo.Entidades
         public ICollection<BitacoraVentana> BitacoraVentana { get; set; }
         public ICollection<BitacoraGembaWalk> BitacoraGembaWalk { get; set; }
         public ICollection<PlanDeProduccion> PlanesDeProduccionReportados { get; set; }
+        public ICollection<Acceso> Accesos { get; set; }
         #endregion
 
     }
