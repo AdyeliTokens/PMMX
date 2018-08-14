@@ -11,6 +11,7 @@ using PMMX.Modelo.Map.InsiteLAC;
 
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using PMMX.Modelo.Entidades.Seguridad;
 
 namespace PMMX.Infraestructura.Contexto
 {
@@ -145,7 +146,7 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new BitacoraGembaWalkMap());
             modelBuilder.Configurations.Add(new WorkFlowMap());
             modelBuilder.Configurations.Add(new TipoOperacionMap());
-
+            modelBuilder.Configurations.Add(new AccesoMap());
 
 
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
@@ -203,7 +204,7 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<ShiftLeaders> ShiftLeaders { get; set; }
         public DbSet<Electricos> Electricos { get; set; }
         public DbSet<Pesador> Pesadores { get; set; }
-
+        public DbSet<Acceso> Accesos { get; set; }
         #endregion
 
         #region WareHouse

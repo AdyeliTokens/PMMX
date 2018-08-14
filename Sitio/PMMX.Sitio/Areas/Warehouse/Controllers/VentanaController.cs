@@ -394,7 +394,7 @@ namespace Sitio.Areas.Warehouse.Controllers
                         var noOfCol = workSheet.Dimension.End.Column;
                         var noOfRow = workSheet.Dimension.End.Row;
 
-                        if (workSheet.Cells[2, 2].Value != null)
+                        if (workSheet.Cells[3, 2].Value != null)
                         {
                             ventana.PO = workSheet.Cells[2, 2].Value == null ? string.Empty : workSheet.Cells[2, 2].Value.ToString().Trim();
                             var numProveedor = Convert.ToInt32(workSheet.Cells[3, 2].Value.ToString().Trim());
