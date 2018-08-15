@@ -82,7 +82,8 @@
 
                     </div>
                     <div class="pull-left info">
-                        <p>@Ajax.MenuLink(User.Identity.GetUserName().ToString(), string.Format("{0:c}", ""), "Details", "Profile", new { area = "", id = 66 }, null, null)</p>
+                        @*<p>@Ajax.MenuLink(User.Identity.GetUserName().ToString(), string.Format("{0:c}", ""), "Details", "Profile", new { area = "", id = 66 }, null, null)</p>*@
+                        <p>@User.Identity.GetUserName().ToString()</p>
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
@@ -99,307 +100,310 @@
 
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">Menu</li>
-                    
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-address-book"></i>
-                            <span>Seguridad</span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li class="treeview">
-                                <a href="#">
-                                    <i class="fa fa-circle-o"></i> Perfiles
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li class="treeview">
-                                        <a href="#">
-                                            <i class="fa fa-circle-o"></i> Mantenimiento
-                                            <span class="pull-right-container">
-                                                <i class="fa fa-angle-left pull-right"></i>
-                                            </span>
-                                        </a>
-                                        <ul class="treeview-menu">
-                                            <li>
-                                                @Ajax.MenuLink("Mecanicos", string.Format("{0:c}", "fa fa-chrome"), "Index", "Mecanicos", new { area = "Seguridad" }, null, null)
-                                            </li>
-                                            <li>
-                                                @Ajax.MenuLink("Electricos", string.Format("{0:c}", "fa fa-circle-o"), "Index", "Electricos", new { area = "Seguridad" }, null, null)
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="treeview">
-                                        <a href="#">
-                                            <i class="fa fa-circle-o"></i> Operarios
-                                            <span class="pull-right-container">
-                                                <i class="fa fa-angle-left pull-right"></i>
-                                            </span>
-                                        </a>
-                                        <ul class="treeview-menu">
-                                            <li>
-                                                @Ajax.MenuLink("Operadores", string.Format("{0:c}", "fa fa-link"), "Index", "Operadores", new { area = "Seguridad" }, null, null)
-                                            </li>
-                                            <li>
-                                                @Ajax.MenuLink("Reapers(Operador Delphi)", string.Format("{0:c}", "fa fa-link"), "Index", "Pesadores", new { area = "Seguridad" }, null, null)
-                                            </li>
-                                            <li>
-                                                @Ajax.MenuLink("ShiftLeaders", string.Format("{0:c}", "fa fa-link"), "Index", "ShiftLeaders", new { area = "Seguridad" }, null, null)
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        @Ajax.MenuLink("LineLeaders", string.Format("{0:c}", "fa fa-link"), "Index", "LineLeaders", new { area = "Seguridad" }, null, null)
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="treeview">
-                                <a href="#">
-                                    <i class="fa fa-circle-o"></i> Usuarios / Personas
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li>
-                                        @Ajax.MenuLink("Puesto", string.Format("{0:c}", "fa fa-link"), "Index", "Puestos", new { area = "Seguridad" }, null, null)
-                                    </li>
-                                    <li>
-                                        @Ajax.MenuLink("Personas", string.Format("{0:c}", "fa fa-link"), "Index", "Personas", new { area = "Seguridad" }, null, null)
-                                    </li>
-                                    <li>
-                                        @Ajax.MenuLink("Users", string.Format("{0:c}", "fa fa-link"), "Index", "Users", new { area = "Seguridad" }, null, null)
-                                    </li>
-                                    <li>
-                                        @Ajax.MenuLink("AspNet Users", string.Format("{0:c}", "fa fa-link"), "Index", "Usuarios", new { area = "Seguridad" }, null, null)
-                                    </li>
-                                    <li>
-                                        @Ajax.MenuLink("Usuarios Por Persona", string.Format("{0:c}", "fa fa-link"), "Index", "UsuariosPorPersonas", new { area = "Seguridad" }, null, null)
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                @Ajax.MenuLink("Entornos", string.Format("{0:c}", "fa fa-link"), "Index", "Entornos", new { area = "Seguridad" }, null, null)
-                            </li>
-                            <li>
-                                @Ajax.MenuLink("Dispositivos", string.Format("{0:c}", "fa fa-link"), "Index", "Dispositivos", new { area = "Seguridad" }, null, null)
-                            </li>
-                        </ul>
-                    </li>
+                    @if (!User.Identity.GetUserName().ToString().Contains("@fleet1one.com"))
+                    {
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-address-book"></i>
+                                <span>Seguridad</span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="treeview">
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i> Perfiles
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        <li class="treeview">
+                                            <a href="#">
+                                                <i class="fa fa-circle-o"></i> Mantenimiento
+                                                <span class="pull-right-container">
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </span>
+                                            </a>
+                                            <ul class="treeview-menu">
+                                                <li>
+                                                    @Ajax.MenuLink("Mecanicos", string.Format("{0:c}", "fa fa-chrome"), "Index", "Mecanicos", new { area = "Seguridad" }, null, null)
+                                                </li>
+                                                <li>
+                                                    @Ajax.MenuLink("Electricos", string.Format("{0:c}", "fa fa-circle-o"), "Index", "Electricos", new { area = "Seguridad" }, null, null)
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="treeview">
+                                            <a href="#">
+                                                <i class="fa fa-circle-o"></i> Operarios
+                                                <span class="pull-right-container">
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </span>
+                                            </a>
+                                            <ul class="treeview-menu">
+                                                <li>
+                                                    @Ajax.MenuLink("Operadores", string.Format("{0:c}", "fa fa-link"), "Index", "Operadores", new { area = "Seguridad" }, null, null)
+                                                </li>
+                                                <li>
+                                                    @Ajax.MenuLink("Reapers(Operador Delphi)", string.Format("{0:c}", "fa fa-link"), "Index", "Pesadores", new { area = "Seguridad" }, null, null)
+                                                </li>
+                                                <li>
+                                                    @Ajax.MenuLink("ShiftLeaders", string.Format("{0:c}", "fa fa-link"), "Index", "ShiftLeaders", new { area = "Seguridad" }, null, null)
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            @Ajax.MenuLink("LineLeaders", string.Format("{0:c}", "fa fa-link"), "Index", "LineLeaders", new { area = "Seguridad" }, null, null)
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="treeview">
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i> Usuarios / Personas
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        <li>
+                                            @Ajax.MenuLink("Puesto", string.Format("{0:c}", "fa fa-link"), "Index", "Puestos", new { area = "Seguridad" }, null, null)
+                                        </li>
+                                        <li>
+                                            @Ajax.MenuLink("Personas", string.Format("{0:c}", "fa fa-link"), "Index", "Personas", new { area = "Seguridad" }, null, null)
+                                        </li>
+                                        <li>
+                                            @Ajax.MenuLink("Users", string.Format("{0:c}", "fa fa-link"), "Index", "Users", new { area = "Seguridad" }, null, null)
+                                        </li>
+                                        <li>
+                                            @Ajax.MenuLink("AspNet Users", string.Format("{0:c}", "fa fa-link"), "Index", "Usuarios", new { area = "Seguridad" }, null, null)
+                                        </li>
+                                        <li>
+                                            @Ajax.MenuLink("Usuarios Por Persona", string.Format("{0:c}", "fa fa-link"), "Index", "UsuariosPorPersonas", new { area = "Seguridad" }, null, null)
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    @Ajax.MenuLink("Entornos", string.Format("{0:c}", "fa fa-link"), "Index", "Entornos", new { area = "Seguridad" }, null, null)
+                                </li>
+                                <li>
+                                    @Ajax.MenuLink("Dispositivos", string.Format("{0:c}", "fa fa-link"), "Index", "Dispositivos", new { area = "Seguridad" }, null, null)
+                                </li>
+                            </ul>
+                        </li>
 
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-area-chart"></i>
-                            <span>Operaciones</span>
-                        </a>
-                        <ul class="treeview-menu">
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-area-chart"></i>
+                                <span>Operaciones</span>
+                            </a>
+                            <ul class="treeview-menu">
 
-                            <li class="treeview">
-                                <a href="#">
-                                    <i class="fa fa-circle-o"></i> Indicadores
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li class="treeview">
-                                        <a href="#">
-                                            <i class="fa fa-circle-o"></i> VQI
-                                            <span class="pull-right-container">
-                                                <i class="fa fa-angle-left pull-right"></i>
-                                            </span>
-                                        </a>
-                                        <ul class="treeview-menu">
-                                            <li>
-                                                @Ajax.MenuLink("No Conformidades", string.Format("{0:c}", "fa fa-link"), "Index", "NoConformidades", new { area = "Operaciones" }, null, null)
-                                            </li>
-                                            <li>
-                                                @Ajax.MenuLink("Objetivos", string.Format("{0:c}", "fa fa-link"), "Index", "ObjetivosVQI", new { area = "Operaciones" }, null, null)
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="treeview">
-                                        <a href="#">
-                                            <i class="fa fa-circle-o"></i> CRR
-                                            <span class="pull-right-container">
-                                                <i class="fa fa-angle-left pull-right"></i>
-                                            </span>
-                                        </a>
-                                        <ul class="treeview-menu">
-                                            <li>
-                                                @Ajax.MenuLink("Desperdicios", string.Format("{0:c}", "fa fa-link"), "Index", "Desperdicios", new { area = "Operaciones" }, null, null)
-                                            </li>
-                                            <li>
-                                                @Ajax.MenuLink("Objetivos", string.Format("{0:c}", "fa fa-link"), "Index", "ObjetivosCRR", new { area = "Operaciones" }, null, null)
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="treeview">
-                                        <a href="#">
-                                            <i class="fa fa-circle-o"></i> Plan Attainment
-                                            <span class="pull-right-container">
-                                                <i class="fa fa-angle-left pull-right"></i>
-                                            </span>
-                                        </a>
-                                        <ul class="treeview-menu">
-                                            <li>
-                                                @Ajax.MenuLink("Volumenes De Produccion", string.Format("{0:c}", "fa fa-link"), "Index", "VolumenesDeProduccion", new { area = "Operaciones" }, null, null)
-                                            </li>
-                                            <li>
-                                                @Ajax.MenuLink("Objetivos", string.Format("{0:c}", "fa fa-link"), "Index", "ObjetivosPlanAttainment", new { area = "Operaciones" }, null, null)
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
+                                <li class="treeview">
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i> Indicadores
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        <li class="treeview">
+                                            <a href="#">
+                                                <i class="fa fa-circle-o"></i> VQI
+                                                <span class="pull-right-container">
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </span>
+                                            </a>
+                                            <ul class="treeview-menu">
+                                                <li>
+                                                    @Ajax.MenuLink("No Conformidades", string.Format("{0:c}", "fa fa-link"), "Index", "NoConformidades", new { area = "Operaciones" }, null, null)
+                                                </li>
+                                                <li>
+                                                    @Ajax.MenuLink("Objetivos", string.Format("{0:c}", "fa fa-link"), "Index", "ObjetivosVQI", new { area = "Operaciones" }, null, null)
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="treeview">
+                                            <a href="#">
+                                                <i class="fa fa-circle-o"></i> CRR
+                                                <span class="pull-right-container">
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </span>
+                                            </a>
+                                            <ul class="treeview-menu">
+                                                <li>
+                                                    @Ajax.MenuLink("Desperdicios", string.Format("{0:c}", "fa fa-link"), "Index", "Desperdicios", new { area = "Operaciones" }, null, null)
+                                                </li>
+                                                <li>
+                                                    @Ajax.MenuLink("Objetivos", string.Format("{0:c}", "fa fa-link"), "Index", "ObjetivosCRR", new { area = "Operaciones" }, null, null)
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="treeview">
+                                            <a href="#">
+                                                <i class="fa fa-circle-o"></i> Plan Attainment
+                                                <span class="pull-right-container">
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </span>
+                                            </a>
+                                            <ul class="treeview-menu">
+                                                <li>
+                                                    @Ajax.MenuLink("Volumenes De Produccion", string.Format("{0:c}", "fa fa-link"), "Index", "VolumenesDeProduccion", new { area = "Operaciones" }, null, null)
+                                                </li>
+                                                <li>
+                                                    @Ajax.MenuLink("Objetivos", string.Format("{0:c}", "fa fa-link"), "Index", "ObjetivosPlanAttainment", new { area = "Operaciones" }, null, null)
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
 
-                            <li class="treeview">
-                                <a href="#">
-                                    <i class="fa fa-circle-o"></i> Maquinaria
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li>
-                                        @Ajax.MenuLink("Bussines Units", string.Format("{0:c}", "fa fa-link"), "Index", "BussinesUnits", new { area = "Operaciones" }, null, null)
-                                    </li>
-                                    <li>
-                                        @Ajax.MenuLink("Modulos", string.Format("{0:c}", "fa fa-link"), "Index", "Modulos", new { area = "Operaciones" }, null, null)
-                                    </li>
-                                    <li class="treeview">
-                                        <a href="#">
-                                            <i class="fa fa-circle-o"></i> Link-Up
-                                            <span class="pull-right-container">
-                                                <i class="fa fa-angle-left pull-right"></i>
-                                            </span>
-                                        </a>
-                                        <ul class="treeview-menu">
-                                            <li>
-                                                @Ajax.MenuLink("LUPS", string.Format("{0:c}", "fa fa-link"), "Index", "WorkCenters", new { area = "Operaciones" }, null, null)
-                                            </li>
-                                            <li>
-                                                @Ajax.MenuLink("Origenes", string.Format("{0:c}", "fa fa-link"), "Index", "Origenes", new { area = "Operaciones" }, null, null)
-                                            </li>
-                                            <li>
-                                                @Ajax.MenuLink("Secciones", string.Format("{0:c}", "fa fa-link"), "Index", "ModulosSecciones", new { area = "Operaciones" }, null, null)
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
+                                <li class="treeview">
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i> Maquinaria
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        <li>
+                                            @Ajax.MenuLink("Bussines Units", string.Format("{0:c}", "fa fa-link"), "Index", "BussinesUnits", new { area = "Operaciones" }, null, null)
+                                        </li>
+                                        <li>
+                                            @Ajax.MenuLink("Modulos", string.Format("{0:c}", "fa fa-link"), "Index", "Modulos", new { area = "Operaciones" }, null, null)
+                                        </li>
+                                        <li class="treeview">
+                                            <a href="#">
+                                                <i class="fa fa-circle-o"></i> Link-Up
+                                                <span class="pull-right-container">
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </span>
+                                            </a>
+                                            <ul class="treeview-menu">
+                                                <li>
+                                                    @Ajax.MenuLink("LUPS", string.Format("{0:c}", "fa fa-link"), "Index", "WorkCenters", new { area = "Operaciones" }, null, null)
+                                                </li>
+                                                <li>
+                                                    @Ajax.MenuLink("Origenes", string.Format("{0:c}", "fa fa-link"), "Index", "Origenes", new { area = "Operaciones" }, null, null)
+                                                </li>
+                                                <li>
+                                                    @Ajax.MenuLink("Secciones", string.Format("{0:c}", "fa fa-link"), "Index", "ModulosSecciones", new { area = "Operaciones" }, null, null)
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
 
-                            <li class="treeview">
-                                <a href="#">
-                                    <i class="fa fa-circle-o"></i> Mantenimiento
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li class="treeview">
-                                        <a href="#">
-                                            <i class="fa fa-circle-o"></i> Fallas
-                                            <span class="pull-right-container">
-                                                <i class="fa fa-angle-left pull-right"></i>
-                                            </span>
-                                        </a>
-                                        <ul class="treeview-menu">
-                                            <li>
-                                                @Ajax.MenuLink("Paros", string.Format("{0:c}", "fa fa-link"), "Index", "Paros", new { area = "Operaciones" }, null, null)
-                                            </li>
-                                            <li>
-                                                @Ajax.MenuLink("Actividad En Paro", string.Format("{0:c}", "fa fa-link"), "Index", "ActividadEnParos", new { area = "Operaciones" }, null, null)
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="treeview">
-                                        <a href="#">
-                                            <i class="fa fa-circle-o"></i> Defectos
-                                            <span class="pull-right-container">
-                                                <i class="fa fa-angle-left pull-right"></i>
-                                            </span>
-                                        </a>
-                                        <ul class="treeview-menu">
-                                            <li>
-                                                @Ajax.MenuLink("Defectos", string.Format("{0:c}", "fa fa-link"), "Index", "Defectos", new { area = "Operaciones" }, null, null)
-                                            </li>
-                                            <li>
-                                                @Ajax.MenuLink("Actividad En Defecto", string.Format("{0:c}", "fa fa-link"), "Index", "ActividadEnDefectos", new { area = "Operaciones" }, null, null)
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
+                                <li class="treeview">
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i> Mantenimiento
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        <li class="treeview">
+                                            <a href="#">
+                                                <i class="fa fa-circle-o"></i> Fallas
+                                                <span class="pull-right-container">
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </span>
+                                            </a>
+                                            <ul class="treeview-menu">
+                                                <li>
+                                                    @Ajax.MenuLink("Paros", string.Format("{0:c}", "fa fa-link"), "Index", "Paros", new { area = "Operaciones" }, null, null)
+                                                </li>
+                                                <li>
+                                                    @Ajax.MenuLink("Actividad En Paro", string.Format("{0:c}", "fa fa-link"), "Index", "ActividadEnParos", new { area = "Operaciones" }, null, null)
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="treeview">
+                                            <a href="#">
+                                                <i class="fa fa-circle-o"></i> Defectos
+                                                <span class="pull-right-container">
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </span>
+                                            </a>
+                                            <ul class="treeview-menu">
+                                                <li>
+                                                    @Ajax.MenuLink("Defectos", string.Format("{0:c}", "fa fa-link"), "Index", "Defectos", new { area = "Operaciones" }, null, null)
+                                                </li>
+                                                <li>
+                                                    @Ajax.MenuLink("Actividad En Defecto", string.Format("{0:c}", "fa fa-link"), "Index", "ActividadEnDefectos", new { area = "Operaciones" }, null, null)
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
 
-                            <li>
-                                @Ajax.MenuLink("Horarios", string.Format("{0:c}", "fa fa-link"), "Index", "Horarios", new { area = "Operaciones" }, null, null)
-                            </li>
-                            <li>
-                                @Ajax.MenuLink("Marcas", string.Format("{0:c}", "fa fa-link"), "Index", "Marcas", new { area = "Operaciones" }, null, null)
-                            </li>
-                            <li>
-                                @Ajax.MenuLink("Plan de produccion", string.Format("{0:c}", "fa fa-link"), "Index", "PlanesDeProduccion", new { area = "Operaciones" }, null, null)
-                            </li>
-                            <li>
-                                @Ajax.MenuLink("Area", string.Format("{0:c}", "fa fa-link"), "Index", "Area", new { area = "Operaciones" }, null, null)
-                            </li>
-                            <li>
-                                @Ajax.MenuLink("SubArea", string.Format("{0:c}", "fa fa-link"), "Index", "SubArea", new { area = "Operaciones" }, null, null)
-                            </li>
-                            <li>
-                                @Ajax.MenuLink("Lista de Distribucion", string.Format("{0:c}", "fa fa-link"), "Index", "ListaDistribucion", new { area = "Operaciones" }, null, null)
-                            </li>
-                            <li>
-                                @Ajax.MenuLink("Calificaciones", string.Format("{0:c}", "fa fa-link"), "Index", "Calificacion", new { area = "Operaciones" }, null, null)
-                            </li>
-                            <li>
-                                @Ajax.MenuLink("Categorias", string.Format("{0:c}", "fa fa-link"), "Index", "Categoria", new { area = "Operaciones" }, null, null)
-                            </li>
-                            <li>
-                                @Ajax.MenuLink("SubCategorias", string.Format("{0:c}", "fa fa-link"), "Index", "SubCategoria", new { area = "Operaciones" }, null, null)
-                            </li>
-                            <li>
-                                @Ajax.MenuLink("Mantenimientos", string.Format("{0:c}", "fa fa-link"), "Index", "Mantenimiento", new { area = "Operaciones" }, null, null)
-                            </li>
-                        </ul>
-                    </li>
+                                <li>
+                                    @Ajax.MenuLink("Horarios", string.Format("{0:c}", "fa fa-link"), "Index", "Horarios", new { area = "Operaciones" }, null, null)
+                                </li>
+                                <li>
+                                    @Ajax.MenuLink("Marcas", string.Format("{0:c}", "fa fa-link"), "Index", "Marcas", new { area = "Operaciones" }, null, null)
+                                </li>
+                                <li>
+                                    @Ajax.MenuLink("Plan de produccion", string.Format("{0:c}", "fa fa-link"), "Index", "PlanesDeProduccion", new { area = "Operaciones" }, null, null)
+                                </li>
+                                <li>
+                                    @Ajax.MenuLink("Area", string.Format("{0:c}", "fa fa-link"), "Index", "Area", new { area = "Operaciones" }, null, null)
+                                </li>
+                                <li>
+                                    @Ajax.MenuLink("SubArea", string.Format("{0:c}", "fa fa-link"), "Index", "SubArea", new { area = "Operaciones" }, null, null)
+                                </li>
+                                <li>
+                                    @Ajax.MenuLink("Lista de Distribucion", string.Format("{0:c}", "fa fa-link"), "Index", "ListaDistribucion", new { area = "Operaciones" }, null, null)
+                                </li>
+                                <li>
+                                    @Ajax.MenuLink("Calificaciones", string.Format("{0:c}", "fa fa-link"), "Index", "Calificacion", new { area = "Operaciones" }, null, null)
+                                </li>
+                                <li>
+                                    @Ajax.MenuLink("Categorias", string.Format("{0:c}", "fa fa-link"), "Index", "Categoria", new { area = "Operaciones" }, null, null)
+                                </li>
+                                <li>
+                                    @Ajax.MenuLink("SubCategorias", string.Format("{0:c}", "fa fa-link"), "Index", "SubCategoria", new { area = "Operaciones" }, null, null)
+                                </li>
+                                <li>
+                                    @Ajax.MenuLink("Mantenimientos", string.Format("{0:c}", "fa fa-link"), "Index", "Mantenimiento", new { area = "Operaciones" }, null, null)
+                                </li>
+                            </ul>
+                        </li>
 
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-files-o"></i>
-                            <span>Cuestionarios</span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li>
-                                @Ajax.MenuLink("Grupo Preguntas", string.Format("{0:c}", "fa fa-link"), "Index", "GrupoPreguntas", new { area = "Cuestionario" }, null, null)
-                            </li>
-                            <li>
-                                @Ajax.MenuLink("Preguntas", string.Format("{0:c}", "fa fa-link"), "Index", "Preguntas", new { area = "Cuestionario" }, null, null)
-                            </li>
-                            <li>
-                                @Ajax.MenuLink("Preguntas x Turno", string.Format("{0:c}", "fa fa-link"), "Index", "PreguntaTurno", new { area = "Cuestionario" }, null, null)
-                            </li>
-                            <li>
-                                @Ajax.MenuLink("Respuestas", string.Format("{0:c}", "fa fa-link"), "Index", "Respuesta", new { area = "Cuestionario" }, null, null)
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-calendar-check-o"></i>
-                            <span>GembaWalks</span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li>
-                                @Ajax.MenuLink("Calendario", string.Format("{0:c}", "fa fa-link"), "Index", "Evento", new { area = "Operaciones" }, null, null)
-                            </li>
-                            <li>
-                                @Ajax.MenuLink("GembaWalks", string.Format("{0:c}", "fa fa-link"), "Index", "GembaWalk", new { area = "Operaciones" }, null, null)
-                            </li>
-                        </ul>
-                    </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-files-o"></i>
+                                <span>Cuestionarios</span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    @Ajax.MenuLink("Grupo Preguntas", string.Format("{0:c}", "fa fa-link"), "Index", "GrupoPreguntas", new { area = "Cuestionario" }, null, null)
+                                </li>
+                                <li>
+                                    @Ajax.MenuLink("Preguntas", string.Format("{0:c}", "fa fa-link"), "Index", "Preguntas", new { area = "Cuestionario" }, null, null)
+                                </li>
+                                <li>
+                                    @Ajax.MenuLink("Preguntas x Turno", string.Format("{0:c}", "fa fa-link"), "Index", "PreguntaTurno", new { area = "Cuestionario" }, null, null)
+                                </li>
+                                <li>
+                                    @Ajax.MenuLink("Respuestas", string.Format("{0:c}", "fa fa-link"), "Index", "Respuesta", new { area = "Cuestionario" }, null, null)
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-calendar-check-o"></i>
+                                <span>GembaWalks</span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    @Ajax.MenuLink("Calendario", string.Format("{0:c}", "fa fa-link"), "Index", "Evento", new { area = "Operaciones" }, null, null)
+                                </li>
+                                <li>
+                                    @Ajax.MenuLink("GembaWalks", string.Format("{0:c}", "fa fa-link"), "Index", "GembaWalk", new { area = "Operaciones" }, null, null)
+                                </li>
+                            </ul>
+                        </li>
+                    }
+
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-files-o"></i>
@@ -458,36 +462,38 @@
                             </li>
                         </ul>
                     </li>
-
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-files-o"></i>
-                            <span>Multimedia</span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li>
-                                @Ajax.MenuLink("Fotos", string.Format("{0:c}", "fa fa-link"), "Index", "Fotos", new { area = "Multimedia" }, null, null)
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="header">Apps</li>
-                    <li>
-                        @Ajax.MenuLink("Maya", string.Format("{0:c}", "fa fa-link"), "Index", "Maya", null, null, null)
-                    </li>
-                    <li>
-                        @Ajax.MenuLink("Augmented Reality", string.Format("{0:c}", "fa fa-link"), "Index", "AugmentedReality", null, null, null)
-                    </li>
-                    <li>
-                        @Html.ActionLink("InSiteLAC", "Index", "InSiteLAC", new { area = "" }, null)
-                    </li>
-                    <li>
-                        @Html.ActionLink("AtomFeed", "Index", "AtomFeed", new { area = "" }, null)
-                    </li>
-                    <li class="header">Help</li>
-                    <li>
-                        @Html.ActionLink("Apis", "Index", "Help", new { area = "" }, null)
-                    </li>
-                </ul>
+                    @if (!User.Identity.GetUserName().ToString().Contains("@fleet1one.com"))
+                    {
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-files-o"></i>
+                                <span>Multimedia</span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    @Ajax.MenuLink("Fotos", string.Format("{0:c}", "fa fa-link"), "Index", "Fotos", new { area = "Multimedia" }, null, null)
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="header">Apps</li>
+                        <li>
+                            @Ajax.MenuLink("Maya", string.Format("{0:c}", "fa fa-link"), "Index", "Maya", null, null, null)
+                        </li>
+                        <li>
+                            @Ajax.MenuLink("Augmented Reality", string.Format("{0:c}", "fa fa-link"), "Index", "AugmentedReality", null, null, null)
+                        </li>
+                        <li>
+                            @Html.ActionLink("InSiteLAC", "Index", "InSiteLAC", new { area = "" }, null)
+                        </li>
+                        <li>
+                            @Html.ActionLink("AtomFeed", "Index", "AtomFeed", new { area = "" }, null)
+                        </li>
+                        <li class="header">Help</li>
+                        <li>
+                            @Html.ActionLink("Apis", "Index", "Help", new { area = "" }, null)
+                        </li>
+                    }
+                    </ul>
             
             </section>
         </aside>
@@ -504,154 +510,6 @@
             </div>
             <strong>Copyright &copy; @DateTime.Now.Year </strong> Derechos reservados.
         </footer>
-        <aside class="control-sidebar control-sidebar-dark">
-            <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-                <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-                <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane" id="control-sidebar-home-tab">
-                    <h3 class="control-sidebar-heading">Recent Activity</h3>
-                    <ul class="control-sidebar-menu">
-                        <li>
-                            <a href="javascript:void(0)">
-                                <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-                                <div class="menu-info">
-                                    <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-                                    <p>Will be 23 on April 24th</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <i class="menu-icon fa fa-user bg-yellow"></i>
-                                <div class="menu-info">
-                                    <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
-                                    <p>New phone +1(800)555-1234</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
-                                <div class="menu-info">
-                                    <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
-                                    <p>nora@example.com</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <i class="menu-icon fa fa-file-code-o bg-green"></i>
-                                <div class="menu-info">
-                                    <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
-                                    <p>Execution time 5 seconds</p>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <h3 class="control-sidebar-heading">Tasks Progress</h3>
-                    <ul class="control-sidebar-menu">
-                        <li>
-                            <a href="javascript:void(0)">
-                                <h4 class="control-sidebar-subheading">
-                                    Custom Template Design
-                                    <span class="label label-danger pull-right">70%</span>
-                                </h4>
-                                <div class="progress progress-xxs">
-                                    <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <h4 class="control-sidebar-subheading">
-                                    Update Resume
-                                    <span class="label label-success pull-right">95%</span>
-                                </h4>
-                                <div class="progress progress-xxs">
-                                    <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <h4 class="control-sidebar-subheading">
-                                    Laravel Integration
-                                    <span class="label label-warning pull-right">50%</span>
-                                </h4>
-                                <div class="progress progress-xxs">
-                                    <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <h4 class="control-sidebar-subheading">
-                                    Back End Framework
-                                    <span class="label label-primary pull-right">68%</span>
-                                </h4>
-                                <div class="progress progress-xxs">
-                                    <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-                <div class="tab-pane" id="control-sidebar-settings-tab">
-                    <form method="post">
-                        <h3 class="control-sidebar-heading">General Settings</h3>
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                Report panel usage
-                                <input type="checkbox" class="pull-right" checked>
-                            </label>
-                            <p>
-                                Some information about this general settings option
-                            </p>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                Allow mail redirect
-                                <input type="checkbox" class="pull-right" checked>
-                            </label>
-                            <p>
-                                Other sets of options are available
-                            </p>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                Expose author name in posts
-                                <input type="checkbox" class="pull-right" checked>
-                            </label>
-                            <p>
-                                Allow the user to show his name in blog posts
-                            </p>
-                        </div>
-                        <h3 class="control-sidebar-heading">Chat Settings</h3>
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                Show me as online
-                                <input type="checkbox" class="pull-right" checked>
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                Turn off notifications
-                                <input type="checkbox" class="pull-right">
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                Delete chat history
-                                <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
-                            </label>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </aside>
         <div class="control-sidebar-bg"></div>
     </div>
 
