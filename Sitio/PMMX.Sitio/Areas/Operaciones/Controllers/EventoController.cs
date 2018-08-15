@@ -42,6 +42,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 if (persona.EjecucionCorrecta)
                 {
                     var _puesto = db.Puestos.Where(p => p.Id == persona.Respuesta.IdPuesto).Select(p => p.Nombre).FirstOrDefault();
+                    List<EventoView> events = new List<EventoView>();
 
                     switch (_puesto)
                     {
@@ -51,7 +52,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                                 .Select(r => r.IdEvento)
                                 .ToList();
 
-                            var eventsE = db.Evento
+                            events = db.Evento
                             .Where(e => (e.FechaInicio >= date && e.FechaFin <= LastDate) && e.Activo == true && listID.Contains(e.Id))
                             .Select(e => new EventoView
                             {
@@ -62,15 +63,15 @@ namespace Sitio.Areas.Operaciones.Controllers
                                 Nota = e.Nota
                             }).ToList();
 
-                            foreach (var item in eventsE)
+                            foreach (var item in events)
                             {
                                 item.Color = GetColorStatus(item.Id);
                                 item.Clasificacion = GetClasificacion(item.Id);
                             }
 
-                            return Json(new { eventsE }, JsonRequestBehavior.AllowGet);
+                            return Json(new { events }, JsonRequestBehavior.AllowGet);
                         default:
-                            var events = db.Evento
+                           events = db.Evento
                                     .Where(e => (e.FechaInicio >= date && e.FechaFin <= LastDate) && e.Activo == true)
                                     .Select(e => new EventoView
                                     {
