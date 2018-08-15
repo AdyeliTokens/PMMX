@@ -105,7 +105,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                             }
                         }).ToList(),
                         WorkFlowInicial = s.Status.WorkFlowInicial
-                        .Where(w => (w.Id == s.Status.Id))
+                        .Where(w => (w.Inicial == s.Status.Id) && (w.IdSubCategoria == s.Ventana.IdSubCategoria))
                         .Select(w => new WorkFlowView
                         {
                             Id = w.Id,

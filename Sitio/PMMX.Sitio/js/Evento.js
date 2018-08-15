@@ -6,8 +6,12 @@
 
     $('.select2').select2();
 
-    GetEvents(formatDate(new Date()), "/Evento/GetEvents?date=" + formatDate(new Date()));
+    setInterval(function () {
+        GetEvents(formatDate(new Date()), "/Evento/GetEvents?date=" + formatDate(new Date()));
+    }, 600000);
+   
     getCategorias();
+    GetEvents(formatDate(new Date()), "/Evento/GetEvents?date=" + formatDate(new Date()));
 
     function formatDate(date) {
         var d = new Date(date),
