@@ -402,7 +402,14 @@ namespace Sitio.Areas.Warehouse.Controllers
 
                             ventana.Recurso = workSheet.Cells[4, 2].Value == null ? string.Empty : workSheet.Cells[4, 2].Value.ToString().Trim();
                             ventana.Cantidad = Convert.ToDouble(workSheet.Cells[5, 2].Value == null ? 0 : workSheet.Cells[5, 2].Value);
-                            ventana.IdCarrier = 3;
+                            if(numProveedor== 12345)
+                            {
+                                ventana.IdCarrier = 5;// FleetOne
+                            }
+                            else
+                            {
+                                ventana.IdCarrier = 6;// No confirmado
+                            }
                             ventana.NombreCarrier = workSheet.Cells[6, 2].Value == null ? string.Empty : workSheet.Cells[6, 2].Value.ToString().Trim();
                             ventana.Conductor = workSheet.Cells[7, 2].Value == null ? string.Empty : workSheet.Cells[7, 2].Value.ToString().Trim();
                             ventana.MovilConductor = workSheet.Cells[8, 2].Value == null ? string.Empty : workSheet.Cells[8, 2].Value.ToString().Trim();
