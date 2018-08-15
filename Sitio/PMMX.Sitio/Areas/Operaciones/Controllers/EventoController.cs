@@ -36,25 +36,61 @@ namespace Sitio.Areas.Operaciones.Controllers
             {
                 var lastDay = DateTime.DaysInMonth(date.Year, date.Month);
                 var LastDate = date.AddDays(lastDay-1);
+                PersonaServicio personaServicio = new PersonaServicio();
+                IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
 
-                var events = db.Evento
-                    .Where(e => (e.FechaInicio >= date && e.FechaFin <= LastDate) && e.Activo == true)
-                    .Select(e => new EventoView
-                    {
-                        Id = e.Id,
-                        Descripcion = e.Descripcion,
-                        FechaInicio = e.FechaInicio,
-                        FechaFin = e.FechaFin,
-                        Nota = e.Nota
-                    }).ToList(); 
-                
-                foreach (var item in events)
+                if (persona.EjecucionCorrecta)
                 {
-                    item.Color = GetColorStatus(item.Id);
-                    item.Clasificacion = GetClasificacion(item.Id);
+                    var _puesto = db.Puestos.Where(p => p.Id == persona.Respuesta.IdPuesto).Select(p => p.Nombre).FirstOrDefault();
+
+                    switch (_puesto)
+                    {
+                        case "Supplier":
+                            var listID = db.EventoResponsable
+                                .Where(r => r.IdResponsable == persona.Respuesta.Id)
+                                .Select(r => r.IdEvento)
+                                .ToList();
+
+                            var eventsE = db.Evento
+                            .Where(e => (e.FechaInicio >= date && e.FechaFin <= LastDate) && e.Activo == true && listID.Contains(e.Id))
+                            .Select(e => new EventoView
+                            {
+                                Id = e.Id,
+                                Descripcion = e.Descripcion,
+                                FechaInicio = e.FechaInicio,
+                                FechaFin = e.FechaFin,
+                                Nota = e.Nota
+                            }).ToList();
+
+                            foreach (var item in eventsE)
+                            {
+                                item.Color = GetColorStatus(item.Id);
+                                item.Clasificacion = GetClasificacion(item.Id);
+                            }
+
+                            return Json(new { eventsE }, JsonRequestBehavior.AllowGet);
+                        default:
+                            var events = db.Evento
+                                    .Where(e => (e.FechaInicio >= date && e.FechaFin <= LastDate) && e.Activo == true)
+                                    .Select(e => new EventoView
+                                    {
+                                        Id = e.Id,
+                                        Descripcion = e.Descripcion,
+                                        FechaInicio = e.FechaInicio,
+                                        FechaFin = e.FechaFin,
+                                        Nota = e.Nota
+                                    }).ToList();
+
+                            foreach (var item in events)
+                            {
+                                item.Color = GetColorStatus(item.Id);
+                                item.Clasificacion = GetClasificacion(item.Id);
+                            }
+                            return Json(new { events }, JsonRequestBehavior.AllowGet);
+                    }
                 }
 
-                return Json(new { events }, JsonRequestBehavior.AllowGet);
+                return Json(new { status = 200 }, JsonRequestBehavior.AllowGet);
             }
             else
             {

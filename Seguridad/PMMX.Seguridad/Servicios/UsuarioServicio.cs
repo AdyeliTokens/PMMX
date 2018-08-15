@@ -132,6 +132,28 @@ namespace PMMX.Seguridad.Servicios
 
         public string GetEmailBySubArea(int idSubArea)
         {
+            if(idSubArea == 15) // Foreing trade
+            {
+                var emailListF = db.ListaDistribucion
+                 .Where(e => (e.IdSubarea == idSubArea || e.IdSubarea == 20)  && e.Activo == true)
+                 .Select(e => e.Remitente.Users.Where(v => v.IdPersona == e.Remitente.Id && e.Remitente.Activo == true).Select(v => new UserView
+                 {
+                     Id = v.Id,
+                     Email = v.Usuario.Email
+                 }).ToList()
+                 ).ToList();
+
+                List<string> emailsF = emailListF.Select(x => x.Select(y => y.Email).FirstOrDefault()).ToList();
+                string stringEmailsF = "";
+
+                foreach (string email in emailsF)
+                {
+                    stringEmailsF += (email + ",");
+                }
+
+                return stringEmailsF;
+            }
+
             var emailList = db.ListaDistribucion
                 .Where(e => e.IdSubarea == idSubArea && e.Activo == true )
                 .Select(e => e.Remitente.Users.Where(v => v.IdPersona == e.Remitente.Id && e.Remitente.Activo == true).Select(v => new UserView
