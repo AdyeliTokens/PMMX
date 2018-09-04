@@ -42,14 +42,7 @@ namespace PMMX.Seguridad.Servicios
         public List<DispositivoView> GetMecanicosPorOrigen(int idOrigen)
         {
             List<DispositivoView> dispositivos = new List<DispositivoView>();
-
-            //var mecanicos = db.Origens.Where(x => x.Id == idOrigen).Select(x => x.WorkCenter.BussinesUnit.Mecanicos.SelectMany(m =>
-            //        m.Mecanico.Dispositivos.Where(d => d.Activo == true).Select(y => new DispositivoView
-            //        {
-            //            Id = y.Id,
-            //            Llave = y.Llave
-            //        })).ToList()).FirstOrDefault();
-
+            
             dispositivos = db.Origens.Where(x => x.Id == idOrigen).Select(x => x.WorkCenter.BussinesUnit.Mecanicos.SelectMany(m =>
                     m.Mecanico.Dispositivos.Where(d => d.Activo == true).Select(y => new DispositivoView
                     {
