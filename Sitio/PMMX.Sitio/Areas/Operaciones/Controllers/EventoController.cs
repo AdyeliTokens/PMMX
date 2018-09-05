@@ -486,6 +486,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             //db.Evento.Remove(evento);
             evento.Activo = false;
             db.SaveChanges();
+
             SendNotification(evento,"The event has been deleted: ");
 
             return RedirectToAction("Index");

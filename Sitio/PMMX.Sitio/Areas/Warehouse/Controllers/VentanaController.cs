@@ -176,9 +176,7 @@ namespace Sitio.Areas.Warehouse.Controllers
                             .Include(v => v.Evento)
                             .Include(v => v.Proveedor)
                             .SingleOrDefault(x => x.Id == ventana.Id);
-
-                //sendNotifications(ventanaSend);
-
+                
                 return RedirectToAction("Index", "Evento", new { Area = "Operaciones" });
             }
 
@@ -235,44 +233,7 @@ namespace Sitio.Areas.Warehouse.Controllers
             }
             return false;
         }
-
-        public bool sendNotifications(Ventana ventana)
-        {
-            try
-            {
-                UsuarioServicio usuarioServicio = new UsuarioServicio();
-                NotificationService notify = new NotificationService();
-
-                string senders = usuarioServicio.GetEmailByEvento(ventana.IdEvento);
-                if (senders != null)
-                {
-                    EmailService emailService = new EmailService();
-                    emailService.SendMail(senders, ventana);
-                }
-
-                List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(ventana.IdEvento);
-                List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
-
-                var estatus = db.StatusVentana
-                         .Where(s => (s.IdVentana == ventana.Id))
-                         .OrderByDescending(s => s.Fecha)
-                         .Select(s => s.Status)
-                         .FirstOrDefault();
-
-                foreach (string notificacion in llaves)
-                {
-                    notify.SendPushNotification(notificacion, " Cambio de estatus Ventana: " + ventana.Evento.Descripcion + ". ", " Cambio de estatus a " + estatus.Nombre);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return false;
-            }
-
-            return true;
-        }
-
+        
         // GET: Warehouse/Ventana/Edit/5
         public ActionResult Edit(int? id)
         {
