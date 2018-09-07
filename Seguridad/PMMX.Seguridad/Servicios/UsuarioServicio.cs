@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using PMMX.Modelo.Entidades.Warehouse;
 
 namespace PMMX.Seguridad.Servicios
 {
@@ -25,9 +26,6 @@ namespace PMMX.Seguridad.Servicios
 
         public List<DispositivoView> GetDispositivosByOrigenAndGrupoPreguntas(int idOrigen, int idGrupo)
         {
-            /*var dispositivos = db.Remitentes.Where(x => (x.IdGrupo == idGrupo))
-                .Select(d => d.Puesto.Personas.SelectMany(p => p.Dispositivos.Select(r => new DispositivoView { Llave = r.Llave })).ToList()).FirstOrDefault();
-            return dispositivos;*/
             var dispositivos = db.Origens.Where(o => (o.Id == idOrigen))
                 .Select( o => (o.WorkCenter.Responsable.Dispositivos.Where( d=> (d.Activo == true)).Select( y => new DispositivoView
                 {
@@ -123,42 +121,43 @@ namespace PMMX.Seguridad.Servicios
             return stringEmails;
         }
 
-        public string GetEmailBySubArea(int idSubArea)
+        public string GetEmailByStatus ( Ventana ventana )
         {
-            if(idSubArea == 15) // Foreing trade
-            {
-                var emailListF = db.ListaDistribucion
-                 .Where(e => (e.IdSubarea == idSubArea || e.IdSubarea == 20)  && e.Activo == true)
-                 .Select(e => e.Remitente.Users.Where(v => v.IdPersona == e.Remitente.Id && e.Remitente.Activo == true).Select(v => new UserView
-                 {
-                     Id = v.Id,
-                     Email = v.Usuario.Email
-                 }).ToList()
-                 ).ToList();
-
-                List<string> emailsF = emailListF.Select(x => x.Select(y => y.Email).FirstOrDefault()).ToList();
-                string stringEmailsF = "";
-
-                foreach (string email in emailsF)
-                {
-                    stringEmailsF += (email + ",");
-                }
-
-                return stringEmailsF;
-            }
-
-            var emailList = db.ListaDistribucion
-                .Where(e => e.IdSubarea == idSubArea && e.Activo == true )
-                .Select(e => e.Remitente.Users.Where(v => v.IdPersona == e.Remitente.Id && e.Remitente.Activo == true).Select(v => new UserView
-                {
-                    Id = v.Id,
-                    Email = v.Usuario.Email
-                }).ToList()
-                ).ToList();
-
-            List<string> emails = emailList.Select(x => x.Select(y => y.Email).FirstOrDefault()).ToList();
             string stringEmails = "";
+            List<UserView> emailList = new List<UserView>();
+            var IdStatus = ventana.StatusVentana.OrderByDescending(s => s.Fecha).Select(s => s.IdStatus).FirstOrDefault();
 
+            var workFlow = db.WorkFlows
+                           .Where(w => (w.Inicial == IdStatus ) 
+                                       && (w.IdSubCategoria == ventana.IdSubCategoria))
+                           .FirstOrDefault(); 
+
+            if (workFlow.AlertaProveedor == true)
+            {
+                emailList = db.ListaDistribucion
+                        .Where(l => (l.IdSubarea == workFlow.IdSubArea) || (l.IdProveedor == ventana.IdProveedor) && (l.Activo == true))
+                        .Select(l=> l.Remitente.Users.Where( r=> (r.IdPersona == l.Remitente.Id))
+                        .Select(r => new UserView {
+                            Id = r.Id,
+                            Email = r.Usuario.Email
+                        }).FirstOrDefault()
+                        ).ToList();
+            }
+            else
+            {
+                emailList = db.ListaDistribucion
+                        .Where(l => (l.IdSubarea == workFlow.IdSubArea))
+                        .Select(l => l.Remitente.Users.Where(r => (r.IdPersona == l.Remitente.Id) && (l.Activo == true))
+                        .Select(r => new UserView
+                        {
+                            Id = r.Id,
+                            Email = r.Usuario.Email
+                        }).FirstOrDefault()
+                        ).ToList();
+            }
+            
+            List<string> emails = emailList.Select(x => x.Email).ToList();
+            
             foreach (string email in emails)
             {
                 stringEmails += (email + ",");
@@ -166,6 +165,5 @@ namespace PMMX.Seguridad.Servicios
 
             return stringEmails;
         }
-
     }
 }

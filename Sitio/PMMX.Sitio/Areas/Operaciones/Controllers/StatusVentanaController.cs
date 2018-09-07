@@ -198,8 +198,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                     UsuarioServicio usuarioServicio = new UsuarioServicio();
                     NotificationService notify = new NotificationService();
 
-                    // string senders = usuarioServicio.GetEmailByEvento(ventana.IdEvento);
-                    string senders = usuarioServicio.GetEmailBySubArea(workFlow.Respuesta.IdSubArea);
+                    string senders = usuarioServicio.GetEmailByStatus(ventana);
 
                     if (senders != "")
                     {
