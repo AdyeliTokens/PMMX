@@ -36,6 +36,9 @@
                             <th style="width:20%">
                                 Persona
                             </th>
+                            <th style="width:20%">
+                                Proveedor
+                            </th>
                             <th style="width:10%">
                                 Activo
                             </th>
@@ -46,36 +49,39 @@
                         @foreach (var item in Model)
                         {
 
-                            <tr class=@(item.Activo ? "primary" : "approved")>
-                                <td>
-                                    @Html.ActionLink("" + item.Id, "Details", new { id = item.Id })
+                        <tr class=@(item.Activo ? "primary" : "approved")>
+                            <td>
+                                @Html.ActionLink("" + item.Id, "Details", new { id = item.Id })
 
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.SubArea.Nombre)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Remitente.Nombre) @Html.DisplayFor(modelItem => item.Remitente.Apellido1) @Html.DisplayFor(modelItem => item.Remitente.Apellido2)
-                                </td>
-                                <td>
-                                    @Html.CheckBoxFor(modelItem => item.Activo)
-                                    @Html.LabelFor(modelItem => item.Activo)
-                                </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
-                                            <i class="fa fa-gear"></i>
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
-                                            <li role="presentation">@Html.ActionLink("Editar", "Edit", new { id = item.Id })</li>
-                                            <li role="presentation">@Html.ActionLink("Detalles", "Details", new { id = item.Id })</li>
-                                            <li role="presentation" class="divider"></li>
-                                            <li role="presentation">@Html.ActionLink("Eliminar", "Delete", new { id = item.Id })</li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SubArea.Nombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Remitente.Nombre) @Html.DisplayFor(modelItem => item.Remitente.Apellido1) @Html.DisplayFor(modelItem => item.Remitente.Apellido2)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Proveedor.NombreCorto)
+                            </td>
+                            <td>
+                                @Html.CheckBoxFor(modelItem => item.Activo)
+                                @Html.LabelFor(modelItem => item.Activo)
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+                                        <i class="fa fa-gear"></i>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
+                                        <li role="presentation">@Html.ActionLink("Editar", "Edit", new { id = item.Id })</li>
+                                        <li role="presentation">@Html.ActionLink("Detalles", "Details", new { id = item.Id })</li>
+                                        <li role="presentation" class="divider"></li>
+                                        <li role="presentation">@Html.ActionLink("Eliminar", "Delete", new { id = item.Id })</li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                     <tfoot>
