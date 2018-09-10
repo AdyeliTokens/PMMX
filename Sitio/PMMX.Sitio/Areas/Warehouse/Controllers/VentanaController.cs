@@ -360,9 +360,8 @@ namespace Sitio.Areas.Warehouse.Controllers
                             ventana.PO = workSheet.Cells[2, 2].Value == null ? string.Empty : workSheet.Cells[2, 2].Value.ToString().Trim();
                             var numProveedor = Convert.ToInt32(workSheet.Cells[3, 2].Value.ToString().Trim());
                             ventana.IdProveedor = db.Proveedores.Where(p => (p.NumeroProveedor == numProveedor)).Select(p => p.Id).FirstOrDefault();
-
                             ventana.Recurso = workSheet.Cells[4, 2].Value == null ? string.Empty : workSheet.Cells[4, 2].Value.ToString().Trim();
-                            ventana.Cantidad = Convert.ToDouble(workSheet.Cells[5, 2].Value == null ? 0 : workSheet.Cells[5, 2].Value);
+                            ventana.Cantidad = workSheet.Cells[5, 2].Value == null ? string.Empty : workSheet.Cells[5, 2].Value.ToString().Trim();
                             if(numProveedor== 12345)
                             {
                                 ventana.IdCarrier = 5;// FleetOne
