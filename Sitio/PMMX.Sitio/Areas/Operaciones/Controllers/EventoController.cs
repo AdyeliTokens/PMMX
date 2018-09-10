@@ -284,6 +284,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
             }
         }
+
         public ActionResult GetResponsables()
         {
             if (ModelState.IsValid)
@@ -301,7 +302,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         {
             if (ModelState.IsValid)
             {
-                var lista = db.SubArea.Select(w => new { Id = w.Id, Nombre = w.Nombre }).OrderBy(w => w.Id).ToList();
+                var lista = db.SubArea.Where(w=> w.Activo == true).Select(w => new { Id = w.Id, Nombre = w.Nombre }).OrderBy(w => w.Id).ToList();
                 return Json(new { lista }, JsonRequestBehavior.AllowGet);
             }
             else
@@ -380,8 +381,6 @@ namespace Sitio.Areas.Operaciones.Controllers
                             db.SaveChanges();
                         }
                     }
-
-                    //SendNotification(evento);
                 }
                 else
                 {
@@ -394,17 +393,16 @@ namespace Sitio.Areas.Operaciones.Controllers
                         db.EventoResponsable.Add(eResponsable);
                         db.SaveChanges();
                     }
-
-                    //SendNotification(evento);
                 }
 
+                SendNotification(evento, "New Event: ");
                 return RedirectToAction("Index");
             }
                         
             return View(evento);
         }
 
-        public bool SendNotification(Evento evento)
+        public bool SendNotification(Evento evento, String mensaje)
         {
             NotificationService notify = new NotificationService();
             UsuarioServicio usuarioServicio = new UsuarioServicio();
@@ -414,7 +412,7 @@ namespace Sitio.Areas.Operaciones.Controllers
 
             foreach (string notificacion in llaves)
             {
-                notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + evento.Descripcion + ". ", "");
+                notify.SendPushNotification(notificacion, mensaje + evento.Descripcion + ". ", "");
             }
 
             string senders = usuarioServicio.GetEmailByEvento(evento.Id);
@@ -488,6 +486,8 @@ namespace Sitio.Areas.Operaciones.Controllers
             //db.Evento.Remove(evento);
             evento.Activo = false;
             db.SaveChanges();
+
+            SendNotification(evento,"The event has been deleted: ");
 
             return RedirectToAction("Index");
         }

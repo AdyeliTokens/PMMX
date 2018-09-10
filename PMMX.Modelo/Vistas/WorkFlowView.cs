@@ -16,6 +16,7 @@ namespace PMMX.Modelo.Vistas
         public int? Anterior { get; set; }
         public int? Siguiente { get; set; }
         public bool Cancelado { get; set; }
+        public bool AlertaProveedor { get; set; }
         public bool Activo { get; set; }
         #endregion
 

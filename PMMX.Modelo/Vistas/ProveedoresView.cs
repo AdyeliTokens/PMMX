@@ -25,6 +25,7 @@ namespace PMMX.Modelo.Vistas
 
         #region Navegacion
         public ICollection<VentanaView> Ventanas { get; set; }
+        public ICollection<ListaDistribucionView> ListaDistribucion { get; set; }
         #endregion
     }
 }

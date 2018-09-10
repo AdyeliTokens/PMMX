@@ -23,6 +23,7 @@ namespace PMMX.Modelo.Map
             Property(c => c.Anterior).HasColumnName("Anterior");
             Property(c => c.Siguiente).HasColumnName("Siguiente");
             Property(c => c.Cancelado).HasColumnName("Cancelado");
+            Property(c => c.AlertaProveedor).HasColumnName("AlertaProveedor");
             Property(c => c.Activo).HasColumnName("Activo");
             #endregion
 
