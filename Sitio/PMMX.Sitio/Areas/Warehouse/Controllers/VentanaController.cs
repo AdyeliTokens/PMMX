@@ -362,15 +362,10 @@ namespace Sitio.Areas.Warehouse.Controllers
                             ventana.IdProveedor = db.Proveedores.Where(p => (p.NumeroProveedor == numProveedor)).Select(p => p.Id).FirstOrDefault();
                             ventana.Recurso = workSheet.Cells[4, 2].Value == null ? string.Empty : workSheet.Cells[4, 2].Value.ToString().Trim();
                             ventana.Cantidad = workSheet.Cells[5, 2].Value == null ? string.Empty : workSheet.Cells[5, 2].Value.ToString().Trim();
-                            if(numProveedor== 12345)
-                            {
-                                ventana.IdCarrier = 5;// FleetOne
-                            }
-                            else
-                            {
-                                ventana.IdCarrier = 6;// No confirmado
-                            }
                             ventana.NombreCarrier = workSheet.Cells[6, 2].Value == null ? string.Empty : workSheet.Cells[6, 2].Value.ToString().Trim();
+                            ventana.IdCarrier = db.Carrier.Where(c => c.NombreCorto == ventana.NombreCarrier).Select(c => c.Id).FirstOrDefault() == 0 
+                                ? db.Carrier.Where(c => c.NombreCorto == "NO CONFIRMADO").Select(c => c.Id).FirstOrDefault() 
+                                : db.Carrier.Where(c => c.NombreCorto == ventana.NombreCarrier).Select(c => c.Id).FirstOrDefault();
                             ventana.Conductor = workSheet.Cells[7, 2].Value == null ? string.Empty : workSheet.Cells[7, 2].Value.ToString().Trim();
                             ventana.MovilConductor = workSheet.Cells[8, 2].Value == null ? string.Empty : workSheet.Cells[8, 2].Value.ToString().Trim();
 
