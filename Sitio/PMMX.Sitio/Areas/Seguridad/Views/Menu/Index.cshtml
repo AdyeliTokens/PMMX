@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PMMX.Modelo.Entidades.Seguridad.Acceso>
+﻿@model IEnumerable<PMMX.Modelo.Entidades.Seguridad.Menu>
 
 @{
     ViewBag.Title = "Index";
@@ -11,9 +11,6 @@
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Area)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.Menu)
         </th>
@@ -35,10 +32,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Area)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Menu)
+            @Html.DisplayFor(modelItem => item.Nombre)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.SubMenu)

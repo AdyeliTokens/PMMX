@@ -1,4 +1,4 @@
-﻿@model PMMX.Modelo.Entidades.Seguridad.Acceso
+﻿@model PMMX.Modelo.Entidades.Seguridad.Menu
 
 @{
     ViewBag.Title = "Delete";
@@ -12,19 +12,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Area)
+            @Html.DisplayNameFor(model => model.Nombre)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Area)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Menu)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Menu)
+            @Html.DisplayFor(model => model.Nombre)
         </dd>
 
         <dt>

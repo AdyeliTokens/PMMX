@@ -13,96 +13,95 @@ using Sitio.Helpers;
 
 namespace Sitio.Areas.Seguridad.Controllers
 {
-    public class AccesoController : Controller
+    public class MenuController : Controller
     {
         private PMMXContext db = new PMMXContext();
 
-        // GET: Seguridad/Acceso
+        // GET: Seguridad/Menu
         public ActionResult Index()
         {
-            return View(db.Accesos.ToList());
+            return View(db.Menu.ToList());
         }
 
-        // GET: Seguridad/Acceso/Details/5
+        // GET: Seguridad/Menu/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Acceso acceso = db.Accesos.Find(id);
-            if (acceso == null)
+            Menu menu = db.Menu.Find(id);
+            if (menu == null)
             {
                 return HttpNotFound();
             }
-            return View(acceso);
+            return View(menu);
         }
 
-        // GET: Seguridad/Acceso/Create
+        // GET: Seguridad/Menu/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Seguridad/Acceso/Create
+        // POST: Seguridad/Menu/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Area,Menu,SubMenu,Programa,Ruta,Activo")] Acceso acceso)
+        public ActionResult Create(Menu menu)
         {
             if (ModelState.IsValid)
             {
-                db.Accesos.Add(acceso);
+                db.Menu.Add(menu);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(acceso);
+            return View(menu);
         }
 
-        // GET: Seguridad/Acceso/Edit/5
+        // GET: Seguridad/Menu/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Acceso acceso = db.Accesos.Find(id);
-            if (acceso == null)
+            Menu menu = db.Menu.Find(id);
+            if (menu == null)
             {
                 return HttpNotFound();
             }
-            return View(acceso);
+            return View(menu);
         }
 
-        // POST: Seguridad/Acceso/Edit/5
+        // POST: Seguridad/Menu/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Area,Menu,SubMenu,Programa,Ruta,Activo")] Acceso acceso)
+        public ActionResult Edit(Menu menu)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(acceso).State = EntityState.Modified;
+                db.Entry(menu).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(acceso);
+            return View(menu);
         }
 
         [RenderAjaxPartialScripts]
         public ActionResult AccesoByPersona(int IdPersona)
         {
-            List<AccesoView> list = new List<AccesoView>();
+            List<MenuView> list = new List<MenuView>();
 
             list = db.Personas
                 .Where(p => p.Id == IdPersona)
-                .Select(p => p.Accesos.Where(a => a.Activo==true).Select(v => new AccesoView
+                .Select(p => p.Menu.Where(a => a.Activo==true).Select(v => new MenuView
                 {
-                    Area = v.Area,
-                    Menu = v.Menu,
+                    Nombre = v.Nombre,
                     SubMenu = v.SubMenu,
                     Programa = v.Programa,
                     Ruta = v.Ruta
@@ -112,28 +111,28 @@ namespace Sitio.Areas.Seguridad.Controllers
             return Json(new { list }, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Seguridad/Acceso/Delete/5
+        // GET: Seguridad/Menu/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Acceso acceso = db.Accesos.Find(id);
-            if (acceso == null)
+            Menu menu = db.Menu.Find(id);
+            if (menu == null)
             {
                 return HttpNotFound();
             }
-            return View(acceso);
+            return View(menu);
         }
 
-        // POST: Seguridad/Acceso/Delete/5
+        // POST: Seguridad/Menu/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Acceso acceso = db.Accesos.Find(id);
-            db.Accesos.Remove(acceso);
+            Menu menu = db.Menu.Find(id);
+            db.Menu.Remove(menu);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

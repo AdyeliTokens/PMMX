@@ -137,7 +137,7 @@
     <Compile Include="Entidades\Remitentes.cs" />
     <Compile Include="Entidades\RequisicionDeDescarga.cs" />
     <Compile Include="Entidades\Respuesta.cs" />
-    <Compile Include="Entidades\Seguridad\Acceso.cs" />
+    <Compile Include="Entidades\Seguridad\Menu.cs" />
     <Compile Include="Entidades\Semana.cs" />
     <Compile Include="Entidades\ShiftLeaders.cs" />
     <Compile Include="Entidades\Turno.cs" />
@@ -155,7 +155,7 @@
     <Compile Include="Entidades\InsiteLAC\KPI.cs" />
     <Compile Include="Entidades\WorkFlow.cs" />
     <Compile Include="Interfaces\IPMMXRepositorio.cs" />
-    <Compile Include="Map\AccesoMap.cs" />
+    <Compile Include="Map\MenuMap.cs" />
     <Compile Include="Map\AliasMap.cs" />
     <Compile Include="Map\AspNetRolesMap.cs" />
     <Compile Include="Map\BitacoraGembaWalkMap.cs" />
@@ -224,7 +224,7 @@
     <Compile Include="Map\WorkCenterMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RespuestaGenerica\RespuestaServicio.cs" />
-    <Compile Include="Vistas\AccesoView.cs" />
+    <Compile Include="Vistas\MenuView.cs" />
     <Compile Include="Vistas\ActividadEnDefectoView.cs" />
     <Compile Include="Vistas\ActividadEnParoView.cs" />
     <Compile Include="Vistas\AtomFeedView.cs" />
