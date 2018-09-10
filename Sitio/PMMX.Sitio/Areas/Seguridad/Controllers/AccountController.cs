@@ -461,7 +461,7 @@ namespace Sitio.Areas.Seguridad.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

@@ -130,8 +130,7 @@ namespace Sitio.Areas.Warehouse.Controllers
                 WorkFlowServicio workflowServicio = new WorkFlowServicio();
                 IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, statusVentana.IdStatus, false);
 
-                //string senders = usuarioServicio.GetEmailByEvento(statusVentana.Ventana.IdEvento);
-                string senders = usuarioServicio.GetEmailBySubArea(workFlow.Respuesta.IdSubArea);
+                string senders = usuarioServicio.GetEmailByStatus(ventana);
                 EmailService emailService = new EmailService();
                 emailService.SendMail(senders, ventana);
             }

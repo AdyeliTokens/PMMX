@@ -176,9 +176,7 @@ namespace Sitio.Areas.Warehouse.Controllers
                             .Include(v => v.Evento)
                             .Include(v => v.Proveedor)
                             .SingleOrDefault(x => x.Id == ventana.Id);
-
-                //sendNotifications(ventanaSend);
-
+                
                 return RedirectToAction("Index", "Evento", new { Area = "Operaciones" });
             }
 
@@ -235,44 +233,7 @@ namespace Sitio.Areas.Warehouse.Controllers
             }
             return false;
         }
-
-        public bool sendNotifications(Ventana ventana)
-        {
-            try
-            {
-                UsuarioServicio usuarioServicio = new UsuarioServicio();
-                NotificationService notify = new NotificationService();
-
-                string senders = usuarioServicio.GetEmailByEvento(ventana.IdEvento);
-                if (senders != null)
-                {
-                    EmailService emailService = new EmailService();
-                    emailService.SendMail(senders, ventana);
-                }
-
-                List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByEvento(ventana.IdEvento);
-                List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
-
-                var estatus = db.StatusVentana
-                         .Where(s => (s.IdVentana == ventana.Id))
-                         .OrderByDescending(s => s.Fecha)
-                         .Select(s => s.Status)
-                         .FirstOrDefault();
-
-                foreach (string notificacion in llaves)
-                {
-                    notify.SendPushNotification(notificacion, " Cambio de estatus Ventana: " + ventana.Evento.Descripcion + ". ", " Cambio de estatus a " + estatus.Nombre);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return false;
-            }
-
-            return true;
-        }
-
+        
         // GET: Warehouse/Ventana/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -399,26 +360,22 @@ namespace Sitio.Areas.Warehouse.Controllers
                             ventana.PO = workSheet.Cells[2, 2].Value == null ? string.Empty : workSheet.Cells[2, 2].Value.ToString().Trim();
                             var numProveedor = Convert.ToInt32(workSheet.Cells[3, 2].Value.ToString().Trim());
                             ventana.IdProveedor = db.Proveedores.Where(p => (p.NumeroProveedor == numProveedor)).Select(p => p.Id).FirstOrDefault();
-
                             ventana.Recurso = workSheet.Cells[4, 2].Value == null ? string.Empty : workSheet.Cells[4, 2].Value.ToString().Trim();
-                            ventana.Cantidad = Convert.ToDouble(workSheet.Cells[5, 2].Value == null ? 0 : workSheet.Cells[5, 2].Value);
-                            if(numProveedor== 12345)
-                            {
-                                ventana.IdCarrier = 5;// FleetOne
-                            }
-                            else
-                            {
-                                ventana.IdCarrier = 6;// No confirmado
-                            }
+                            ventana.Cantidad = workSheet.Cells[5, 2].Value == null ? string.Empty : workSheet.Cells[5, 2].Value.ToString().Trim();
                             ventana.NombreCarrier = workSheet.Cells[6, 2].Value == null ? string.Empty : workSheet.Cells[6, 2].Value.ToString().Trim();
+                            ventana.IdCarrier = db.Carrier.Where(c => c.NombreCorto == ventana.NombreCarrier).Select(c => c.Id).FirstOrDefault() == 0 
+                                ? db.Carrier.Where(c => c.NombreCorto == "NO CONFIRMADO").Select(c => c.Id).FirstOrDefault() 
+                                : db.Carrier.Where(c => c.NombreCorto == ventana.NombreCarrier).Select(c => c.Id).FirstOrDefault();
                             ventana.Conductor = workSheet.Cells[7, 2].Value == null ? string.Empty : workSheet.Cells[7, 2].Value.ToString().Trim();
                             ventana.MovilConductor = workSheet.Cells[8, 2].Value == null ? string.Empty : workSheet.Cells[8, 2].Value.ToString().Trim();
-
                             var nombreCorto = workSheet.Cells[9, 2].Value == null ? "MX" : workSheet.Cells[9, 2].Value.ToString().Trim();
-                            ventana.IdProcedencia = db.Locacion.Where(l => l.NombreCorto == nombreCorto).Select(l => l.Id).FirstOrDefault() == 0 ? db.Locacion.Where(l => l.NombreCorto == "MX").Select(l => l.Id).FirstOrDefault() : db.Locacion.Where(l => l.NombreCorto == nombreCorto).Select(l => l.Id).FirstOrDefault();
+                            ventana.IdProcedencia = db.Locacion.Where(l => l.NombreCorto == nombreCorto).Select(l => l.Id).FirstOrDefault() == 0 
+                                ? db.Locacion.Where(l => l.NombreCorto == "MX").Select(l => l.Id).FirstOrDefault() 
+                                : db.Locacion.Where(l => l.NombreCorto == nombreCorto).Select(l => l.Id).FirstOrDefault();
                             nombreCorto = workSheet.Cells[10, 2].Value == null ? "MX" : workSheet.Cells[10, 2].Value.ToString().Trim();
-                            ventana.IdDestino = db.Locacion.Where(l => l.NombreCorto == nombreCorto).Select(l => l.Id).FirstOrDefault() == 0 ? db.Locacion.Where(l => l.NombreCorto == "MX").Select(l => l.Id).FirstOrDefault() : db.Locacion.Where(l => l.NombreCorto == nombreCorto).Select(l => l.Id).FirstOrDefault();
-
+                            ventana.IdDestino = db.Locacion.Where(l => l.NombreCorto == nombreCorto).Select(l => l.Id).FirstOrDefault() == 0 
+                                ? db.Locacion.Where(l => l.NombreCorto == "MX").Select(l => l.Id).FirstOrDefault() 
+                                : db.Locacion.Where(l => l.NombreCorto == nombreCorto).Select(l => l.Id).FirstOrDefault();
                             ventana.NumeroEconomico = workSheet.Cells[11, 2].Value == null ? string.Empty : workSheet.Cells[11, 2].Value.ToString().Trim();
                             ventana.NumeroPlaca = workSheet.Cells[12, 2].Value == null ? string.Empty : workSheet.Cells[12, 2].Value.ToString().Trim();
                             ventana.EconomicoRemolque = workSheet.Cells[13, 2].Value == null ? string.Empty : workSheet.Cells[13, 2].Value.ToString().Trim();

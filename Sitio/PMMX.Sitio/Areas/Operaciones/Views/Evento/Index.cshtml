@@ -47,14 +47,19 @@ else
 
 <!-- Modal-->
 <div class="modal fade" id="createAssetModal" role="dialog" aria-labelledby="CreateAssetModal" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header alert-info">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <div id="createAssetContainer" class="modal-body"></div>
-            <div id="subVista" class="modal-body"></div>
+            <div class="modal-body">
+                <div class="row">
+                    <div id="createAssetContainer" class="col-md-6"></div>
+                    <div id="subVista" class="col-md-6"></div>
+                </div>
+            </div>
+            
             <input id="IdEventoModal" type="hidden" />
             <input id="IdVentanaEvento" type="hidden" />
         </div>

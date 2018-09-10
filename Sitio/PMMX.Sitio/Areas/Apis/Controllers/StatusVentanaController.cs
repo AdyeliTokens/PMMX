@@ -111,7 +111,7 @@ namespace Sitio.Areas.Apis
                 UsuarioServicio usuarioServicio = new UsuarioServicio();
                 NotificationService notify = new NotificationService();
 
-               string senders = usuarioServicio.GetEmailBySubArea(workFlow.Respuesta.IdSubArea);
+                string senders = usuarioServicio.GetEmailByStatus(ventana);
 
                 if (senders != "")
                 {

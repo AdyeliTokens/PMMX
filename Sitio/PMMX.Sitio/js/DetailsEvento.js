@@ -7,7 +7,8 @@
     function start() {
         var idCategoria = $("#IdCategoria").val();
         $("#opciones-ventana").hide();
-        $('#subVista').hide();
+        $('#subVista').show();
+        Info();
     }
 
     $("#btn-CreateVentana").on("click", function () {
@@ -30,7 +31,8 @@
         });
     });
 
-    $("#btn-Info").on("click", function () {
+    function Info()
+    {
         $.ajax({
             dataType: "json",
             contentType: "application/json",
@@ -50,12 +52,11 @@
                         }
 
                         $.get(url, function (data) {
-                            $('#subVista').show();
                             $('#subVista').html(data);
                         });
                     }
                     else {
-                        alert("Sin datos en ventana");
+                        $('#subVista').html("<h2>Sin datos en ventana</h2>");
                     }
                 });
             },
@@ -63,8 +64,7 @@
                 alert('There was an error while fetching data!');
             }
         });
-    });
-
+    }
 
     $("#btn-Delete").on("click", function () {
         var url = ("/Operaciones/Evento/Delete/" + id);
