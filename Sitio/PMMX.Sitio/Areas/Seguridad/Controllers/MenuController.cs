@@ -107,7 +107,12 @@ namespace Sitio.Areas.Seguridad.Controllers
             {
                 list = db.Personas
                     .Where(p => p.Id == persona.Respuesta.Id)
-                    .Select(p => p.Menu.Where(a => a.Activo == true).Select(v => new MenuView
+                    .Select(p => p.Menu
+                    .OrderBy(o=> o.Nombre)
+                    .ThenBy(o => o.SubMenu)
+                    .ThenBy(o => o.Programa)
+                    .Where(a => a.Activo == true)
+                    .Select(v => new MenuView
                     {
                         Nombre = v.Nombre,
                         SubMenu = v.SubMenu,
@@ -117,7 +122,6 @@ namespace Sitio.Areas.Seguridad.Controllers
                     ).FirstOrDefault();
             }
             return Json(new { list }, JsonRequestBehavior.AllowGet);
-            //return View(list);
         }
 
         // GET: Seguridad/Menu/Delete/5
