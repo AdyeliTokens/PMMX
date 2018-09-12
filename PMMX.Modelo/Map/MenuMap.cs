@@ -10,16 +10,15 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace PMMX.Modelo.Map
 {
-    public class AccesoMap : EntityTypeConfiguration<Acceso>
+    public class MenuMap : EntityTypeConfiguration<Menu>
     {
-        public AccesoMap()
+        public MenuMap()
         {
             #region Properties
-            ToTable("Accesos");
+            ToTable("Menu");
             HasKey(c => c.Id);
             Property(c => c.Id).HasColumnName("Id");
-            Property(c => c.Area).HasColumnName("Area");
-            Property(c => c.Menu).HasColumnName("Menu");
+            Property(c => c.Nombre).HasColumnName("Menu");
             Property(c => c.SubMenu).HasColumnName("SubMenu");
             Property(c => c.Programa).HasColumnName("Programa");
             Property(c => c.Ruta).HasColumnName("Ruta");
@@ -31,11 +30,11 @@ namespace PMMX.Modelo.Map
             #endregion
 
             #region HasMany
-            HasMany(c => c.Personas).WithMany(x => x.Accesos).Map(cs =>
+            HasMany(c => c.Personas).WithMany(x => x.Menu).Map(cs =>
             {
-                cs.MapLeftKey("IdAcceso");
+                cs.MapLeftKey("IdMenu");
                 cs.MapRightKey("IdPersona");
-                cs.ToTable("AccesoPersona");
+                cs.ToTable("MenuPersona");
             });
             #endregion
 
