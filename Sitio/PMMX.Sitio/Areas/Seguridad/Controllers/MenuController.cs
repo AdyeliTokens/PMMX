@@ -6,9 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using PMMX.Infraestructura.Contexto;
+using PMMX.Modelo.Entidades;
 using PMMX.Modelo.Entidades.Seguridad;
+using PMMX.Modelo.RespuestaGenerica;
 using PMMX.Modelo.Vistas;
+using PMMX.Seguridad.Servicios;
 using Sitio.Helpers;
 
 namespace Sitio.Areas.Seguridad.Controllers
@@ -93,22 +97,27 @@ namespace Sitio.Areas.Seguridad.Controllers
         }
 
         [RenderAjaxPartialScripts]
-        public ActionResult AccesoByPersona(int IdPersona)
+        public ActionResult getMenuByPersona()
         {
             List<MenuView> list = new List<MenuView>();
+            PersonaServicio personaServicio = new PersonaServicio();
+            IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
 
-            list = db.Personas
-                .Where(p => p.Id == IdPersona)
-                .Select(p => p.Menu.Where(a => a.Activo==true).Select(v => new MenuView
-                {
-                    Nombre = v.Nombre,
-                    SubMenu = v.SubMenu,
-                    Programa = v.Programa,
-                    Ruta = v.Ruta
-                }).ToList()
-                ).FirstOrDefault();
-
+            if (persona.EjecucionCorrecta)
+            {
+                list = db.Personas
+                    .Where(p => p.Id == persona.Respuesta.Id)
+                    .Select(p => p.Menu.Where(a => a.Activo == true).Select(v => new MenuView
+                    {
+                        Nombre = v.Nombre,
+                        SubMenu = v.SubMenu,
+                        Programa = v.Programa,
+                        Ruta = v.Ruta
+                    }).ToList()
+                    ).FirstOrDefault();
+            }
             return Json(new { list }, JsonRequestBehavior.AllowGet);
+            //return View(list);
         }
 
         // GET: Seguridad/Menu/Delete/5
