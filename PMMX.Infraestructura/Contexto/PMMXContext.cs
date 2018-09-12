@@ -146,7 +146,7 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new BitacoraGembaWalkMap());
             modelBuilder.Configurations.Add(new WorkFlowMap());
             modelBuilder.Configurations.Add(new TipoOperacionMap());
-            modelBuilder.Configurations.Add(new AccesoMap());
+            modelBuilder.Configurations.Add(new MenuMap());
 
 
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
@@ -204,7 +204,7 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<ShiftLeaders> ShiftLeaders { get; set; }
         public DbSet<Electricos> Electricos { get; set; }
         public DbSet<Pesador> Pesadores { get; set; }
-        public DbSet<Acceso> Accesos { get; set; }
+        public DbSet<Menu> Menu { get; set; }
         #endregion
 
         #region WareHouse
