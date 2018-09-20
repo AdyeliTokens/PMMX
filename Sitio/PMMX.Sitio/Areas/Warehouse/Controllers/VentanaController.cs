@@ -23,6 +23,7 @@ using PdfSharp.Pdf;
 using PdfSharp.Drawing;
 using System.Diagnostics;
 using System.Globalization;
+using Sitio.Models;
 
 namespace Sitio.Areas.Warehouse.Controllers
 {
@@ -434,6 +435,107 @@ namespace Sitio.Areas.Warehouse.Controllers
             Response.Flush();
             stream.Close();
             Response.End();
+        }
+
+        public ActionResult Report()
+        {
+            FechaInicioFin model = new FechaInicioFin();
+            model.Inicio = DateTime.Now.Date;
+            model.Fin = DateTime.Now.Date.AddDays(1);
+            return View(model);
+        }
+
+        public ActionResult downloadReport(DateTime Inicio, DateTime Fin)
+        {
+            List<Ventana> ventanas = db.Ventana
+                            .Include(v => v.TipoOperacion)
+                            .Include(v => v.StatusVentana)
+                            .Include(v => v.StatusVentana.Select(s => s.Status))
+                            .Include(v => v.BitacoraVentana)
+                            .Include(v => v.BitacoraVentana.Select(b => b.Estatus))
+                            .Include(v => v.BitacoraVentana.Select(b => b.Rechazo))
+                            .Include(v => v.Evento)
+                            .Include(v => v.Proveedor)
+                            .Include(v => v.Procedencia)
+                            .Include(v => v.Destino)
+                            .Include(v => v.Carrier)
+                            .Include(v => v.SubCategoria)
+                            .Where(v => v.Evento.FechaInicio >= Inicio && v.Evento.FechaFin <= Fin)
+                            .ToList();
+
+            var fileName = "ReportedeAccesos_" + DateTime.Now.ToString("yyyy-MM-dd--hh-mm-ss") + ".xlsx";
+            
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.FirstOrDefault(x => x.Name == "");
+                worksheet = package.Workbook.Worksheets.Add("Reporte");
+                worksheet.Row(1).Height = 20;
+
+                worksheet.TabColor = Color.Gold;
+                worksheet.DefaultRowHeight = 12;
+                worksheet.Row(1).Height = 20;
+
+                //Header
+                worksheet.Cells[1, 1].Value = "Nombre del Conductor";
+                worksheet.Cells[1, 2].Value = "Fecha";
+                worksheet.Cells[1, 3].Value = "Linea";
+                worksheet.Cells[1, 4].Value = "Almacen";
+                worksheet.Cells[1, 5].Value = "Proveedor";
+                worksheet.Cells[1, 6].Value = "Ventana";
+                worksheet.Cells[1, 7].Value = "Tipo";
+                worksheet.Cells[1, 8].Value = "Horario Datos en Ventana";
+                worksheet.Cells[1, 9].Value = "Producto";
+                worksheet.Cells[1, 10].Value = "Horario de llamada 1";
+                worksheet.Cells[1, 11].Value = "Horario de llamada 2";
+                worksheet.Cells[1, 12].Value = "Hora de Reporte en C3";
+                worksheet.Cells[1, 13].Value = "Hora de Ingreso";
+                worksheet.Cells[1, 14].Value = "Motivo de No ingreso";
+
+                var fila = 2;
+
+                foreach (var ventana in ventanas)
+                {
+                    //Content
+                    worksheet.Cells[fila, 1].Value = ventana.Conductor.ToUpper();
+                    worksheet.Cells[fila, 2].Value = ventana.Evento.FechaInicio.ToString();
+                    worksheet.Cells[fila, 3].Value = ventana.NombreCarrier.ToUpper();
+                    worksheet.Cells[fila, 4].Value = "ALMACÉN";
+                    worksheet.Cells[fila, 5].Value = ventana.Proveedor.NombreCorto.ToUpper();
+                    var date = new System.DateTime(ventana.Evento.FechaInicio.Year, ventana.Evento.FechaInicio.Month, ventana.Evento.FechaInicio.Day);
+                    double result = ventana.Evento.FechaInicio.Subtract(date).TotalSeconds;
+                    worksheet.Cells[fila, 6].Value = result >= 32400 ? "9 a 15" : result >= 54000 ? "17 a 22" : "22 a 9";
+                    worksheet.Cells[fila, 7].Value = ventana.SubCategoria.Nombre.ToUpper();
+                    worksheet.Cells[fila, 8].Value = ventana.StatusVentana.OrderByDescending(s=> s.Fecha).Where(s=> s.IdStatus == 3).Select(s=> s.Fecha).FirstOrDefault().ToString();
+                    worksheet.Cells[fila, 9].Value = ventana.Recurso.ToUpper();
+                    worksheet.Cells[fila, 10].Value = ventana.StatusVentana.OrderByDescending(s => s.Fecha).Where(s => s.IdStatus == 4).Select(s => s.Fecha).FirstOrDefault().ToString();
+                    worksheet.Cells[fila, 11].Value = "";
+                    worksheet.Cells[fila, 12].Value = ventana.StatusVentana.OrderByDescending(s => s.Fecha).Where(s => s.IdStatus == 4).Select(s => s.Fecha).FirstOrDefault().ToString(); 
+                    worksheet.Cells[fila, 13].Value = ventana.StatusVentana.OrderByDescending(s => s.Fecha).Where(s => s.IdStatus == 11).Select(s => s.Fecha).FirstOrDefault().ToString();
+                    worksheet.Cells[fila, 14].Value = ventana.BitacoraVentana.OrderBy(b => b.Fecha).Select(b => b.Rechazo.Nombre).FirstOrDefault();
+                    fila++;
+                }
+                
+                worksheet.Column(1).AutoFit();
+                worksheet.Column(2).AutoFit();
+
+
+                for (var i = 0; i < 14; i++)
+                {
+                    worksheet.Cells[1, i + 1].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    worksheet.Cells[1, i + 1].Style.Font.Color.SetColor(Color.White);
+                    worksheet.Cells[1, i + 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.MidnightBlue);
+                }
+
+                package.Workbook.Properties.Title = "Reporte";
+                this.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                this.Response.AddHeader("content-disposition", string.Format("attachment;  filename={0}", fileName));
+                this.Response.BinaryWrite(package.GetAsByteArray());
+                this.Response.Flush();
+                this.Response.Close();
+                this.Response.End();
+            }
+
+            return View();
         }
 
         protected override void Dispose(bool disposing)

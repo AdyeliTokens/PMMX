@@ -8115,6 +8115,7 @@
     <Content Include="Areas\Seguridad\Views\Menu\Edit.cshtml" />
     <Content Include="Areas\Seguridad\Views\Menu\Index.cshtml" />
     <Content Include="Areas\Seguridad\Views\Menu\getMenuByPersona.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Ventana\Report.cshtml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
