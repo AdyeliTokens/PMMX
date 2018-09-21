@@ -150,20 +150,6 @@
                             ]
                         },
                         {
-                            id: '18',
-                            title: 'Tab expandido',
-                            children: [
-                                {
-                                    id: 'Tab expandido-Mañana',
-                                    title: 'Mañana'
-                                },
-                                {
-                                    id: 'Tab expandido-Tarde',
-                                    title: 'Tarde'
-                                }
-                            ]
-                        },
-                        {
                             id: 'd',
                             title: 'Sin Datos'
                         },

@@ -22,6 +22,7 @@ namespace PMMX.Modelo.Vistas
         public PersonaView Responsable { get; set; }
         public ICollection<ListaDistribucionView> ListaDistribucion { get; set; }
         public ICollection<WorkFlowView> WorkFlows { get; set; }
+        public ICollection<WorkFlowView> WorkFlowAreaANotificar { get; set; }
         #endregion
     }
 }
