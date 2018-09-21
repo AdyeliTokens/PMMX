@@ -14,6 +14,8 @@ using PMMX.Seguridad.Servicios;
 using PMMX.Modelo.RespuestaGenerica;
 using PMMX.Modelo.Entidades;
 using Microsoft.AspNet.Identity;
+using PMMX.Modelo.Entidades.Warehouse;
+using PMMX.Operaciones.Servicios;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -395,7 +397,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                     }
                 }
 
-                SendNotification(evento, "New Event: ");
+                //SendNotification(evento, "New Event: ");
                 return RedirectToAction("Index");
             }
                         
@@ -418,6 +420,47 @@ namespace Sitio.Areas.Operaciones.Controllers
             string senders = usuarioServicio.GetEmailByEvento(evento.Id);
             EmailService emailService = new EmailService();
             emailService.SendMail(senders, evento);
+
+            return true;
+        }
+
+        public bool changeStatus(Evento evento)
+        {
+            Ventana ventana = db.Ventana
+                                 .Include(v => v.StatusVentana)
+                                 .Include(v => v.StatusVentana.Select(s => s.Status))
+                                 .Include(v => v.BitacoraVentana)
+                                 .Include(v => v.BitacoraVentana.Select(b => b.Estatus))
+                                 .Include(v => v.BitacoraVentana.Select(b => b.Rechazo))
+                                 .Include(v => v.Evento)
+                                 .Include(v => v.Proveedor)
+                                 .SingleOrDefault(x => x.IdEvento == evento.Id);
+
+            WorkFlowServicio workflowServicio = new WorkFlowServicio();
+            IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, ventana.StatusVentana.OrderByDescending(x=> x.Fecha).Select(x=> x.IdStatus).FirstOrDefault(), false);
+
+            StatusVentana statusVentana = new StatusVentana();
+            statusVentana.IdResponsable = evento.IdAsignador;
+            statusVentana.IdStatus = workFlow.Respuesta.EstatusSiguiente.Id;
+            statusVentana.IdVentana = ventana.Id;
+            statusVentana.Fecha = DateTime.Now;
+            statusVentana.Comentarios = "Se reagenda ventana";
+            db.StatusVentana.Add(statusVentana);
+            db.SaveChanges();
+
+            try
+            {
+                UsuarioServicio usuarioServicio = new UsuarioServicio();
+                NotificationService notify = new NotificationService();
+
+                string senders = usuarioServicio.GetEmailByStatus(ventana);
+                EmailService emailService = new EmailService();
+                emailService.SendMail(senders, ventana);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
 
             return true;
         }
@@ -450,6 +493,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(evento).State = EntityState.Modified;
+                changeStatus(evento);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

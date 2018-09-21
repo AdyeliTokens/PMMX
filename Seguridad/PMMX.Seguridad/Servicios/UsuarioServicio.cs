@@ -135,7 +135,7 @@ namespace PMMX.Seguridad.Servicios
             if (workFlow.AlertaProveedor == true)
             {
                 emailList = db.ListaDistribucion
-                        .Where(l => (l.IdSubarea == workFlow.IdSubArea) || (l.IdProveedor == ventana.IdProveedor) && (l.Activo == true))
+                        .Where(l => (l.IdSubarea == workFlow.IdSubAreaANotificar) || (l.IdProveedor == ventana.IdProveedor) && (l.Activo == true))
                         .Select(l=> l.Remitente.Users.Where( r=> (r.IdPersona == l.Remitente.Id))
                         .Select(r => new UserView {
                             Id = r.Id,
@@ -146,7 +146,7 @@ namespace PMMX.Seguridad.Servicios
             else
             {
                 emailList = db.ListaDistribucion
-                        .Where(l => (l.IdSubarea == workFlow.IdSubArea))
+                        .Where(l => (l.IdSubarea == workFlow.IdSubAreaANotificar))
                         .Select(l => l.Remitente.Users.Where(r => (r.IdPersona == l.Remitente.Id) && (l.Activo == true))
                         .Select(r => new UserView
                         {

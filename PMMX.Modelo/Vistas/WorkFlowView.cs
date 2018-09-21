@@ -12,6 +12,7 @@ namespace PMMX.Modelo.Vistas
         public int Id { get; set; }
         public int IdSubCategoria { get; set; }
         public int IdSubArea { get; set; }
+        public int IdSubAreaANotificar { get; set; }
         public int? Inicial { get; set; }
         public int? Anterior { get; set; }
         public int? Siguiente { get; set; }
@@ -23,6 +24,7 @@ namespace PMMX.Modelo.Vistas
         #region Navegacion
         public SubCategoriaView SubCategoria { get; set; }
         public SubAreaView SubArea { get; set; }
+        public SubAreaView SubAreaNotificar { get; set; }
         public EstatusView EstatusInicial { get; set; }
         public EstatusView EstatusAnterior { get; set; }
         public EstatusView EstatusSiguiente { get; set; }
