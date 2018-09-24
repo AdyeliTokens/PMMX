@@ -384,20 +384,8 @@ namespace Sitio.Areas.Operaciones.Controllers
                         }
                     }
                 }
-                else
-                {
-                    var lista = db.ListaDistribucion.Select(w => new { IdPersona = w.IdPersona }).ToList();
-                    foreach (var elemento in lista)
-                    {
-                        EventoResponsable eResponsable = new EventoResponsable();
-                        eResponsable.IdEvento = evento.Id;
-                        eResponsable.IdResponsable = elemento.IdPersona;
-                        db.EventoResponsable.Add(eResponsable);
-                        db.SaveChanges();
-                    }
-                }
 
-                //SendNotification(evento, "New Event: ");
+                SendNotification(evento, "New Event: ");
                 return RedirectToAction("Index");
             }
                         
@@ -435,34 +423,37 @@ namespace Sitio.Areas.Operaciones.Controllers
                                  .Include(v => v.Evento)
                                  .Include(v => v.Proveedor)
                                  .SingleOrDefault(x => x.IdEvento == evento.Id);
-
-            WorkFlowServicio workflowServicio = new WorkFlowServicio();
-            IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, ventana.StatusVentana.OrderByDescending(x=> x.Fecha).Select(x=> x.IdStatus).FirstOrDefault(), false);
-
-            StatusVentana statusVentana = new StatusVentana();
-            statusVentana.IdResponsable = evento.IdAsignador;
-            statusVentana.IdStatus = workFlow.Respuesta.EstatusSiguiente.Id;
-            statusVentana.IdVentana = ventana.Id;
-            statusVentana.Fecha = DateTime.Now;
-            statusVentana.Comentarios = "Se reagenda ventana";
-            db.StatusVentana.Add(statusVentana);
-            db.SaveChanges();
-
-            try
+            if (ventana != null)
             {
-                UsuarioServicio usuarioServicio = new UsuarioServicio();
-                NotificationService notify = new NotificationService();
+                try
+                {
+                    WorkFlowServicio workflowServicio = new WorkFlowServicio();
+                    IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, ventana.StatusVentana.OrderByDescending(x => x.Fecha).Select(x => x.IdStatus).FirstOrDefault(), false);
 
-                string senders = usuarioServicio.GetEmailByStatus(ventana);
-                EmailService emailService = new EmailService();
-                emailService.SendMail(senders, ventana);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
+                    StatusVentana statusVentana = new StatusVentana();
+                    statusVentana.IdResponsable = evento.IdAsignador;
+                    statusVentana.IdStatus = workFlow.Respuesta.EstatusSiguiente.Id;
+                    statusVentana.IdVentana = ventana.Id;
+                    statusVentana.Fecha = DateTime.Now;
+                    statusVentana.Comentarios = "Se reagenda ventana";
+                    db.StatusVentana.Add(statusVentana);
+                    db.SaveChanges();
+
+                    UsuarioServicio usuarioServicio = new UsuarioServicio();
+                    NotificationService notify = new NotificationService();
+
+                    string senders = usuarioServicio.GetEmailByStatus(ventana);
+                    EmailService emailService = new EmailService();
+                    emailService.SendMail(senders, ventana);
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
 
-            return true;
+            return false;
         }
 
         // GET: Eventos/Evento/Edit/5
