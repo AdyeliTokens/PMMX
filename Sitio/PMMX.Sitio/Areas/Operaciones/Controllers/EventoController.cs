@@ -383,9 +383,9 @@ namespace Sitio.Areas.Operaciones.Controllers
                             db.SaveChanges();
                         }
                     }
+                    SendNotification(evento, "New Event: ");
                 }
 
-                SendNotification(evento, "New Event: ");
                 return RedirectToAction("Index");
             }
                         
