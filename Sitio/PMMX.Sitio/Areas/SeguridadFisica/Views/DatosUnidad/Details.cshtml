@@ -1,0 +1,59 @@
+﻿@model PMMX.Modelo.Entidades.SeguridadFisica.DatosUnidad
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DatosUnidad</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RegistroUnidad.Empresa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegistroUnidad.Empresa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Placas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Placas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NoEco)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoEco)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NoCaja)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoCaja)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoRemolque)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoRemolque)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

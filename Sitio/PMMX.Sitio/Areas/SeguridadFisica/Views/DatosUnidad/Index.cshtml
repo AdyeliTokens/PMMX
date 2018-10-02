@@ -1,0 +1,58 @@
+﻿@model IEnumerable<PMMX.Modelo.Entidades.SeguridadFisica.DatosUnidad>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RegistroUnidad.Empresa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Placas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoEco)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoCaja)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TipoRemolque)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RegistroUnidad.Empresa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Placas)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoEco)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoCaja)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TipoRemolque)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

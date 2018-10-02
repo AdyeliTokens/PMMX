@@ -1,0 +1,65 @@
+﻿@model PMMX.Modelo.Entidades.SeguridadFisica.DatosUnidad
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>DatosUnidad</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RegistroUnidad.Empresa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegistroUnidad.Empresa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Placas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Placas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NoEco)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoEco)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NoCaja)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoCaja)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoRemolque)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoRemolque)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
