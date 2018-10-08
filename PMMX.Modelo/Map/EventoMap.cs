@@ -15,16 +15,17 @@ namespace PMMX.Modelo.Map
             this.Property(c => c.Descripcion).HasColumnName("Descripcion");
             this.Property(c => c.IdAsignador).HasColumnName("IdAsignador");
             this.Property(c => c.IdCategoria).HasColumnName("IdCategoria");
+            this.Property(c => c.IdSubCategoria).HasColumnName("IdSubCategoria");
             this.Property(c => c.FechaInicio).HasColumnName("FechaInicio");
             this.Property(c => c.FechaFin).HasColumnName("FechaFin");
             this.Property(c => c.Nota).HasColumnName("Nota");
-            this.Property(c => c.EsRecurrente).HasColumnName("EsRecurrente");
             this.Property(c => c.Activo).HasColumnName("Activo");
             #endregion
 
             #region HasRequired
             this.HasRequired(c => c.Asignador).WithMany(x => x.EventosReportados).HasForeignKey(c => c.IdAsignador);
             this.HasRequired(c => c.Categoria).WithMany(x => x.Eventos).HasForeignKey(c => c.IdCategoria);
+            this.HasRequired(c => c.SubCategoria).WithMany(x => x.Eventos).HasForeignKey(c => c.IdSubCategoria);
             #endregion
 
             #region HasMany

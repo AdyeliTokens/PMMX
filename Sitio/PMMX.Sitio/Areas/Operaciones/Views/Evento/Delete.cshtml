@@ -25,7 +25,7 @@
         </dt>
 
         <dd>
-            @Html.Raw(@ViewBag.IdCategoria)
+            @Html.Raw(@ViewBag.IdCategoria) @Html.Raw(@ViewBag.IdSubCategoria)
         </dd>
         
         <dt>
@@ -58,14 +58,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.Nota)
-        </dd>
-
-        <dt>
-            @Html.LabelFor(model => model.EsRecurrente)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EsRecurrente)
         </dd>
 
         <dt>

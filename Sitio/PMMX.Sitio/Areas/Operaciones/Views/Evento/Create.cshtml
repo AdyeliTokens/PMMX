@@ -16,95 +16,85 @@
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <h4>Evento</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Descripcion, "Nombre del Evento: " , htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FechaInicio, "Fecha Inicio: ", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.FechaInicio, new { id = "FechaInicio", @class = "form-control" } )
-                @Html.ValidationMessageFor(model => model.FechaInicio, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FechaFin, "Fecha Fin: ", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.FechaFin, new { id = "FechaFin" , @class = "form-control" } )
-                @Html.ValidationMessageFor(model => model.FechaFin, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nota, "Comentarios: ", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Nota, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Nota, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.EsRecurrente, "Recurrente: ", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.EsRecurrente)
-                    @Html.ValidationMessageFor(model => model.EsRecurrente, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdCategoria, "Tipo de Evento: ", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.DropDownList("IdCategoria", null, htmlAttributes: new { @class = "form-control select2", @style = "width: 100%;" })
-                    @Html.ValidationMessageFor(model => model.IdCategoria, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div id="div-ubicacion" class="form-group">
-            @Html.Label("Agregar ubicacion: ", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBox("Ubicacion", "")
-            </div>
-        </div>
-
-        <div id="div-personas" class="form-group">
-            @Html.Label("Invitar a más personas: ", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBox("Responsables","")
-            </div>
-        </div>
-
-        <div id="div-lista" class="form-group">
-            @Html.Label("Proveedor: ", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBox("Distribucion", "")
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Hidden("IdOrigen",0)
-            @Html.Hidden("IdResponsables",null)
-            @Html.Hidden("Activo")            
-        </div>
-        
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+<div class="form-horizontal">
+    <h4>Evento</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Descripcion, "Nombre del Evento: ", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FechaInicio, "Fecha Inicio: ", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.FechaInicio, new { id = "FechaInicio", @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.FechaInicio, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FechaFin, "Fecha Fin: ", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.FechaFin, new { id = "FechaFin", @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.FechaFin, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Nota, "Comentarios: ", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Nota, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Nota, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IdSubCategoria, "Tipo de Evento: ", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select id="slt-SubCategoria" class="form-control select2"></select>
+            @Html.ValidationMessageFor(model => model.IdSubCategoria, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div id="div-ubicacion" class="form-group">
+        @Html.Label("Agregar ubicacion: ", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBox("Ubicacion", "")
+        </div>
+    </div>
+
+    <div id="div-personas" class="form-group">
+        @Html.Label("Invitar a más personas: ", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBox("Responsables", "")
+        </div>
+    </div>
+
+    <div id="div-lista" class="form-group">
+        @Html.Label("Proveedor: ", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBox("Distribucion", "")
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Hidden("IdOrigen", 0)
+        @Html.Hidden("IdCategoria", 10)
+        @Html.Hidden("IdSubCategoria")
+        @Html.Hidden("IdResponsables", null)
+        @Html.Hidden("Activo")
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
     
 }
 
@@ -137,10 +127,7 @@
         $(document).ready(function ()
         {
             var today = new Date();
-            $("#div-personas").hide();
-            $("#div-ubicacion").hide();
-            $("#div-lista").hide();
-            $("#Activo").val(true);
+            Init();
 
             $('#FechaInicio').daterangepicker({
                 "singleDatePicker": true,
@@ -179,25 +166,6 @@
             $('#FechaInicio').on("change", function () {
                 $("#FechaFin").val($(this).val());
             });
-
-            $("#IdCategoria").on("change", function () {
-                var idCategoria = $('#IdCategoria').val();
-                
-               switch (idCategoria)
-               {
-                   case "10": // ventana
-                       $("#div-personas").hide();
-                       $("#div-ubicacion").hide();
-                       $("#div-lista").show();
-                   break;
-                   default:
-                       $("#div-personas").show();
-                       $("#div-ubicacion").show();
-                       $("#div-lista").hide();
-                   break;
-               }
-
-            });
             
             $("#Ubicacion").click(function () {
                 var url = ("/Operaciones/Evento/Ubicaciones");
@@ -229,6 +197,42 @@
                     $('#createAssetModal').modal('show');
                 });
             });
+
+            $("#slt-SubCategoria").on("change", function () {
+                $("#IdSubCategoria").val($("#slt-SubCategoria").val());
+                alert($("#IdSubCategoria").val());
+            });
+
+            function GetSubCategorias() {
+                var url = ("/SubCategoria/GetSubCategoriasByCategoria?IdCategoria="+$("#IdCategoria").val());
+
+                $.get(url, function (data) {
+                    items = '<option></option>';
+                    $.each(data.lista, function (i, k) {
+                        items += "<option value='" + k.Id + "'>" + k.Nombre + "</option>";
+                    });
+                    $('#slt-SubCategoria').html(items);
+                });
+            }
+
+            function Init() {
+                var idCategoria = $('#IdCategoria').val();
+                $("#Activo").val(true);
+
+                switch (idCategoria) {
+                    case "10": // ventana
+                        $("#div-personas").hide();
+                        $("#div-ubicacion").hide();
+                        $("#div-lista").show();
+                        GetSubCategorias();
+                        break;
+                    default:
+                        $("#div-personas").hide();
+                        $("#div-ubicacion").hide();
+                        $("#div-lista").hide();
+                        break;
+                }
+            }      
         });
     </script>
 }

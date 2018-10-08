@@ -10,8 +10,8 @@
         GetEvents(formatDate(new Date()), "/Evento/GetEvents?date=" + formatDate(new Date()));
     }, 600000);
    
-    getCategorias();
     GetEvents(formatDate(new Date()), "/Evento/GetEvents?date=" + formatDate(new Date()));
+    GetSubCategorias();
 
     function formatDate(date) {
         var d = new Date(date),
@@ -40,24 +40,27 @@
 
     $('#calendar').on('click', '.fc-next-button, .fc-prev-button', function () {
         var view = $('#calendar').fullCalendar('getView');
+        var d, date;
 
         switch (view.name) {
             case "month":
-                var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");
-                var url = "/Evento/GetEvents?date=" + date;
+                date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");                
+                var url = $("#IdSubCategoria").val() == 0
+                    ? "/Evento/GetEvents?date=" + date
+                    : "/Evento/GetEventsBySubCategoria?IdSubCategoria=" + $("#IdSubCategoria").val() + "&date=" + date;
                 GetEvents(date, url);
                 break;
             case "timelineWeek":
-                var d = new Date($('#calendar').fullCalendar('getDate'));
-                var date = formatCurrentDate(d.setDate(d.getDate() + 7));
-
+                d = new Date($('#calendar').fullCalendar('getDate'));
+                date = formatCurrentDate(d.setDate(d.getDate() + 7));
+                
                 $('#calendar').fullCalendar('gotoDate', date);
                 $('#calendar').fullCalendar('changeView', view.name);
                 break;
             case "timelineDay":
-                var d = new Date($('#calendar').fullCalendar('getDate'));
-                var date = formatCurrentDate(d.setDate(d.getDate() + 1));
-
+                d = new Date($('#calendar').fullCalendar('getDate')); 
+                date = formatCurrentDate(d.setDate(d.getDate() + 1));
+                
                 $('#calendar').fullCalendar('gotoDate', date);
                 $('#calendar').fullCalendar('changeView', view.name);
                 break;
@@ -65,18 +68,47 @@
     });
 
     $('#calendar').on('click', '.fc-basicWeek-button', function () {
-        var date = formatCurrentDate(new Date());
+        var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");
 
         $('#calendar').fullCalendar('gotoDate', date);
         $('#calendar').fullCalendar('changeView', 'timelineWeek');
     });
 
     $('#calendar').on('click', '.fc-basicDay-button', function () {
-        var date = formatCurrentDate(new Date());
+        var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");
 
         $('#calendar').fullCalendar('gotoDate', date);
         $('#calendar').fullCalendar('changeView', 'timelineDay');
     });
+
+    $('.subcategoria').on('click', 'button', function () {
+        var id = $(this).attr("id");
+        var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");
+
+        $("#IdSubCategoria").val(id);
+        var url = $("#IdSubCategoria").val() == 0
+            ? "/Evento/GetEvents?date=" + date
+            : "/Evento/GetEventsBySubCategoria?IdSubCategoria=" + $("#IdSubCategoria").val() + "&date=" + date;
+        GetEvents(date, url);
+    });
+
+    function GetSubCategorias() {
+        $.ajax({
+            dataType: "json",
+            contentType: "application/json",
+            data: {"IdCategoria": 10},
+            url: "/SubCategoria/GetSubCategoriasByCategoria",
+            success: function (data) {
+                $('<button type="button" id="0" class="btn btn -default btn - sm" title="Mostrar Todos"><i class="fa fa-truck"></i></button>').appendTo('#div-subcategoria');
+                $.each(data.lista, function (i, val) {
+                    $('<button type="button" id="' + val.Id + ' " class="btn btn -default btn - sm" title="' + val.Nombre + '"><i class="fa fa-truck"></i></button>').appendTo('#div-subcategoria');
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('There was an error while fetching data!');
+            }
+        });
+    }
 
     function GetEvents(date, url) {
         $.ajax({
@@ -84,7 +116,6 @@
             contentType: "application/json",
             data: "{}",
             url: url,
-            dataType: "json",
             success: function (data) {
                 $('#calendar').fullCalendar('destroy');
                 $('#calendar').fullCalendar('render');
@@ -185,35 +216,5 @@
             }
         });
     }
-
-    function getCategorias() {
-        $.ajax({
-            dataType: "json",
-            contentType: "application/json",
-            url: "/Operaciones/Categoria/GetCategorias",
-            success: function (data) {
-                var items = '<option>Categoria</option>';
-                $.each(data.lista, function (i, k) {
-                    items += "<option value='" + k.Id + "'>" + k.Nombre + "</option>";
-                });
-                $('#slt-Categorias').html(items);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert('There was an error while fetching data!');
-            }
-        });
-    }
-
-    $('#slt-Categorias').on("change", function () {
-        var date = $.fullCalendar.formatDate($('#calendar').fullCalendar('getDate'), "YYYY-MM-DD");
-        var url = "/Evento/GetEvents?date=" + date;
-
-        if ($('#slt-Categorias').val() == "Categoria")
-            GetEvents(date, url);
-        else {
-            url = "/Evento/GetEventsByCategoria?IdCategoria=" + $('#slt-Categorias').val() + "&Date=" + date,
-                GetEvents(date, url);
-        }
-    });
-
+    
 })(jQuery); // End of use strict
