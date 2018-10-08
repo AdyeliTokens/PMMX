@@ -34,7 +34,8 @@ else
 <div class="row">
     
     <div class="mailbox-controls">
-        @Html.ActionLink("+", "Create", null, new { @class = "btn btn-sm btn-success" })
+        @Html.ActionLink("+", "Create", null, new { @class = "btn btn-sm btn-success", @id="add-new" })
+       
         <div id="div-subcategoria" class="btn-group pull-right subcategoria">
             @Html.Hidden("IdSubCategoria", 0)
         </div>

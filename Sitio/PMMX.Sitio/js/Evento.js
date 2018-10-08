@@ -9,10 +9,8 @@
     setInterval(function () {
         GetEvents(formatDate(new Date()), "/Evento/GetEvents?date=" + formatDate(new Date()));
     }, 600000);
-   
-    GetEvents(formatDate(new Date()), "/Evento/GetEvents?date=" + formatDate(new Date()));
-    GetSubCategorias();
-
+    init();
+    
     function formatDate(date) {
         var d = new Date(date),
             month = '' + (d.getMonth() + 1),
@@ -220,5 +218,14 @@
     function randomColor() {
         return '#' + ('00000' + (Math.random() * 16777216 << 0).toString(16)).substr(-6);
     }
-    
+
+    function init()
+    {
+        $("#perfil").val() == "Supplier" ? $("#add-new").hide() : $("#add-new").show(); 
+
+        GetEvents(formatDate(new Date()), "/Evento/GetEvents?date=" + formatDate(new Date()));
+        GetSubCategorias();
+    }
+
+
 })(jQuery); // End of use strict
