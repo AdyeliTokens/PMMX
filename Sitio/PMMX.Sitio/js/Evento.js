@@ -96,12 +96,12 @@
         $.ajax({
             dataType: "json",
             contentType: "application/json",
-            data: {"IdCategoria": 10},
+            data: {"IdCategoria": 10},//Ventana
             url: "/SubCategoria/GetSubCategoriasByCategoria",
             success: function (data) {
-                $('<button type="button" id="0" class="btn btn -default btn - sm" title="Mostrar Todos"><i class="fa fa-truck"></i></button>').appendTo('#div-subcategoria');
+                $('<button type="button" id="0" class="btn btn-sm btn-info" title="Mostrar Todos"><i class="fa fa-calendar"></i></button>').appendTo('#div-subcategoria');
                 $.each(data.lista, function (i, val) {
-                    $('<button type="button" id="' + val.Id + ' " class="btn btn -default btn - sm" title="' + val.Nombre + '"><i class="fa fa-truck"></i></button>').appendTo('#div-subcategoria');
+                    $('<button type="button" id="' + val.Id + ' " class="btn btn-sm btn-info" title="' + val.Nombre + '" ">' + val.Nombre + '</button>').appendTo('#div-subcategoria');
                 });
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -215,6 +215,10 @@
                 alert('There was an error while fetching events!');
             }
         });
+    }
+
+    function randomColor() {
+        return '#' + ('00000' + (Math.random() * 16777216 << 0).toString(16)).substr(-6);
     }
     
 })(jQuery); // End of use strict

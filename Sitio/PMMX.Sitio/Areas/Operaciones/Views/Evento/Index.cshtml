@@ -34,41 +34,52 @@ else
 <div class="row">
     <h2 style="text-align: center">Calendario de Eventos</h2>
     <div class="mailbox-controls">
-        @Html.ActionLink("+", "Create", null, new { @class = "btn btn-default btn-success" })        
-        <div id="div-subcategoria" class="pull-right subcategoria">
-            @Html.Hidden("IdSubCategoria",0)
+        @Html.ActionLink("+", "Create", null, new { @class = "btn btn-xs btn-success" })
+        <div id="div-subcategoria" class="btn-group pull-right subcategoria">
+            @Html.Hidden("IdSubCategoria", 0)
         </div>
     </div>
 </div>
 <div class="row">
-        <div class="box box-primary">
-            <div id='calendar' style="max-width: 900px; margin: 0 auto;"></div>
-        </div>
+    <div class="box box-primary">
+        <div id='calendar' style="max-width: 900px; margin: 0 auto;"></div>
+    </div>
 </div>
 
-    <!-- Modal-->
-    <div class="modal fade" id="createAssetModal" role="dialog" aria-labelledby="CreateAssetModal" aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog modal-lg">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header alert-info">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div id="createAssetContainer" class="col-md-6"></div>
-                        <div id="subVista" class="col-md-6"></div>
-                    </div>
-                </div>
-
-                <input id="IdEventoModal" type="hidden" />
-                <input id="IdVentanaEvento" type="hidden" />
+<!-- Modal-->
+<div class="modal fade" id="createAssetModal" role="dialog" aria-labelledby="CreateAssetModal" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header alert-info">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div id="createAssetContainer" class="col-md-6"></div>
+                    <div id="subVista" class="col-md-6"></div>
+                </div>
+            </div>
+
+            <input id="IdEventoModal" type="hidden" />
+            <input id="IdVentanaEvento" type="hidden" />
         </div>
     </div>
+</div>
 
-    @if (Request.IsAjaxRequest())
-    {
+@if (Request.IsAjaxRequest())
+{
+    @Scripts.Render("~/JS/Moment")
+    @Scripts.Render("~/JS/jquery")
+    @Scripts.Render("~/JS/FullCalendar")
+    @Scripts.Render("~/JS/Scheduler")
+    @Scripts.Render("~/JS/Select2")
+    @Scripts.Render("~/JS/Evento")
+    @Scripts.Render("~/JS/Bootstrap")
+}
+else
+{
+    @section Scripts{
         @Scripts.Render("~/JS/Moment")
         @Scripts.Render("~/JS/jquery")
         @Scripts.Render("~/JS/FullCalendar")
@@ -77,16 +88,5 @@ else
         @Scripts.Render("~/JS/Evento")
         @Scripts.Render("~/JS/Bootstrap")
     }
-    else
-    {
-        @section Scripts{
-            @Scripts.Render("~/JS/Moment")
-            @Scripts.Render("~/JS/jquery")
-            @Scripts.Render("~/JS/FullCalendar")
-            @Scripts.Render("~/JS/Scheduler")
-            @Scripts.Render("~/JS/Select2")
-            @Scripts.Render("~/JS/Evento")
-            @Scripts.Render("~/JS/Bootstrap")
-        }
-    }
+}
 
