@@ -44,13 +44,16 @@
 
                         $("#IdVentanaEvento").val(k.Id);
 
-                        $("#opciones-ventana").show();
-                        $("#btn-Rechazo").hide();
+                        if ($("#perfil").val() != "Supplier")
+                        {
+                            $("#opciones-ventana").show();
+                            $("#btn-Rechazo").hide();
 
-                        if (k.Cancelado[0] != 0) {
-                            $("#btn-Rechazo").show();
+                            if (k.Cancelado[0] != 0) {
+                                $("#btn-Rechazo").show();
+                            }
                         }
-
+                        
                         $.get(url, function (data) {
                             $('#subVista').html(data);
                         });

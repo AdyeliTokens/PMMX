@@ -47,7 +47,7 @@ namespace Sitio.Areas.Warehouse.Controllers
             
             return View(ventana);            
         }
-        
+
         // GET: Warehouse/Ventana/Details/5
         public ActionResult Details(int? id)
         {
@@ -55,8 +55,9 @@ namespace Sitio.Areas.Warehouse.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
-            var ventana = db.Ventana.Where(v=> (v.Id == id))
+
+            var ventana = db.Ventana
+                 .Where(e => e.Id == id)
                  .Include(e => e.Evento)
                  .Include(e => e.Proveedor)
                  .Include(e => e.Carrier)
@@ -64,6 +65,11 @@ namespace Sitio.Areas.Warehouse.Controllers
                  .Include(e => e.Procedencia)
                  .Include(e => e.SubCategoria)
                  .Include(e => e.TipoOperacion)
+                 .Include(e => e.StatusVentana)
+                 .Include(e => e.StatusVentana.Select(s => s.Status))
+                 .Include(e => e.BitacoraVentana)
+                 .Include(e => e.BitacoraVentana.Select(b => b.Estatus))
+                 .Include(e => e.BitacoraVentana.Select(b => b.Rechazo))
                  .FirstOrDefault();
 
             if (ventana == null)
@@ -171,17 +177,6 @@ namespace Sitio.Areas.Warehouse.Controllers
                     changeEstatus(ventana);
                 }
 
-                Ventana ventanaSend = db.Ventana
-                            .Include(v => v.TipoOperacion)
-                            .Include(v => v.StatusVentana)
-                            .Include(v => v.StatusVentana.Select(s => s.Status))
-                            .Include(v => v.BitacoraVentana)
-                            .Include(v => v.BitacoraVentana.Select(b => b.Estatus))
-                            .Include(v => v.BitacoraVentana.Select(b => b.Rechazo))
-                            .Include(v => v.Evento)
-                            .Include(v => v.Proveedor)
-                            .SingleOrDefault(x => x.Id == ventana.Id);
-                
                 return RedirectToAction("Index", "Evento", new { Area = "Operaciones" });
             }
 
