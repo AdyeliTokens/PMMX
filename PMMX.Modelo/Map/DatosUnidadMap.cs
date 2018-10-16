@@ -16,6 +16,7 @@ namespace PMMX.Modelo.Map
             ToTable("DatosUnidad");
             HasKey(c => c.Id);
             Property(c => c.Id).HasColumnName("Id");
+            Property(c => c.NombreConductor).HasColumnName("NombreConductor");
             Property(c => c.Placas).HasColumnName("Placas");
             Property(c => c.NoEco).HasColumnName("NoEconomico");
             Property(c => c.NoCaja).HasColumnName("NoCaja");

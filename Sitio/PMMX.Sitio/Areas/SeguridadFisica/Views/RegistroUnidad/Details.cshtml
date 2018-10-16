@@ -20,11 +20,55 @@
         </dd>
 
         <dt>
+            @Html.DisplayName("Nombre del Conductor")
+        </dt>
+
+        <dd>
+            @foreach (var dato in Model.Datos)
+            {
+                @Html.DisplayFor(modelItem => dato.NombreConductor)
+            }
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Empresa)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Empresa)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Placas")
+        </dt>
+
+        <dd>
+            @foreach (var dato in Model.Datos)
+            {
+                @Html.DisplayFor(modelItem => dato.Placas)
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayName("#Economico")
+        </dt>
+
+        <dd>
+            @foreach (var dato in Model.Datos)
+            {
+                @Html.DisplayFor(modelItem => dato.NoEco)
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Puerta")
+        </dt>
+
+        <dd>
+            @foreach (var bitacora in Model.Bitacora)
+            {
+                @Html.DisplayFor(modelItem => bitacora.Puerta)
+            }
         </dd>
 
         <dt>
@@ -34,6 +78,15 @@
         <dd>
             @Html.DisplayFor(model => model.Asunto)
         </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NombreAutoriza)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NombreAutoriza)
+        </dd>
+
 
         <dt>
             @Html.DisplayNameFor(model => model.NoGafette)

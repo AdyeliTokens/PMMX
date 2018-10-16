@@ -10,6 +10,7 @@ namespace PMMX.Modelo.Vistas
     {
         #region Propiedades
         public int Id { get; set; }
+        public string NombreConductor { get; set; }
         public string Placas { get; set; }
         public string NoEco { get; set; }
         public string NoCaja { get; set; }

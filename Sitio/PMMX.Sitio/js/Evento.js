@@ -97,10 +97,12 @@
             data: {"IdCategoria": 10},//Ventana
             url: "/SubCategoria/GetSubCategoriasByCategoria",
             success: function (data) {
-                $('<button type="button" id="0" class="btn btn-sm btn-info" title="Mostrar Todos"><i class="fa fa-calendar"></i></button>').appendTo('#div-subcategoria');
-                $.each(data.lista, function (i, val) {
-                    $('<button type="button" id="' + val.Id + ' " class="btn btn-sm btn-info" title="' + val.Nombre + '" ">' + val.Nombre + '</button>').appendTo('#div-subcategoria');
-                });
+                if ($("#0").length == 0) {
+                    $('<button type="button" id="0" class="btn btn-sm btn-info" title="Mostrar Todos"><i class="fa fa-calendar"></i></button>').appendTo('#div-subcategoria');
+                    $.each(data.lista, function (i, val) {
+                        $('<button type="button" id="' + val.Id + ' " class="btn btn-sm btn-info" title="' + val.Nombre + '" ">' + val.Nombre + '</button>').appendTo('#div-subcategoria');
+                    });
+                }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert('There was an error while fetching data!');
@@ -226,6 +228,5 @@
         GetEvents(formatDate(new Date()), "/Evento/GetEvents?date=" + formatDate(new Date()));
         GetSubCategorias();
     }
-
 
 })(jQuery); // End of use strict

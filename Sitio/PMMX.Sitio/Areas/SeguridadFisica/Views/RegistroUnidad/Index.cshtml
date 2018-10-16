@@ -2,51 +2,249 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Formato.Codigo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Empresa)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Asunto)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NoGafette)
-        </th>
-        <th></th>
-    </tr>
+@Styles.Render("~/Style/DataTables")
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Formato.Codigo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Empresa)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Asunto)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NoGafette)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <div class="box-tools">
+                    <a href="@Url.Action("Create", "RegistroUnidad")" class="btn btn-primary btn-sm">
+                        <span class="fa fa-plus" aria-hidden="true"></span>
+                    </a>
+                    <button id="btn-downloadVentana" class="btn btn-default" alt="Download"><i class="fa fa-cloud-download text-info"></i></button>
+                </div>
+            </div>
+            <br />
+            <div class="box-body table-responsive">
+                <table class="table table-hover table-striped" id="example1">
+                    <thead>
+                        <tr class="info">
+                            <th>
+                                @Html.DisplayNameFor(model => model.Formato.Codigo)
+                            </th>
+                            <th>
+                                @Html.DisplayName("Nombre del Conductor")
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Empresa)
+                            </th>
 
-</table>
+                            <th>
+                                @Html.DisplayName("Placas")
+                            </th>
+                            <th>
+                                @Html.DisplayName("No. Economico")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Puerta")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Asunto")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Nombre Autoriza")
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NoGafette)
+                            </th>
+                            <th>
+                                @Html.DisplayName("Hora de Entrada")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Hora de Salida")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Nombre del Guardia")
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Formato.Codigo)
+                                </td>
+                                <td>
+                                    @foreach (var dato in item.Datos)
+                                    {
+                                        @Html.DisplayFor(modelItem => dato.NombreConductor)
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Empresa)
+                                </td>
+                                <td>
+                                    @foreach (var dato in item.Datos)
+                                    {
+                                        @Html.DisplayFor(modelItem => dato.Placas)
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var datos in item.Datos)
+                                    {
+                                        @Html.DisplayFor(modelItem => datos.NoEco)
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var bitacora in item.Bitacora)
+                                    {
+                                        @Html.DisplayFor(modelItem => bitacora.Puerta)
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Asunto)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NombreAutoriza)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NoGafette)
+                                </td>
+                                <td>
+                                    @foreach (var bitacora in item.Bitacora)
+                                    {
+                                        if (bitacora.Fecha == item.Bitacora.Min(b => b.Fecha))
+                                        {
+                                            @Html.DisplayFor(modelItem => bitacora.Fecha)
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var bitacora in item.Bitacora)
+                                    {
+                                        if (bitacora.Fecha == item.Bitacora.Max(b => b.Fecha))
+                                        {
+                                            @Html.DisplayFor(modelItem => bitacora.Fecha)
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var bitacora in item.Bitacora)
+                                    {
+                                        @Html.DisplayFor(modelItem => bitacora.Guardia.Nombre)  @Html.DisplayFor(modelItem => bitacora.Guardia.Apellido1)  @Html.DisplayFor(modelItem => bitacora.Guardia.Apellido2)
+                                    }
+                                </td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+                                            <i class="fa fa-gear"></i>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
+                                            <li role="presentation">@Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "li-action", @data_target = "li-action" })</li>
+                                            <li role="presentation">@Html.ActionLink("Detalles", "Details", new { id = item.Id })</li>
+                                            <li class="divider" role="presentation"></li>
+                                            <li role="presentation">@Html.ActionLink("Eliminar", "Delete", new { id = item.Id })</li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr class="info">
+                            <th>
+                                @Html.DisplayNameFor(model => model.Formato.Codigo)
+                            </th>
+                            <th>
+                                @Html.DisplayName("Nombre del Conductor")
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Empresa)
+                            </th>
+
+                            <th>
+                                @Html.DisplayName("Placas")
+                            </th>
+                            <th>
+                                @Html.DisplayName("No. Economico")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Puerta")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Asunto")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Nombre Autoriza")
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NoGafette)
+                            </th>
+                            <th>
+                                @Html.DisplayName("Hora de Entrada")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Hora de Salida")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Nombre del Guardia")
+                            </th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal-->
+<div class="modal fade" id="createAssetModal" tabindex="-1" role="dialog" aria-labelledby="CreateAssetModal" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header alert-info">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div id="createAssetContainer" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Scripts.Render("~/JS/DataTables")
+<script>
+    $(function () {
+        $('#example1').DataTable();
+
+
+        $(".li-action").on("click", function (e) {
+            e.preventDefault();
+            alert("li-action");
+            //var url = $(this).data("url");
+            //alert(url);
+            //$.get(url, function (data) {
+            //    $('#createAssetContainer').html(data);
+            //    $('#createAssetModal').modal('show');
+
+            //});
+        });
+
+        $("#btn-downloadVentana").on("click", function (e) {
+            var Inicio = "2018-10-01";
+            var Fin = "2018-10-31";
+            window.open("/Warehouse/Ventana/downloadReport?Inicio=" + Inicio + "&Fin=" + Fin);
+            e.preventDefault();
+        });
+
+    });
+
+
+    $('#example1 input[type="checkbox"]').iCheck({
+        checkboxClass: 'icheckbox_flat-blue',
+        radioClass: 'iradio_flat-blue'
+    });
+
+    
+
+</script>
+

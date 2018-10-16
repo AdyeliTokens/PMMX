@@ -12,6 +12,7 @@ namespace PMMX.Modelo.Entidades.SeguridadFisica
         public int Id { get; set; }
         public string Empresa { get; set; }
         public string Asunto { get; set; }
+        public string NombreAutoriza { get; set; }
         public int NoGafette { get; set; }
         public int IdFormato { get; set; }
         #endregion

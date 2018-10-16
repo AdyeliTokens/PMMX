@@ -18,6 +18,7 @@ namespace PMMX.Modelo.Map
             Property(c => c.Id).HasColumnName("Id");
             Property(c => c.Empresa).HasColumnName("Empresa");
             Property(c => c.Asunto).HasColumnName("Asunto");
+            Property(c => c.NombreAutoriza).HasColumnName("NombreAutoriza");
             Property(c => c.NoGafette).HasColumnName("NoGafette");
             Property(c => c.IdFormato).HasColumnName("IdFormato");
             #endregion
