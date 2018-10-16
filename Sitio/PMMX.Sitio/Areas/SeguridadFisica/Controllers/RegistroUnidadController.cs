@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.Entity;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using OfficeOpenXml;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades;
 using PMMX.Modelo.Entidades.SeguridadFisica;
@@ -21,9 +23,10 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
         private PMMXContext db = new PMMXContext();
 
         // GET: SeguridadFisica/RegistroUnidad
-        public ActionResult Index()
+        public ActionResult Index(string Codigo)
         {
             var registroUnidad = db.RegistroUnidad
+                .Where(r=> r.Formato.Codigo == Codigo)
                 .Include(v => v.Formato)
                 .Include(r => r.Formato)
                 .Include(r => r.Datos)
@@ -57,9 +60,21 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
         }
 
         // GET: SeguridadFisica/RegistroUnidad/Create
-        public ActionResult Create()
+        public ActionResult Create(string Codigo)
         {
-            ViewBag.IdFormato = new SelectList(db.Formato, "Id", "Codigo");
+            if(Codigo != null)
+            {
+                ViewBag.IdFormato = new SelectList(db.Formato
+                    .Where(x=> x.Codigo == Codigo)
+                    .Select(x => new { Id = x.Id, NombreCorto = x.Descripcion })
+                    .OrderBy(x => x.NombreCorto), "Id", "NombreCorto");
+            }
+            else
+            {
+                ViewBag.IdFormato = new SelectList(db.Formato
+                    .Select(x => new { Id = x.Id, NombreCorto = x.Descripcion })
+                    .OrderBy(x => x.NombreCorto), "Id", "NombreCorto");
+            }           
             return View();
         }
 
@@ -133,33 +148,20 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
             {
                 db.Entry(registroUnidad).State = EntityState.Modified;
                 db.SaveChanges();
-                datos.IdRegistroUnidad = registroUnidad.Id;
 
                 var _datos = db.DatosUnidad.Where(d => d.IdRegistroUnidad == registroUnidad.Id).FirstOrDefault();
-                //CopyValues(datos, _datos);
-                //db.Entry(_datos).Property(x => x.Id).IsModified = false;
-                //db.Entry(_datos).CurrentValues.SetValues(datos);                
+                _datos.NombreConductor = datos.NombreConductor;
+                _datos.Placas = datos.Placas;
+                _datos.NoEco = datos.NoEco;
+                _datos.NoCaja = datos.NoCaja;
+                _datos.TipoRemolque = datos.TipoRemolque;
+                db.Entry(_datos).State = EntityState.Modified;
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
             ViewBag.IdFormato = new SelectList(db.Formato, "Id", "Codigo", registroUnidad.IdFormato);
             return View(registroUnidad);
-        }
-
-        public void CopyValues<T>(T source, T destination)
-        {
-            var props = typeof(T).GetProperties().Where(p => !Attribute.IsDefined(p, typeof(KeyAttribute))).ToArray();
-
-            foreach (var prop in props)
-            {
-                var value = prop.GetValue(source);
-                prop.SetValue(destination, value);
-            }
-
-            // string[] properties = new string[] { "NombreConductor", "Placas", "NoEco", "NoCaja", "TipoRemolque" };
-            
-            db.SaveChanges();
         }
 
         // GET: SeguridadFisica/RegistroUnidad/Delete/5
@@ -194,6 +196,79 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
             db.RegistroUnidad.Remove(registroUnidad);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult downloadReport(DateTime Inicio, DateTime Fin, string Codigo)
+        {
+            List<RegistroUnidad> registros = db.RegistroUnidad
+                            .Include(v => v.Formato)
+                            .Include(v => v.Bitacora)
+                            .Include(v => v.Bitacora.Select(s => s.Guardia))
+                            .Include(v => v.Datos)
+                            .Where(v => v.Formato.Codigo.Equals(Codigo))
+                            .ToList();
+
+            var fileName = "Bitacora_" + DateTime.Now.ToString("yyyy-MM-dd--hh-mm-ss") + ".xlsx";
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.FirstOrDefault(x => x.Name == "");
+                worksheet = package.Workbook.Worksheets.Add(Codigo);
+                worksheet.Row(1).Height = 20;
+
+                worksheet.TabColor = Color.Gold;
+                worksheet.DefaultRowHeight = 12;
+                worksheet.Row(1).Height = 20;
+
+                //Header
+                worksheet.Cells[1, 1].Value = "Nombre";
+                worksheet.Cells[1, 2].Value = "Empresa";
+                worksheet.Cells[1, 3].Value = "Placas";
+                worksheet.Cells[1, 4].Value = "#Economico";
+                worksheet.Cells[1, 5].Value = "Asunto";
+                worksheet.Cells[1, 6].Value = "Nombre Autoriza";
+                worksheet.Cells[1, 7].Value = "#Gafette";
+                worksheet.Cells[1, 8].Value = "Hora Entrada";
+                worksheet.Cells[1, 9].Value = "Hora Salida";
+
+                var fila = 2;
+
+                foreach (var registro in registros)
+                {
+                    //Content
+                    worksheet.Cells[fila, 1].Value = registro.Datos.Select(d => d.NombreConductor).FirstOrDefault().ToUpper();
+                    worksheet.Cells[fila, 2].Value = registro.Empresa.ToUpper();
+                    worksheet.Cells[fila, 3].Value = registro.Datos.Select(d => d.Placas).FirstOrDefault().ToUpper();
+                    worksheet.Cells[fila, 4].Value = registro.Datos.Select(d => d.NoEco).FirstOrDefault().ToUpper();
+                    worksheet.Cells[fila, 5].Value = registro.Asunto.ToUpper();
+                    worksheet.Cells[fila, 6].Value = registro.NombreAutoriza.ToUpper();
+                    worksheet.Cells[fila, 7].Value = registro.NoGafette;
+                    worksheet.Cells[fila, 8].Value = registro.Bitacora.OrderByDescending(b=> b.Fecha).Select(d => d.Fecha).LastOrDefault();
+                    worksheet.Cells[fila, 9].Value = registro.Bitacora.OrderByDescending(b => b.Fecha).Select(d => d.Fecha).FirstOrDefault();
+                    fila++;
+                }
+
+                worksheet.Column(1).AutoFit();
+                worksheet.Column(2).AutoFit();
+
+
+                for (var i = 0; i < 14; i++)
+                {
+                    worksheet.Cells[1, i + 1].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    worksheet.Cells[1, i + 1].Style.Font.Color.SetColor(Color.White);
+                    worksheet.Cells[1, i + 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.MidnightBlue);
+                }
+
+                package.Workbook.Properties.Title = "Bitacora";
+                this.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                this.Response.AddHeader("content-disposition", string.Format("attachment;  filename={0}", fileName));
+                this.Response.BinaryWrite(package.GetAsByteArray());
+                this.Response.Flush();
+                this.Response.Close();
+                this.Response.End();
+            }
+
+            return View();
         }
 
         protected override void Dispose(bool disposing)

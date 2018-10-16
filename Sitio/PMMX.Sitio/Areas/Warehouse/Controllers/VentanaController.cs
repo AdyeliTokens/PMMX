@@ -318,9 +318,19 @@ namespace Sitio.Areas.Warehouse.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Upload()
+        public ActionResult Upload(int IdEvento)
         {
-            ViewBag.SelectSubCategoria = new SelectList(db.SubCategoria.Where(x => (x.IdCategoria == 10)).Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
+            var IdSubCategoria = db.Evento.Where(e => e.Id == IdEvento).Select(e => e.IdSubCategoria).FirstOrDefault();
+
+            if (IdSubCategoria == 0)
+            {
+                ViewBag.SelectSubCategoria = new SelectList(db.SubCategoria.Where(x => (x.IdCategoria == 10)).Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
+            }
+            else
+            {
+                ViewBag.SelectSubCategoria = new SelectList(db.SubCategoria.Where(x => (x.Id == IdSubCategoria )).Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
+            }
+           
             ViewBag.SelectOperacion = new SelectList(db.TipoOperacion.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View();
         }
@@ -390,7 +400,12 @@ namespace Sitio.Areas.Warehouse.Controllers
                             db.Ventana.Add(ventana);
                             db.SaveChanges();
 
-                            for(int i=0; i<3; i++)
+                            Evento evento = db.Evento.Find(ventana.IdEvento);
+                            evento.IdSubCategoria = ventana.IdSubCategoria;
+                            db.Entry(evento).State = EntityState.Modified;
+                            db.SaveChanges();
+
+                            for (int i=0; i<3; i++)
                             {
                                 changeEstatus(ventana);
                             }

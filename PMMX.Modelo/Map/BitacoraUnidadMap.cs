@@ -19,6 +19,7 @@ namespace PMMX.Modelo.Map
             Property(c => c.IdGuardia).HasColumnName("IdGuardia");
             Property(c => c.Puerta).HasColumnName("Puerta");
             Property(c => c.Fecha).HasColumnName("Fecha");
+            Property(c => c.TipoMovimiento).HasColumnName("TipoMovimiento");
             Property(c => c.IdRegistroUnidad).HasColumnName("IdRegistroUnidad");
             #endregion
 

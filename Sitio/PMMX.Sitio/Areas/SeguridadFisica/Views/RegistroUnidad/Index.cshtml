@@ -5,28 +5,37 @@
     Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
-
-@Styles.Render("~/Style/DataTables")
+@section Styles {
+    @Styles.Render("~/Style/Bootstrap")
+    @Styles.Render("~/Style/DataTables")
+    @Styles.Render("~/Style/DataRangePicker")
+}
 
 <div class="row">
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-header">
                 <div class="box-tools">
-                    <a href="@Url.Action("Create", "RegistroUnidad")" class="btn btn-primary btn-sm">
-                        <span class="fa fa-plus" aria-hidden="true"></span>
-                    </a>
-                    <button id="btn-downloadVentana" class="btn btn-default" alt="Download"><i class="fa fa-cloud-download text-info"></i></button>
+                    <div class="form-group col-xs-4">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" class="form-control pull-right" id="reservation">
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <a href="@Url.Action("Create", "RegistroUnidad", new { Codigo = Model.Select(m=> m.Formato.Codigo).FirstOrDefault() })" class="btn btn-primary btn-sm"><span class="fa fa-plus" aria-hidden="true"></span></a>
+                        <button id="btn-downloadReport" class="btn btn-default" alt="Download"><i class="fa fa-cloud-download text-info"></i></button>
+                    </div>
                 </div>
             </div>
+            <br />
             <br />
             <div class="box-body table-responsive">
                 <table class="table table-hover table-striped" id="example1">
                     <thead>
                         <tr class="info">
-                            <th>
-                                @Html.DisplayNameFor(model => model.Formato.Codigo)
-                            </th>
                             <th>
                                 @Html.DisplayName("Nombre del Conductor")
                             </th>
@@ -65,13 +74,12 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @{var i = 0; }
                         @foreach (var item in Model)
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Formato.Codigo)
-                                </td>
-                                <td>
+                                    @Html.Hidden("Codigo" + i, item.Formato.Codigo)
                                     @foreach (var dato in item.Datos)
                                     {
                                         @Html.DisplayFor(modelItem => dato.NombreConductor)
@@ -128,7 +136,7 @@
                                 <td>
                                     @foreach (var bitacora in item.Bitacora)
                                     {
-                                        @Html.DisplayFor(modelItem => bitacora.Guardia.Nombre)  @Html.DisplayFor(modelItem => bitacora.Guardia.Apellido1)  @Html.DisplayFor(modelItem => bitacora.Guardia.Apellido2)
+                                        @Html.DisplayFor(modelItem => bitacora.Guardia.Nombre) @Html.DisplayFor(modelItem => bitacora.Guardia.Apellido1) @Html.DisplayFor(modelItem => bitacora.Guardia.Apellido2)
                                     }
                                 </td>
                                 <td>
@@ -150,9 +158,6 @@
                     </tbody>
                     <tfoot>
                         <tr class="info">
-                            <th>
-                                @Html.DisplayNameFor(model => model.Formato.Codigo)
-                            </th>
                             <th>
                                 @Html.DisplayName("Nombre del Conductor")
                             </th>
@@ -211,11 +216,17 @@
 </div>
 
 
+@Scripts.Render("~/JS/jquery")
+@Scripts.Render("~/JS/Bootstrap")
 @Scripts.Render("~/JS/DataTables")
-<script>
-    $(function () {
-        $('#example1').DataTable();
+@Scripts.Render("~/JS/Moment")
+@Scripts.Render("~/JS/DataRangePicker")
 
+
+<script>
+    $(document).ready(function () {
+        $('#example1').DataTable();
+        $('#reservation').daterangepicker();
 
         $(".li-action").on("click", function (e) {
             e.preventDefault();
@@ -229,22 +240,15 @@
             //});
         });
 
-        $("#btn-downloadVentana").on("click", function (e) {
-            var Inicio = "2018-10-01";
-            var Fin = "2018-10-31";
-            window.open("/Warehouse/Ventana/downloadReport?Inicio=" + Inicio + "&Fin=" + Fin);
+        $("#btn-downloadReport").on("click", function (e) {
+            var Fecha = ($("#reservation").val()).split(" - ");
+            var Inicio = Fecha[0];
+            var Fin = Fecha[1];
+            var Codigo = $("#Codigo0").val();
+
+            window.open("/SeguridadFisica/RegistroUnidad/downloadReport?Inicio=" + Inicio + "&Fin=" + Fin + "&Codigo=" + Codigo);
             e.preventDefault();
         });
-
     });
-
-
-    $('#example1 input[type="checkbox"]').iCheck({
-        checkboxClass: 'icheckbox_flat-blue',
-        radioClass: 'iradio_flat-blue'
-    });
-
-    
-
 </script>
 

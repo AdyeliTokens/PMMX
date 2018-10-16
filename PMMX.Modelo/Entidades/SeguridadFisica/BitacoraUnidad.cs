@@ -13,6 +13,7 @@ namespace PMMX.Modelo.Entidades.SeguridadFisica
         public int IdGuardia { get; set; }
         public string Puerta { get; set; }
         public DateTime Fecha { get; set; }
+        public string TipoMovimiento { get; set; }
         public int IdRegistroUnidad { get; set; }
         #endregion
 
