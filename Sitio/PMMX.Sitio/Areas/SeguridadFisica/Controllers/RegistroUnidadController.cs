@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades;
 using PMMX.Modelo.Entidades.SeguridadFisica;
@@ -32,7 +33,7 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
                 .Include(r => r.Datos)
                 .Include(r => r.Bitacora)
                 .Include(r => r.Bitacora.Select(b => b.Guardia));
-
+            ViewBag.CodigoFormato = Codigo;
             return View(registroUnidad.ToList());
         }
 
@@ -74,7 +75,8 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
                 ViewBag.IdFormato = new SelectList(db.Formato
                     .Select(x => new { Id = x.Id, NombreCorto = x.Descripcion })
                     .OrderBy(x => x.NombreCorto), "Id", "NombreCorto");
-            }           
+            }
+            ViewBag.CodigoFormato = Codigo;
             return View();
         }
 
@@ -249,22 +251,38 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
                 worksheet.TabColor = Color.Gold;
                 worksheet.DefaultRowHeight = 12;
                 worksheet.Row(1).Height = 20;
-
                 //Header
-                worksheet.Cells[1, 1].Value = "Nombre";
-                worksheet.Cells[1, 2].Value = "Empresa";
-                worksheet.Cells[1, 3].Value = "Placas";
-                worksheet.Cells[1, 4].Value = "#Economico";
-                worksheet.Cells[1, 5].Value = "Asunto";
-                worksheet.Cells[1, 6].Value = "Nombre Autoriza";
-                worksheet.Cells[1, 7].Value = "#Gafette";
-                worksheet.Cells[1, 8].Value = "Hora Entrada";
-                worksheet.Cells[1, 9].Value = "Hora Salida";
+                worksheet.Cells[4, 1].Value = "Nombre";
+                worksheet.Cells[4, 2].Value = "Empresa";
+                worksheet.Cells[4, 3].Value = "Placas";
+                worksheet.Cells[4, 4].Value = "#Economico";
+                worksheet.Cells[4, 5].Value = "Asunto";
+                worksheet.Cells[4, 6].Value = "Nombre Autoriza";
+                worksheet.Cells[4, 7].Value = "#Gafette";
+                worksheet.Cells[4, 8].Value = "Hora Entrada";
+                worksheet.Cells[4, 9].Value = "Hora Salida";
 
-                var fila = 2;
+                var fila = 5;
 
                 foreach (var registro in registros)
                 {
+                    //Header
+                    if(worksheet.Cells[1, 1].Value == null)
+                    {
+                        worksheet.Cells[1, 1].Value = registro.Formato.Descripcion.ToUpper();
+                        worksheet.Cells["A1:I1"].Merge = true;
+                        worksheet.Cells["A1:I1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        worksheet.Cells[2, 1].Value = "Codigo del Formato: ";
+                        worksheet.Cells[2, 2].Value =  registro.Formato.Codigo.ToUpper();
+                        worksheet.Cells[2, 3].Value = "Fecha de Efectividad: ";
+                        worksheet.Cells[2, 4].Value =  registro.Formato.FechaEfectividad.ToString();
+                        worksheet.Cells[2, 5].Value = "Tiempo de Retención: ";
+                        worksheet.Cells[2, 6].Value =  registro.Formato.TiempoRetencion.ToString() + " Año";
+                        worksheet.Cells[2, 7].Value = "Versión: " ;
+                        worksheet.Cells[2, 8].Value =  registro.Formato.Version.ToString();
+                        worksheet.Cells[2, 9].Value = "Pagina: 1";
+                    }
+                    
                     //Content
                     worksheet.Cells[fila, 1].Value = registro.Datos.Select(d => d.NombreConductor).FirstOrDefault().ToUpper();
                     worksheet.Cells[fila, 2].Value = registro.Empresa.ToUpper();
@@ -273,23 +291,29 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
                     worksheet.Cells[fila, 5].Value = registro.Asunto.ToUpper();
                     worksheet.Cells[fila, 6].Value = registro.NombreAutoriza.ToUpper();
                     worksheet.Cells[fila, 7].Value = registro.NoGafette;
-                    worksheet.Cells[fila, 8].Value = registro.Bitacora.OrderByDescending(b=> b.Fecha).Select(d => d.Fecha).LastOrDefault();
-                    worksheet.Cells[fila, 9].Value = registro.Bitacora.OrderByDescending(b => b.Fecha).Select(d => d.Fecha).FirstOrDefault();
+                    worksheet.Cells[fila, 8].Value = registro.Bitacora.OrderByDescending(b=> b.Fecha).Select(d => d.Fecha).LastOrDefault().ToString();
+                    worksheet.Cells[fila, 9].Value = registro.Bitacora.OrderByDescending(b => b.Fecha).Select(d => d.Fecha).FirstOrDefault().ToString();
                     fila++;
                 }
 
-                worksheet.Column(1).AutoFit();
-                worksheet.Column(2).AutoFit();
+                worksheet.Cells.AutoFitColumns();
 
-
-                for (var i = 0; i < 14; i++)
+                for (var i = 0; i < 9; i++)
                 {
                     worksheet.Cells[1, i + 1].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
                     worksheet.Cells[1, i + 1].Style.Font.Color.SetColor(Color.White);
                     worksheet.Cells[1, i + 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.MidnightBlue);
+
+                    worksheet.Cells[2, i + 1].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    worksheet.Cells[2, i + 1].Style.Font.Color.SetColor(Color.White);
+                    worksheet.Cells[2, i + 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.MidnightBlue);
+
+                    worksheet.Cells[4, i + 1].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    worksheet.Cells[4, i + 1].Style.Font.Color.SetColor(Color.Black);
+                    worksheet.Cells[4, i + 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
                 }
 
-                package.Workbook.Properties.Title = "Bitacora";
+                package.Workbook.Properties.Title = "Bitacora_";
                 this.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                 this.Response.AddHeader("content-disposition", string.Format("attachment;  filename={0}", fileName));
                 this.Response.BinaryWrite(package.GetAsByteArray());
