@@ -19,6 +19,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public string Descripcion { get; set; }
         public int IdAsignador { get; set; }
         public int IdCategoria { get; set; }
+        public int IdSubCategoria { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]
         public DateTime FechaInicio { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]
@@ -26,11 +27,11 @@ namespace PMMX.Modelo.Entidades.Operaciones
 
         [StringLength(250)]
         public string Nota { get; set; }
-        public bool EsRecurrente { get; set; }
         public bool Activo { get; set; }
 
         public Persona Asignador { get; set; }
         public Categoria Categoria { get; set; }
+        public SubCategoria SubCategoria { get; set; }
         public List<GembaWalk> GembaWalk { get; set; }
         public List<Ventana> Ventanas { get; set; }
         public List<EventoOrigen> EventoOrigen { get; set; }

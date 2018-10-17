@@ -23,9 +23,28 @@
     <table class="table">
         <tr class="bg-primary">
             <td><i class="fa fa-star"></i></td>
-            <td>Status</td>
-            <td><div id="NombreStatus"></div></td>
-            <td></td>
+            <td>Status / Rechazo</td>
+            <td>
+                @{ var estatus = "";}
+                @foreach (var item in Model.StatusVentana)
+                {
+                    if (item.Fecha == Model.StatusVentana.Max(s => s.Fecha))
+                    {
+                        @Html.DisplayFor(modelItem => item.Status.Nombre)
+                        estatus = item.Status.Nombre;
+                    }
+                }
+            </td>
+            <td>
+                @foreach (var item in Model.BitacoraVentana)
+                {
+                    if (item.Fecha == Model.BitacoraVentana.Max(b => b.Fecha) && estatus == item.Estatus.Nombre)
+                    {
+                        <span><i class="bg-red fa fa-warning"></i>  @Html.DisplayFor(modelItem => item.Rechazo.Nombre)</span>
+                        <br /><span><i class="fa fa-commenting-o"></i>  @Html.DisplayFor(modelItem => item.Comentarios)</span>
+                    }
+                 }
+            </td>
         </tr>
         <tr class="bg-info">
             <td class="bg-primary"><i class="fa fa-calendar"></i></td>
@@ -49,24 +68,24 @@
             <td class="bg-primary"><i class="fa fa-globe"></i></td>
             <td class="bg-primary"><b>Ubicacion</b></td>
             <td>
-               Origen : @Html.DisplayFor(model => model.Procedencia.Nombre)
+                Origen : @Html.DisplayFor(model => model.Procedencia.Nombre)
             </td>
             <td>
                 Destino : @Html.DisplayFor(model => model.Destino.Nombre)
-            </td>            
+            </td>
         </tr>
         <tr class="bg-success">
             <td class="bg-primary"><i class="fa fa-truck"></i></td>
             <td class="bg-primary"><b>Transporte</b></td>
             <td>
                 Linea transportista: @Html.DisplayFor(model => model.Carrier.NombreCorto) </br>
-                                     @Html.DisplayFor(model => model.NombreCarrier)
+                @Html.DisplayFor(model => model.NombreCarrier)
             </td>
             <td>
                 Color contenedor: @Html.DisplayFor(model => model.ColorContenedor) </br>
                 Sellos:@Html.DisplayFor(model => model.Sellos)
             </td>
-         </tr>
+        </tr>
 
         <tr class="bg-success">
             <td class="bg-primary"></td>
@@ -113,7 +132,7 @@
                 @Html.DisplayFor(model => model.MovilConductor)
             </td>
         </tr>
-        
+
     </table>
 
 </div>
@@ -122,42 +141,6 @@
 <script>
         $(function () {
             var IdVentana = $("#IdVentanaEvento").val();
-
-            if (IdVentana != null) {
-                getStatusActualVentana(IdVentana);
-                GetRechazoActualVentana(IdVentana);
-            }
-           
-    
-
-            function getStatusActualVentana(IdVentana) {
-                $.ajax({
-                    dataType: "json",
-                    contentType: "application/json",
-                    url: "/Warehouse/Ventana/GetStatusActualVentana?idVentana=" + IdVentana,
-                    success: function (data) {
-                        $('#NombreStatus').html(data.status);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert('There was an error while fetching data!');
-                    }
-                });
-            }
-
-            function GetRechazoActualVentana(IdVentana) {
-                $.ajax({
-                    dataType: "json",
-                    contentType: "application/json",
-                    url: "/Warehouse/Ventana/GetRechazoActualVentana?idVentana=" + IdVentana,
-                    success: function (data) {
-                        estatus = $('#NombreStatus').val() + "/" + data.rechazo;
-                        $('#NombreStatus').html(estatus);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert('There was an error while fetching data!');
-                    }
-                });
-            }
 
             $("#btn-EditarVentana").on("click", function () {
                     var url = ("/Warehouse/Ventana/Edit/" + IdVentana);

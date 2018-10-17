@@ -1,0 +1,51 @@
+﻿@model PMMX.Modelo.Entidades.SeguridadFisica.BitacoraUnidad
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BitacoraUnidad</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Guardia.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Guardia.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RegistroUnidad.Empresa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegistroUnidad.Empresa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Puerta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Puerta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,104 @@
+﻿@model PMMX.Modelo.Entidades.SeguridadFisica.RegistroUnidad
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>RegistroUnidad</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Formato.Codigo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Formato.Codigo)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Nombre del Conductor")
+        </dt>
+
+        <dd>
+            @foreach (var dato in Model.Datos)
+            {
+                @Html.DisplayFor(modelItem => dato.NombreConductor)
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Empresa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Empresa)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Placas")
+        </dt>
+
+        <dd>
+            @foreach (var dato in Model.Datos)
+            {
+                @Html.DisplayFor(modelItem => dato.Placas)
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayName("#Economico")
+        </dt>
+
+        <dd>
+            @foreach (var dato in Model.Datos)
+            {
+                @Html.DisplayFor(modelItem => dato.NoEco)
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Puerta")
+        </dt>
+
+        <dd>
+            @foreach (var bitacora in Model.Bitacora)
+            {
+                @Html.DisplayFor(modelItem => bitacora.Puerta)
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Asunto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Asunto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NombreAutoriza)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NombreAutoriza)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NoGafette)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoGafette)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index", new { Codigo = Model.Formato.Codigo })
+</p>

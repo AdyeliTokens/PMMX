@@ -40,8 +40,9 @@ else
         </dt>
 
         <dd>
-            @Html.Raw(@ViewBag.IdCategoria)
+            @Html.Raw(@ViewBag.IdCategoria)  @Html.Raw(@ViewBag.IdSubCategoria)
         </dd>
+
 
         <dt>
             @Html.LabelFor(model => model.FechaInicio, "Fecha Inicio: ")
@@ -68,14 +69,6 @@ else
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.EsRecurrente)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EsRecurrente)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Activo)
         </dt>
 
@@ -90,6 +83,7 @@ else
     <button id="btn-Continuar" class="btn btn-success">Continuar</button>
     <button id="btn-Rechazo" class="btn btn-danger">Rechazar</button>
 </div>
+
 @if (Request.IsAjaxRequest())
 {
     @Scripts.Render("~/JS/jquery")

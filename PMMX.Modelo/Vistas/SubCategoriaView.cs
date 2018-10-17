@@ -24,6 +24,7 @@ namespace PMMX.Modelo.Vistas
         
         public ICollection<VentanaView> Ventanas { get; set; }
         public ICollection<GembaWalkView> GembaWalk { get; set; }
+        public ICollection<SubCategoriaView> SubCategorias { get; set; }
         #endregion
     }
 }
