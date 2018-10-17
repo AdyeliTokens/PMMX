@@ -352,6 +352,7 @@
     <Compile Include="Areas\Operaciones\Controllers\EventoController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\EventoOrigenController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\EventoResponsableController.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\FormatosController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\HorariosController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\GembaWalkController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\MantenimientoController.cs" />
@@ -381,6 +382,10 @@
     <Compile Include="Areas\Operaciones\Controllers\SubAreaController.cs" />
     <Compile Include="Areas\Operaciones\Controllers\WorkFlowsController.cs" />
     <Compile Include="Areas\Operaciones\OperacionesAreaRegistration.cs" />
+    <Compile Include="Areas\SeguridadFisica\Controllers\BitacoraUnidadController.cs" />
+    <Compile Include="Areas\SeguridadFisica\Controllers\DatosUnidadController.cs" />
+    <Compile Include="Areas\SeguridadFisica\Controllers\RegistroUnidadController.cs" />
+    <Compile Include="Areas\SeguridadFisica\SeguridadFisicaAreaRegistration.cs" />
     <Compile Include="Areas\Seguridad\Controllers\MenuController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\DispositivosController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\ElectricosController.cs" />
@@ -8116,6 +8121,27 @@
     <Content Include="Areas\Seguridad\Views\Menu\Index.cshtml" />
     <Content Include="Areas\Seguridad\Views\Menu\getMenuByPersona.cshtml" />
     <Content Include="Areas\Warehouse\Views\Ventana\Report.cshtml" />
+    <Content Include="Areas\SeguridadFisica\Views\web.config" />
+    <Content Include="Areas\SeguridadFisica\Views\RegistroUnidad\Create.cshtml" />
+    <Content Include="Areas\SeguridadFisica\Views\RegistroUnidad\Delete.cshtml" />
+    <Content Include="Areas\SeguridadFisica\Views\RegistroUnidad\Details.cshtml" />
+    <Content Include="Areas\SeguridadFisica\Views\RegistroUnidad\Edit.cshtml" />
+    <Content Include="Areas\SeguridadFisica\Views\RegistroUnidad\Index.cshtml" />
+    <Content Include="Areas\SeguridadFisica\Views\DatosUnidad\Create.cshtml" />
+    <Content Include="Areas\SeguridadFisica\Views\DatosUnidad\Delete.cshtml" />
+    <Content Include="Areas\SeguridadFisica\Views\DatosUnidad\Details.cshtml" />
+    <Content Include="Areas\SeguridadFisica\Views\DatosUnidad\Edit.cshtml" />
+    <Content Include="Areas\SeguridadFisica\Views\DatosUnidad\Index.cshtml" />
+    <Content Include="Areas\SeguridadFisica\Views\BitacoraUnidad\Create.cshtml" />
+    <Content Include="Areas\SeguridadFisica\Views\BitacoraUnidad\Delete.cshtml" />
+    <Content Include="Areas\SeguridadFisica\Views\BitacoraUnidad\Details.cshtml" />
+    <Content Include="Areas\SeguridadFisica\Views\BitacoraUnidad\Edit.cshtml" />
+    <Content Include="Areas\SeguridadFisica\Views\BitacoraUnidad\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Formatos\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Formatos\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Formatos\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Formatos\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Formatos\Index.cshtml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -8470,6 +8496,8 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\SeguridadFisica\Models\" />
+    <Folder Include="Areas\SeguridadFisica\Views\Shared\" />
     <Folder Include="Areas\Warehouse\Models\" />
     <Folder Include="Results\" />
   </ItemGroup>

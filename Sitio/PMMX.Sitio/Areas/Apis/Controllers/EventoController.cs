@@ -167,7 +167,6 @@ namespace Sitio.Areas.Apis.Controllers
 
             evento.FechaInicio = DateTime.Now;
             evento.FechaFin = DateTime.Now;
-            evento.EsRecurrente = false;
             evento.Activo = true;
             
             db.Evento.Add(evento);

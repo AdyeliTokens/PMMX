@@ -1,0 +1,267 @@
+﻿@model IEnumerable<PMMX.Modelo.Entidades.SeguridadFisica.RegistroUnidad>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+}
+@if (Request.IsAjaxRequest())
+{
+    @Styles.Render("~/Style/DataTables")
+    @Styles.Render("~/Style/DataRangePicker")
+}
+else
+{
+    @section Styles {
+        @Styles.Render("~/Style/DataTables")
+        @Styles.Render("~/Style/DataRangePicker")
+    }
+}
+
+<div id="header" style="padding: 20px 30px; background: rgb(243, 156, 18); z-index: 999999; font-size: 16px; font-weight: 600;"></div>
+@Html.Hidden("CodigoFormato")
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <div class="box-tools">
+                    <div class="form-group col-xs-4">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" class="form-control pull-right" id="reservation">
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        @*<a href="@Url.Action("Create", "RegistroUnidad", new { Codigo = Model.Select(m=> m.Formato.Codigo).FirstOrDefault() })" class="btn btn-primary btn-sm"><span class="fa fa-plus" aria-hidden="true"></span></a>*@
+                        <a href="@Url.Action("Create", "RegistroUnidad", new { Codigo = ViewBag.CodigoFormato })" class="btn btn-primary btn-sm"><span class="fa fa-plus" aria-hidden="true"></span></a>
+                        <button id="btn-downloadReport" class="btn btn-default" alt="Download"><i class="fa fa-cloud-download text-info"></i></button>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="box-body table-responsive">
+                <table class="table table-hover table-striped" id="example1">
+                    <thead>
+                        <tr class="info">
+                            <th>
+                                @Html.DisplayName("Nombre del Conductor")
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Empresa)
+                            </th>
+
+                            <th>
+                                @Html.DisplayName("Placas")
+                            </th>
+                            <th>
+                                @Html.DisplayName("No. Economico")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Asunto")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Nombre Autoriza")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Hora de Entrada")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Hora de Salida")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Puerta")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Nombre del Guardia")
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{var i = 0; }
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.Hidden("Codigo" + i, item.Formato.Codigo)
+                                    @foreach (var dato in item.Datos)
+                                    {
+                                        @Html.DisplayFor(modelItem => dato.NombreConductor)
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Empresa)
+                                </td>
+                                <td>
+                                    @foreach (var dato in item.Datos)
+                                    {
+                                        @Html.DisplayFor(modelItem => dato.Placas)
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var datos in item.Datos)
+                                    {
+                                        @Html.DisplayFor(modelItem => datos.NoEco)
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Asunto)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NombreAutoriza)
+                                </td>
+                                <td>
+                                    @foreach (var bitacora in item.Bitacora)
+                                    {
+                                        if (bitacora.Fecha == item.Bitacora.Min(b => b.Fecha))
+                                        {
+                                            @Html.DisplayFor(modelItem => bitacora.Fecha)
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var bitacora in item.Bitacora)
+                                    {
+                                        if (bitacora.Fecha == item.Bitacora.Max(b => b.Fecha))
+                                        {
+                                            @Html.DisplayFor(modelItem => bitacora.Fecha)
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var bitacora in item.Bitacora)
+                                    {
+                                        <p>@Html.DisplayFor(modelItem => bitacora.Puerta)</p>
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var bitacora in item.Bitacora)
+                                    {
+                                        <p>@Html.DisplayFor(modelItem => bitacora.Guardia.Nombre) @Html.DisplayFor(modelItem => bitacora.Guardia.Apellido1) @Html.DisplayFor(modelItem => bitacora.Guardia.Apellido2)</p>
+                                    }
+                                </td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+                                            <i class="fa fa-gear"></i>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
+                                            <li role="presentation">@Html.ActionLink("Cerrar", "Edit", new { id = item.Id })</li>
+                                            <li role="presentation">@Html.ActionLink("Ver", "Details", new { id = item.Id })</li>
+                                            <li class="divider" role="presentation"></li>
+                                            <li role="presentation">@Html.ActionLink("Eliminar", "Delete", new { id = item.Id })</li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr class="info">
+                            <th>
+                                @Html.DisplayName("Nombre del Conductor")
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Empresa)
+                            </th>
+
+                            <th>
+                                @Html.DisplayName("Placas")
+                            </th>
+                            <th>
+                                @Html.DisplayName("No. Economico")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Puerta")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Asunto")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Nombre Autoriza")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Hora de Entrada")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Hora de Salida")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Nombre del Guardia")
+                            </th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal-->
+<div class="modal fade" id="createAssetModal" tabindex="-1" role="dialog" aria-labelledby="CreateAssetModal" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header alert-info">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div id="createAssetContainer" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@if (Request.IsAjaxRequest())
+{@Scripts.Render("~/JS/DataTables")
+@Scripts.Render("~/JS/DataRangePicker")
+
+<script>
+    $(document).ready(function () {
+        $('#example1').DataTable();
+        $('#reservation').daterangepicker();
+        $("<h3 style='color: #ffffff'>" + $("#CodigoFormato").val() + "</h3>").appendTo("#header");
+
+        $("#btn-downloadReport").on("click", function (e) {
+            var Fecha = ($("#reservation").val()).split(" - ");
+            var Inicio = Fecha[0];
+            var Fin = Fecha[1];
+            var Codigo = $("#CodigoFormato").val();
+
+            window.open("/SeguridadFisica/RegistroUnidad/downloadReport?Inicio=" + Inicio + "&Fin=" + Fin + "&Codigo=" + Codigo);
+            e.preventDefault();
+        });
+    });
+</script>
+}
+else
+{
+@section Scripts {
+    @Scripts.Render("~/JS/DataTables")
+    @Scripts.Render("~/JS/DataRangePicker")
+
+    <script>
+        $(document).ready(function () {
+            $('#example1').DataTable();
+            $('#reservation').daterangepicker();
+            $("<h3 style='color: #ffffff'>" + $("#Codigo0").val() + "</h3>").appendTo("#header");
+
+            $("#btn-downloadReport").on("click", function (e) {
+                var Fecha = ($("#reservation").val()).split(" - ");
+                var Inicio = Fecha[0];
+                var Fin = Fecha[1];
+                var Codigo = $("#Codigo0").val();
+
+                window.open("/SeguridadFisica/RegistroUnidad/downloadReport?Inicio=" + Inicio + "&Fin=" + Fin + "&Codigo=" + Codigo);
+                e.preventDefault();
+            });
+        });
+    </script>
+}
+}

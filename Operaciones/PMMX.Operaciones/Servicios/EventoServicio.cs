@@ -34,7 +34,6 @@ namespace PMMX.Operaciones.Servicios
                 FechaInicio = d.FechaInicio,
                 FechaFin = d.FechaFin,
                 Nota = d.Nota,
-                EsRecurrente = d.EsRecurrente,
                 Activo = d.Activo,
                 Asignador = new PersonaView
                 {
@@ -75,7 +74,6 @@ namespace PMMX.Operaciones.Servicios
                     FechaInicio = d.FechaInicio,
                     FechaFin = d.FechaFin,
                     Nota = d.Nota,
-                    EsRecurrente = d.EsRecurrente,
                     Activo = d.Activo,
                     Asignador = new PersonaView
                     {

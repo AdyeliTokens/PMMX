@@ -6,8 +6,12 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades;
+using PMMX.Modelo.RespuestaGenerica;
+using PMMX.Seguridad.Servicios;
+using Sitio.Helpers;
 
 namespace Sitio.Areas.Seguridad.Controllers
 {
@@ -20,6 +24,26 @@ namespace Sitio.Areas.Seguridad.Controllers
         public ActionResult Index()
         {
             return View(db.Puestos.ToList());
+        }
+
+        [RenderAjaxPartialScripts]
+        public ActionResult getPuestoByPersona()
+        {
+            PersonaServicio personaServicio = new PersonaServicio();
+            IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
+
+            if (persona.EjecucionCorrecta)
+            {
+                var perfil = db.Puestos
+                    .Where(w => w.Id == persona.Respuesta.IdPuesto)
+                    .Select(s => s.Nombre)
+                    .FirstOrDefault()
+                    .ToString();
+
+                return Json(new { perfil }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Seguridad/Puestos/Details/5

@@ -84,6 +84,7 @@
                     <div class="pull-left info">
                         @*<p>@Ajax.MenuLink(User.Identity.GetUserName().ToString(), string.Format("{0:c}", ""), "Details", "Profile", new { area = "", id = 66 }, null, null)</p>*@
                         <p>@User.Identity.GetUserName().ToString()</p>
+                        @Html.Hidden("perfil")
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
@@ -130,6 +131,7 @@
         $(document).ready(function ()
         {
             getMenuByPersona();
+            getPuestoByPersona();
         });
 
         function getMenuByPersona() {
@@ -169,6 +171,22 @@
             });
         }
         
+        function getPuestoByPersona() {
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                traditional: true,
+                url: "/Seguridad/Puestos/getPuestoByPersona",
+                success: function (data) {
+                    $("#perfil").val(data.perfil);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('There was an error while fetching data!');
+                }
+            });
+        }
+
     </script>
     @RenderSection("Scripts", required: false)
 

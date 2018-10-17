@@ -32,6 +32,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public ICollection<Ventana> Ventanas { get; set; }
         public ICollection<GembaWalk> GembaWalk { get; set; }
         public ICollection<WorkFlow> WorkFlows { get; set; }
+        public ICollection<Evento> Eventos { get; set; }
         #endregion
     }
 }
