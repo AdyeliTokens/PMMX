@@ -76,19 +76,8 @@ namespace Sitio.Areas.Warehouse.Controllers
                     .Where( v => (v.Id == bitacoraVentana.IdVentana))
                     .FirstOrDefault();
 
-                WorkFlowServicio workflowServicio = new WorkFlowServicio();
-                IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, ventana.StatusVentana.Where(s => s.IdVentana == bitacoraVentana.IdVentana).OrderByDescending(s=> s.Fecha).FirstOrDefault().IdStatus, true);
-
-                if (workFlow.Respuesta != null)
-                {
-                    bitacoraVentana.IdStatus = workFlow.Respuesta.EstatusSiguiente.Id;
-                }
-                else
-                {
-                    workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, ventana.StatusVentana.Where(s => s.IdVentana == bitacoraVentana.IdVentana).OrderByDescending(s => s.Fecha).FirstOrDefault().IdStatus, false);
-                    bitacoraVentana.IdStatus = workFlow.Respuesta.EstatusInicial.Id;
-                }
-                
+                Rechazo rechazo = db.Rechazo.Find(bitacoraVentana.IdRechazo);
+                bitacoraVentana.IdStatus = rechazo.IdStatus;
                 bitacoraVentana.Fecha = DateTime.Now;
 
                 db.BitacoraVentana.Add(bitacoraVentana);
@@ -127,11 +116,8 @@ namespace Sitio.Areas.Warehouse.Controllers
             {
                 UsuarioServicio usuarioServicio = new UsuarioServicio();
                 NotificationService notify = new NotificationService();
-                WorkFlowServicio workflowServicio = new WorkFlowServicio();
-                IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, statusVentana.IdStatus, false);
 
-                //string senders = usuarioServicio.GetEmailByEvento(statusVentana.Ventana.IdEvento);
-                string senders = usuarioServicio.GetEmailBySubArea(workFlow.Respuesta.IdSubArea);
+                string senders = usuarioServicio.GetEmailByStatus(ventana);
                 EmailService emailService = new EmailService();
                 emailService.SendMail(senders, ventana);
             }

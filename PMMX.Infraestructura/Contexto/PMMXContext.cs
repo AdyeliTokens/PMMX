@@ -11,6 +11,8 @@ using PMMX.Modelo.Map.InsiteLAC;
 
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using PMMX.Modelo.Entidades.Seguridad;
+using PMMX.Modelo.Entidades.SeguridadFisica;
 
 namespace PMMX.Infraestructura.Contexto
 {
@@ -89,7 +91,6 @@ namespace PMMX.Infraestructura.Contexto
             #endregion
 
             #region Seguridad
-
             modelBuilder.Configurations.Add(new PersonaMap());
             modelBuilder.Configurations.Add(new PuestoMap());
             modelBuilder.Configurations.Add(new DispositivoMap());
@@ -103,6 +104,13 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new MecanicoMap());
 
             #endregion
+
+            #region SeguridadFisica
+            modelBuilder.Configurations.Add(new RegistroUnidadMap());
+            modelBuilder.Configurations.Add(new DatosUnidadMap());
+            modelBuilder.Configurations.Add(new BitacoraUnidadMap());
+            #endregion
+
 
             #region WareHouse
 
@@ -145,8 +153,8 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new BitacoraGembaWalkMap());
             modelBuilder.Configurations.Add(new WorkFlowMap());
             modelBuilder.Configurations.Add(new TipoOperacionMap());
-
-
+            modelBuilder.Configurations.Add(new MenuMap());
+            modelBuilder.Configurations.Add(new FormatoMap());
 
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
@@ -191,7 +199,6 @@ namespace PMMX.Infraestructura.Contexto
         #endregion
 
         #region Seguridad
-
         public DbSet<Dispositivo> Dispositivos { get; set; }
         public DbSet<Persona> Personas { get; set; }
         public DbSet<Puesto> Puestos { get; set; }
@@ -203,13 +210,17 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<ShiftLeaders> ShiftLeaders { get; set; }
         public DbSet<Electricos> Electricos { get; set; }
         public DbSet<Pesador> Pesadores { get; set; }
+        public DbSet<Menu> Menu { get; set; }
+        #endregion
 
+        #region SeguridadFisica
+        public DbSet<RegistroUnidad> RegistroUnidad { get; set; }
+        public DbSet<DatosUnidad> DatosUnidad { get; set; }
+        public DbSet<BitacoraUnidad> BitacoraUnidad { get; set; }
         #endregion
 
         #region WareHouse
         #endregion
-
-
 
 
         public DbSet<Pregunta> Preguntas { get; set; }
@@ -242,6 +253,7 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<WorkFlow> WorkFlows { get; set; }
         public DbSet<BitacoraGembaWalk> BitacoraGembaWalks { get; set; }
         public DbSet<TipoOperacion> TipoOperacion { get; set; }
+        public DbSet<Formato>  Formato { get; set; }
     }
 }
 

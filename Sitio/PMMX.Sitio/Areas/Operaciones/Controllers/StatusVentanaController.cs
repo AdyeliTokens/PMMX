@@ -105,7 +105,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                             }
                         }).ToList(),
                         WorkFlowInicial = s.Status.WorkFlowInicial
-                        .Where(w => (w.Id == s.Status.Id))
+                        .Where(w => (w.Inicial == s.Status.Id) && (w.IdSubCategoria == s.Ventana.IdSubCategoria))
                         .Select(w => new WorkFlowView
                         {
                             Id = w.Id,
@@ -140,8 +140,8 @@ namespace Sitio.Areas.Operaciones.Controllers
         }
         public PartialViewResult SearchTimeline()
         {
-            DateTime inicio = DateTime.Now.AddDays(-7);
-            DateTime fin = DateTime.Now.AddDays(7);
+            DateTime inicio = DateTime.Now.AddDays(-15);
+            DateTime fin = DateTime.Now.AddDays(15);
 
             ViewBag.IdEvento = new SelectList(db.Evento.Where(x => x.FechaInicio >= inicio && x.FechaFin <= fin).Select(x => new { Id = x.Id, Descripcion = x.Descripcion }), "Id", "Descripcion");
 
@@ -198,8 +198,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                     UsuarioServicio usuarioServicio = new UsuarioServicio();
                     NotificationService notify = new NotificationService();
 
-                    // string senders = usuarioServicio.GetEmailByEvento(ventana.IdEvento);
-                    string senders = usuarioServicio.GetEmailBySubArea(workFlow.Respuesta.IdSubArea);
+                    string senders = usuarioServicio.GetEmailByStatus(ventana);
 
                     if (senders != "")
                     {

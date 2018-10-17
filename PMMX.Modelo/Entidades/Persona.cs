@@ -5,14 +5,13 @@ using PMMX.Modelo.Entidades.Paros;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using PMMX.Modelo.Entidades.Warehouse;
-
+using PMMX.Modelo.Entidades.Seguridad;
+using PMMX.Modelo.Entidades.SeguridadFisica;
 
 namespace PMMX.Modelo.Entidades
 {
     public class Persona
     {
-        
-
         #region Propiedades
         public int Id { get; set; }
         public int IdPuesto { get; set; }
@@ -74,6 +73,8 @@ namespace PMMX.Modelo.Entidades
         public ICollection<BitacoraVentana> BitacoraVentana { get; set; }
         public ICollection<BitacoraGembaWalk> BitacoraGembaWalk { get; set; }
         public ICollection<PlanDeProduccion> PlanesDeProduccionReportados { get; set; }
+        public ICollection<Menu> Menu { get; set; }
+        public ICollection<BitacoraUnidad> BitacorasUnidad { get; set; }
         #endregion
 
     }

@@ -16,16 +16,19 @@ namespace PMMX.Modelo.Entidades
         public int Id { get; set; }
         public int IdSubCategoria { get; set; }
         public int IdSubArea { get; set; }
+        public int IdSubAreaANotificar { get; set; }
         public int? Inicial { get; set; }
         public int? Anterior { get; set; }
         public int? Siguiente { get; set; }
         public bool Cancelado { get; set; }
+        public bool AlertaProveedor { get; set; }        
         public bool Activo { get; set; }
         #endregion
 
         #region Navegacion
         public SubCategoria SubCategoria { get; set; }
         public SubArea SubArea { get; set; }
+        public SubArea SubAreaNotificar { get; set; }
         public Estatus EstatusInicial { get; set; }
         public Estatus EstatusAnterior { get; set; }
         public Estatus EstatusSiguiente { get; set; }

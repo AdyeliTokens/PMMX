@@ -28,7 +28,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         {
             if (ModelState.IsValid)
             {
-                var lista = db.SubCategoria.Where(w => (w.IdCategoria == IdCategoria)).Select(w => new { Id = w.Id, Nombre = w.Nombre }).OrderBy(w => w.Id).ToList();
+                var lista = db.SubCategoria.Where(w => (w.IdCategoria == IdCategoria)).Select(w => new { Id = w.Id, Nombre = w.NombreCorto }).OrderBy(w => w.Id).ToList();
                 return Json(new { lista }, JsonRequestBehavior.AllowGet);
             }
             else

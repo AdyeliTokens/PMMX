@@ -86,6 +86,7 @@
     <Compile Include="Entidades\AspNetUser.cs" />
     <Compile Include="Entidades\AspNetUserClaims.cs" />
     <Compile Include="Entidades\Feeds.cs" />
+    <Compile Include="Entidades\Formato.cs" />
     <Compile Include="Entidades\Operaciones\BitacoraGembaWalk.cs" />
     <Compile Include="Entidades\Desperdicio.cs" />
     <Compile Include="Entidades\Electricos.cs" />
@@ -137,6 +138,10 @@
     <Compile Include="Entidades\Remitentes.cs" />
     <Compile Include="Entidades\RequisicionDeDescarga.cs" />
     <Compile Include="Entidades\Respuesta.cs" />
+    <Compile Include="Entidades\SeguridadFisica\BitacoraUnidad.cs" />
+    <Compile Include="Entidades\SeguridadFisica\DatosUnidad.cs" />
+    <Compile Include="Entidades\SeguridadFisica\RegistroUnidad.cs" />
+    <Compile Include="Entidades\Seguridad\Menu.cs" />
     <Compile Include="Entidades\Semana.cs" />
     <Compile Include="Entidades\ShiftLeaders.cs" />
     <Compile Include="Entidades\Turno.cs" />
@@ -154,6 +159,10 @@
     <Compile Include="Entidades\InsiteLAC\KPI.cs" />
     <Compile Include="Entidades\WorkFlow.cs" />
     <Compile Include="Interfaces\IPMMXRepositorio.cs" />
+    <Compile Include="Map\BitacoraUnidadMap.cs" />
+    <Compile Include="Map\DatosUnidadMap.cs" />
+    <Compile Include="Map\FormatoMap.cs" />
+    <Compile Include="Map\MenuMap.cs" />
     <Compile Include="Map\AliasMap.cs" />
     <Compile Include="Map\AspNetRolesMap.cs" />
     <Compile Include="Map\BitacoraGembaWalkMap.cs" />
@@ -188,6 +197,7 @@
     <Compile Include="Map\OperadoresMap.cs" />
     <Compile Include="Map\ProveedoresMap.cs" />
     <Compile Include="Map\RecursosMap.cs" />
+    <Compile Include="Map\RegistroUnidadMap.cs" />
     <Compile Include="Map\RemitentesMap.cs" />
     <Compile Include="Map\RequisicionDeDescargaMap.cs" />
     <Compile Include="Map\ShiftLeaderMap.cs" />
@@ -222,6 +232,10 @@
     <Compile Include="Map\WorkCenterMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RespuestaGenerica\RespuestaServicio.cs" />
+    <Compile Include="Vistas\BitacoraUnidadView.cs" />
+    <Compile Include="Vistas\DatosUnidadView.cs" />
+    <Compile Include="Vistas\FormatoView.cs" />
+    <Compile Include="Vistas\MenuView.cs" />
     <Compile Include="Vistas\ActividadEnDefectoView.cs" />
     <Compile Include="Vistas\ActividadEnParoView.cs" />
     <Compile Include="Vistas\AtomFeedView.cs" />
@@ -271,6 +285,7 @@
     <Compile Include="Vistas\ProveedoresView.cs" />
     <Compile Include="Vistas\PuestoView.cs" />
     <Compile Include="Vistas\RechazoView.cs" />
+    <Compile Include="Vistas\RegistroUnidadView.cs" />
     <Compile Include="Vistas\RemitentesView.cs" />
     <Compile Include="Vistas\ReporteTotalView.cs" />
     <Compile Include="Vistas\ReporteView.cs" />
@@ -292,7 +307,6 @@
     <Compile Include="Vistas\WorkFlowView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Entidades\Seguridad\" />
     <Folder Include="Interfaces\Seguridad\" />
     <Folder Include="Servicios\" />
   </ItemGroup>

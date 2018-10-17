@@ -2,10 +2,10 @@
 @Styles.Render("~/Style/Select2")
 
 
-<h2>Seleccionar Area</h2>
+<h2>Seleccione Proveedor</h2>
 <div id="personas">
     <div class="form-group">
-        <select id="slt-listadistribucion" class="form-control select2" multiple="multiple"></select>
+        <select id="slt-listadistribucion" class="form-control select2"></select>
     </div>
     <div class="form-group">
         <button id="btn-finish">Listo</button>
@@ -44,11 +44,11 @@
         $("#btn-finish").on("click", function () 
         {      
             var subarea = $('#slt-listadistribucion').find(":selected").text();
-            var id = $('#slt-listadistribucion').val() + '';
+            var id = $('#slt-listadistribucion').val() + ',8';
             items = "";
             var numbersArray = id.split(',').map(x => { return parseInt(x) });
             
-            $.each(numbersArray, function (index, value) {
+            $.each(numbersArray, function (index, value) {                
                 $.ajax({
                     dataType: "json",
                     contentType: "application/json",
@@ -56,8 +56,7 @@
                     success: function (data) {
                         $.each(data.lista, function (i, k) {
                             items += k.IdPersona + ",";
-                        });
-                        
+                        });                       
                         $("#IdResponsables").val(items);
                         $("#Distribucion").val(subarea);
                     },

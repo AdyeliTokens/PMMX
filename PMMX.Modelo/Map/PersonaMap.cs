@@ -26,8 +26,6 @@ namespace PMMX.Modelo.Map
             #endregion
 
             #region HasMany
-
-            
             HasMany(c => c.ParosReportados).WithRequired(p => p.Reportador).HasForeignKey(c => c.IdReportador);
             HasMany(c => c.DefectosReportados).WithRequired(p => p.Reportador).HasForeignKey(c => c.IdReportador);
             HasMany(c => c.ActividadesEnDefectoRealizadas).WithRequired(p => p.Ejecutante).HasForeignKey(c => c.IdEjecutante);
@@ -52,7 +50,6 @@ namespace PMMX.Modelo.Map
                 cs.MapRightKey("IdFoto");
                 cs.ToTable("PersonasFotos");
             });
-
             HasMany(c => c.ListaDistribucion).WithRequired(x => x.Remitente).HasForeignKey(c => c.IdPersona);
             HasMany(c => c.Areas).WithRequired(b => b.Responsable).HasForeignKey(c => c.IdResponsable);
             HasMany(c => c.SubArea).WithRequired(b => b.Responsable).HasForeignKey(c => c.IdResponsable);
@@ -63,7 +60,13 @@ namespace PMMX.Modelo.Map
             HasMany(c => c.BitacoraGembaWalk).WithRequired(b => b.Responsable).HasForeignKey(c => c.IdResponsable);
             HasMany(c => c.MarcasDadasDeAlta).WithRequired(b => b.PersonaQueDioDeAlta).HasForeignKey(c => c.IdPersonaQueDioDeAlta);
             HasMany(c => c.PlanesDeProduccionReportados).WithRequired(b => b.Uploader).HasForeignKey(c => c.IdUploader);
-
+            HasMany(c => c.Menu).WithMany(x => x.Personas).Map(cs =>
+            {
+                cs.MapLeftKey("IdPersona");
+                cs.MapRightKey("IdMenu");
+                cs.ToTable("MenuPersona");
+            });
+            HasMany(c => c.BitacorasUnidad).WithRequired(b => b.Guardia).HasForeignKey(c => c.IdGuardia);
             #endregion
 
             #region HasRequired

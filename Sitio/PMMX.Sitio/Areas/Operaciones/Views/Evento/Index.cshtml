@@ -31,30 +31,37 @@ else
 }
 
 
-
-<h2>Calendario de Eventos</h2>
-<p>
-    <i class="fa fa-plus-circle text-green"></i>
-    @Html.ActionLink("Create New", "Create")
-
-    <div class="form-group">
-        <div class="col-md-6"><select id="slt-Categorias" class="form-control select2"></select></div>
-        </br></br>
+<div class="row">
+    
+    <div class="mailbox-controls">
+        @Html.ActionLink("+", "Create", null, new { @class = "btn btn-sm btn-success", @id="add-new" })
+       
+        <div id="div-subcategoria" class="btn-group pull-right subcategoria">
+            @Html.Hidden("IdSubCategoria", 0)
+        </div>
     </div>
-</p>
-
-<div id='calendar' style="width: 70%; height: 70%; max-width: 900px; margin: 0 auto;"></div>
+</div>
+<div class="row">
+    <div class="box box-primary">
+        <div id='calendar' style="max-width: 900px; margin: 0 auto;"></div>
+    </div>
+</div>
 
 <!-- Modal-->
 <div class="modal fade" id="createAssetModal" role="dialog" aria-labelledby="CreateAssetModal" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header alert-info">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <div id="createAssetContainer" class="modal-body"></div>
-            <div id="subVista" class="modal-body"></div>
+            <div class="modal-body">
+                <div class="row">
+                    <div id="createAssetContainer" class="col-md-6"></div>
+                    <div id="subVista" class="col-md-6"></div>
+                </div>
+            </div>
+
             <input id="IdEventoModal" type="hidden" />
             <input id="IdVentanaEvento" type="hidden" />
         </div>
@@ -83,3 +90,4 @@ else
         @Scripts.Render("~/JS/Bootstrap")
     }
 }
+

@@ -38,6 +38,8 @@ namespace PMMX.Operaciones.Servicios
                 Anterior = d.Anterior,
                 Siguiente = d.Siguiente,
                 Cancelado = d.Cancelado,
+                AlertaProveedor = d.AlertaProveedor,
+                IdSubAreaANotificar = d.IdSubAreaANotificar,
                 Activo = d.Activo,
                 EstatusInicial = new EstatusView
                 {
@@ -79,6 +81,8 @@ namespace PMMX.Operaciones.Servicios
                     Anterior = d.Anterior,
                     Siguiente = d.Siguiente,
                     Cancelado = d.Cancelado,
+                    AlertaProveedor = d.AlertaProveedor,
+                    IdSubAreaANotificar = d.IdSubAreaANotificar,
                     Activo = d.Activo,
                     EstatusInicial = new EstatusView
                     {
@@ -136,6 +140,8 @@ namespace PMMX.Operaciones.Servicios
                           Siguiente = w.Siguiente,
                           Anterior = w.Anterior,
                           Cancelado = w.Cancelado,
+                          AlertaProveedor = w.AlertaProveedor,
+                          IdSubAreaANotificar = w.IdSubAreaANotificar,
                           EstatusInicial = new EstatusView
                           {
                               Id = w.EstatusInicial.Id,
@@ -166,6 +172,8 @@ namespace PMMX.Operaciones.Servicios
                         Siguiente = w.Siguiente,
                         Anterior = w.Anterior,
                         Cancelado = w.Cancelado,
+                        AlertaProveedor = w.AlertaProveedor,
+                        IdSubAreaANotificar = w.IdSubAreaANotificar,
                         EstatusInicial = new EstatusView
                         {
                             Id = w.EstatusInicial.Id,

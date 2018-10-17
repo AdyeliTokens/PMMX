@@ -7,11 +7,12 @@
     function start() {
         var idCategoria = $("#IdCategoria").val();
         $("#opciones-ventana").hide();
-        $('#subVista').hide();
+        $('#subVista').show();
+        Info();
     }
 
     $("#btn-CreateVentana").on("click", function () {
-        var url = ("/Warehouse/Ventana/Upload");
+        var url = ("/Warehouse/Ventana/Upload?IdEvento="+$("#Id").val());
 
         $.get(url, function (data) {
             $('#createAssetContainer').html(data);
@@ -30,7 +31,8 @@
         });
     });
 
-    $("#btn-Info").on("click", function () {
+    function Info()
+    {
         $.ajax({
             dataType: "json",
             contentType: "application/json",
@@ -42,20 +44,22 @@
 
                         $("#IdVentanaEvento").val(k.Id);
 
-                        $("#opciones-ventana").show();
-                        $("#btn-Rechazo").hide();
+                        if ($("#perfil").val() != "Supplier")
+                        {
+                            $("#opciones-ventana").show();
+                            $("#btn-Rechazo").hide();
 
-                        if (k.Cancelado[0] != 0) {
-                            $("#btn-Rechazo").show();
+                            if (k.Cancelado[0] != 0) {
+                                $("#btn-Rechazo").show();
+                            }
                         }
-
+                        
                         $.get(url, function (data) {
-                            $('#subVista').show();
                             $('#subVista').html(data);
                         });
                     }
                     else {
-                        alert("Sin datos en ventana");
+                        $('#subVista').html("<h2>Sin datos en ventana</h2>");
                     }
                 });
             },
@@ -63,8 +67,7 @@
                 alert('There was an error while fetching data!');
             }
         });
-    });
-
+    }
 
     $("#btn-Delete").on("click", function () {
         var url = ("/Operaciones/Evento/Delete/" + id);

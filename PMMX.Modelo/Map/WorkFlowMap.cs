@@ -23,6 +23,8 @@ namespace PMMX.Modelo.Map
             Property(c => c.Anterior).HasColumnName("Anterior");
             Property(c => c.Siguiente).HasColumnName("Siguiente");
             Property(c => c.Cancelado).HasColumnName("Cancelado");
+            Property(c => c.AlertaProveedor).HasColumnName("AlertaProveedor");
+            Property(c => c.IdSubAreaANotificar).HasColumnName("IdSubAreaANotificar");
             Property(c => c.Activo).HasColumnName("Activo");
             #endregion
 
@@ -38,6 +40,7 @@ namespace PMMX.Modelo.Map
             #region HasRequired
             this.HasRequired(x => x.SubCategoria).WithMany(c => c.WorkFlows);
             this.HasRequired(x => x.SubArea).WithMany(c => c.WorkFlows);
+            this.HasRequired(x => x.SubAreaNotificar).WithMany(c => c.WorkFlowAreaANotificar);
             #endregion
         }
     }

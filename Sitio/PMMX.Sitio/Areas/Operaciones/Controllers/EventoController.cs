@@ -14,6 +14,8 @@ using PMMX.Seguridad.Servicios;
 using PMMX.Modelo.RespuestaGenerica;
 using PMMX.Modelo.Entidades;
 using Microsoft.AspNet.Identity;
+using PMMX.Modelo.Entidades.Warehouse;
+using PMMX.Operaciones.Servicios;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -36,58 +38,62 @@ namespace Sitio.Areas.Operaciones.Controllers
             {
                 var lastDay = DateTime.DaysInMonth(date.Year, date.Month);
                 var LastDate = date.AddDays(lastDay-1);
+                PersonaServicio personaServicio = new PersonaServicio();
+                IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
 
-                var events = db.Evento
-                    .Where(e => (e.FechaInicio >= date && e.FechaFin <= LastDate) && e.Activo == true)
-                    .Select(e => new EventoView
-                    {
-                        Id = e.Id,
-                        Descripcion = e.Descripcion,
-                        FechaInicio = e.FechaInicio,
-                        FechaFin = e.FechaFin,
-                        Nota = e.Nota
-                    }).ToList(); 
-                
-                foreach (var item in events)
+                if (persona.EjecucionCorrecta)
                 {
-                    item.Color = GetColorStatus(item.Id);
-                    item.Clasificacion = GetClasificacion(item.Id);
+                    var _puesto = db.Puestos.Where(p => p.Id == persona.Respuesta.IdPuesto).Select(p => p.Nombre).FirstOrDefault();
+                    List<EventoView> events = new List<EventoView>();
+
+                    switch (_puesto)
+                    {
+                        case "Supplier":
+                            var listID = db.EventoResponsable
+                                .Where(r => r.IdResponsable == persona.Respuesta.Id)
+                                .Select(r => r.IdEvento)
+                                .ToList();
+
+                            events = db.Evento
+                            .Where(e => (e.FechaInicio >= date && e.FechaFin <= LastDate) && e.Activo == true && listID.Contains(e.Id))
+                            .Select(e => new EventoView
+                            {
+                                Id = e.Id,
+                                Descripcion = e.Descripcion,
+                                FechaInicio = e.FechaInicio,
+                                FechaFin = e.FechaFin,
+                                Nota = e.Nota
+                            }).ToList();
+
+                            foreach (var item in events)
+                            {
+                                item.Color = GetColorStatus(item.Id);
+                                item.Clasificacion = GetClasificacion(item.Id);
+                            }
+
+                            return Json(new { events }, JsonRequestBehavior.AllowGet);
+                        default:
+                           events = db.Evento
+                                    .Where(e => (e.FechaInicio >= date && e.FechaFin <= LastDate) && e.Activo == true)
+                                    .Select(e => new EventoView
+                                    {
+                                        Id = e.Id,
+                                        Descripcion = e.Descripcion,
+                                        FechaInicio = e.FechaInicio,
+                                        FechaFin = e.FechaFin,
+                                        Nota = e.Nota
+                                    }).ToList();
+
+                            foreach (var item in events)
+                            {
+                                item.Color = GetColorStatus(item.Id);
+                                item.Clasificacion = GetClasificacion(item.Id);
+                            }
+                            return Json(new { events }, JsonRequestBehavior.AllowGet);
+                    }
                 }
 
-                return Json(new { events }, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        [RenderAjaxPartialScripts]
-        public ActionResult GetEventsByCategoria(int IdCategoria, DateTime date)
-        {
-            if (ModelState.IsValid)
-            {
-                var lastDay = DateTime.DaysInMonth(date.Year, date.Month);
-                var LastDate = date.AddDays(lastDay - 1);
-
-                var events = db.Evento
-                    .Where(e => (e.IdCategoria == IdCategoria) && (e.FechaInicio >= date && e.FechaInicio <= LastDate) && (e.Activo == true) )
-                    .Select(e => new EventoView
-                    {
-                        Id = e.Id,
-                        Descripcion = e.Descripcion,
-                        FechaInicio = e.FechaInicio,
-                        FechaFin = e.FechaFin,
-                        Nota = e.Nota
-                    }).ToList();
-
-                foreach (var item in events)
-                {
-                    item.Color = GetColorStatus(item.Id);
-                    item.Clasificacion = GetClasificacion(item.Id);
-                }
-
-                return Json(new { events }, JsonRequestBehavior.AllowGet);
+                return Json(new { status = 200 }, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -124,31 +130,75 @@ namespace Sitio.Areas.Operaciones.Controllers
         {
             if (ModelState.IsValid)
             {
+                var listSC = new List<int>();
                 var lastDay = DateTime.DaysInMonth(date.Year, date.Month);
                 var LastDate = date.AddDays(lastDay - 1);
+                PersonaServicio personaServicio = new PersonaServicio();
+                IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
 
-                var events = db.Ventana
-                    .Where(v => (v.IdSubCategoria == IdSubCategoria) && (v.Evento.FechaInicio >= date && v.Evento.FechaFin <= LastDate) && (v.Evento.Activo == true))
-                    .Select( e => new EventoView
-                    {
-                        Id = e.Evento.Id,
-                        Descripcion = e.Evento.Descripcion,
-                        IdAsignador = e.Evento.IdAsignador,
-                        IdCategoria = e.Evento.IdCategoria,
-                        FechaInicio = e.Evento.FechaInicio,
-                        FechaFin = e.Evento.FechaFin,
-                        Nota = e.Evento.Nota,
-                        EsRecurrente = e.Evento.EsRecurrente,
-                        Activo = e.Evento.Activo
-                    }).ToList();
-
-                foreach (var item in events)
+                if (persona.EjecucionCorrecta)
                 {
-                    item.Color = GetColorStatus(item.Id);
-                    item.Clasificacion = GetClasificacion(item.Id);
+                    var _puesto = db.Puestos.Where(p => p.Id == persona.Respuesta.IdPuesto).Select(p => p.Nombre).FirstOrDefault();
+                    List<EventoView> events = new List<EventoView>();
+
+                    switch (_puesto)
+                    {
+                        case "Supplier":
+                            var listID = db.EventoResponsable
+                                .Where(r => r.IdResponsable == persona.Respuesta.Id)
+                                .Select(r => r.IdEvento)
+                                .ToList();
+
+                            listSC = db.Ventana
+                                .Where(v => v.IdSubCategoria == IdSubCategoria)
+                                .Select(v => v.IdEvento)
+                                .ToList();
+
+                            events = db.Evento
+                            .Where(e => (e.FechaInicio >= date && e.FechaFin <= LastDate) && e.Activo == true && listID.Contains(e.Id) && listSC.Contains(e.Id) || e.IdSubCategoria == IdSubCategoria)
+                            .Select(e => new EventoView
+                            {
+                                Id = e.Id,
+                                Descripcion = e.Descripcion,
+                                FechaInicio = e.FechaInicio,
+                                FechaFin = e.FechaFin,
+                                Nota = e.Nota
+                            }).ToList();
+
+                            foreach (var item in events)
+                            {
+                                item.Color = GetColorStatus(item.Id);
+                                item.Clasificacion = GetClasificacion(item.Id);
+                            }
+
+                            return Json(new { events }, JsonRequestBehavior.AllowGet);
+                        default:
+                            listSC = db.Ventana
+                                .Where(v => v.IdSubCategoria == IdSubCategoria)
+                                .Select(v => v.IdEvento)
+                                .ToList();
+
+                            events = db.Evento
+                                     .Where(e => (e.FechaInicio >= date && e.FechaFin <= LastDate) && e.Activo == true && (listSC.Contains(e.Id) || e.IdSubCategoria == IdSubCategoria))
+                                     .Select(e => new EventoView
+                                     {
+                                         Id = e.Id,
+                                         Descripcion = e.Descripcion,
+                                         FechaInicio = e.FechaInicio,
+                                         FechaFin = e.FechaFin,
+                                         Nota = e.Nota
+                                     }).ToList();
+
+                            foreach (var item in events)
+                            {
+                                item.Color = GetColorStatus(item.Id);
+                                item.Clasificacion = GetClasificacion(item.Id);
+                            }
+                            return Json(new { events }, JsonRequestBehavior.AllowGet);
+                    }
                 }
 
-                return Json(new { events }, JsonRequestBehavior.AllowGet);
+                return Json(new { status = 200 }, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -172,10 +222,10 @@ namespace Sitio.Areas.Operaciones.Controllers
                     Descripcion = e.Descripcion,
                     IdAsignador = e.IdAsignador,
                     IdCategoria = e.IdCategoria,
+                    IdSubCategoria = e.IdSubCategoria,
                     FechaInicio = e.FechaInicio,
                     FechaFin = e.FechaFin,
                     Nota = e.Nota,
-                    EsRecurrente = e.EsRecurrente,
                     Activo = e.Activo,
                     GembaWalk = e.GembaWalk.Where(j => j.IdEvento == e.Id)
                     .Select(j => new GembaWalkView
@@ -192,7 +242,9 @@ namespace Sitio.Areas.Operaciones.Controllers
 
             ViewBag.NombreAsignador = db.Personas.Where(x => x.Id == evento.IdAsignador).Select(x => x.Nombre + " " + x.Apellido1 + " " + x.Apellido2).FirstOrDefault().ToString();
             ViewBag.IdCategoria = db.Categoria.Where(x => x.Id == evento.IdCategoria).Select(x => x.Nombre).FirstOrDefault().ToString();
-
+            ViewBag.IdSubCategoria = db.SubCategoria.Where(x => x.Id == evento.IdSubCategoria).Select(x => x.Nombre).FirstOrDefault() == null 
+                ? " " 
+                : db.SubCategoria.Where(x => x.Id == evento.IdSubCategoria).Select(x => x.Nombre).FirstOrDefault().ToString();
             return View(evento);
         }
 
@@ -247,6 +299,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                 return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
             }
         }
+
         public ActionResult GetResponsables()
         {
             if (ModelState.IsValid)
@@ -264,7 +317,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         {
             if (ModelState.IsValid)
             {
-                var lista = db.SubArea.Select(w => new { Id = w.Id, Nombre = w.Nombre }).OrderBy(w => w.Id).ToList();
+                var lista = db.SubArea.Where(w=> w.Activo == true).Select(w => new { Id = w.Id, Nombre = w.Nombre }).OrderBy(w => w.Id).ToList();
                 return Json(new { lista }, JsonRequestBehavior.AllowGet);
             }
             else
@@ -293,7 +346,6 @@ namespace Sitio.Areas.Operaciones.Controllers
         public ActionResult Create()
         {
             ViewBag.IdAsignador = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
-            ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre");
             return View();
         }
 
@@ -343,22 +395,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                             db.SaveChanges();
                         }
                     }
-
-                    //SendNotification(evento);
-                }
-                else
-                {
-                    var lista = db.ListaDistribucion.Select(w => new { IdPersona = w.IdPersona }).ToList();
-                    foreach (var elemento in lista)
-                    {
-                        EventoResponsable eResponsable = new EventoResponsable();
-                        eResponsable.IdEvento = evento.Id;
-                        eResponsable.IdResponsable = elemento.IdPersona;
-                        db.EventoResponsable.Add(eResponsable);
-                        db.SaveChanges();
-                    }
-
-                    //SendNotification(evento);
+                    SendNotification(evento, "New Event: ");
                 }
 
                 return RedirectToAction("Index");
@@ -367,7 +404,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(evento);
         }
 
-        public bool SendNotification(Evento evento)
+        public bool SendNotification(Evento evento, String mensaje)
         {
             NotificationService notify = new NotificationService();
             UsuarioServicio usuarioServicio = new UsuarioServicio();
@@ -377,7 +414,7 @@ namespace Sitio.Areas.Operaciones.Controllers
 
             foreach (string notificacion in llaves)
             {
-                notify.SendPushNotification(notificacion, "Se le ha asignado un nuevo evento: " + evento.Descripcion + ". ", "");
+                notify.SendPushNotification(notificacion, mensaje + evento.Descripcion + ". ", "");
             }
 
             string senders = usuarioServicio.GetEmailByEvento(evento.Id);
@@ -385,6 +422,50 @@ namespace Sitio.Areas.Operaciones.Controllers
             emailService.SendMail(senders, evento);
 
             return true;
+        }
+
+        public bool changeStatus(Evento evento)
+        {
+            Ventana ventana = db.Ventana
+                                 .Include(v => v.StatusVentana)
+                                 .Include(v => v.StatusVentana.Select(s => s.Status))
+                                 .Include(v => v.BitacoraVentana)
+                                 .Include(v => v.BitacoraVentana.Select(b => b.Estatus))
+                                 .Include(v => v.BitacoraVentana.Select(b => b.Rechazo))
+                                 .Include(v => v.Evento)
+                                 .Include(v => v.Proveedor)
+                                 .SingleOrDefault(x => x.IdEvento == evento.Id);
+            if (ventana != null)
+            {
+                try
+                {
+                    WorkFlowServicio workflowServicio = new WorkFlowServicio();
+                    IRespuestaServicio<WorkFlowView> workFlow = workflowServicio.nextEstatus(ventana.IdSubCategoria, ventana.StatusVentana.OrderByDescending(x => x.Fecha).Select(x => x.IdStatus).FirstOrDefault(), false);
+
+                    StatusVentana statusVentana = new StatusVentana();
+                    statusVentana.IdResponsable = evento.IdAsignador;
+                    statusVentana.IdStatus = workFlow.Respuesta.EstatusSiguiente.Id;
+                    statusVentana.IdVentana = ventana.Id;
+                    statusVentana.Fecha = DateTime.Now;
+                    statusVentana.Comentarios = "Se reagenda ventana";
+                    db.StatusVentana.Add(statusVentana);
+                    db.SaveChanges();
+
+                    UsuarioServicio usuarioServicio = new UsuarioServicio();
+                    NotificationService notify = new NotificationService();
+
+                    string senders = usuarioServicio.GetEmailByStatus(ventana);
+                    EmailService emailService = new EmailService();
+                    emailService.SendMail(senders, ventana);
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+
+            return false;
         }
 
         // GET: Eventos/Evento/Edit/5
@@ -402,6 +483,7 @@ namespace Sitio.Areas.Operaciones.Controllers
 
             ViewBag.IdAsignador = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre", evento.IdAsignador);
             ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", evento.IdCategoria);
+            ViewBag.IdSubCategoria = new SelectList(db.SubCategoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", evento.IdSubCategoria);
             return View(evento);
         }
 
@@ -415,12 +497,14 @@ namespace Sitio.Areas.Operaciones.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(evento).State = EntityState.Modified;
+                changeStatus(evento);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             ViewBag.IdAsignador = new SelectList(db.Personas.Select(x => new { Id = x.Id, Nombre = x.Nombre + " " + x.Apellido1 + " " + x.Apellido2 }).OrderBy(x => x.Nombre), "Id", "Nombre");
             ViewBag.IdCategoria = new SelectList(db.Categoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", evento.IdCategoria);
+            ViewBag.IdSubCategoria = new SelectList(db.SubCategoria.Select(x => new { Id = x.Id, Nombre = x.Nombre }).OrderBy(x => x.Nombre), "Id", "Nombre", evento.IdSubCategoria);
             return View(evento);
         }
 
@@ -451,6 +535,8 @@ namespace Sitio.Areas.Operaciones.Controllers
             //db.Evento.Remove(evento);
             evento.Activo = false;
             db.SaveChanges();
+
+            SendNotification(evento,"The event has been deleted: ");
 
             return RedirectToAction("Index");
         }

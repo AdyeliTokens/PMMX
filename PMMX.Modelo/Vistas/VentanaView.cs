@@ -21,7 +21,7 @@ namespace PMMX.Modelo.Vistas
         public int IdEvento { get; set; }
         [StringLength(250)]
         public string Recurso { get; set; }
-        public double Cantidad { get; set; }
+        public string Cantidad { get; set; }
         public int? IdCarrier { get; set; }
         [StringLength(250)]
         public string NombreCarrier { get; set; }

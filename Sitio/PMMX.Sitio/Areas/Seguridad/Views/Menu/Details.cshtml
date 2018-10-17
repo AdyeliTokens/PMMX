@@ -1,0 +1,58 @@
+﻿@model PMMX.Modelo.Entidades.Seguridad.Menu
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Acceso</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubMenu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubMenu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Programa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Programa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ruta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ruta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Activo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Activo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

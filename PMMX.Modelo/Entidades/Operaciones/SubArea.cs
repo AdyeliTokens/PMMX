@@ -31,6 +31,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         
         public ICollection<ListaDistribucion> ListaDistribucion { get; set; }
         public ICollection<WorkFlow> WorkFlows { get; set; }
+        public ICollection<WorkFlow> WorkFlowAreaANotificar { get; set; }
         #endregion
 
     }

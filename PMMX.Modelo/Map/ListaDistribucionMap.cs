@@ -26,6 +26,7 @@ namespace PMMX.Modelo.Map
             #region HasRequired
             this.HasRequired(c => c.SubArea).WithMany(x => x.ListaDistribucion);
             this.HasRequired(c => c.Remitente).WithMany(x => x.ListaDistribucion);
+            this.HasRequired(c => c.Proveedor).WithMany(x => x.ListaDistribucion);
             #endregion
 
 
