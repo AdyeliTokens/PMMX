@@ -83,7 +83,7 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(RegistroUnidad registroUnidad, DatosUnidad datos)
+        public ActionResult Create(RegistroUnidad registroUnidad, DatosUnidad datos, DateTime date)
         {
             if (ModelState.IsValid)
             {
@@ -99,15 +99,15 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
                 {
                     BitacoraUnidad bitacora = new BitacoraUnidad();
                     bitacora.IdGuardia = persona.Respuesta.Id;
-                    bitacora.Puerta = registroUnidad.Formato.Puerta;
-                    bitacora.Fecha = DateTime.Now;
+                    bitacora.Puerta = db.Formato.Where(f => f.Id == registroUnidad.IdFormato).Select(f=> f.Puerta).FirstOrDefault();
+                    bitacora.Fecha = date;
                     bitacora.IdRegistroUnidad = registroUnidad.Id;
                     bitacora.TipoMovimiento = "Entrada";
                     db.BitacoraUnidad.Add(bitacora);
                 }
 
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { Codigo = db.Formato.Where(f => f.Id == registroUnidad.IdFormato).Select(f => f.Codigo).FirstOrDefault() });
             }
 
             ViewBag.IdFormato = new SelectList(db.Formato, "Id", "Codigo", registroUnidad.IdFormato);
@@ -143,7 +143,7 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(RegistroUnidad registroUnidad, DatosUnidad datos)
+        public ActionResult Edit(RegistroUnidad registroUnidad, DatosUnidad datos, DateTime date)
         {
             if (ModelState.IsValid)
             {
@@ -159,7 +159,22 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
                 db.Entry(_datos).State = EntityState.Modified;
                 db.SaveChanges();
 
-                return RedirectToAction("Index");
+                PersonaServicio personaServicio = new PersonaServicio();
+                IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
+
+                if (persona.EjecucionCorrecta)
+                {
+                    BitacoraUnidad bitacora = new BitacoraUnidad();
+                    bitacora.IdGuardia = persona.Respuesta.Id;
+                    bitacora.Puerta = db.Formato.Where(f => f.Id == registroUnidad.IdFormato).Select(f => f.Puerta).FirstOrDefault();
+                    bitacora.Fecha = date;
+                    bitacora.IdRegistroUnidad = registroUnidad.Id;
+                    bitacora.TipoMovimiento = "Salida";
+                    db.BitacoraUnidad.Add(bitacora);
+                    db.SaveChanges();
+                }
+
+                return RedirectToAction("Index", new { Codigo = db.Formato.Where(f=> f.Id == registroUnidad.IdFormato).Select(f=> f.Codigo).FirstOrDefault() });
             }
             ViewBag.IdFormato = new SelectList(db.Formato, "Id", "Codigo", registroUnidad.IdFormato);
             return View(registroUnidad);
@@ -195,8 +210,22 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
         {
             RegistroUnidad registroUnidad = db.RegistroUnidad.Find(id);
             db.RegistroUnidad.Remove(registroUnidad);
+
+            List<DatosUnidad> datos = db.DatosUnidad.Where(d => d.IdRegistroUnidad == id).ToList();
+            List<BitacoraUnidad> bitacoras = db.BitacoraUnidad.Where(d => d.IdRegistroUnidad == id).ToList();
+
+            foreach(var dato in datos)
+            {
+                db.DatosUnidad.Remove(dato);
+            }
+
+            foreach (var bitacora in bitacoras)
+            {
+                db.BitacoraUnidad.Remove(bitacora);
+            }
+
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { Codigo = db.Formato.Where(f => f.Id == registroUnidad.IdFormato).Select(f => f.Codigo).FirstOrDefault() });
         }
 
         public ActionResult downloadReport(DateTime Inicio, DateTime Fin, string Codigo)

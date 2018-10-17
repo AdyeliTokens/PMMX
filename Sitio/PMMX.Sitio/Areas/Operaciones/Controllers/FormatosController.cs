@@ -47,7 +47,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Codigo,Descripcion,FechaEfectividad,TiempoRetencion,Version")] Formato formato)
+        public ActionResult Create(Formato formato)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Codigo,Descripcion,FechaEfectividad,TiempoRetencion,Version")] Formato formato)
+        public ActionResult Edit(Formato formato)
         {
             if (ModelState.IsValid)
             {

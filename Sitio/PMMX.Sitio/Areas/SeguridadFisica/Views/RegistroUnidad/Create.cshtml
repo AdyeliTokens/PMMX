@@ -5,12 +5,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Styles {
+    @Styles.Render("~/Style/Bootstrap")
+    @Styles.Render("~/Style/DataRangePicker")
+}
+
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
 <div class="form-horizontal">
     <h4>RegistroUnidad</h4>
     <hr />
@@ -88,10 +93,17 @@
             @Html.ValidationMessage("NombreAutoriza", "", new { @class = "text-danger" })
         </div>
     </div>
+    
+    <div class="form-group">
+        @Html.Label("Fecha", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBox("date", null, new { @class = "form-control" })
+            @Html.ValidationMessage("date", "", new { @class = "text-danger" })
+        </div>
+    </div>
 
     <div class="form-group">
         @Html.Hidden("NoGafette", 0)
-        @Html.Hidden("Puerta", "")
     </div>
 
     <div class="form-group">
@@ -103,5 +115,34 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", new { Codigo = Model.Formato.Codigo })
 </div>
+
+@section Scripts{
+    @Scripts.Render("~/JS/jquery")
+    @Scripts.Render("~/JS/Bootstrap")
+    @Scripts.Render("~/JS/Moment")
+    @Scripts.Render("~/JS/DataRangePicker")
+
+    <script>
+        $(document).ready(function () {
+            var today = new Date();
+            $('#date').daterangepicker({
+                "singleDatePicker": true,
+                "timePicker": true,
+                "timePicker24Hour": true,
+                "locale": {
+                    "format": "YYYY-MM-DD  h:mm A",
+                    "separator": " - ",
+                    "applyLabel": "Apply",
+                    "cancelLabel": "Cancel",
+                    "firstDay": 1
+                },
+                "startDate": today,
+                "endDate": today,
+                "minDate": "YYYY-MM-DD  h:mm A",
+                "maxDate": "YYYY-MM-DD  h:mm A"
+            });
+        });
+    </script>
+}

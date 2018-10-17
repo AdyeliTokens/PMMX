@@ -4,12 +4,19 @@
     ViewBag.Title = "Index";
     Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
-
-@section Styles {
-    @Styles.Render("~/Style/Bootstrap")
+@if (Request.IsAjaxRequest())
+{    
     @Styles.Render("~/Style/DataTables")
     @Styles.Render("~/Style/DataRangePicker")
 }
+else
+{
+    @section Styles {
+        @Styles.Render("~/Style/DataTables")
+        @Styles.Render("~/Style/DataRangePicker")
+    }
+}
+
 <div id="header" style="padding: 20px 30px; background: rgb(243, 156, 18); z-index: 999999; font-size: 16px; font-weight: 600;"></div>
 
 <div class="row">
@@ -51,9 +58,6 @@
                                 @Html.DisplayName("No. Economico")
                             </th>
                             <th>
-                                @Html.DisplayName("Puerta")
-                            </th>
-                            <th>
                                 @Html.DisplayName("Asunto")
                             </th>
                             <th>
@@ -64,6 +68,9 @@
                             </th>
                             <th>
                                 @Html.DisplayName("Hora de Salida")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Puerta")
                             </th>
                             <th>
                                 @Html.DisplayName("Nombre del Guardia")
@@ -99,12 +106,6 @@
                                     }
                                 </td>
                                 <td>
-                                    @foreach (var bitacora in item.Bitacora)
-                                    {
-                                        @Html.DisplayFor(modelItem => bitacora.Puerta)
-                                    }
-                                </td>
-                                <td>
                                     @Html.DisplayFor(modelItem => item.Asunto)
                                 </td>
                                 <td>
@@ -131,7 +132,13 @@
                                 <td>
                                     @foreach (var bitacora in item.Bitacora)
                                     {
-                                        @Html.DisplayFor(modelItem => bitacora.Guardia.Nombre) @Html.DisplayFor(modelItem => bitacora.Guardia.Apellido1) @Html.DisplayFor(modelItem => bitacora.Guardia.Apellido2)
+                                        <p>@Html.DisplayFor(modelItem => bitacora.Puerta)</p>
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var bitacora in item.Bitacora)
+                                    {
+                                        <p>@Html.DisplayFor(modelItem => bitacora.Guardia.Nombre) @Html.DisplayFor(modelItem => bitacora.Guardia.Apellido1) @Html.DisplayFor(modelItem => bitacora.Guardia.Apellido2)</p>
                                     }
                                 </td>
                                 <td>
@@ -141,8 +148,8 @@
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
-                                            <li role="presentation">@Html.ActionLink("Edit", "Edit", new { id = item.Id })</li>
-                                            <li role="presentation">@Html.ActionLink("Detalles", "Details", new { id = item.Id })</li>
+                                            <li role="presentation">@Html.ActionLink("Cerrar", "Edit", new { id = item.Id })</li>
+                                            <li role="presentation">@Html.ActionLink("Ver", "Details", new { id = item.Id })</li>
                                             <li class="divider" role="presentation"></li>
                                             <li role="presentation">@Html.ActionLink("Eliminar", "Delete", new { id = item.Id })</li>
                                         </ul>
@@ -208,12 +215,11 @@
 </div>
 
 
-@Scripts.Render("~/JS/jquery")
-@Scripts.Render("~/JS/Bootstrap")
-@Scripts.Render("~/JS/DataTables")
-@Scripts.Render("~/JS/Moment")
-@Scripts.Render("~/JS/DataRangePicker")
 
+
+@if (Request.IsAjaxRequest())
+{@Scripts.Render("~/JS/DataTables")
+@Scripts.Render("~/JS/DataRangePicker")
 
 <script>
     $(document).ready(function () {
@@ -232,4 +238,29 @@
         });
     });
 </script>
+}
+else
+{
+@section Scripts {
+    @Scripts.Render("~/JS/DataTables")
+    @Scripts.Render("~/JS/DataRangePicker")
 
+    <script>
+        $(document).ready(function () {
+            $('#example1').DataTable();
+            $('#reservation').daterangepicker();
+            $("<h3 style='color: #ffffff'>" + $("#Codigo0").val() + "</h3>").appendTo("#header");
+
+            $("#btn-downloadReport").on("click", function (e) {
+                var Fecha = ($("#reservation").val()).split(" - ");
+                var Inicio = Fecha[0];
+                var Fin = Fecha[1];
+                var Codigo = $("#Codigo0").val();
+
+                window.open("/SeguridadFisica/RegistroUnidad/downloadReport?Inicio=" + Inicio + "&Fin=" + Fin + "&Codigo=" + Codigo);
+                e.preventDefault();
+            });
+        });
+    </script>
+}
+}
