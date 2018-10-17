@@ -18,6 +18,7 @@ namespace PMMX.Modelo.Map
             Property(c => c.Id).HasColumnName("Id");
             Property(c => c.Codigo).HasColumnName("Codigo");
             Property(c => c.Descripcion).HasColumnName("Descripcion");
+            Property(c => c.Puerta).HasColumnName("Puerta");
             Property(c => c.FechaEfectividad).HasColumnName("FechaEfectividad");
             Property(c => c.TiempoRetencion).HasColumnName("TiempoRetencion");
             Property(c => c.Version).HasColumnName("Version");

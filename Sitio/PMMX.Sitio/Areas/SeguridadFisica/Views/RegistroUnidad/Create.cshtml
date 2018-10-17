@@ -74,14 +74,6 @@
     </div>
 
     <div class="form-group">
-        @Html.Label("Puerta", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBox("Puerta", null, new { @class = "form-control" })
-            @Html.ValidationMessage("Puerta", "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
         @Html.LabelFor(model => model.Asunto, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Asunto, new { htmlAttributes = new { @class = "form-control" } })
@@ -98,11 +90,8 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.NoGafette, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.NoGafette, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.NoGafette, "", new { @class = "text-danger" })
-        </div>
+        @Html.Hidden("NoGafette", 0)
+        @Html.Hidden("Puerta", "")
     </div>
 
     <div class="form-group">

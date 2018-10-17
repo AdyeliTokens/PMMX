@@ -19,6 +19,9 @@
             @Html.DisplayNameFor(model => model.Descripcion)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Puerta)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.FechaEfectividad)
         </th>
         <th>
@@ -39,6 +42,9 @@
             @Html.DisplayFor(modelItem => item.Descripcion)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Puerta)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.FechaEfectividad)
         </td>
         <td>
@@ -48,9 +54,9 @@
             @Html.DisplayFor(modelItem => item.Version)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
         </td>
     </tr>
 }

@@ -83,7 +83,7 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(RegistroUnidad registroUnidad, DatosUnidad datos, string Puerta)
+        public ActionResult Create(RegistroUnidad registroUnidad, DatosUnidad datos)
         {
             if (ModelState.IsValid)
             {
@@ -99,9 +99,10 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
                 {
                     BitacoraUnidad bitacora = new BitacoraUnidad();
                     bitacora.IdGuardia = persona.Respuesta.Id;
-                    bitacora.Puerta = Puerta;
+                    bitacora.Puerta = registroUnidad.Formato.Puerta;
                     bitacora.Fecha = DateTime.Now;
                     bitacora.IdRegistroUnidad = registroUnidad.Id;
+                    bitacora.TipoMovimiento = "Entrada";
                     db.BitacoraUnidad.Add(bitacora);
                 }
 
@@ -142,7 +143,7 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(RegistroUnidad registroUnidad, DatosUnidad datos, string Puerta)
+        public ActionResult Edit(RegistroUnidad registroUnidad, DatosUnidad datos)
         {
             if (ModelState.IsValid)
             {

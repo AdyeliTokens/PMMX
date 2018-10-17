@@ -13,6 +13,7 @@ namespace PMMX.Modelo.Entidades
         public int Id { get; set; }
         public string Codigo { get; set; }
         public string Descripcion { get; set; }
+        public string Puerta { get; set; }
         public DateTime FechaEfectividad { get; set; }
         public int TiempoRetencion { get; set; }
         public float Version { get; set; }

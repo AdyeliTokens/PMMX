@@ -10,6 +10,7 @@
     @Styles.Render("~/Style/DataTables")
     @Styles.Render("~/Style/DataRangePicker")
 }
+<div id="header" style="padding: 20px 30px; background: rgb(243, 156, 18); z-index: 999999; font-size: 16px; font-weight: 600;"></div>
 
 <div class="row">
     <div class="col-md-12">
@@ -57,9 +58,6 @@
                             </th>
                             <th>
                                 @Html.DisplayName("Nombre Autoriza")
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.NoGafette)
                             </th>
                             <th>
                                 @Html.DisplayName("Hora de Entrada")
@@ -113,9 +111,6 @@
                                     @Html.DisplayFor(modelItem => item.NombreAutoriza)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.NoGafette)
-                                </td>
-                                <td>
                                     @foreach (var bitacora in item.Bitacora)
                                     {
                                         if (bitacora.Fecha == item.Bitacora.Min(b => b.Fecha))
@@ -146,7 +141,7 @@
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
-                                            <li role="presentation">@Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "li-action", @data_target = "li-action" })</li>
+                                            <li role="presentation">@Html.ActionLink("Edit", "Edit", new { id = item.Id })</li>
                                             <li role="presentation">@Html.ActionLink("Detalles", "Details", new { id = item.Id })</li>
                                             <li class="divider" role="presentation"></li>
                                             <li role="presentation">@Html.ActionLink("Eliminar", "Delete", new { id = item.Id })</li>
@@ -179,9 +174,6 @@
                             </th>
                             <th>
                                 @Html.DisplayName("Nombre Autoriza")
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.NoGafette)
                             </th>
                             <th>
                                 @Html.DisplayName("Hora de Entrada")
@@ -227,18 +219,7 @@
     $(document).ready(function () {
         $('#example1').DataTable();
         $('#reservation').daterangepicker();
-
-        $(".li-action").on("click", function (e) {
-            e.preventDefault();
-            alert("li-action");
-            //var url = $(this).data("url");
-            //alert(url);
-            //$.get(url, function (data) {
-            //    $('#createAssetContainer').html(data);
-            //    $('#createAssetModal').modal('show');
-
-            //});
-        });
+        $("<h3 style='color: #ffffff'>" + $("#Codigo0").val() + "</h3>").appendTo("#header");
 
         $("#btn-downloadReport").on("click", function (e) {
             var Fecha = ($("#reservation").val()).split(" - ");
