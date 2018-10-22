@@ -37,7 +37,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             if (ModelState.IsValid)
             {
                 var lastDay = DateTime.DaysInMonth(date.Year, date.Month);
-                var LastDate = date.AddDays(lastDay-1);
+                var LastDate = date.AddDays(lastDay);
                 PersonaServicio personaServicio = new PersonaServicio();
                 IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
 
