@@ -24,12 +24,26 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(subCategoria.ToList());
         }
 
-        public ActionResult GetSubCategoriasByCategoria(int IdCategoria)
+        public ActionResult GetSubCategoriasByCategoria(int IdCategoria, bool Opcion)
         {
             if (ModelState.IsValid)
             {
-                var lista = db.SubCategoria.Where(w => (w.IdCategoria == IdCategoria)).Select(w => new { Id = w.Id, Nombre = w.NombreCorto }).OrderBy(w => w.Id).ToList();
-                return Json(new { lista }, JsonRequestBehavior.AllowGet);
+                if(Opcion)
+                {
+                    var lista = db.SubCategoria
+                        .Where(w => (w.IdCategoria == IdCategoria) && (w.Tipo != "Local"))
+                        .Select(w => new { Id = w.Id, Nombre = w.NombreCorto })
+                        .OrderBy(w => w.Id).ToList();
+                    return Json(new { lista }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                   var lista = db.SubCategoria
+                        .Where(w => (w.IdCategoria == IdCategoria))
+                        .Select(w => new { Id = w.Id, Nombre = w.NombreCorto })
+                        .OrderBy(w => w.Id).ToList();
+                    return Json(new { lista }, JsonRequestBehavior.AllowGet);
+                }
             }
             else
             {
