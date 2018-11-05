@@ -6,9 +6,6 @@
 
     $('.select2').select2();
 
-    //setInterval(function () {
-    //    GetEvents(formatDate(new Date()), "/Evento/GetEvents?date=" + formatDate(new Date()));
-    //}, 600000);
     init();
     
     function formatDate(date) {
@@ -185,12 +182,11 @@
                             id: 'd',
                             title: 'Sin Datos'
                         },
-
                     ],
                     events: $.map(data.events, function (item, i) {
                         var event = new Object();
-                        event.start = moment(item.FechaInicio).utc();
-                        event.end = moment(item.FechaFin).utc();
+                        event.start = moment(item.FechaInicio).parseZone();
+                        event.end = moment(item.FechaFin).parseZone();
                         event.title = item.Descripcion;
                         event.brief = item.Nota;
                         event.id = item.Id;
