@@ -6,9 +6,6 @@
 
     $('.select2').select2();
 
-    setInterval(function () {
-        GetEvents(formatDate(new Date()), "/Evento/GetEvents?date=" + formatDate(new Date()));
-    }, 600000);
     init();
     
     function formatDate(date) {
@@ -94,11 +91,12 @@
         $.ajax({
             dataType: "json",
             contentType: "application/json",
-            data: {"IdCategoria": 10},//Ventana
+            data: { "IdCategoria": 10, "Opcion": true },//Ventana
             url: "/SubCategoria/GetSubCategoriasByCategoria",
             success: function (data) {
                 if ($("#0").length == 0) {
                     $('<button type="button" id="0" class="btn btn-sm btn-info" title="Mostrar Todos"><i class="fa fa-calendar"></i></button>').appendTo('#div-subcategoria');
+                    $('<button type="button" id="1" class="btn btn-sm btn-info" title="Local">Local</button>').appendTo('#div-subcategoria');
                     $.each(data.lista, function (i, val) {
                         $('<button type="button" id="' + val.Id + ' " class="btn btn-sm btn-info" title="' + val.Nombre + '" ">' + val.Nombre + '</button>').appendTo('#div-subcategoria');
                     });
@@ -184,12 +182,11 @@
                             id: 'd',
                             title: 'Sin Datos'
                         },
-
                     ],
                     events: $.map(data.events, function (item, i) {
                         var event = new Object();
-                        event.start = moment(item.FechaInicio).utc();
-                        event.end = moment(item.FechaFin).utc();
+                        event.start = moment(item.FechaInicio).parseZone();
+                        event.end = moment(item.FechaFin).parseZone();
                         event.title = item.Descripcion;
                         event.brief = item.Nota;
                         event.id = item.Id;

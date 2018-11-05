@@ -131,6 +131,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             if (ModelState.IsValid)
             {
                 var listSC = new List<int>();
+                var listSD = new List<int>();
                 var lastDay = DateTime.DaysInMonth(date.Year, date.Month);
                 var LastDate = date.AddDays(lastDay - 1);
                 PersonaServicio personaServicio = new PersonaServicio();
@@ -148,14 +149,27 @@ namespace Sitio.Areas.Operaciones.Controllers
                                 .Where(r => r.IdResponsable == persona.Respuesta.Id)
                                 .Select(r => r.IdEvento)
                                 .ToList();
+                            
+                            if (IdSubCategoria == 1)
+                            {
+                                listSD = db.SubCategoria.Where(w => w.Tipo == "Local").Select(w=> w.Id).ToList();
 
-                            listSC = db.Ventana
+                                listSC = db.Ventana
+                                .Where(w=> (listSD.Contains(w.IdSubCategoria)))
+                                .Select(v => v.IdEvento)
+                                .ToList();
+                            }
+                            else
+                            {
+                                listSC = db.Ventana
                                 .Where(v => v.IdSubCategoria == IdSubCategoria)
                                 .Select(v => v.IdEvento)
                                 .ToList();
-
+                            }
+                            
                             events = db.Evento
-                            .Where(e => (e.FechaInicio >= date && e.FechaFin <= LastDate) && e.Activo == true && listID.Contains(e.Id) && listSC.Contains(e.Id) || e.IdSubCategoria == IdSubCategoria)
+                            .Where(e => (e.FechaInicio >= date && e.FechaFin <= LastDate) && e.Activo == true && listID.Contains(e.Id) && listSC.Contains(e.Id) 
+                            || (e.IdSubCategoria == IdSubCategoria || listSD.Contains(e.IdSubCategoria)) )
                             .Select(e => new EventoView
                             {
                                 Id = e.Id,
@@ -173,13 +187,26 @@ namespace Sitio.Areas.Operaciones.Controllers
 
                             return Json(new { events }, JsonRequestBehavior.AllowGet);
                         default:
-                            listSC = db.Ventana
+                            if (IdSubCategoria == 1)
+                            {
+                                listSD = db.SubCategoria.Where(w => w.Tipo == "Local").Select(w => w.Id).ToList();
+
+                                listSC = db.Ventana
+                                .Where(w => (listSD.Contains(w.IdSubCategoria)))
+                                .Select(v => v.IdEvento)
+                                .ToList();
+                            }
+                            else
+                            {
+                                listSC = db.Ventana
                                 .Where(v => v.IdSubCategoria == IdSubCategoria)
                                 .Select(v => v.IdEvento)
                                 .ToList();
+                            }
 
                             events = db.Evento
-                                     .Where(e => (e.FechaInicio >= date && e.FechaFin <= LastDate) && e.Activo == true && (listSC.Contains(e.Id) || e.IdSubCategoria == IdSubCategoria))
+                                     .Where(e => (e.FechaInicio >= date && e.FechaFin <= LastDate) && e.Activo == true && (listSC.Contains(e.Id) 
+                                     || e.IdSubCategoria == IdSubCategoria || listSD.Contains(e.IdSubCategoria)))
                                      .Select(e => new EventoView
                                      {
                                          Id = e.Id,

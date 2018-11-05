@@ -13,6 +13,7 @@ namespace PMMX.Modelo.Vistas
         public int IdCategoria { get; set; }
         public string Nombre { get; set; }
         public string NombreCorto { get; set; }
+        public string Tipo { get; set; }
         public int IdResponsable { get; set; }
         public int IdGrupo { get; set; }
         public bool Activo { get; set; }
