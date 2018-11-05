@@ -269,6 +269,18 @@ namespace Sitio.Areas.Warehouse.Controllers
             {
                 db.Entry(ventana).State = EntityState.Modified;
                 db.SaveChanges();
+
+                var estatus = db.StatusVentana
+                     .Where(s => (s.IdVentana == ventana.Id))
+                     .OrderByDescending(s => s.Fecha)
+                     .Select(s => s.Status)
+                     .FirstOrDefault();
+
+                if(estatus.Nombre == "Rechazo")
+                {
+                    changeEstatus(ventana);
+                }
+
                 return RedirectToAction("Index", "Evento", new { Area = "Operaciones" });
             }
 

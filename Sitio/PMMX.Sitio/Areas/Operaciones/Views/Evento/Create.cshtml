@@ -203,7 +203,7 @@
             });
 
             function GetSubCategorias() {
-                var url = ("/SubCategoria/GetSubCategoriasByCategoria?IdCategoria="+$("#IdCategoria").val());
+                var url = ("/SubCategoria/GetSubCategoriasByCategoria?IdCategoria=" + $("#IdCategoria").val() +"&Opcion=false");
 
                 $.get(url, function (data) {
                     items = '<option></option>';
