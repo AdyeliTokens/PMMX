@@ -11,10 +11,12 @@ namespace PMMX.Modelo.Vistas
         #region Propiedades
         public int Id { get; set; }
         public string NombreConductor { get; set; }
-        public string Placas { get; set; }
-        public string NoEco { get; set; }
-        public string NoCaja { get; set; }
+        public string PlacasTractor { get; set; }
+        public string NoEcoTractor { get; set; }
         public string TipoRemolque { get; set; }
+        public string NoCaja { get; set; }
+        public string PlacasRemolque { get; set; }
+        public string NoEcoRemolque { get; set; }
         public int IdRegistroUnidad { get; set; }
         #endregion
 

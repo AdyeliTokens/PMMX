@@ -10,7 +10,8 @@ namespace PMMX.Modelo.Entidades.SeguridadFisica
     {
         #region Propiedades
         public int Id { get; set; }
-        public int IdGuardia { get; set; }
+        public int IdPersona { get; set; }
+        public string NombreGuardia { get; set; }
         public string Puerta { get; set; }
         public DateTime Fecha { get; set; }
         public string TipoMovimiento { get; set; }
@@ -18,7 +19,7 @@ namespace PMMX.Modelo.Entidades.SeguridadFisica
         #endregion
 
         #region Navegacion
-        public Persona Guardia { get; set; }
+        public Persona Persona { get; set; }
         public RegistroUnidad RegistroUnidad { get; set; }
         #endregion
     }
