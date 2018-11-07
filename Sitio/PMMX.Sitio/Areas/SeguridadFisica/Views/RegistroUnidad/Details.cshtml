@@ -4,30 +4,24 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="box box-header bg-yellow d-inline">
+    <div class="pull-left"><h3>Ver</h3> </div>
+    <div class="pull-right box-tools">
+        <div class="pull-right">
+            <a href="@Url.Action("Edit", "RegistroUnidad", new {id = Model.Id })" class="btn btn-success btn-sm"><span class="fa fa-pencil" aria-hidden="true"></span></a>
+            <a href="@Url.Action("Index", "RegistroUnidad", new { Codigo = Model.Formato.Codigo })" class="btn btn-primary btn-sm"><span class="fa fa-close" aria-hidden="true"></span></a>
+        </div>
+    </div>
+</div>
 
-<h2>Details</h2>
-
-<div>
-    <h4>RegistroUnidad</h4>
-    <hr />
+<div class="box box-primary">    
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Formato.Codigo)
+            @Html.DisplayNameFor(model => model.Formato)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Formato.Codigo)
-        </dd>
-
-        <dt>
-            @Html.DisplayName("Nombre del Conductor")
-        </dt>
-
-        <dd>
-            @foreach (var dato in Model.Datos)
-            {
-                @Html.DisplayFor(modelItem => dato.NombreConductor)
-            }
+            @Html.DisplayFor(model => model.Formato.Descripcion)
         </dd>
 
         <dt>
@@ -39,39 +33,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Placas")
-        </dt>
-
-        <dd>
-            @foreach (var dato in Model.Datos)
-            {
-                @Html.DisplayFor(modelItem => dato.Placas)
-            }
-        </dd>
-
-        <dt>
-            @Html.DisplayName("#Economico")
-        </dt>
-
-        <dd>
-            @foreach (var dato in Model.Datos)
-            {
-                @Html.DisplayFor(modelItem => dato.NoEco)
-            }
-        </dd>
-
-        <dt>
-            @Html.DisplayName("Puerta")
-        </dt>
-
-        <dd>
-            @foreach (var bitacora in Model.Bitacora)
-            {
-                @Html.DisplayFor(modelItem => bitacora.Puerta)
-            }
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Asunto)
         </dt>
 
@@ -80,25 +41,56 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.NombreAutoriza)
+            @Html.DisplayName("Autoriza")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.NombreAutoriza)
         </dd>
-
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NoGafette)
-        </dt>
-
+        
+        <dt><br />Datos Unidad</dt>
         <dd>
-            @Html.DisplayFor(model => model.NoGafette)
+            <br />
+            <div class="col-md-6">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Nombre del Conductor</th>
+                        <th>Datos del Tractor</th>
+                        <th></th>
+                        <th>Datos del Remolque</th>
+                        <th></th>
+                    </tr>
+                    @foreach (var dato in Model.Datos)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => dato.NombreConductor)</td>
+                            <td>@Html.DisplayFor(modelItem => dato.PlacasTractor)</td>
+                            <td>@Html.DisplayFor(modelItem => dato.NoEcoTractor)</td>
+                            <td>@Html.DisplayFor(modelItem => dato.PlacasRemolque)</td>
+                            <td>@Html.DisplayFor(modelItem => dato.NoEcoRemolque)</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Tipo de Movimiento</th>
+                        <th>Guardia</th>
+                        <th>Puerta</th>
+                        <th>Fecha</th>
+                    </tr>
+                    @foreach (var bitacora in Model.Bitacora)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => bitacora.TipoMovimiento)</td>
+                            <td>@Html.DisplayFor(modelItem => bitacora.NombreGuardia)</td>
+                            <td>@Html.DisplayFor(modelItem => bitacora.Puerta)</td>
+                            <td>@Html.DisplayFor(modelItem => bitacora.Fecha)</td>
+                        </tr>
+                    }
+                </table>
+            </div>
         </dd>
-
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index", new { Codigo = Model.Formato.Codigo })
-</p>

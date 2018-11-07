@@ -66,7 +66,7 @@ namespace PMMX.Modelo.Map
                 cs.MapRightKey("IdMenu");
                 cs.ToTable("MenuPersona");
             });
-            HasMany(c => c.BitacorasUnidad).WithRequired(b => b.Guardia).HasForeignKey(c => c.IdGuardia);
+            HasMany(c => c.BitacorasUnidad).WithRequired(b => b.Persona).HasForeignKey(c => c.IdPersona);
             #endregion
 
             #region HasRequired

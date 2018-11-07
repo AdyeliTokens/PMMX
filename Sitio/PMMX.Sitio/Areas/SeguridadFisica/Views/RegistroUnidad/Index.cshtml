@@ -33,7 +33,6 @@ else
                         </div>
                     </div>
                     <div class="pull-right">
-                        @*<a href="@Url.Action("Create", "RegistroUnidad", new { Codigo = Model.Select(m=> m.Formato.Codigo).FirstOrDefault() })" class="btn btn-primary btn-sm"><span class="fa fa-plus" aria-hidden="true"></span></a>*@
                         <a href="@Url.Action("Create", "RegistroUnidad", new { Codigo = ViewBag.CodigoFormato })" class="btn btn-primary btn-sm"><span class="fa fa-plus" aria-hidden="true"></span></a>
                         <button id="btn-downloadReport" class="btn btn-default" alt="Download"><i class="fa fa-cloud-download text-info"></i></button>
                     </div>
@@ -44,19 +43,24 @@ else
             <div class="box-body table-responsive">
                 <table class="table table-hover table-striped" id="example1">
                     <thead>
-                        <tr class="info">
+                        <tr class="bg-primary">
                             <th>
                                 @Html.DisplayName("Nombre del Conductor")
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Empresa)
                             </th>
-
                             <th>
-                                @Html.DisplayName("Placas")
+                                @Html.DisplayName("Placas Tractor")
                             </th>
                             <th>
-                                @Html.DisplayName("No. Economico")
+                                @Html.DisplayName("No. Economico Tractor")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Placas Remolque")
+                            </th>
+                            <th>
+                                @Html.DisplayName("No. Economico Remolque")
                             </th>
                             <th>
                                 @Html.DisplayName("Asunto")
@@ -83,12 +87,21 @@ else
                         @{var i = 0; }
                         @foreach (var item in Model)
                         {
-                            <tr>
+                            var clase = "bg-red color-palette";
+                            foreach (var bitacora in item.Bitacora)
+                            {
+                                if (bitacora.TipoMovimiento == "Salida" && bitacora.Fecha != null)
+                                {
+                                    clase = "success";
+                                }
+                            }
+
+                            <tr class="@clase">
                                 <td>
                                     @Html.Hidden("Codigo" + i, item.Formato.Codigo)
                                     @foreach (var dato in item.Datos)
                                     {
-                                        @Html.DisplayFor(modelItem => dato.NombreConductor)
+                                        <p>@Html.DisplayFor(modelItem => dato.NombreConductor)</p>
                                     }
                                 </td>
                                 <td>
@@ -97,13 +110,25 @@ else
                                 <td>
                                     @foreach (var dato in item.Datos)
                                     {
-                                        @Html.DisplayFor(modelItem => dato.Placas)
+                                        <p>@Html.DisplayFor(modelItem => dato.PlacasTractor)</p>
                                     }
                                 </td>
                                 <td>
                                     @foreach (var datos in item.Datos)
                                     {
-                                        @Html.DisplayFor(modelItem => datos.NoEco)
+                                        <p>@Html.DisplayFor(modelItem => datos.NoEcoTractor)</p>
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var dato in item.Datos)
+                                    {
+                                        <p>@Html.DisplayFor(modelItem => dato.PlacasRemolque)</p>
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var datos in item.Datos)
+                                    {
+                                        <p>@Html.DisplayFor(modelItem => datos.NoEcoRemolque)</p>
                                     }
                                 </td>
                                 <td>
@@ -124,7 +149,7 @@ else
                                 <td>
                                     @foreach (var bitacora in item.Bitacora)
                                     {
-                                        if (bitacora.Fecha == item.Bitacora.Max(b => b.Fecha))
+                                        if (bitacora.TipoMovimiento == "Salida" && bitacora.Fecha == item.Bitacora.Max(b => b.Fecha))
                                         {
                                             @Html.DisplayFor(modelItem => bitacora.Fecha)
                                         }
@@ -139,7 +164,7 @@ else
                                 <td>
                                     @foreach (var bitacora in item.Bitacora)
                                     {
-                                        <p>@Html.DisplayFor(modelItem => bitacora.Guardia.Nombre) @Html.DisplayFor(modelItem => bitacora.Guardia.Apellido1) @Html.DisplayFor(modelItem => bitacora.Guardia.Apellido2)</p>
+                                        <p>@Html.DisplayFor(modelItem => bitacora.NombreGuardia)</p>
                                     }
                                 </td>
                                 <td>
@@ -160,22 +185,24 @@ else
                         }
                     </tbody>
                     <tfoot>
-                        <tr class="info">
+                        <tr class="bg-primary">
                             <th>
                                 @Html.DisplayName("Nombre del Conductor")
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Empresa)
                             </th>
-
                             <th>
-                                @Html.DisplayName("Placas")
+                                @Html.DisplayName("Placas Tractor")
                             </th>
                             <th>
-                                @Html.DisplayName("No. Economico")
+                                @Html.DisplayName("No. Economico Tractor")
                             </th>
                             <th>
-                                @Html.DisplayName("Puerta")
+                                @Html.DisplayName("Placas Remolque")
+                            </th>
+                            <th>
+                                @Html.DisplayName("No. Economico Remolque")
                             </th>
                             <th>
                                 @Html.DisplayName("Asunto")
@@ -188,6 +215,9 @@ else
                             </th>
                             <th>
                                 @Html.DisplayName("Hora de Salida")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Puerta")
                             </th>
                             <th>
                                 @Html.DisplayName("Nombre del Guardia")

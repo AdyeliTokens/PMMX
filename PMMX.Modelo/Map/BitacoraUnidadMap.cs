@@ -16,7 +16,8 @@ namespace PMMX.Modelo.Map
             ToTable("BitacoraUnidad");
             HasKey(c => c.Id);
             Property(c => c.Id).HasColumnName("Id");
-            Property(c => c.IdGuardia).HasColumnName("IdGuardia");
+            Property(c => c.IdPersona).HasColumnName("IdPersona");
+            Property(c => c.NombreGuardia).HasColumnName("NombreGuardia");
             Property(c => c.Puerta).HasColumnName("Puerta");
             Property(c => c.Fecha).HasColumnName("Fecha");
             Property(c => c.TipoMovimiento).HasColumnName("TipoMovimiento");
@@ -31,7 +32,7 @@ namespace PMMX.Modelo.Map
 
             #region HasRequired
             this.HasRequired(r => r.RegistroUnidad).WithMany(e => e.Bitacora);
-            this.HasRequired(r => r.Guardia).WithMany(e => e.BitacorasUnidad);
+            this.HasRequired(r => r.Persona).WithMany(e => e.BitacorasUnidad);
             #endregion         
         }
 
