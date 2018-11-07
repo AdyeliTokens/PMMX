@@ -10,15 +10,19 @@
     @Styles.Render("~/Style/DataRangePicker")
 }
 
-<h2>Edit</h2>
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>RegistroUnidad</h4>
-        <hr />
+<div class="form-horizontal">
+    <div class="box box-header bg-yellow d-inline">
+        <div class="pull-left"><h3>Cerrar Registro</h3> </div>
+        <div class="pull-right">
+            <a href="@Url.Action("Index", "RegistroUnidad", new { Codigo = Model.Formato.Codigo })" class="btn btn-primary btn-sm"><span class="fa fa-close" aria-hidden="true"></span></a>
+        </div>
+    </div>
+
+    <div class="box box-primary">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
@@ -31,14 +35,6 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Nombre del Conductor", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBox("NombreConductor", Model.Datos.Select(d => d.NombreConductor).FirstOrDefault(), new { @class = "form-control" })
-                @Html.ValidationMessage("NombreConductor", "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.Empresa, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Empresa, new { htmlAttributes = new { @class = "form-control" } })
@@ -47,72 +43,88 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Tipo Remolque", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBox("TipoRemolque", Model.Datos.Select(d => d.TipoRemolque).FirstOrDefault(), new { @class = "form-control" })
-                @Html.ValidationMessage("TipoRemolque", "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("#Caja", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBox("NoCaja", Model.Datos.Select(d => d.NoCaja).FirstOrDefault(), new { @class = "form-control" })
-                @Html.ValidationMessage("NoCaja", "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("Placas", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBox("Placas", Model.Datos.Select(d => d.Placas).FirstOrDefault(), new { @class = "form-control" })
-                @Html.ValidationMessage("Placas", "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("#Economico", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBox("NoEco", Model.Datos.Select(d => d.NoEco).FirstOrDefault(), new { @class = "form-control" })
-                @Html.ValidationMessage("NoEco", "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.Asunto, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-4">
                 @Html.EditorFor(model => model.Asunto, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Asunto, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NombreAutoriza, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NombreAutoriza, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NombreAutoriza, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.Label("Fecha", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-4">
                 @Html.TextBox("date", null, new { @class = "form-control" })
                 @Html.ValidationMessage("date", "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.NombreAutoriza, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.NombreAutoriza, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NombreAutoriza, "", new { @class = "text-danger" })
+            </div>
+            @Html.Label("Nombre del Conductor", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBox("NombreConductor", Model.Datos.Select(d => d.NombreConductor).LastOrDefault(), new { @class = "form-control" })
+                @Html.ValidationMessage("NombreConductor", "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Placas Tractor", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBox("PlacasTractor", Model.Datos.Select(d => d.PlacasTractor).LastOrDefault(), new { @class = "form-control" })
+                @Html.ValidationMessage("PlacasTractor", "", new { @class = "text-danger" })
+            </div>
+            @Html.Label("#Economico Tractor", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBox("NoEcoTractor", Model.Datos.Select(d => d.NoEcoTractor).LastOrDefault(), new { @class = "form-control" })
+                @Html.ValidationMessage("NoEcoTractor", "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.Label("Placas Remolque", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBox("PlacasRemolque", Model.Datos.Select(d => d.PlacasRemolque).LastOrDefault(), new { @class = "form-control" })
+                @Html.ValidationMessage("Placas", "", new { @class = "text-danger" })
+            </div>
+            @Html.Label("#Economico Remolque", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBox("NoEcoRemolque", Model.Datos.Select(d => d.NoEcoRemolque).LastOrDefault(), new { @class = "form-control" })
+                @Html.ValidationMessage("NoEcoRemolque", "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Nombre del Guardia", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBox("NombreGuardia", null, new { @class = "form-control" })
+                @Html.ValidationMessage("NombreGuardia", "", new { @class = "text-danger" })
+            </div>
+            @Html.Label("Caseta", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.DropDownList("Puerta",
+                         new SelectList(new List<SelectListItem>
+                          {
+                              new SelectListItem { Text = "Puerta 4" , Value = "Puerta 4"},
+                              new SelectListItem { Text = "Puerta 6", Value = "Puerta 6" },
+                              new SelectListItem { Text = "Caseta MITO", Value = "Caseta MITO" }
+                          },
+                            "Value", // property to be set as Value of dropdown item
+                            "Text",  // property to be used as text of dropdown item
+                            "True"), // value that should be set selected of dropdown
+                             new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Guardar" class="btn btn-success" />
             </div>
         </div>
     </div>
+</div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index", new { Codigo = Model.Formato.Codigo})
-</div>
 
 @section Scripts{
     @Scripts.Render("~/JS/jquery")

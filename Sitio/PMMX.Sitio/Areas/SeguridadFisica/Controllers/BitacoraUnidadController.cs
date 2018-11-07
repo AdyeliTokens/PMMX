@@ -18,7 +18,7 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
         // GET: SeguridadFisica/BitacoraUnidad
         public ActionResult Index()
         {
-            var bitacoraUnidad = db.BitacoraUnidad.Include(b => b.Guardia).Include(b => b.RegistroUnidad);
+            var bitacoraUnidad = db.BitacoraUnidad.Include(b => b.Persona).Include(b => b.RegistroUnidad);
             return View(bitacoraUnidad.ToList());
         }
 
@@ -59,7 +59,7 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdGuardia = new SelectList(db.Personas, "Id", "Nombre", bitacoraUnidad.IdGuardia);
+            ViewBag.IdGuardia = new SelectList(db.Personas, "Id", "Nombre", bitacoraUnidad.IdPersona);
             ViewBag.IdRegistroUnidad = new SelectList(db.RegistroUnidad, "Id", "Empresa", bitacoraUnidad.IdRegistroUnidad);
             return View(bitacoraUnidad);
         }
@@ -76,7 +76,7 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IdGuardia = new SelectList(db.Personas, "Id", "Nombre", bitacoraUnidad.IdGuardia);
+            ViewBag.IdGuardia = new SelectList(db.Personas, "Id", "Nombre", bitacoraUnidad.IdPersona);
             ViewBag.IdRegistroUnidad = new SelectList(db.RegistroUnidad, "Id", "Empresa", bitacoraUnidad.IdRegistroUnidad);
             return View(bitacoraUnidad);
         }
@@ -94,7 +94,7 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdGuardia = new SelectList(db.Personas, "Id", "Nombre", bitacoraUnidad.IdGuardia);
+            ViewBag.IdGuardia = new SelectList(db.Personas, "Id", "Nombre", bitacoraUnidad.IdPersona);
             ViewBag.IdRegistroUnidad = new SelectList(db.RegistroUnidad, "Id", "Empresa", bitacoraUnidad.IdRegistroUnidad);
             return View(bitacoraUnidad);
         }

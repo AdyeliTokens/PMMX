@@ -27,12 +27,13 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
         public ActionResult Index(string Codigo)
         {
             var registroUnidad = db.RegistroUnidad
+                .OrderByDescending(r=> r.Id)
                 .Where(r=> r.Formato.Codigo == Codigo)
-                .Include(v => v.Formato)
                 .Include(r => r.Formato)
                 .Include(r => r.Datos)
                 .Include(r => r.Bitacora)
-                .Include(r => r.Bitacora.Select(b => b.Guardia));
+                .Include(r => r.Bitacora.Select(b => b.Persona));
+
             ViewBag.CodigoFormato = Codigo;
             return View(registroUnidad.ToList());
         }
@@ -50,7 +51,7 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
                 .Include(v=> v.Formato)
                 .Include(v => v.Datos)
                 .Include(v => v.Bitacora)
-                .Include(r => r.Bitacora.Select(b => b.Guardia))
+                .Include(r => r.Bitacora.Select(b => b.Persona))
                 .FirstOrDefault();
 
             if (registroUnidad == null)
@@ -85,12 +86,19 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(RegistroUnidad registroUnidad, DatosUnidad datos, DateTime date)
+        public ActionResult Create(RegistroUnidad registroUnidad, DatosUnidad datos, DateTime date, string NombreGuardia, string Puerta)
         {
             if (ModelState.IsValid)
             {
                 db.RegistroUnidad.Add(registroUnidad);
                 db.SaveChanges();
+
+                datos.PlacasTractor = datos.PlacasTractor == null ? " " : datos.PlacasTractor;
+                datos.NoEcoTractor = datos.NoEcoTractor == null ? " " : datos.NoEcoTractor;
+                datos.PlacasRemolque = datos.PlacasRemolque == null ? " " : datos.PlacasRemolque;
+                datos.NoEcoRemolque = datos.NoEcoRemolque == null ? " " : datos.NoEcoRemolque;
+                datos.TipoRemolque = datos.TipoRemolque == null ? " " : datos.TipoRemolque;
+                datos.NoCaja = datos.NoCaja == null ? "" : datos.NoCaja;
                 datos.IdRegistroUnidad = registroUnidad.Id;
                 db.DatosUnidad.Add(datos);
                 
@@ -100,8 +108,11 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
                 if (persona.EjecucionCorrecta)
                 {
                     BitacoraUnidad bitacora = new BitacoraUnidad();
-                    bitacora.IdGuardia = persona.Respuesta.Id;
-                    bitacora.Puerta = db.Formato.Where(f => f.Id == registroUnidad.IdFormato).Select(f=> f.Puerta).FirstOrDefault();
+                    bitacora.IdPersona = persona.Respuesta.Id;
+                    bitacora.NombreGuardia = NombreGuardia;
+                    bitacora.Puerta = Puerta == null 
+                        ? db.Formato.Where(f => f.Id == registroUnidad.IdFormato).Select(f=> f.Puerta).FirstOrDefault() 
+                        : Puerta;
                     bitacora.Fecha = date;
                     bitacora.IdRegistroUnidad = registroUnidad.Id;
                     bitacora.TipoMovimiento = "Entrada";
@@ -129,7 +140,7 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
                 .Include(v => v.Formato)
                 .Include(v => v.Datos)
                 .Include(v => v.Bitacora)
-                .Include(r => r.Bitacora.Select(b => b.Guardia))
+                .Include(r => r.Bitacora.Select(b => b.Persona))
                 .FirstOrDefault();
 
             if (registroUnidad == null)
@@ -145,20 +156,33 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(RegistroUnidad registroUnidad, DatosUnidad datos, DateTime date)
+        public ActionResult Edit(RegistroUnidad registroUnidad, DatosUnidad datos, DateTime date, string NombreGuardia, string Puerta)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(registroUnidad).State = EntityState.Modified;
                 db.SaveChanges();
 
-                var _datos = db.DatosUnidad.Where(d => d.IdRegistroUnidad == registroUnidad.Id).FirstOrDefault();
+                // Editar otra Entidad
+                /*var _datos = db.DatosUnidad.Where(d => d.IdRegistroUnidad == registroUnidad.Id).FirstOrDefault();
                 _datos.NombreConductor = datos.NombreConductor;
-                _datos.Placas = datos.Placas;
-                _datos.NoEco = datos.NoEco;
+                _datos.PlacasTractor = datos.PlacasTractor;
+                _datos.NoEcoTractor = datos.NoEcoTractor;
                 _datos.NoCaja = datos.NoCaja;
                 _datos.TipoRemolque = datos.TipoRemolque;
+                _datos.PlacasRemolque = datos.PlacasRemolque;
+                _datos.NoEcoRemolque = datos.NoEcoRemolque;
                 db.Entry(_datos).State = EntityState.Modified;
+                db.SaveChanges();*/
+
+                datos.PlacasTractor = datos.PlacasTractor == null ? " " : datos.PlacasTractor;
+                datos.NoEcoTractor = datos.NoEcoTractor == null ? " " : datos.NoEcoTractor;
+                datos.PlacasRemolque = datos.PlacasRemolque == null ? " " : datos.PlacasRemolque;
+                datos.NoEcoRemolque = datos.NoEcoRemolque == null ? " " : datos.NoEcoRemolque;
+                datos.TipoRemolque = datos.TipoRemolque == null ? " " : datos.TipoRemolque;
+                datos.NoCaja = datos.NoCaja == null ? "" : datos.NoCaja;
+                datos.IdRegistroUnidad = registroUnidad.Id;
+                db.DatosUnidad.Add(datos);
                 db.SaveChanges();
 
                 PersonaServicio personaServicio = new PersonaServicio();
@@ -167,8 +191,11 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
                 if (persona.EjecucionCorrecta)
                 {
                     BitacoraUnidad bitacora = new BitacoraUnidad();
-                    bitacora.IdGuardia = persona.Respuesta.Id;
-                    bitacora.Puerta = db.Formato.Where(f => f.Id == registroUnidad.IdFormato).Select(f => f.Puerta).FirstOrDefault();
+                    bitacora.IdPersona = persona.Respuesta.Id;
+                    bitacora.NombreGuardia = NombreGuardia;
+                    bitacora.Puerta = Puerta == null
+                        ? db.Formato.Where(f => f.Id == registroUnidad.IdFormato).Select(f => f.Puerta).FirstOrDefault()
+                        : Puerta;
                     bitacora.Fecha = date;
                     bitacora.IdRegistroUnidad = registroUnidad.Id;
                     bitacora.TipoMovimiento = "Salida";
@@ -195,7 +222,7 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
                 .Include(v => v.Formato)
                 .Include(v => v.Datos)
                 .Include(v => v.Bitacora)
-                .Include(r => r.Bitacora.Select(b => b.Guardia))
+                .Include(r => r.Bitacora.Select(b => b.Persona))
                 .FirstOrDefault();
 
             if (registroUnidad == null)
@@ -235,7 +262,7 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
             List<RegistroUnidad> registros = db.RegistroUnidad
                             .Include(v => v.Formato)
                             .Include(v => v.Bitacora)
-                            .Include(v => v.Bitacora.Select(s => s.Guardia))
+                            .Include(v => v.Bitacora.Select(s => s.Persona))
                             .Include(v => v.Datos)
                             .Where(v => v.Formato.Codigo.Equals(Codigo))
                             .ToList();
@@ -254,13 +281,16 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
                 //Header
                 worksheet.Cells[4, 1].Value = "Nombre";
                 worksheet.Cells[4, 2].Value = "Empresa";
-                worksheet.Cells[4, 3].Value = "Placas";
-                worksheet.Cells[4, 4].Value = "#Economico";
-                worksheet.Cells[4, 5].Value = "Asunto";
-                worksheet.Cells[4, 6].Value = "Nombre Autoriza";
-                worksheet.Cells[4, 7].Value = "#Gafette";
-                worksheet.Cells[4, 8].Value = "Hora Entrada";
-                worksheet.Cells[4, 9].Value = "Hora Salida";
+                worksheet.Cells[4, 3].Value = "Placas Tractor";
+                worksheet.Cells[4, 4].Value = "#Economico Tractor";
+                worksheet.Cells[4, 5].Value = "Placas Remolque";
+                worksheet.Cells[4, 6].Value = "#Economico Remolque";
+                worksheet.Cells[4, 7].Value = "Asunto";
+                worksheet.Cells[4, 8].Value = "Nombre Autoriza";
+                worksheet.Cells[4, 9].Value = "Nombre Guardia";
+                worksheet.Cells[4, 10].Value = "#Gafette";
+                worksheet.Cells[4, 11].Value = "Hora Entrada";
+                worksheet.Cells[4, 12].Value = "Hora Salida";
 
                 var fila = 5;
 
@@ -284,21 +314,24 @@ namespace Sitio.Areas.SeguridadFisica.Controllers
                     }
                     
                     //Content
-                    worksheet.Cells[fila, 1].Value = registro.Datos.Select(d => d.NombreConductor).FirstOrDefault().ToUpper();
+                    worksheet.Cells[fila, 1].Value = registro.Datos.Select(d => d.NombreConductor).LastOrDefault().ToUpper();
                     worksheet.Cells[fila, 2].Value = registro.Empresa.ToUpper();
-                    worksheet.Cells[fila, 3].Value = registro.Datos.Select(d => d.Placas).FirstOrDefault().ToUpper();
-                    worksheet.Cells[fila, 4].Value = registro.Datos.Select(d => d.NoEco).FirstOrDefault().ToUpper();
-                    worksheet.Cells[fila, 5].Value = registro.Asunto.ToUpper();
-                    worksheet.Cells[fila, 6].Value = registro.NombreAutoriza.ToUpper();
-                    worksheet.Cells[fila, 7].Value = registro.NoGafette;
-                    worksheet.Cells[fila, 8].Value = registro.Bitacora.OrderByDescending(b=> b.Fecha).Select(d => d.Fecha).LastOrDefault().ToString();
-                    worksheet.Cells[fila, 9].Value = registro.Bitacora.OrderByDescending(b => b.Fecha).Select(d => d.Fecha).FirstOrDefault().ToString();
+                    worksheet.Cells[fila, 3].Value = registro.Datos.Select(d => d.PlacasTractor).LastOrDefault().ToUpper();
+                    worksheet.Cells[fila, 4].Value = registro.Datos.Select(d => d.NoEcoTractor).LastOrDefault().ToUpper();
+                    worksheet.Cells[fila, 5].Value = registro.Datos.Select(d => d.PlacasRemolque).LastOrDefault().ToUpper();
+                    worksheet.Cells[fila, 6].Value = registro.Datos.Select(d => d.NoEcoRemolque).LastOrDefault().ToUpper();
+                    worksheet.Cells[fila, 7].Value = registro.Asunto.ToUpper();
+                    worksheet.Cells[fila, 8].Value = registro.NombreAutoriza.ToUpper();
+                    worksheet.Cells[fila, 9].Value = registro.Bitacora.OrderByDescending(b => b.Fecha).Select(d => d.NombreGuardia).FirstOrDefault().ToString();
+                    worksheet.Cells[fila, 10].Value = registro.NoGafette;
+                    worksheet.Cells[fila, 11].Value = registro.Bitacora.OrderByDescending(b=> b.Fecha).Select(d => d.Fecha).LastOrDefault().ToString();
+                    worksheet.Cells[fila, 12].Value = registro.Bitacora.OrderByDescending(b => b.Fecha).Select(d => d.Fecha).FirstOrDefault().ToString();
                     fila++;
                 }
 
                 worksheet.Cells.AutoFitColumns();
 
-                for (var i = 0; i < 9; i++)
+                for (var i = 0; i < 12; i++)
                 {
                     worksheet.Cells[1, i + 1].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
                     worksheet.Cells[1, i + 1].Style.Font.Color.SetColor(Color.White);
