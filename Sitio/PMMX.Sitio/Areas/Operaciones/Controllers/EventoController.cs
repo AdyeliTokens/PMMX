@@ -31,7 +31,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             return View(evento.Where(e => e.Activo == true).ToList());
         }
 
-        [RenderAjaxPartialScripts]
+        //[RenderAjaxPartialScripts]
         public ActionResult GetEvents(DateTime date)
         {
             if (ModelState.IsValid)
@@ -89,6 +89,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                                 item.Color = GetColorStatus(item.Id);
                                 item.Clasificacion = GetClasificacion(item.Id);
                             }
+
                             return Json(new { events }, JsonRequestBehavior.AllowGet);
                     }
                 }
@@ -101,7 +102,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             }
         }
 
-        [RenderAjaxPartialScripts]
+        //[RenderAjaxPartialScripts]
         public string GetColorStatus(int idEvento)
         {
           var colors = db.StatusVentana.OrderByDescending(s=> s.Fecha).Where(s => s.Ventana.IdEvento == idEvento)
@@ -113,7 +114,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             return colors;
         }
 
-        [RenderAjaxPartialScripts]
+        //[RenderAjaxPartialScripts]
         public string GetClasificacion(int idEvento)
         {
             var clasificacion = db.Ventana.Where(s => s.IdEvento == idEvento)
@@ -125,7 +126,7 @@ namespace Sitio.Areas.Operaciones.Controllers
             return clasificacion;
         }
 
-        [RenderAjaxPartialScripts]
+        //[RenderAjaxPartialScripts]
         public ActionResult GetEventsBySubCategoria(int IdSubCategoria, DateTime date)
         {
             if (ModelState.IsValid)
@@ -221,6 +222,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                                 item.Color = GetColorStatus(item.Id);
                                 item.Clasificacion = GetClasificacion(item.Id);
                             }
+
                             return Json(new { events }, JsonRequestBehavior.AllowGet);
                     }
                 }

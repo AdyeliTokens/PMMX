@@ -96,7 +96,8 @@ namespace Sitio.Areas.Seguridad.Controllers
             return View(menu);
         }
 
-        [RenderAjaxPartialScripts]
+        //[RenderAjaxPartialScripts]
+        [HttpPost]
         public ActionResult getMenuByPersona()
         {
             List<MenuView> list = new List<MenuView>();
@@ -121,7 +122,8 @@ namespace Sitio.Areas.Seguridad.Controllers
                     }).ToList()
                     ).FirstOrDefault();
             }
-            return Json(new { list }, JsonRequestBehavior.AllowGet);
+            //return Json(new { list }, JsonRequestBehavior.AllowGet);
+            return Json(new { list });
         }
 
         // GET: Seguridad/Menu/Delete/5
