@@ -1,6 +1,7 @@
 ﻿using PMMX;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web;
@@ -63,6 +64,13 @@ namespace Sitio
 
             // Clear the error from the server
             Server.ClearError();
+        }
+
+        protected void Application_BeginRequest()
+        {
+            CultureInfo info = new CultureInfo(System.Threading.Thread.CurrentThread.CurrentCulture.ToString());
+            info.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy HH:mm:ss";
+            System.Threading.Thread.CurrentThread.CurrentCulture = info;
         }
     }
 }
