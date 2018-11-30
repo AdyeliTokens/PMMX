@@ -128,14 +128,14 @@
     <script src="~/Scripts/app.js"></script>
     @Scripts.Render("~/JS/Bootstrap")
     <script>
-        $(document).ready(function ()
+$(document).ready(function ()
         {
             getMenuByPersona();
             getPuestoByPersona();
         });
 
         function getMenuByPersona() {
-            $.ajax({
+           $.ajax({
                 dataType: "json",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
@@ -145,14 +145,14 @@
                     var _menu = data.list.map(function (item2) {
                         return item2.Nombre;
                     }).filter((v, i, a) => a.indexOf(v) === i && v !== undefined);
-                    
+
                     for (i = 0; i < _menu.length; i++) {
                         $("#menu_ul").append('<li class="treeview"><a href="#"><i class="fa fa-gg"></i>' + _menu[i] + '<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span ></a><ul id="'+_menu[i]+'"  class="treeview-menu"></ul></li>');
-                       
+
                         var _submenu = data.list
                            .reduce((result, { Nombre, SubMenu }) => [...result, ...Nombre === _menu[i] ? [SubMenu] : []], [])
                            .filter((value, index, a) => a.indexOf(value) === index && value !== undefined);
-                        
+
                         for (s = 0; s < _submenu.length; s++) {
                             $("#" + _menu[i]).append('<li class="treeview"><a href="#"><i class="fa fa-codepen"></i>' + _submenu[s] + '<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span ></a><ul id="' + _submenu[s] +'"  class="treeview-menu"></ul></li>');
                             var _links = data.list
@@ -170,9 +170,10 @@
                 }
             });
         }
-        
+
         function getPuestoByPersona() {
             $.ajax({
+                data: JSON.stringify(),
                 dataType: "json",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
@@ -185,9 +186,7 @@
                     alert('There was an error while fetching data!');
                 }
             });
-        }
-
-    </script>
+        }</script>
     @RenderSection("Scripts", required: false)
 
 

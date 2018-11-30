@@ -147,7 +147,7 @@ namespace PMMX.Seguridad.Servicios
             {
                 emailList = db.ListaDistribucion
                         .Where(l => (l.IdSubarea == workFlow.IdSubAreaANotificar))
-                        .Select(l => l.Remitente.Users.Where(r => (r.IdPersona == l.Remitente.Id) && (l.Activo == true))
+                              .Select(l => l.Remitente.Users.Where(r => (r.IdPersona == l.Remitente.Id) && (l.Activo == true))
                         .Select(r => new UserView
                         {
                             Id = r.Id,
@@ -156,7 +156,7 @@ namespace PMMX.Seguridad.Servicios
                         ).ToList();
             }
             
-            List<string> emails = emailList.Select(x => x.Email).ToList();
+            List<string> emails = emailList.Where(x=>  x.Email != null).Select(x => x.Email).ToList();
             
             foreach (string email in emails)
             {

@@ -26,11 +26,11 @@ namespace Sitio.Areas.Seguridad.Controllers
             return View(db.Puestos.ToList());
         }
 
-        [RenderAjaxPartialScripts]
-        public ActionResult getPuestoByPersona()
+        [HttpPost]
+        public JsonResult getPuestoByPersona()
         {
             PersonaServicio personaServicio = new PersonaServicio();
-            IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
+            IRespuestaServicio<Persona> persona = personaServicio.GetPersona( User.Identity.GetUserId());
 
             if (persona.EjecucionCorrecta)
             {
@@ -40,10 +40,12 @@ namespace Sitio.Areas.Seguridad.Controllers
                     .FirstOrDefault()
                     .ToString();
 
-                return Json(new { perfil }, JsonRequestBehavior.AllowGet);
+                //return Json(new { perfil }, JsonRequestBehavior.AllowGet);
+                return Json(new { perfil });
             }
 
-            return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            //return Json(new { status = 400 }, JsonRequestBehavior.AllowGet);
+            return Json(new { status = 400 });
         }
 
         // GET: Seguridad/Puestos/Details/5
