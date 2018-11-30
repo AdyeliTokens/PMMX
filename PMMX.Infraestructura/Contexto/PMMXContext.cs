@@ -36,7 +36,6 @@ namespace PMMX.Infraestructura.Contexto
             
         }
 
-
         /// <summary>
         /// Contructor "Estatico" que retorna la entidad creada sin necesidad de intanciar previamente
         /// </summary>

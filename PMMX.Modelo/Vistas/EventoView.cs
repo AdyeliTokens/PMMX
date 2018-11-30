@@ -34,7 +34,7 @@ namespace PMMX.Modelo.Vistas
 
         public PersonaView Asignador { get; set; }
         public CategoriaView Categoria { get; set; }
-        public SubCategoria SubCategoria { get; set; }
+        public SubCategoriaView SubCategoria { get; set; }
         public List<GembaWalkView> GembaWalk { get; set; }
         public List<VentanaView> Ventanas { get; set; }
         public List<EventoOrigenView> EventoOrigen { get; set; }
