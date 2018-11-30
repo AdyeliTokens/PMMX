@@ -44,13 +44,13 @@
         <div class="form-group">
             @Html.LabelFor(model => model.FechaInicio, "Fecha Inicio: ", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-4">
-                @Html.TextBoxFor(model => model.FechaInicio, new { id = "FechaInicio" })
+                @Html.TextBoxFor(model => model.FechaInicio, new { @id = "FechaInicio", @type = "DateTime", @Value = Convert.ToDateTime(Model.FechaInicio).ToString("dd/MM/yyyy HH:mm:ss") })
                 @Html.ValidationMessageFor(model => model.FechaInicio, "", new { @class = "text-danger" })
             </div>
 
             @Html.LabelFor(model => model.FechaFin, "Fin: ", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-4">
-                @Html.TextBoxFor(model => model.FechaFin, new { id = "FechaFin" })
+                @Html.TextBoxFor(model => model.FechaFin, new { @id = "FechaFin", @type = "DateTime", @Value = Convert.ToDateTime(Model.FechaFin).ToString("dd/MM/yyyy HH:mm:ss") })
                 @Html.ValidationMessageFor(model => model.FechaFin, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -77,8 +77,7 @@
 }
 
 @Scripts.Render("~/JS/jquery")
-    <script>
-    $(document).ready(function ()
+    <script>$(document).ready(function ()
         {
             Init();
 
@@ -116,5 +115,4 @@
                 }
             }
 
-        });
-    </script>
+        });</script>
