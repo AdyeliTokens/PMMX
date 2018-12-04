@@ -15,7 +15,7 @@ namespace PMMX.Modelo.Map
             this.ToTable("ClasificacionHallazgo");
             this.HasKey(c => c.Id);
             this.Property(c => c.Id).HasColumnName("Id");
-            this.Property(c => c.Nombre).HasColumnName("IdReporta");
+            this.Property(c => c.Nombre).HasColumnName("Nombre");
             this.Property(c => c.IdSubCategoria).HasColumnName("IdSubCategoria");
             this.Property(c => c.Activo).HasColumnName("Activo");
             #endregion

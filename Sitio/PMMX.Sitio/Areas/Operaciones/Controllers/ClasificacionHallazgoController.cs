@@ -11,7 +11,7 @@ using PMMX.Infraestructura.Contexto;
 using PMMX.Modelo.Entidades;
 using PMMX.Modelo.Entidades.Operaciones;
 
-namespace Sitio.Controllers
+namespace Sitio.Areas.Operaciones.Controllers
 {
     public class ClasificacionHallazgoController : Controller
     {
@@ -118,6 +118,16 @@ namespace Sitio.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult GetClasificacion(int IdSubcategoria)
+        {
+            var lista = db.ClasificacionHallazgo
+                                  .Where(x => x.IdSubCategoria == IdSubcategoria)
+                                  .Select(w => new { Id = w.Id, Nombre = w.Nombre })
+                                  .ToList();
+
+            return Json(new { lista }, JsonRequestBehavior.AllowGet);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -126,7 +136,5 @@ namespace Sitio.Controllers
             }
             base.Dispose(disposing);
         }
-
-
     }
 }
