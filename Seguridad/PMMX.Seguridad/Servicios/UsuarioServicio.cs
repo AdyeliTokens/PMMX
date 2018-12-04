@@ -67,22 +67,6 @@ namespace PMMX.Seguridad.Servicios
             return dispositivos;
         }
 
-        public List<DispositivoView> GetDispositivoByJDI(int IdGembaWalk)
-        {
-            List<DispositivoView> dispositivos = new List<DispositivoView>();
-
-            dispositivos = db.GembaWalk
-                .Where(e => e.Id == IdGembaWalk)
-                .Select(e => e.Responsable.Dispositivos.Where(d => d.Activo == true).Select(v => new DispositivoView
-                {
-                    Id = v.Id,
-                    Llave = v.Llave
-                }).ToList()
-                ).FirstOrDefault();
-
-            return dispositivos;
-        }
-
         public List<DispositivoView> GetDispositivoByMantenimiento(int idMantenimiento)
         {
             List<DispositivoView> dispositivos = new List<DispositivoView>();

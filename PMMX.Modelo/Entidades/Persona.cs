@@ -54,7 +54,6 @@ namespace PMMX.Modelo.Entidades
         public ICollection<SubCategoria> SubCategorias { get; set; }
         public ICollection<Evento> EventosReportados { get; set; }
         public ICollection<GembaWalk> JustDoItReportados { get; set; }
-        public ICollection<GembaWalk> JustDoItAsignados { get; set; }
         public ICollection<Mantenimiento> MantenimientosReportados { get; set; }
         public ICollection<Mantenimiento> MantenimientosAsignados { get; set; }
         public ICollection<Foto> FotosPersonales { get; set; }

@@ -29,7 +29,6 @@ namespace PMMX.Modelo.Map
             #endregion
 
             #region HasMany
-            this.HasMany(c => c.GembaWalk).WithRequired(x => x.Evento).HasForeignKey(c => c.IdEvento);
             this.HasMany(c => c.Ventanas).WithRequired(x => x.Evento).HasForeignKey(c => c.IdEvento);
             this.HasMany(c => c.EventoOrigen).WithRequired(x => x.Evento).HasForeignKey(c => c.IdEvento);
             this.HasMany(c => c.EventoResponsable).WithRequired(x => x.Evento).HasForeignKey(c => c.IdEvento);

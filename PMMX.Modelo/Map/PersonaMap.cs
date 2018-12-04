@@ -40,8 +40,7 @@ namespace PMMX.Modelo.Map
             HasMany(c => c.Comentarios).WithRequired(x => x.Comentador).HasForeignKey(c => c.IdComentador);
             HasMany(c => c.MantenimientosAsignados).WithRequired(x => x.Responsable).HasForeignKey(c => c.IdResponsable);
             HasMany(c => c.MantenimientosReportados).WithRequired(x => x.Reportador).HasForeignKey(c => c.IdReportador);
-            HasMany(c => c.JustDoItAsignados).WithRequired(x => x.Responsable).HasForeignKey(c => c.IdResponsable);
-            HasMany(c => c.JustDoItReportados).WithRequired(x => x.Reportador).HasForeignKey(c => c.IdReportador);
+            HasMany(c => c.JustDoItReportados).WithRequired(x => x.Reportador).HasForeignKey(c => c.IdReporta);
             HasMany(c => c.Asignaciones).WithRequired(x => x.Asignado).HasForeignKey(c => c.IdAsignado);
             HasMany(c => c.FotosSubidas).WithOptional(x => x.Contribuidor).HasForeignKey(c => c.IdContribuidor);
             HasMany(c => c.FotosPersonales).WithMany(x => x.Personas).Map(cs =>

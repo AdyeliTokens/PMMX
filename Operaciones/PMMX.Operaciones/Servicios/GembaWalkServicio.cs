@@ -29,14 +29,11 @@ namespace PMMX.Operaciones.Servicios
             {
                 Id = d.Id,
                 IdOrigen = d.IdOrigen,
-                IdEvento = d.IdEvento,
-                IdReportador = d.IdReportador,
+                IdReporta = d.IdReporta,
                 Activo = d.Activo,
                 Prioridad = d.Prioridad,
                 FechaReporte = d.FechaReporte,
-                FechaEstimada = d.FechaEstimada,
                 Descripcion = d.Descripcion,
-                IdResponsable = d.IdResponsable,
                 IdSubCategoria = d.IdSubCategoria,
                 Tipo = d.Tipo,
                 Reportador = new PersonaView
@@ -100,15 +97,12 @@ namespace PMMX.Operaciones.Servicios
                 .Select(d => new GembaWalkView
                 {
                     Id = d.Id,
-                    IdEvento = d.IdEvento,
                     IdOrigen = d.IdOrigen,
-                    IdReportador = d.IdReportador,
-                    IdResponsable = d.IdResponsable,
+                    IdReporta = d.IdReporta,
                     Descripcion = d.Descripcion,
                     Activo = d.Activo,
                     Prioridad = d.Prioridad,
                     FechaReporte = d.FechaReporte,
-                    FechaEstimada = d.FechaEstimada,
                     IdSubCategoria = d.IdSubCategoria,
                     Tipo = d.Tipo,
                     Reportador = new PersonaView
@@ -121,18 +115,6 @@ namespace PMMX.Operaciones.Servicios
                         {
                             Id = d.Reportador.Puesto.Id,
                             Nombre = d.Reportador.Puesto.Nombre
-                        }
-                    },
-                    Responsable = new PersonaView
-                    {
-                        Id = d.Responsable.Id,
-                        Nombre = d.Responsable.Nombre,
-                        Apellido1 = d.Responsable.Apellido1,
-                        Apellido2 = d.Responsable.Apellido2,
-                        Puesto = new PuestoView
-                        {
-                            Id = d.Responsable.Puesto.Id,
-                            Nombre = d.Responsable.Puesto.Nombre
                         }
                     },
                     Origen = new OrigenView

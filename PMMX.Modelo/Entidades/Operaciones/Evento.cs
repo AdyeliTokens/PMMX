@@ -32,7 +32,6 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public Persona Asignador { get; set; }
         public Categoria Categoria { get; set; }
         public SubCategoria SubCategoria { get; set; }
-        public List<GembaWalk> GembaWalk { get; set; }
         public List<Ventana> Ventanas { get; set; }
         public List<EventoOrigen> EventoOrigen { get; set; }
         public List<EventoResponsable> EventoResponsable { get; set; }

@@ -37,14 +37,11 @@ namespace Sitio.Areas.Apis.Controllers
                {
                    Id = d.Id,
                    IdOrigen = d.IdOrigen,
-                   IdReportador = d.IdReportador,
-                   IdResponsable = d.IdResponsable,
+                   IdReporta = d.IdReporta,
                    IdSubCategoria = d.IdSubCategoria,
-                   IdEvento = d.IdEvento,
                    Descripcion = d.Descripcion,
                    Activo = d.Activo,
                    FechaReporte = d.FechaReporte,
-                   FechaEstimada = d.FechaEstimada,
                    Prioridad = d.Prioridad,
                    Tipo = d.Tipo,
                    Reportador = new PersonaView
@@ -102,19 +99,16 @@ namespace Sitio.Areas.Apis.Controllers
         public IHttpActionResult GetGembaWalkbyTipo(int Tipo, int IdResponsable)
         {
             var GembaWalk = db.GembaWalk
-               .Where(d => (d.Tipo == Tipo) && (d.IdResponsable == IdResponsable))
+               .Where(d => (d.Tipo == Tipo) )
                .Select(d => new GembaWalkView
                {
                    Id = d.Id,
                    IdOrigen = d.IdOrigen,
-                   IdReportador = d.IdReportador,
-                   IdResponsable = d.IdResponsable,
+                   IdReporta = d.IdReporta,
                    IdSubCategoria = d.IdSubCategoria,
-                   IdEvento = d.IdEvento,
                    Descripcion = d.Descripcion,
                    Activo = d.Activo,
                    FechaReporte = d.FechaReporte,
-                   FechaEstimada = d.FechaEstimada,
                    Prioridad = d.Prioridad,
                    Tipo = d.Tipo
                }).ToList();
@@ -132,19 +126,16 @@ namespace Sitio.Areas.Apis.Controllers
         public IHttpActionResult GetGembaWalkporStatus(int IdStatus, int IdResponsable)
         {
             var GembaWalk = db.BitacoraGembaWalks
-               .Where(b => (b.IdStatus == IdStatus) && (b.GembaWalk.IdResponsable == IdResponsable))
+               .Where(b => (b.IdStatus == IdStatus))
                .Select(d => new GembaWalkView
                {
                    Id = d.GembaWalk.Id,
                    IdOrigen = d.GembaWalk.IdOrigen,
-                   IdReportador = d.GembaWalk.IdReportador,
-                   IdResponsable = d.GembaWalk.IdResponsable,
+                   IdReporta = d.GembaWalk.IdReporta,
                    IdSubCategoria = d.GembaWalk.IdSubCategoria,
-                   IdEvento = d.GembaWalk.IdEvento,
                    Descripcion = d.GembaWalk.Descripcion,
                    Activo = d.GembaWalk.Activo,
                    FechaReporte = d.GembaWalk.FechaReporte,
-                   FechaEstimada = d.GembaWalk.FechaEstimada,
                    Prioridad = d.GembaWalk.Prioridad,
                    Tipo = d.GembaWalk.Tipo,
                }).ToList();
@@ -155,36 +146,6 @@ namespace Sitio.Areas.Apis.Controllers
             }
 
             return Ok(GembaWalk);
-        }
-
-        // GET: api/Ventana/5
-        [ResponseType(typeof(GembaWalk))]
-        public IHttpActionResult GetGembaWalkbyEvento(int idEvento)
-        {
-            var gemaWalk = db.GembaWalk
-                          .Where(ve => (ve.IdEvento == idEvento))
-                          .Select(g => new GembaWalkView
-                          {
-                            Id = g.Id,
-                            ReportadorNombre = db.Personas.Where(o => o.Id == g.IdReportador).Select(o => o.Nombre + " "+ o.Apellido1 +" "+ o.Apellido2).FirstOrDefault(),
-                            OrigenNombre = db.Origens.Where(o => o.Id == g.IdOrigen).Select(o => o.WorkCenter.NombreCorto + " " + o.Modulo.NombreCorto).FirstOrDefault(),
-                            Descripcion = g.Descripcion,
-                            Activo = g.Activo,
-                            FechaReporte = g.FechaReporte,
-                            FechaEstimada = g.FechaEstimada,
-                            Prioridad = g.Prioridad,
-                            ResponsableNombre = db.Personas.Where(o => o.Id == g.IdResponsable).Select(o => o.Nombre + " " + o.Apellido1 + " " + o.Apellido2).FirstOrDefault(),
-                            SubCategoriaNombre = db.SubCategoria.Where(o => o.Id == g.IdSubCategoria).Select(o => o.Nombre ).FirstOrDefault(),
-                            TipoNombre = (g.Tipo == 1) ? "JustDoIt" : "CAPAIA",
-                            StatusNombre = db.BitacoraGembaWalks.Where(s => s.IdGembaWalk == g.Id).Select(s => s.Estatus.Nombre).FirstOrDefault()
-                          }).ToList();
-
-            if (gemaWalk == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(gemaWalk);
         }
 
 
@@ -244,14 +205,11 @@ namespace Sitio.Areas.Apis.Controllers
                 {
                     Id = d.Id,
                     IdOrigen = d.IdOrigen,
-                    IdReportador = d.IdReportador,
-                    IdResponsable = d.IdResponsable,
-                    IdEvento = d.IdEvento,
+                    IdReporta = d.IdReporta,
                     IdSubCategoria = d.IdSubCategoria,
                     Descripcion = d.Descripcion,
                     Activo = d.Activo,
                     FechaReporte = d.FechaReporte,
-                    FechaEstimada = d.FechaEstimada,
                     Prioridad = d.Prioridad,
                     Tipo = d.Tipo
                 }).FirstOrDefault();
@@ -261,83 +219,6 @@ namespace Sitio.Areas.Apis.Controllers
                 return NotFound();
             }
 
-            return Ok(GembaWalkView);
-        }
-
-        [HttpPut]
-        [ResponseType(typeof(GembaWalkView))]
-        public IHttpActionResult PutGembaWalkByFechaEstimada(int id, int dia, int mes, int year)
-        {
-            GembaWalk GembaWalk = db.GembaWalk.Where(x => x.Id == id).FirstOrDefault();
-
-            if (GembaWalk == null)
-            {
-                return NotFound();
-            }
-            DateTime fechaEstimada = new DateTime(year, mes, dia);
-
-            GembaWalk.FechaEstimada = fechaEstimada;
-            db.Entry(GembaWalk).State = EntityState.Modified;
-            db.SaveChanges();
-
-            var GembaWalkView = db.GembaWalk
-                .Where(d => (d.Id == id))
-                .Select(d => new GembaWalkView
-                {
-                    Id = d.Id,
-                    IdOrigen = d.IdOrigen,
-                    IdReportador = d.IdReportador,
-                    IdResponsable = d.IdResponsable,
-                    IdEvento = d.IdEvento,
-                    IdSubCategoria = d.IdSubCategoria,
-                    Descripcion = d.Descripcion,
-                    Activo = d.Activo,
-                    FechaReporte = d.FechaReporte,
-                    FechaEstimada = d.FechaEstimada,
-                    Prioridad = d.Prioridad,
-                    Tipo = d.Tipo
-                }).FirstOrDefault();
-
-            if (GembaWalkView == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(GembaWalkView);
-        }
-
-        [HttpPut]
-        [ResponseType(typeof(GembaWalkView))]
-        public IHttpActionResult PutGembaWalkByResponsable(int id, int idResponsable)
-        {
-            GembaWalk GembaWalk = db.GembaWalk.Where(x => x.Id == id).FirstOrDefault();
-
-            if (GembaWalk == null)
-            {
-                return NotFound();
-            }
-
-            GembaWalk.IdResponsable = idResponsable;
-            db.SaveChanges();
-
-            var GembaWalkView = db.GembaWalk
-                .Where(d => (d.Id == id))
-                .Select(d => new GembaWalkView
-                {
-                    Id = d.Id,
-                    IdOrigen = d.IdOrigen,
-                    IdReportador = d.IdReportador,
-                    IdResponsable = d.IdResponsable,
-                    IdEvento = d.IdEvento,
-                    IdSubCategoria = d.IdSubCategoria,
-                    Descripcion = d.Descripcion,
-                    Activo = d.Activo,
-                    FechaReporte = d.FechaReporte,
-                    FechaEstimada = d.FechaEstimada,
-                    Prioridad = d.Prioridad,
-                    Tipo = d.Tipo
-                }).FirstOrDefault();
-            
             return Ok(GembaWalkView);
         }
 
@@ -389,13 +270,13 @@ namespace Sitio.Areas.Apis.Controllers
             NotificationService notify = new NotificationService();
             UsuarioServicio usuarioServicio = new UsuarioServicio();
 
-            List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByJDI(GembaWalk.Id);
+            /*List<DispositivoView> dispositivos = usuarioServicio.GetDispositivoByJDI(GembaWalk.Id);
             List<string> llaves = dispositivos.Select(x => x.Llave).ToList();
 
             foreach (string notificacion in llaves)
             {
                 notify.SendPushNotification(notificacion, "Se le ha asignado el GembaWalk " + GembaWalkView.Descripcion + ".", "Nuevo GembaWalk reportado en " + GembaWalkView.Origen.WorkCenter.BussinesUnit.Area.Nombre + ".");
-            }
+            }*/
 
             return Ok(GembaWalkView);
         }

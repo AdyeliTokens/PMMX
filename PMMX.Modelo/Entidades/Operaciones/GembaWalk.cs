@@ -14,16 +14,22 @@ namespace PMMX.Modelo.Entidades.Operaciones
     {
         #region Propiedades
         public int Id { get; set; }
-        public int IdEvento { get; set; }
-        public int IdReportador { get; set; }
+        public int IdReporta { get; set; }
         public int IdOrigen { get; set; }
 
-        [StringLength(250)]
+        [StringLength(532)]
         public string Descripcion { get; set; }
+        [StringLength(532)]
+        public string Impacto { get; set; }
+        [StringLength(532)]
+        public string ParametroIncumplido { get; set; }
+        [StringLength(532)]
+        public string AccionInmediata { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]
         public DateTime FechaReporte { get; set; }
-        public DateTime FechaEstimada { get; set; }
+
         public int Prioridad { get; set; }
-        public int IdResponsable { get; set; }
         public int IdSubCategoria { get; set; }
         public int Tipo { get; set; }
         public Boolean Activo { get; set; }
@@ -31,9 +37,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
 
         #region Navegacion
         public Persona Reportador { get; set; }
-        public Persona Responsable { get; set; }
         public Origen Origen { get; set; }
-        public Evento Evento { get; set; }
         public SubCategoria SubCategoria { get; set; }
         public List<Foto> Fotos { get; set; }
         public ICollection<BitacoraGembaWalk> BitacoraGembaWalk { get; set; }

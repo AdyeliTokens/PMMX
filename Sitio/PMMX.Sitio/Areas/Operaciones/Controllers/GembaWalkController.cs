@@ -56,6 +56,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         // GET: Maquinaria/GembaWalk/Create
         public ActionResult Create()
         {
+            ViewBag.IdOrigen = new SelectList(db.Origens, "Id", "Id");
             return View();
         }
 
@@ -66,6 +67,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(GembaWalk GembaWalk)
         {
+            ViewBag.IdOrigen = new SelectList(db.Origens, "Id", "Id", GembaWalk.IdOrigen);
             return View();
         }
 
@@ -115,7 +117,7 @@ namespace Sitio.Areas.Operaciones.Controllers
         public ActionResult Edit(GembaWalk GembaWalk)
         {
             ViewBag.IdOrigen = new SelectList(db.Origens, "Id", "Id", GembaWalk.IdOrigen);
-            ViewBag.IdReportador = new SelectList(db.Personas, "Id", "Nombre", GembaWalk.IdReportador);
+            ViewBag.IdReporta = new SelectList(db.Personas, "Id", "Nombre", GembaWalk.IdReporta);
             ViewBag.IdSubCategoria = new SelectList(db.SubCategoria, "Id", "Id", GembaWalk.IdSubCategoria);
             return View();
         }

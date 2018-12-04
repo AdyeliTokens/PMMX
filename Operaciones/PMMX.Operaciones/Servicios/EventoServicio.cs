@@ -42,20 +42,7 @@ namespace PMMX.Operaciones.Servicios
                     Apellido1 = d.Asignador.Apellido1,
                     Apellido2 = d.Asignador.Apellido2,
                     IdPuesto = d.Asignador.IdPuesto
-                },
-                GembaWalk = d.GembaWalk.Where(j => (j.IdEvento == d.Id))
-                .Select(j => new GembaWalkView
-                {
-                    Id = j.Id,
-                    IdEvento = j.IdEvento,
-                    IdOrigen = j.IdOrigen,
-                    IdReportador = j.IdReportador,
-                    IdResponsable = j.IdResponsable,
-                    Descripcion = j.Descripcion,
-                    FechaEstimada = j.FechaEstimada,
-                    FechaReporte = j.FechaReporte,
-                    Prioridad = j.Prioridad
-                }).ToList()
+                }
             });
             return respuesta;
         }
@@ -82,20 +69,7 @@ namespace PMMX.Operaciones.Servicios
                         Apellido1 = d.Asignador.Apellido1,
                         Apellido2 = d.Asignador.Apellido2,
                         IdPuesto = d.Asignador.IdPuesto
-                    },
-                    GembaWalk = d.GembaWalk.Where(j => (j.IdEvento == d.Id))
-                    .Select(j => new GembaWalkView
-                    {
-                        Id = j.Id,
-                        IdEvento = j.IdEvento,
-                        IdOrigen = j.IdOrigen,
-                        IdReportador = j.IdReportador,
-                        IdResponsable = j.IdResponsable,
-                        Descripcion = j.Descripcion,
-                        FechaEstimada = j.FechaEstimada,
-                        FechaReporte = j.FechaReporte,
-                        Prioridad = j.Prioridad
-                    }).ToList()
+                    }
              }).FirstOrDefault();
 
             if (Evento != null)
