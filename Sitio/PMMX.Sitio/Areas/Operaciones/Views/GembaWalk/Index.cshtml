@@ -78,19 +78,13 @@
                                     Modulo
                                 </th>
                                 <th style="width:15%">
-                                    Reportante
-                                </th>
-                                <th style="width:15%">
-                                    Responsable
+                                    Reporta
                                 </th>
                                 <th style="width:20%">
                                     @Html.DisplayNameFor(model => model.Descripcion)
                                 </th>
                                 <th style="width:10%">
                                     @Html.DisplayNameFor(model => model.FechaReporte)
-                                </th>
-                                <th style="width:10%">
-                                    @Html.DisplayNameFor(model => model.FechaEstimada)
                                 </th>
                                 <th style="width:2%"></th>
                             </tr>
@@ -121,18 +115,13 @@
                                         @Html.DisplayFor(modelItem => item.Reportador.Nombre) @Html.DisplayFor(modelItem => item.Reportador.Apellido1) @Html.DisplayFor(modelItem => item.Reportador.Apellido2).
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Reportador.Nombre) @Html.DisplayFor(modelItem => item.Reportador.Apellido1) @Html.DisplayFor(modelItem => item.Reportador.Apellido2).
-                                    </td>
-                                    <td>
                                         @Html.DisplayFor(modelItem => item.Descripcion)
                                     </td>
 
                                     <td>
                                         @Html.DisplayFor(modelItem => item.FechaReporte)
                                     </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.FechaEstimada)
-                                    </td>
+
                                     <td>
                                         <div class="dropdown">
                                             <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">

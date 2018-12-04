@@ -452,6 +452,7 @@
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Repository\AuthRepository.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Areas\Operaciones\Controllers\ClasificacionHallazgoController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -8495,12 +8496,18 @@
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1-vsdoc.js" />
+    <Content Include="Areas\Operaciones\Views\ClasificacionHallazgo\Delete.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ClasificacionHallazgo\Edit.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ClasificacionHallazgo\Create.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ClasificacionHallazgo\Details.cshtml" />
+    <Content Include="Areas\Operaciones\Views\ClasificacionHallazgo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\SeguridadFisica\Models\" />
     <Folder Include="Areas\SeguridadFisica\Views\Shared\" />
     <Folder Include="Areas\Warehouse\Models\" />
     <Folder Include="Results\" />
+    <Folder Include="Areas\Operaciones\Views\ClasificacionHallazgo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

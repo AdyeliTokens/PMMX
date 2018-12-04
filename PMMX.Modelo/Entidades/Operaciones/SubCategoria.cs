@@ -27,6 +27,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         #region Navegacion
         public Persona Responsable { get; set; }
         public Categoria Categoria { get; set; }
+        public ICollection<ClasificacionHallazgo> ClasificacionHallazgo { get; set; }
         public ICollection<Ventana> Ventanas { get; set; }
         public ICollection<GembaWalk> GembaWalk { get; set; }
         public ICollection<WorkFlow> WorkFlows { get; set; }

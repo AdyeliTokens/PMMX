@@ -43,7 +43,6 @@ namespace Sitio.Areas.Apis.Controllers
                    Activo = d.Activo,
                    FechaReporte = d.FechaReporte,
                    Prioridad = d.Prioridad,
-                   Tipo = d.Tipo,
                    Reportador = new PersonaView
                    {
                        Id = d.Reportador.Id,
@@ -96,33 +95,6 @@ namespace Sitio.Areas.Apis.Controllers
 
         // GET: api/GembaWalk/5
         [ResponseType(typeof(GembaWalkView))]
-        public IHttpActionResult GetGembaWalkbyTipo(int Tipo, int IdResponsable)
-        {
-            var GembaWalk = db.GembaWalk
-               .Where(d => (d.Tipo == Tipo) )
-               .Select(d => new GembaWalkView
-               {
-                   Id = d.Id,
-                   IdOrigen = d.IdOrigen,
-                   IdReporta = d.IdReporta,
-                   IdSubCategoria = d.IdSubCategoria,
-                   Descripcion = d.Descripcion,
-                   Activo = d.Activo,
-                   FechaReporte = d.FechaReporte,
-                   Prioridad = d.Prioridad,
-                   Tipo = d.Tipo
-               }).ToList();
-
-            if (GembaWalk == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(GembaWalk);
-        }
-
-        // GET: api/GembaWalk/5
-        [ResponseType(typeof(GembaWalkView))]
         public IHttpActionResult GetGembaWalkporStatus(int IdStatus, int IdResponsable)
         {
             var GembaWalk = db.BitacoraGembaWalks
@@ -136,8 +108,7 @@ namespace Sitio.Areas.Apis.Controllers
                    Descripcion = d.GembaWalk.Descripcion,
                    Activo = d.GembaWalk.Activo,
                    FechaReporte = d.GembaWalk.FechaReporte,
-                   Prioridad = d.GembaWalk.Prioridad,
-                   Tipo = d.GembaWalk.Tipo,
+                   Prioridad = d.GembaWalk.Prioridad
                }).ToList();
 
             if (GembaWalk == null)
@@ -210,8 +181,7 @@ namespace Sitio.Areas.Apis.Controllers
                     Descripcion = d.Descripcion,
                     Activo = d.Activo,
                     FechaReporte = d.FechaReporte,
-                    Prioridad = d.Prioridad,
-                    Tipo = d.Tipo
+                    Prioridad = d.Prioridad
                 }).FirstOrDefault();
 
             if (GembaWalkView == null)

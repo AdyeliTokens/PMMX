@@ -31,7 +31,6 @@ namespace PMMX.Modelo.Entidades.Operaciones
 
         public int Prioridad { get; set; }
         public int IdSubCategoria { get; set; }
-        public int Tipo { get; set; }
         public Boolean Activo { get; set; }
         #endregion
 
@@ -41,6 +40,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
         public SubCategoria SubCategoria { get; set; }
         public List<Foto> Fotos { get; set; }
         public ICollection<BitacoraGembaWalk> BitacoraGembaWalk { get; set; }
+        public List<ClasificacionHallazgo> ClasificacionHallazgos { get; set; }
         #endregion
     }
 }

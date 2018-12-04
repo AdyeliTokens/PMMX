@@ -86,6 +86,7 @@ namespace PMMX.Infraestructura.Contexto
             modelBuilder.Configurations.Add(new VolumenDeProduccionMap());
             modelBuilder.Configurations.Add(new AliasMap());
             modelBuilder.Configurations.Add(new PlanDeProduccionMap());
+            modelBuilder.Configurations.Add(new ClasificacionHallazgoMap());
 
             #endregion
 
@@ -195,6 +196,7 @@ namespace PMMX.Infraestructura.Contexto
         public DbSet<VolumenDeProduccion> VolumenesDeProduccion { get; set; }
         public DbSet<Alias> Alias { get; set; }
         public DbSet<PlanDeProduccion> PlanDeProduccion { get; set; }
+        public DbSet<ClasificacionHallazgo> ClasificacionHallazgo { get; set; }
         #endregion
 
         #region Seguridad

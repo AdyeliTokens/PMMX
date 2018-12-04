@@ -24,7 +24,6 @@ namespace PMMX.Modelo.Map
             this.Property(c => c.AccionInmediata).HasColumnName("AccionInmediata");
             this.Property(c => c.FechaReporte).HasColumnName("FechaReporte");
             this.Property(c => c.Prioridad).HasColumnName("Prioridad");
-            this.Property(c => c.Tipo).HasColumnName("Tipo");
             this.Property(c => c.Activo).HasColumnName("Activo");
             #endregion
 
@@ -40,6 +39,13 @@ namespace PMMX.Modelo.Map
                 cs.MapLeftKey("IdGembaWalk");
                 cs.MapRightKey("IdFoto");
                 cs.ToTable("GembaWalkFotos");
+            });
+
+            this.HasMany(c => c.ClasificacionHallazgos).WithMany(x => x.GembaWalks).Map(cs =>
+            {
+                cs.MapLeftKey("IdGembaWalk");
+                cs.MapRightKey("IdClasificacion");
+                cs.ToTable("ClasificacionGembaWalk");
             });
 
             this.HasMany(x => x.BitacoraGembaWalk).WithRequired(c => c.GembaWalk).HasForeignKey(c => c.IdGembaWalk);

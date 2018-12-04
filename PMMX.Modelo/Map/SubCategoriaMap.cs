@@ -30,6 +30,7 @@ namespace PMMX.Modelo.Entidades.Operaciones
             #region HasMany
             this.HasMany(c => c.Ventanas).WithRequired(x => x.SubCategoria).HasForeignKey(x => x.IdSubCategoria);
             this.HasMany(c => c.GembaWalk).WithRequired(x => x.SubCategoria).HasForeignKey(x => x.IdSubCategoria);
+            this.HasMany(c => c.ClasificacionHallazgo).WithRequired(x => x.SubCategoria).HasForeignKey(x => x.IdSubCategoria);
             this.HasMany(c => c.WorkFlows).WithRequired(x => x.SubCategoria).HasForeignKey(c => c.IdSubCategoria);
             this.HasMany(c => c.Eventos).WithRequired(x => x.SubCategoria).HasForeignKey(c => c.IdSubCategoria);
             #endregion
