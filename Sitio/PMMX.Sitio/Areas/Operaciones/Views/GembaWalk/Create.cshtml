@@ -14,9 +14,15 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+
+        <div id="menuTab" class="form-group">
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#home">Registro</a></li>
-                <li><a data-toggle="tab" href="#menu1">Clasificación</a></li>
+                <li><a data-toggle="tab" href="#menu1">Clasificacion</a></li>
                 <li><a data-toggle="tab" href="#menu2">Evidencia</a></li>
             </ul>
 
@@ -97,6 +103,7 @@
     <script>
         $(document).ready(function()
         {
+            var selected = [];
             getClasificacion();
 
             function getClasificacion()
@@ -116,6 +123,39 @@
                     }
                 });
             }
+
+        $('#checkboxes input:checked').each(function() {
+            selected.push($(this).attr('value'));
+        });
+
+        $("#save").on("click", function(){
+            var gembaWalk = [
+                { 'IdOrigen': $("#IdOrigen").val(),
+                  'Descripcion': $("#Descripcion").val(),
+                  'Impacto': $("#Impacto").val(),
+                  'ParametroIncumplido': $("#ParametroIncumplido").val(),
+                  'AccionInmediata': $("#AccionInmediata").val(),
+                  'FechaReporte': $("#FechaReporte").val()
+                }
+            ];
+
+            $.ajax({
+                //contentType: 'application/json; charset=utf-8',
+                type: 'POST',
+                dataType: "json",
+                url: '/Operaciones/GembaWalk/Create',
+                //'Lista': selected,
+                data: { 'GembaWalk': gembaWalk, __RequestVerificationToken: $('input[name=__RequestVerificationToken]').val() },
+                success: function () {
+                    alert("OK");
+                },
+                failure: function (response) {
+                    //$('#result').html(response);
+                    alert(response);
+                }
+            });
+        });
+
         });
     </script>
     

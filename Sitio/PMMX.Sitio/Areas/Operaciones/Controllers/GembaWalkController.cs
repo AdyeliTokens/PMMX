@@ -65,10 +65,25 @@ namespace Sitio.Areas.Operaciones.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(GembaWalk GembaWalk)
+        public ActionResult Create(GembaWalk gemba)
         {
-            ViewBag.IdOrigen = new SelectList(db.Origens, "Id", "Id", GembaWalk.IdOrigen);
-            return View();
+            if (ModelState.IsValid)
+            {
+                PersonaServicio personaServicio = new PersonaServicio();
+                IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
+                if (persona.EjecucionCorrecta)
+                {
+                    gemba.IdReporta = persona.Respuesta.Id;
+                    gemba.IdSubCategoria = 22;
+                    gemba.Prioridad = 1;
+                    db.GembaWalk.Add(gemba);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+
+            ViewBag.IdOrigen = new SelectList(db.Origens, "Id", "Id"); 
+            return View(gemba);
         }
 
         [HttpPost]
