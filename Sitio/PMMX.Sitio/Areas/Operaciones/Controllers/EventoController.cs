@@ -59,6 +59,15 @@ namespace Sitio.Areas.Operaciones.Controllers
                             events = events.Where(e=> (listID.Contains(e.Id))).ToList();
 
                             return Json(new { events }, JsonRequestBehavior.AllowGet);
+                        case "Developer":
+                            var listIDs = db.EventoResponsable
+                                .Where(r => (r.IdResponsable == persona.Respuesta.Id) && (r.Evento.FechaInicio >= date && r.Evento.FechaFin <= LastDate))
+                                .Select(r => r.IdEvento)
+                                .ToList();
+
+                            events = events.Where(e => (listIDs.Contains(e.Id))).ToList();
+
+                            return Json(new { events }, JsonRequestBehavior.AllowGet);
                         default:
                             return Json(new { events }, JsonRequestBehavior.AllowGet);
                     }
@@ -602,6 +611,23 @@ namespace Sitio.Areas.Operaciones.Controllers
 
                                 db.Evento.Add(evento);
                                 db.SaveChanges();
+
+                                var proveedor = workSheet.Cells[row, 4].Value.ToString().Trim();
+                                var idSubArea = db.SubArea.Where(f=> f.NombreCorto == proveedor ).Select(f=> f.Id).FirstOrDefault();
+                                var listaDistribucion = db.ListaDistribucion.Where(w => (w.IdSubarea == idSubArea)).Select(w => new { IdPersona = w.IdPersona }).ToList();
+
+                                if (listaDistribucion.Count > 0)
+                                {
+                                    foreach (var item in listaDistribucion)
+                                    {
+                                        EventoResponsable eResponsable = new EventoResponsable();
+                                        eResponsable.IdEvento = evento.Id;
+                                        eResponsable.IdResponsable = item.IdPersona;
+                                        db.EventoResponsable.Add(eResponsable);
+                                        db.SaveChanges();
+                                    }
+                                    SendNotification(evento, "New Event: ");
+                                }
                             }
                         }
                         break;
