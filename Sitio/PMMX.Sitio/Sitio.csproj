@@ -8142,6 +8142,7 @@
     <Content Include="Areas\Operaciones\Views\Formatos\Details.cshtml" />
     <Content Include="Areas\Operaciones\Views\Formatos\Edit.cshtml" />
     <Content Include="Areas\Operaciones\Views\Formatos\Index.cshtml" />
+    <Content Include="Areas\Operaciones\Views\Evento\Upload.cshtml" />
     <None Include="Properties\PublishProfiles\serverpmi.tr3sco.net - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
