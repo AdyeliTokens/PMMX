@@ -33,6 +33,16 @@
         return [year, month, day].join('-');
     }
 
+    $("#btn-multipleEvents").on("click", function () {
+       var url = ("/Operaciones/Evento/Upload");
+
+        $.get(url, function (data) {
+            $('#createAssetContainer').html(data);
+            jQuery.noConflict();
+            $('#createAssetModal').modal('show');
+        });
+    });
+
     $('#calendar').on('click', '.fc-next-button, .fc-prev-button', function () {
         var view = $('#calendar').fullCalendar('getView');
         var d, date;
@@ -237,7 +247,8 @@
 
     function init()
     {
-        $("#perfil").val() == "Supplier" ? $("#add-new").hide() : $("#add-new").show(); 
+        $("#perfil").val() === "Supplier" ? $("#add-new").hide() : $("#add-new").show(); 
+        $("#perfil").val() === "Supplier" ? $("#btn-multipleEvents").hide() : $("#btn-multipleEvents").show(); 
 
         GetEvents(formatDate(new Date()), "/Evento/GetEvents?date=" + formatDate(new Date()));
         GetSubCategorias();

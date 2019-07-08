@@ -19,6 +19,7 @@
 <div class="form-horizontal">
     <h4>Evento</h4>
     <hr />
+    
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(model => model.Descripcion, "Nombre del Evento: ", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -202,6 +203,17 @@
                 $("#IdSubCategoria").val($("#slt-SubCategoria").val());
             });
 
+            $("#Distribucion").click(function () {
+                var url = ("/Operaciones/Evento/ListaDistribucion");
+
+                $.get(url, function (data) {
+
+                    $('#createAssetContainer').html(data);
+
+                    $('#createAssetModal').modal('show');
+                });
+            });
+            
             function GetSubCategorias() {
                 var url = ("/SubCategoria/GetSubCategoriasByCategoria?IdCategoria=" + $("#IdCategoria").val() +"&Opcion=false");
 
