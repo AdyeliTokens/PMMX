@@ -17,6 +17,7 @@ using Microsoft.AspNet.Identity;
 using PMMX.Modelo.Entidades.Warehouse;
 using PMMX.Operaciones.Servicios;
 using OfficeOpenXml;
+using System.Globalization;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -553,6 +554,11 @@ namespace Sitio.Areas.Operaciones.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Upload()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file)
         {
@@ -580,16 +586,17 @@ namespace Sitio.Areas.Operaciones.Controllers
                             if (workSheet.Cells[row, 1].Value != null)
                             {
                                 var numSubCategoria = workSheet.Cells[row, 3].Value.ToString().Trim();
+                                var fecha = DateTime.ParseExact(workSheet.Cells[row, 2].Value.ToString().Trim(), "dd/MM/yyyy hh:mm", null);
                                 Evento evento = new Evento();
 
                                 evento.Descripcion = workSheet.Cells[row, 1].Value == null ? string.Empty : workSheet.Cells[row, 1].Value.ToString().Trim();
-                                evento.FechaInicio = workSheet.Cells[row, 2].Value == null ? DateTime.Now : DateTime.ParseExact(workSheet.Cells[row, 2].Value.ToString().Trim(), "yyyy-MM-dd HH:mm tt", null);
+                                evento.FechaInicio = workSheet.Cells[row, 2].Value == null ? DateTime.Now : fecha;
                                 evento.FechaFin = evento.FechaFin.AddHours(1);
                                 evento.IdAsignador = persona.Respuesta.Id;
                                 evento.IdCategoria = db.Categoria.Where(c => c.NombreCorto == "Ventana").Select(c => c.Id).FirstOrDefault();
-                                evento.IdSubCategoria = db.SubCategoria.Where(c => c.Nombre == numSubCategoria).Select(c => c.Id).FirstOrDefault() == 0
-                                    ? db.Carrier.Where(c => c.Nombre == "DIMS Nacional").Select(c => c.Id).FirstOrDefault()
-                                    : db.SubCategoria.Where(c => c.Nombre == numSubCategoria).Select(c => c.Id).FirstOrDefault();
+                                evento.IdSubCategoria = db.SubCategoria.Where(c => c.NombreCorto == numSubCategoria).Select(c => c.Id).FirstOrDefault() == 0
+                                    ? db.Carrier.Where(c => c.NombreCorto == "DIMS Nacional").Select(c => c.Id).FirstOrDefault()
+                                    : db.SubCategoria.Where(c => c.NombreCorto == numSubCategoria).Select(c => c.Id).FirstOrDefault();
                                 evento.Nota = " ";
                                 evento.Activo = true;
 
