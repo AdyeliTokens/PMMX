@@ -59,15 +59,15 @@ namespace Sitio.Areas.Operaciones.Controllers
                             events = events.Where(e=> (listID.Contains(e.Id))).ToList();
 
                             return Json(new { events }, JsonRequestBehavior.AllowGet);
-                        case "Developer":
-                            var listIDs = db.EventoResponsable
-                                .Where(r => (r.IdResponsable == persona.Respuesta.Id) && (r.Evento.FechaInicio >= date && r.Evento.FechaFin <= LastDate))
-                                .Select(r => r.IdEvento)
-                                .ToList();
+                        //case "Developer":
+                        //    var listIDs = db.EventoResponsable
+                        //        .Where(r => (r.IdResponsable == persona.Respuesta.Id) && (r.Evento.FechaInicio >= date && r.Evento.FechaFin <= LastDate))
+                        //        .Select(r => r.IdEvento)
+                        //        .ToList();
 
-                            events = events.Where(e => (listIDs.Contains(e.Id))).ToList();
+                        //    events = events.Where(e => (listIDs.Contains(e.Id))).ToList();
 
-                            return Json(new { events }, JsonRequestBehavior.AllowGet);
+                        //    return Json(new { events }, JsonRequestBehavior.AllowGet);
                         default:
                             return Json(new { events }, JsonRequestBehavior.AllowGet);
                     }
