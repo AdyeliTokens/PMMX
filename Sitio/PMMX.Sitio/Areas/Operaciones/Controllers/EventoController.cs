@@ -16,6 +16,8 @@ using PMMX.Modelo.Entidades;
 using Microsoft.AspNet.Identity;
 using PMMX.Modelo.Entidades.Warehouse;
 using PMMX.Operaciones.Servicios;
+using OfficeOpenXml;
+using System.Globalization;
 
 namespace Sitio.Areas.Operaciones.Controllers
 {
@@ -203,13 +205,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                     FechaInicio = e.FechaInicio,
                     FechaFin = e.FechaFin,
                     Nota = e.Nota,
-                    Activo = e.Activo,
-                    GembaWalk = e.GembaWalk.Where(j => j.IdEvento == e.Id)
-                    .Select(j => new GembaWalkView
-                    {
-                        Id = j.Id,
-                        IdSubCategoria = j.IdSubCategoria
-                    }).ToList(),
+                    Activo = e.Activo
                 }).FirstOrDefault();
 
             if (evento == null)
@@ -557,6 +553,65 @@ namespace Sitio.Areas.Operaciones.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public ActionResult Upload()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase file)
+        {
+            if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+            {
+                string fileName = file.FileName;
+                string fileContentType = file.ContentType;
+                byte[] fileBytes = new byte[file.ContentLength];
+                var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+
+                using (var package = new ExcelPackage(file.InputStream))
+                {
+                    PersonaServicio personaServicio = new PersonaServicio();
+                    IRespuestaServicio<Persona> persona = personaServicio.GetPersona(User.Identity.GetUserId());
+
+                    var currentSheet = package.Workbook.Worksheets;
+
+                    foreach (var workSheet in currentSheet)
+                    {
+                        var noOfCol = workSheet.Dimension.End.Column;
+                        var noOfRow = workSheet.Dimension.End.Row;
+                        
+                        for(var row = 2; row <= noOfRow; row++)
+                        {
+                            if (workSheet.Cells[row, 1].Value != null)
+                            {
+                                var numSubCategoria = workSheet.Cells[row, 3].Value.ToString().Trim();
+                                var fecha = DateTime.ParseExact(workSheet.Cells[row, 2].Value.ToString().Trim(), "dd/MM/yyyy hh:mm", null);
+                                Evento evento = new Evento();
+
+                                evento.Descripcion = workSheet.Cells[row, 1].Value == null ? string.Empty : workSheet.Cells[row, 1].Value.ToString().Trim();
+                                evento.FechaInicio = workSheet.Cells[row, 2].Value == null ? DateTime.Now : fecha;
+                                evento.FechaFin = evento.FechaFin.AddHours(1);
+                                evento.IdAsignador = persona.Respuesta.Id;
+                                evento.IdCategoria = db.Categoria.Where(c => c.NombreCorto == "Ventana").Select(c => c.Id).FirstOrDefault();
+                                evento.IdSubCategoria = db.SubCategoria.Where(c => c.NombreCorto == numSubCategoria).Select(c => c.Id).FirstOrDefault() == 0
+                                    ? db.Carrier.Where(c => c.NombreCorto == "DIMS Nacional").Select(c => c.Id).FirstOrDefault()
+                                    : db.SubCategoria.Where(c => c.NombreCorto == numSubCategoria).Select(c => c.Id).FirstOrDefault();
+                                evento.Nota = " ";
+                                evento.Activo = true;
+
+                                db.Evento.Add(evento);
+                                db.SaveChanges();
+                            }
+                        }
+                        break;
+                    }
+                    return RedirectToAction("Index", "Evento", new { Area = "Operaciones" });
+                }
+            }
+            return View("Index");
+        }
+
 
         protected override void Dispose(bool disposing)
         {
