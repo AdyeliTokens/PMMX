@@ -203,13 +203,7 @@ namespace Sitio.Areas.Operaciones.Controllers
                     FechaInicio = e.FechaInicio,
                     FechaFin = e.FechaFin,
                     Nota = e.Nota,
-                    Activo = e.Activo,
-                    GembaWalk = e.GembaWalk.Where(j => j.IdEvento == e.Id)
-                    .Select(j => new GembaWalkView
-                    {
-                        Id = j.Id,
-                        IdSubCategoria = j.IdSubCategoria
-                    }).ToList(),
+                    Activo = e.Activo
                 }).FirstOrDefault();
 
             if (evento == null)

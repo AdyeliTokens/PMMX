@@ -218,12 +218,30 @@
         return '#' + ('00000' + (Math.random() * 16777216 << 0).toString(16)).substr(-6);
     }
 
+    function GetSimbologia() {
+        $.ajax({
+            dataType: "json",
+            contentType: "application/json",
+            data: { "IdCategoria": 10 },//Ventana
+            url: "/Estatus/GetAllStatus",
+            success: function (data) {
+                $.each(data.estatus, function (i, val) {
+                    $('<li><a href="#"><i class="fa fa-square" style="color: ' + val.Color +'"></i> '+ val.Nombre +'</a></li>').appendTo("#symbols");
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('There was an error while fetching data!');
+            }
+        });
+    }
+
     function init()
     {
         $("#perfil").val() == "Supplier" ? $("#add-new").hide() : $("#add-new").show(); 
 
         GetEvents(formatDate(new Date()), "/Evento/GetEvents?date=" + formatDate(new Date()));
         GetSubCategorias();
+        GetSimbologia();
     }
 
 })(jQuery); // End of use strict

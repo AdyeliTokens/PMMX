@@ -25,7 +25,16 @@ namespace Sitio.Areas.Operaciones.Controllers
 
             return View(estatus);
         }
-        
+
+        public ActionResult GetAllStatus(int IdCategoria)
+        {
+            var estatus = db.Estatus
+                           .Where(e=> e.Categoria.Id == IdCategoria)
+                           .ToList();
+
+            return Json(new { estatus }, JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Operaciones/Estatus/Details/5
         public ActionResult Details(int? id)
         {
