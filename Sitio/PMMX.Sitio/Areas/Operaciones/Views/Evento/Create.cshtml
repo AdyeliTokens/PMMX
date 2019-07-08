@@ -203,17 +203,6 @@
                 $("#IdSubCategoria").val($("#slt-SubCategoria").val());
             });
 
-            $("#Distribucion").click(function () {
-                var url = ("/Operaciones/Evento/ListaDistribucion");
-
-                $.get(url, function (data) {
-
-                    $('#createAssetContainer').html(data);
-
-                    $('#createAssetModal').modal('show');
-                });
-            });
-            
             function GetSubCategorias() {
                 var url = ("/SubCategoria/GetSubCategoriasByCategoria?IdCategoria=" + $("#IdCategoria").val() +"&Opcion=false");
 
